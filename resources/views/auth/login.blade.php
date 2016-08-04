@@ -4,7 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+             @if(Session::has('flash_message'))
+                    <div class="alert alert-danger">
+                         <span class="glyphicon glyphicon-close"></span>
+                            <em> {!! session('flash_message') !!}</em>
+                    </div>
+                @endif
             <div class="panel panel-default">
+               
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
@@ -14,7 +21,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input id="email" type="text" class="form-control" placeholder="Username Or Email" name="email" value="{{ old('email') }}">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -28,7 +35,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
+                                <input id="password" type="password" placeholder="Password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

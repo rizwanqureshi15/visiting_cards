@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Auth;
+use Session;
 
 class AuthController extends Controller
 {
@@ -72,5 +75,38 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             'username' => $data['username'],
         ]);
+    }
+
+    public function login(Request $request)
+    {
+         $v=$validator= Validator::make(
+        [
+            'email' => $request->email,
+            'password' => $request->password
+        ],
+        [
+            'email' => 'required',
+            'password' => 'required'
+        ]
+        );
+
+        $email=$request->email;
+        $password=$request->password;
+
+       if($v->fails())
+       {
+            return redirect()->back()->withErrors($v->errors());
+       }
+       
+       if (Auth::attempt(['email' => $email, 'password' => $password]) OR Auth::attempt(['username' => $email, 'password' => $password]))
+        {   
+            Session::flash('flash_message','Successfully Login');
+            return redirect('/');
+        }
+        else
+        {
+            Session::flash('flash_message','Wrong Email or Password..');
+            return redirect('login');   
+        }
     }
 }

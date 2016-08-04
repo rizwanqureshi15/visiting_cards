@@ -24,3 +24,5 @@ Route::get('employees/login', 'EmployeeController@login');
 Route::post('employees/login', 'EmployeeController@login_post');
 
 Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
+
+
