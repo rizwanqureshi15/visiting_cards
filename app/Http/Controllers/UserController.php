@@ -41,6 +41,11 @@ class UserController extends Controller
 
     public function change_profile(Request $request)
     {
+        if(Auth::guest())
+        {
+            Session::flash('flash_message','Please Login First.');
+            return redirect('login');
+        }
         $user_id=Auth::user()->id;
         $v=$validator=Validator::make([
                 'first_name' => $request->first_name,
@@ -81,5 +86,47 @@ class UserController extends Controller
     {
         $username=User::where('username', $request->username)->first();
         return response()->json($username);
+    }
+
+    public function show_change_password()
+    {
+         if(Auth::guest())
+        {
+            Session::flash('flash_message','Please Login First.');
+            return redirect('login');
+        }
+        return view('auth.change_password');
+    }
+
+    public function change_password(Request $request)
+    {
+        if(Auth::guest())
+        {
+            Session::flash('flash_message','Please Login First.');
+            return redirect('login');
+        }
+
+        $user_id=Auth::user()->id;
+        $v=$validator=Validator::make([
+                'password' => $request->password,
+                'password_confirmation' => $request->password_confirmation
+            ],
+            [
+                'password' => 'required|min:6|confirmed',
+                'password_confirmation' => 'required|min:6'
+            ]);
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors());
+        }
+        $password=bcrypt($request['password']);
+
+        User::where('id',$user_id)
+            ->update(array(
+                'password' =>  $password
+                ));
+
+        return redirect('/');
+
     }
 }

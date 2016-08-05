@@ -49,5 +49,6 @@ Route::post('admin/edit_profile/{id}', 'AdminController@edit_profile_post');
 Route::get('admin/create_employee', 'AdminController@create_employee');
 Route::post('admin/create_employee', 'AdminController@create_employee_post');
 
-
+Route::get('change_password','UserController@show_change_password');
+Route::post('change_password','UserController@change_password');
 

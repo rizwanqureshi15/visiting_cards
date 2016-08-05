@@ -115,7 +115,7 @@
 $(document).ready(function () {
 
     var typingTimer;                
-    var doneTypingInterval = 700;
+    var doneTypingInterval = 500;
     $('#username').keyup(function () {
                     clearTimeout(typingTimer);
                     typingTimer = setTimeout(CheckUsername, doneTypingInterval);
