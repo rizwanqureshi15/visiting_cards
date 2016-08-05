@@ -24,3 +24,21 @@ Route::get('employees/login', 'EmployeeController@login');
 Route::post('employees/login', 'EmployeeController@login_post');
 
 Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
+
+Route::get('admin/dashboard', 'AdminController@dashboard_display');
+
+Route::get('admin/logout', 'AdminController@logout');
+
+Route::get('admin/employees_list', 'AdminController@employees_list');
+
+Route::post('admin/reset_password', 'AdminController@reset_password');
+
+Route::get('admin/delete_employee/{id}', 'AdminController@delete_employee');
+
+Route::get('admin/edit_profile/{id}', 'AdminController@edit_profile');
+Route::post('admin/edit_profile/{id}', 'AdminController@edit_profile_post');
+
+
+Route::get('admin/create_employee', 'AdminController@create_employee');
+Route::post('admin/create_employee', 'AdminController@create_employee_post');
+

@@ -18,12 +18,37 @@ class EmployeeController extends Controller
     	return view('employee/login');
     }
 
+    public function authenticate_employee()
+    {
+       
+        if((Auth::guard('employee')->user()->is_admin) == 0)
+        {
+            return true;
+        }
+        elseif(Auth::user() != null)
+        {
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function login_post(Request $request)
     {
-    	//Auth::guard('Newgardname'); [specify guerd name by which you want to authenticate]
-    	if (Auth::guard('employee')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed...
-            return redirect()->intended('employees/dashboard');
+    	//Auth::guard('Newgardname'); [specify guerd name by which you want to authenticate
+        if(Auth::guard('employee')->attempt(['username' => $request->username, 'password' => $request->password]))
+    	{
+            // Authentication passed...	
+    		if(Employeecontroller::authenticate_employee())
+    		{
+    			return redirect()->intended('employees/dashboard');	
+    		}
+            else
+            {
+            	return redirect()->intended('admin/dashboard');
+            }
         }
         else
         {
@@ -34,6 +59,6 @@ class EmployeeController extends Controller
 
     public function dashboard_display()
     {
-    	return view('admin.dashboard');
+    	return view('employee.dashboard');
     }
 }
