@@ -26,3 +26,9 @@ Route::post('employees/login', 'EmployeeController@login_post');
 Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
 
 
+Route::get('profile','UserController@show_profile');
+Route::post('profile','UserController@change_profile');
+
+Route::get('change_password','UserController@show_changepasword_page');
+
+

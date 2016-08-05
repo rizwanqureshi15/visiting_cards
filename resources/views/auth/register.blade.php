@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" id="myform" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
@@ -84,8 +84,8 @@
                             <label for="username" class="col-md-4 control-label">Username</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}">
-
+                                <input id="username" type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
+                                <div class="results help-block" style="color:red"></div>
                                 @if ($errors->has('username'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
@@ -107,4 +107,51 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+$(document).ready(function () {
+
+    var typingTimer;                
+    var doneTypingInterval = 700;
+    $('#username').keyup(function () {
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(CheckUsername, doneTypingInterval);
+                });
+
+    $('#username').keydown(function () {
+                    clearTimeout(typingTimer);
+                });
+
+    function CheckUsername () 
+    {
+            var a=$("#username").val();
+            $.ajax({
+                type: "POST",
+                url: "check_username",
+                dataType: 'json',
+                data: { "_token": "{{ csrf_token() }}","username": a},
+                success : function(username){
+
+                    if (jQuery.isEmptyObject(username)) {
+                        $('.results').html(' ');
+                    }
+                    else
+                    {
+                        $('.results').html('Username is already exist');
+                    }
+                }  
+            }).fail(function(data){
+                // on an error show us a warning and write errors to console
+                var errors = data.responseJSON;
+            });
+    }
+});
+
+</script>
+
+
+
 @endsection
