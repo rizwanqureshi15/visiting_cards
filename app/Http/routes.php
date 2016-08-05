@@ -25,6 +25,7 @@ Route::post('employees/login', 'EmployeeController@login_post');
 
 Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
 
+
 Route::get('admin/dashboard', 'AdminController@dashboard_display');
 
 Route::get('admin/logout', 'AdminController@logout');
@@ -41,4 +42,5 @@ Route::post('admin/edit_profile/{id}', 'AdminController@edit_profile_post');
 
 Route::get('admin/create_employee', 'AdminController@create_employee');
 Route::post('admin/create_employee', 'AdminController@create_employee_post');
+
 
