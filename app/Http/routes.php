@@ -32,4 +32,22 @@ Route::post('profile','UserController@change_profile');
 Route::get('change_password','UserController@show_changepasword_page');
 Route::post('check_username','UserController@check_username');
 
+Route::get('admin/dashboard', 'AdminController@dashboard_display');
+
+Route::get('admin/logout', 'AdminController@logout');
+
+Route::get('admin/employees_list', 'AdminController@employees_list');
+
+Route::post('admin/reset_password', 'AdminController@reset_password');
+
+Route::get('admin/delete_employee/{id}', 'AdminController@delete_employee');
+
+Route::get('admin/edit_profile/{id}', 'AdminController@edit_profile');
+Route::post('admin/edit_profile/{id}', 'AdminController@edit_profile_post');
+
+
+Route::get('admin/create_employee', 'AdminController@create_employee');
+Route::post('admin/create_employee', 'AdminController@create_employee_post');
+
+
 

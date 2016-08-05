@@ -21,6 +21,7 @@ class Employees extends Migration
             $table->string('password');
             $table->string('username')->unique();
             $table->boolean('is_admin');
+            $table->boolean('is_delete');
             $table->timestamps();
         });
     }
