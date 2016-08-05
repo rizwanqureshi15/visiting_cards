@@ -30,5 +30,6 @@ Route::get('profile','UserController@show_profile');
 Route::post('profile','UserController@change_profile');
 
 Route::get('change_password','UserController@show_changepasword_page');
+Route::post('check_username','UserController@check_username');
 
 
