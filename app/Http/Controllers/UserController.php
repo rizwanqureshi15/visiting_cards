@@ -126,6 +126,7 @@ class UserController extends Controller
                 'password' =>  $password
                 ));
 
+        Session::flash('flash_message','Password successfully changed.');
         return redirect('/');
 
     }
