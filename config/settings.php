@@ -2,6 +2,6 @@
 
 	return [
 
-		'number_of_rows' => 1
+		'number_of_rows' => 10
 
 	];

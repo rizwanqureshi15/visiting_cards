@@ -3,8 +3,8 @@
 
 	<div class="row">
 		<div class="col-md-3"><h2>Employees</h2></div>
-		<div class="col-md-offset-4 col-md-2" style="margin-top:30px;">
-			<a href="{{ url('admin/create_employee') }}" class="btn btn-primary">New Employee Account</a>
+		<div class="" style="margin-top:30px;">
+			<a href="{{ url('admin/create_employee') }}" class="btn btn-primary pull-right">Add Employee</a>
 		</div>
 		<div class="col-md-12" style="margin-top:20px;">
 			@if(Session::get('reset_msg'))
@@ -32,24 +32,31 @@
 				<tr>
 					<th> Name </th>
 					<th> Username </th>
-					<th> Task </th>
+					<th> Action </th>
 				</tr>
 			</thead>
 			<tbody>
+				@if(!count($employees))
+				<tr>
+					<td>Data Not Found..!</td>
+				</tr>
+				@endif
  				@foreach($employees as $employee)
  				<tr>
  					<td> {{ $employee->first_name }} {{ $employee->last_name }}</td>
  					<td> {{ $employee->username }}</td>
  					<td> 
- 						<a class="btn btn-primary" href="{{ url('admin/edit_profile', $employee->id) }}">Edit</a> | 
- 						<a class="btn btn-primary" href="{{ url('admin/delete_employee', $employee->id) }}">Delete</a> | 
- 						<button type="button" class="btn btn-primary reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
+ 						<a href="{{ url('admin/edit_profile', $employee->id) }}">Edit</a> | 
+ 						<a  href="{{ url('admin/delete_employee', $employee->id) }}">Delete</a> | 
+ 						<button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
 						  Reset Password
 						</button>
  				</tr>
  				@endforeach
  			</tbody>
+ 			
 			</table>
+
 		</div>
 		<div class="col-md-8 col-md-offset-4">
 			{{ $employees->links() }}

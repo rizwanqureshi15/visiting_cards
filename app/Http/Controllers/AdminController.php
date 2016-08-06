@@ -41,7 +41,8 @@ class AdminController extends Controller
         //dd(AdminController::authenticate_admin());
         if(AdminController::authenticate_admin())
         {
-                return view('admin.dashboard');        
+
+                return redirect('admin/employees_list');        
         }
         else
         {
@@ -49,10 +50,11 @@ class AdminController extends Controller
         }
     
     }
-
+    
     public function logout()
     {
-        Auth::logout();
+        
+        Auth::guard('employee')->logout();
         return redirect('employees/login');
     }
 

@@ -15,6 +15,11 @@
 				</tr>
 			</thead>
 			<tbody>
+				@if(!count($users))
+				<tr>
+					<td>Data Not Found..!</td>
+				</tr>
+				@endif
  				@foreach($users as $user)
  				<tr>
  					<td> {{ $user->first_name }} {{ $user->last_name }}</td>

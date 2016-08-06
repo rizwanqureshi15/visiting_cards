@@ -46,7 +46,7 @@ class EmployeeController extends Controller
     		{
                 if(Auth::guard('employee')->user()->is_delete == 0)
                     {   
-                       return redirect()->intended('employees/dashboard');  
+                       return redirect('employees/dashboard');  
                     }
                     else
                     {
@@ -58,7 +58,8 @@ class EmployeeController extends Controller
     		}
             else
             {
-            	return redirect()->intended('admin/dashboard');
+
+            	return redirect('admin/employees_list');
             }
         }
         else
