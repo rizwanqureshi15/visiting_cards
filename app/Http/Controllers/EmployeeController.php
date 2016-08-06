@@ -22,8 +22,9 @@ class EmployeeController extends Controller
     {
        
         if((Auth::guard('employee')->user()->is_admin) == 0)
-        {
-            return true;
+        {  
+                return true;
+            
         }
         elseif(Auth::user() != null)
         {
@@ -43,7 +44,17 @@ class EmployeeController extends Controller
             // Authentication passed...	
     		if(Employeecontroller::authenticate_employee())
     		{
-    			return redirect()->intended('employees/dashboard');	
+                if(Auth::guard('employee')->user()->is_delete == 0)
+                    {   
+                       return redirect()->intended('employees/dashboard');  
+                    }
+                    else
+                    {
+
+                        Session::flash('dlt_msg', 'Your account is De-activated by Admin');
+                        return redirect()->back();
+                    }
+    			
     		}
             else
             {

@@ -19,11 +19,17 @@
   </head>
   <body>
 
+
     
-   <div class="container">
-
-
-         @yield('content')
+   <div class="container" style="">
+      <div class="row">
+        <div class="col-md-2" style="padding-right:0px;padding-left:0px;">
+            @include('sidebar')
+        </div>
+        <div class="col-md-10">
+            @yield('content')
+        </div>
+      </div>
     </div>
     
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

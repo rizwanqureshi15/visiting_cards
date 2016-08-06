@@ -52,3 +52,5 @@ Route::post('admin/create_employee', 'AdminController@create_employee_post');
 Route::get('change_password','UserController@show_change_password');
 Route::post('change_password','UserController@change_password');
 
+Route::get('admin/users_list', 'AdminController@users_list');
+

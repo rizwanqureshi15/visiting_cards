@@ -1,12 +1,12 @@
 @extends('master')
 @section('content')
-<div class="container">
+
 	<div class="row">
-		<div class="col-md-offset-3 col-md-3"><h2>Employees</h2></div>
+		<div class="col-md-3"><h2>Employees</h2></div>
 		<div class="col-md-offset-4 col-md-2" style="margin-top:30px;">
 			<a href="{{ url('admin/create_employee') }}" class="btn btn-primary">New Employee Account</a>
 		</div>
-		<div class="col-md-offset-2 col-md-10" style="margin-top:20px;">
+		<div class="col-md-12" style="margin-top:20px;">
 			@if(Session::get('reset_msg'))
 				<div class="alert alert-success" role="alert">
 				  <a class="alert-link">{{ Session::get('reset_msg') }}</a>
@@ -51,7 +51,11 @@
  			</tbody>
 			</table>
 		</div>
-	</div>
+		<div class="col-md-8 col-md-offset-4">
+			{{ $employees->links() }}
+		</div>
+		</div>
+	
 		
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">

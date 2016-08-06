@@ -9,7 +9,14 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('employees/login') }}">
                         @if(Session::get('error_msg'))
-                            {{ Session::get('error_msg') }}
+                            <div class="alert alert-danger" role="alert">
+                              <a class="alert-link">{{ Session::get('error_msg') }}</a>
+                            </div>
+                        @endif
+                        @if(Session::get('dlt_msg'))
+                            <div class="alert alert-danger" role="alert">
+                              <a class="alert-link">{{ Session::get('dlt_msg') }}</a>
+                            </div>
                         @endif
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">

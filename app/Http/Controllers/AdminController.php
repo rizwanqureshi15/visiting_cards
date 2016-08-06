@@ -11,6 +11,8 @@ use App\Employee;
 use Hash;
 use Form;
 use Validator;
+use App\User;
+use Config;
 
 class AdminController extends Controller
 {
@@ -59,7 +61,7 @@ class AdminController extends Controller
 
         if(AdminController::authenticate_admin())
         {
-                $data['employees'] = Employee::where('is_delete', 0)->where('is_admin', 0)->get();
+                $data['employees'] = Employee::where('is_delete', 0)->where('is_admin', 0)->paginate(Config::get('settings.number_of_rows'));
 
                 return view('admin.employees_list', $data);        
         }
@@ -200,6 +202,20 @@ class AdminController extends Controller
                 Session::flash('edit_msg','Profile is edited successfully..');
                 return redirect('admin/employees_list');
             }
+        }
+        else
+        {
+                return redirect()->back();
+        }
+    }
+
+    public function users_list()
+    {
+         if(AdminController::authenticate_admin())
+        {
+
+            $data['users'] = User::paginate(Config::get('settings.number_of_rows'));
+            return view('admin.users_list', $data);
         }
         else
         {
