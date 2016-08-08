@@ -78,7 +78,7 @@ class UserController extends Controller
 
             $value = User::where('id', $user_id)->update($data);
             Session::flash('flash_message','Successfully Changed');
-            return redirect('/');
+            return redirect('profile');
         
     }
 

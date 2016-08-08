@@ -52,6 +52,21 @@
                             </div>
                         </div>
 
+                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label for="username" class="col-md-4 control-label">Username</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
+                                <div class="results help-block" style="color:red"></div>
+                                <div class="length help-block" style="color:red"></div>
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -80,19 +95,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-4 control-label">Username</label>
-
-                            <div class="col-md-6">
-                                <input id="username" type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
-                                <div class="results help-block" style="color:red"></div>
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -123,12 +126,30 @@ $(document).ready(function () {
                     typingTimer = setTimeout(CheckUsername, doneTypingInterval);
                 });
 
-    $('#username').keydown(function () {
-                    clearTimeout(typingTimer);
-                });
-
     function CheckUsername () 
     {
+        if($("#username").val().length < 5)
+        {
+            $('.length').html('Username must be at least 5 characters.');
+        }
+        else
+        {
+            $('.length').html('');
+        }
+
+
+        $('#myform').submit (function() {
+            if($("#username").val().length < 5)
+            {
+                $('.length').html('Username must be at least 5 characters.');
+                return false;
+            }
+            else
+            {
+                $('.length').html('');
+                return true;
+            }
+        });
             var a=$("#username").val();
             $.ajax({
                 type: "POST",
@@ -138,18 +159,33 @@ $(document).ready(function () {
                 success : function(username){
 
                     if (jQuery.isEmptyObject(username)) {
-                        $('.results').html(' ');
+                        $('.results').html('');
                     }
                     else
                     {
                         $('.results').html('Username is already exist');
                     }
+
+                     $('#myform').submit (function() {
+                            if (jQuery.isEmptyObject(username))
+                            {
+                                $('.results').html('');
+                                return true;
+                            }
+                            else
+                            {
+                                $('.results').html('Username is already exist');
+                                return false;
+                            }
+                    });
+                   
                 }  
             }).fail(function(data){
                 // on an error show us a warning and write errors to console
                 var errors = data.responseJSON;
             });
     }
+
 });
 
 </script>

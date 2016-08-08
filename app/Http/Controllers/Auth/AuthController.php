@@ -57,7 +57,7 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6',
-            'username' => 'required|unique:users',
+            'username' => 'required|unique:users|min:5',
         ]);
     }
 
@@ -98,8 +98,8 @@ class AuthController extends Controller
        {
             return redirect()->back()->withErrors($v->errors());
        }
-       
-       if (Auth::attempt(['email' => $email, 'password' => $password]) OR Auth::attempt(['username' => $email, 'password' => $password]))
+
+       if (Auth::attempt(['email' => $email, 'password' => $password, 'is_delete' => 0]) OR Auth::attempt(['username' => $email, 'password' => $password, 'is_delete' => 0]))
         {   
             Session::flash('flash_message','Successfully Login');
             return redirect('/');
