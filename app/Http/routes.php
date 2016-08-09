@@ -40,7 +40,7 @@ Route::get('admin/employees_list', 'AdminController@employees_list');
 
 Route::post('admin/reset_password', 'AdminController@reset_password');
 
-Route::get('admin/delete_employee/{id}', 'AdminController@delete_employee');
+Route::post('admin/delete_employee', 'AdminController@delete_employee');
 
 Route::get('admin/edit_profile/{id}', 'AdminController@edit_profile');
 Route::post('admin/edit_profile/{id}', 'AdminController@edit_profile_post');
@@ -53,4 +53,6 @@ Route::get('change_password','UserController@show_change_password');
 Route::post('change_password','UserController@change_password');
 
 Route::get('admin/users_list', 'AdminController@users_list');
+
+Route::post('admin/check_employeename','AdminController@check_employeename');
 

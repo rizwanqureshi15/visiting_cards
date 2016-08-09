@@ -63,8 +63,7 @@ class AdminController extends Controller
 
         if(AdminController::authenticate_admin())
         {
-                $data['employees'] = Employee::where('is_delete', 0)->where('is_admin', 0)->paginate(Config::get('settings.number_of_rows'));
-
+                 $data['employees'] = Employee::where('is_delete', 0)->where('is_admin', 0)->paginate(Config::get('settings.number_of_rows'));
                 return view('admin.employees_list', $data);        
         }
         else
@@ -126,7 +125,7 @@ class AdminController extends Controller
         if(AdminController::authenticate_admin())
         {
             $validator = Validator::make($request->all(), [
-                'password' => 'required'
+                'password' => 'required|min:8'
                 
              ]);
         
@@ -149,13 +148,14 @@ class AdminController extends Controller
         }
     }
 
-    public function delete_employee($id)
+    public function delete_employee(Request $request)
     {
+        $id=$request->delete_id;
         if(AdminController::authenticate_admin())
         {
             Employee::where('id',$id)->update(['is_delete' => 1]);
             Session::flash('dlt_msg','Successfully deleted employee..!!');
-            return redirect()->back();
+            return redirect('admin/employees_list');
         }
         else
         {
@@ -223,5 +223,11 @@ class AdminController extends Controller
         {
                 return redirect()->back();
         }
+    }
+
+    public function check_employeename(Request $request)
+    {
+        $employeename=Employee::where('username', $request->username)->first();
+        return response()->json($employeename);
     }
 }
