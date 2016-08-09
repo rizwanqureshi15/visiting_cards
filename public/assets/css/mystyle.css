@@ -1,0 +1,42 @@
+.mytable
+{
+	border-style: solid;
+	border-size:22px;
+	border-color:#b5babf;
+	
+}
+.mytheadtr
+{
+	background-color:#38454f;
+}
+.headtext
+{
+	font-size:15px;
+	color:#fff;
+	font-family:Verdana;
+}
+.textbox-size
+{
+	border:3px dashed black;
+	width:200px;
+	position: absolute;
+	padding-left: 6px;
+    padding-bottom: 5px;
+}
+.popup-toolbar
+{
+	background: #000;
+	color:white;
+	height:90px;
+	width:500px;
+	left:0px;
+	top:0px;
+
+}
+.toolbar-textbox{
+	position: relative;
+	top:53px;
+	left:10px;
+	height: 30px;
+	width: 480px;
+}

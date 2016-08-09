@@ -54,3 +54,5 @@ Route::post('change_password','UserController@change_password');
 
 Route::get('admin/users_list', 'AdminController@users_list');
 
+Route::get('idcard', 'HomeController@get_card');
+
