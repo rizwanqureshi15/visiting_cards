@@ -36,23 +36,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if(!count($employees))
+				@if($employees->count() == 0)
 				<tr>
 					<td>Data Not Found..!</td>
 				</tr>
-				@endif
+				@else
  				@foreach($employees as $employee)
  				<tr>
  					<td> {{ $employee->first_name }} {{ $employee->last_name }}</td>
  					<td> {{ $employee->username }}</td>
  					<td> 
  						<a href="{{ url('admin/edit_profile', $employee->id) }}">Edit</a> | 
- 						<a  href="{{ url('admin/delete_employee', $employee->id) }}">Delete</a> | 
+ 						<a data-toggle="modal" class="delete_password" data-target="#onDelete" data-delete="{{ $employee->id }}" >Delete</a> | 
  						<button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
 						  Reset Password
 						</button>
  				</tr>
  				@endforeach
+ 				@endif
  			</tbody>
  			
 			</table>
@@ -97,6 +98,38 @@
 			    </div>
 			  </div>
 			</div>
+
+
+			<div class="modal fade" id="onDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			    {{ Form::open(array('method' => 'post', 'url' => url('admin/delete_employee'), 'class' =>"form-horizontal")) }}
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Delete Employee</h4>
+			      </div>
+			      <div class="modal-body">
+
+			        <div class="form-group">
+					     <label for="inputPassword3" class="col-sm-6 control-label">Are you sure want to delete ?</label>
+					    <div class="col-sm-6">
+					    	{{ Form::hidden('delete_id', null, ['id' => 'employee_delete_id']) }}
+					       
+					    </div>
+					    
+					  </div>
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			       <!--  <button type="button" class="btn btn-primary" >Generate Password</button> -->
+			        <input type="submit" class="btn btn-primary" value="Delete">
+			        
+			      </div>
+			      {{ Form::close() }}
+			    </div>
+			  </div>
+			</div>
 			
 </div>
 	@endsection
@@ -111,8 +144,15 @@
 				$('#employee_id').val(id);
 
 			});
+
+		$('.delete_password').click(function(){
+				var delete_id = $(this).data('delete');
+				$('#employee_delete_id').val(delete_id);
+
+			});
+
 		$('#random_password').click(function(){
-			var str = Math.floor((Math.random() * 1000000) + 1);
+			var str = Math.floor((Math.random() * 100000000) + 1);
 			$('#new_password').val(str);
 		});
 
