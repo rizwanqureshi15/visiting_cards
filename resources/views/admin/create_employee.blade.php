@@ -4,8 +4,9 @@
 
 @section('content')
 
-<div class="row" style="margin-top:100px;">
-{{ Form::open(array('id' => 'myform','method' => 'post','url' => url('admin/create_employee'), 'class' => "form-horizontal col-md-10")) }}
+<div class="row" style="margin-top:10px;">
+<div class="col-md-12 col-md-offset-1" style="padding-bottom:20px;"><h2>Add New Employee</h2></div>
+{{ Form::open(array('id' => 'myform','method' => 'post','url' => url('admin/employees/create'), 'class' => "form-horizontal col-md-10")) }}
 <!--lcKdznp68eH1IWpi48YSBOConAHZQIEyRQsGkJT1-->
 <input type="hidden" name="_token" value="{{ csrf_token() }}" >
   <div class="form-group">

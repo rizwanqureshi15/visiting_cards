@@ -76,7 +76,7 @@ class AdminController extends Controller
     {
         if(AdminController::authenticate_admin())
         {
-               return view('admin/create_employee');       
+               return view('admin.create_employee');       
         }
         else
         {

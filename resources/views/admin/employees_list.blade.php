@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-3"><h2>Employees</h2></div>
 		<div class="" style="margin-top:30px;">
-			<a href="{{ url('admin/create_employee') }}" class="btn btn-primary pull-right">Add Employee</a>
+			<a href="{{ url('admin/employees/create') }}" class="btn btn-primary pull-right">Add Employee</a>
 		</div>
 		<div class="col-md-12" style="margin-top:20px;">
 			@if(Session::get('reset_msg'))
@@ -46,7 +46,7 @@
  					<td> {{ $employee->first_name }} {{ $employee->last_name }}</td>
  					<td> {{ $employee->username }}</td>
  					<td> 
- 						<a href="{{ url('admin/edit_profile', $employee->id) }}">Edit</a> | 
+ 						<a href="{{ url('admin/employees/edit', $employee->id) }}">Edit</a> | 
  						<a data-toggle="modal" class="delete_password" data-target="#onDelete" data-delete="{{ $employee->id }}" >Delete</a> | 
  						<button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
 						  Reset Password

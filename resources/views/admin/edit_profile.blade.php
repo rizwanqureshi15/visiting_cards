@@ -4,8 +4,9 @@
 
 @section('content')
 
-<div class="row" style="margin-top:100px;">
-{{ Form::model($employee, array('method' => 'post','url' => url('admin/edit_profile', $employee->id), 'class' => "form-horizontal col-md-10")) }}
+<div class="row" style="margin-top:10px;">
+<div class="col-md-12 col-md-offset-1" style="padding-bottom:20px;"><h2>Edit Employee's Profile</h2></div>
+{{ Form::model($employee, array('method' => 'post','url' => url('admin/employees/edit', $employee->id), 'class' => "form-horizontal col-md-10")) }}
 <!--lcKdznp68eH1IWpi48YSBOConAHZQIEyRQsGkJT1-->
 <input type="hidden" name="_token" value="{{ csrf_token() }}" >
   <div class="form-group">
