@@ -60,7 +60,7 @@
 
 
         <form id="form1">
-        <div id="div1" style="height:510px;width:710px">
+        <div id="div1" style="height:510px;width:710px;background-color:#fff;">
             <div width="700" height="500" style="border-style:dashed;height:510px;width:710px">
 
 
@@ -110,9 +110,6 @@
         </div><!--Toolbar end-->
         <div id="company_name" class="ui-widget-content textbox-size" style="position: absolute;top:30px;left:250px;height:25px;">
             <span id="span_company_name">Enter your Name</span>
-        </div>
-
-        <div id="company_name" class="ui-widget-content textbox-size" style="position: absolute;border:none;top:30px;left:250px;height:25px;">Enter your Name</div>
         </div>
         <button id="btnSave" type="submit" class="btn btn-primary" style="float:right">
             Save

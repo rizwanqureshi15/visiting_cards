@@ -96,7 +96,6 @@
     <script src="http://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
-    <script src="{{ url('assets/js/myjs.js') }}"></script>
     @yield('js');
     <!-- JavaScripts -->
     
