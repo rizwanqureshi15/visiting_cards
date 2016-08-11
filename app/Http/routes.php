@@ -58,4 +58,5 @@ Route::get('admin/users_list', 'AdminController@users_list');
 Route::get('idcard', 'HomeController@get_card');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
+Route::post('card_image_save','UserController@save_image');
 

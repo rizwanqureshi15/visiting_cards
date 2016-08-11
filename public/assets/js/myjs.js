@@ -1,9 +1,6 @@
 
 
-	var txt = document.getElementById("company_name");
-	var canvas = document.getElementById("canvas1");
-	var ctx = canvas.getContext("2d");
-	ctx.font = "30px Arial";
+
 		
 		$('#sidebar_company_name').keyup(function(){
 			var txt = $('#sidebar_company_name').val();

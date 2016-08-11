@@ -49,28 +49,87 @@
     	</div>	
 
     	<div class="col-md-8" style="padding-left:90px;padding-right:50px;">
-    		
+    		@if(Session::has('flash_message'))
+                    <div class="alert alert-danger">
+                         <span class="glyphicon glyphicon-close"></span>
+                            <em> {!! session('flash_message') !!}</em>
+                    </div>
+            @endif
     		<!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
     		-->
 
 
+        <form id="form1">
+        <div id="div1" style="height:510px;width:710px">
+            <div width="700" height="500" style="border-style:dashed;height:510px;width:710px">
 
-        <canvas id="canvas1" width="700" height="500" style="border-style:dashed;">
-        </canvas>
+            </div>
+        
         <div id="myToolbar" class="popup-toolbar" style="display:none;position:absolute;">
             <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />
         </div>
         <div id="company_name" class="ui-widget-content textbox-size" style="position: absolute;border:none;top:30px;left:250px;height:25px;">Enter your Name</div>
-
+        </div>
+        <button id="btnSave" type="submit" class="btn btn-primary" style="float:right">
+            Save
+         </button>
     	</div>
-
+    </form>
+    <div id="previewImage">
+        
+    </div>
     </div>
 </div>
 
 @endsection
 
 @section('js')
-	<script src="{{ url('assets/js/jquery-ui.js') }}"></script>
-    <script src="{{ url('assets/js/myjs.js') }}"></script>
+    
+
+    <script>
+
+   $(document).ready(function(){
+
+    
+   var element = $("#div1"); // global variable
+    var getCanvas; // global variable
+ 
+    $("#btnSave").on('click', function () {
+         html2canvas(element, {
+         onrendered: function (canvas) {
+                //$("#previewImage").append(canvas);
+                getCanvas = canvas;
+                var imgageData = getCanvas.toDataURL("image/png");
+                console.log(imgageData);
+
+                $.ajax({
+                type: "POST",
+                url: "card_image_save",
+                dataType: 'json',
+                data: { "_token": "{{ csrf_token() }}","image": imgageData},
+                success : function(image){
+
+                    alert('image save');
+                    } 
+                }).fail(function(data){
+                    // on an error show us a warning and write errors to console
+                    var errors = data.responseJSON;
+                });
+
+
+             }
+         });
+    });
+
+    $("#btn-Convert-Html2Image").on('click', function () {
+    var imgageData = getCanvas.toDataURL("image/png");
+    // Now browser starts downloading it instead of just showing it
+    var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+    $("#btn-Convert-Html2Image").attr("download", "your_pic_name.png").attr("href", newData);
+    });
+
+});
+    
+</script>
 
 @endsection
