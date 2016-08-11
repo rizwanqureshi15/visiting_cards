@@ -137,6 +137,7 @@ class UserController extends Controller
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
+        $name = 'image';
         $data1=file_put_contents('images/cards/'.$name.'.png', $data);
 
     }

@@ -63,11 +63,55 @@
         <div id="div1" style="height:510px;width:710px">
             <div width="700" height="500" style="border-style:dashed;height:510px;width:710px">
 
-            </div>
+
+        <canvas id="canvas1" width="700" height="500" style="border-style:dashed;">
+        </canvas>
+        <!--Toolebasr start-->
+        <div id="myToolbar" class="popup-toolbar row" style="display:none;position:absolute;">
+
+        <!--Font Style Selector-->
+            <div class="toolbar-fontbox col-md-5">
+                <input id="font" type="text" />
+            </div><!--Font Style Selector end-->
         
-        <div id="myToolbar" class="popup-toolbar" style="display:none;position:absolute;">
-            <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />
+        <!--Font Size Selector-->
+            <div class="col-md-2" style="margin-top:10px;margin-left:15px;">
+                <select id="size-font" style="height:30px;color:black;width:74px">
+                    <option value="8">8px</option>
+                    <option value="10">10px</option>
+                    <option value="12">12px</option>
+                    <option value="14">14px</option>
+                    <option value="18">18px</option>
+                    <option value="20">20px</option>
+                    <option value="24">24px</option>
+                    <option value="28">28px</option>
+                    <option value="30">30px</option>
+                    <option value="32">32px</option>
+                </select>
+            </div><!--Font Size Selector end-->
+
+        <!--Toolbar colorpicker-->
+        <div class="col-md-1">
+            <div id="colorSelector" style="margin-top:5px;"><div style="background-color: #0000ff"></div></div>
         </div>
+        <!--Toolbar colorpicker end-->
+            
+        <!--Toolbar Delete Button-->
+        <div class="col-md-2">
+            <img src="{{ url('assets/images/delete.png') }}" style="width:20px;margin-top:14px;" id="toolbardelete">
+        </div>
+        <!--Toolbar Delete Button end-->
+
+        <!--Toolbar Textbox-->
+
+            <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />
+        <!--Toolbar Textbox end-->
+
+        </div><!--Toolbar end-->
+        <div id="company_name" class="ui-widget-content textbox-size" style="position: absolute;top:30px;left:250px;height:25px;">
+            <span id="span_company_name">Enter your Name</span>
+        </div>
+
         <div id="company_name" class="ui-widget-content textbox-size" style="position: absolute;border:none;top:30px;left:250px;height:25px;">Enter your Name</div>
         </div>
         <button id="btnSave" type="submit" class="btn btn-primary" style="float:right">
@@ -78,6 +122,7 @@
     <div id="previewImage">
         
     </div>
+
     </div>
 </div>
 
@@ -132,4 +177,15 @@
     
 </script>
 
+
+	<script src="{{ url('assets/js/jquery-ui.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.fontselect.js') }}"></script>
+    <!--Color Picker -->
+    <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
+    <!--end-->
+    <script src="{{ url('assets/js/myjs.js') }}"></script>
+    
+    
+    
 @endsection
+

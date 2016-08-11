@@ -47,7 +47,7 @@
  					<td> {{ $employee->username }}</td>
  					<td> 
  						<a href="{{ url('admin/employees/edit', $employee->id) }}">Edit</a> | 
- 						<a data-toggle="modal" class="delete_password" data-target="#onDelete" data-delete="{{ $employee->id }}" >Delete</a> | 
+ 						<a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="{{ $employee->id }}" >Delete</a> | 
  						<button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
 						  Reset Password
 						</button>
