@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-             @if(Session::has('flash_message'))
+            @if(Session::has('flash_message'))
                     <div class="alert alert-danger">
                          <span class="glyphicon glyphicon-close"></span>
                             <em> {!! session('flash_message') !!}</em>
                     </div>
-                @endif
+            @endif
             <div class="panel panel-default">
                
                 <div class="panel-heading">Login</div>
