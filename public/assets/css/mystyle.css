@@ -5,6 +5,10 @@
 	border-color:#b5babf;
 	
 }
+.button-selected{
+    background-color: #d8d9db;
+    box-shadow: -1px 2px 3px #595959 inset;
+}
 .mytheadtr
 {
 	background-color:#38454f;

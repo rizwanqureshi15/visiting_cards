@@ -17,5 +17,6 @@ class HomeController extends Controller
     public function get_card()
     {
         return view('show_cards');
+        //return view('crop');
     }
 }

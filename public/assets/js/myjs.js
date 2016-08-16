@@ -4,7 +4,51 @@
 			element_id = $(this).attr('id');
 			
 		});
-		
+		$("#under_line").click(function(){
+			var check = $("#span_" + element_id).css("text-decoration");
+			//alert(check);
+			 if(check == "none")
+			 {
+				$("#span_" + element_id).css("text-decoration", "underline"); 	
+				$("#under_line").addClass("button-selected");
+			 }
+			 else
+			 {
+			 	$("#span_" + element_id).css("text-decoration", "none");
+			 	$("#under_line").removeClass("button-selected");
+			 }
+			
+		});
+		$("#italic").click(function(){
+			var check = $("#span_" + element_id).css("font-style");
+			
+			 if(check == "normal")
+			 {
+				$("#span_" + element_id).css("font-style", "italic");
+				$("#italic").addClass("button-selected"); 	
+			 }
+			 else
+			 {
+			 	$("#span_" + element_id).css("font-style", "normal");
+			 	$("#italic").removeClass("button-selected");
+			 }
+			
+		});
+		$("#bold").click(function(){
+			var check = $("#span_" + element_id).css("font-weight");
+			
+			 if(check == 400)
+			 {
+				$("#span_" + element_id).css("font-weight", 900);
+				$("#bold").addClass("button-selected"); 	
+			 }
+			 else
+			 {
+			 	$("#span_" + element_id).css("font-weight", 400);
+			 	$("#bold").removeClass("button-selected");
+			 }
+			
+		});
 		$("#sidebar_company_name,#sidebar_company_message").keyup(function(){
 			
 			var txt = $(this).val();
@@ -130,6 +174,8 @@
 			$('#'+element_id).remove();
 			$("#myToolbar").hide();			
 		});
+
+		
       });
 
 

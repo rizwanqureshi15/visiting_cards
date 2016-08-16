@@ -81,13 +81,13 @@
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
         <div class="col-md-12" style="padding:0px;">
             <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
-               <div class="col-md-4" style="padding:10px;">
-                    <u class="myFont">U</u>
+               <div class="col-md-4" style="padding:10px;" id="under_line">
+                    <u class="myFont" >U</u>
                </div>
-               <div class="col-md-4" style="padding:10px;border-left: 1px solid #b5babf;border-right: 1px solid #b5babf;">
-                    <b class="myFont">B</b>
+               <div class="col-md-4" id="bold" style="padding:10px;border-left: 1px solid #b5babf;border-right: 1px solid #b5babf;">
+                    <b class="myFont" >B</b>
                </div>
-               <div class="col-md-4" style="padding:10px;">
+               <div class="col-md-4"  id="italic" style="padding:10px;">
                     <i class="myFont">I</i>
                </div>
             </div>
@@ -100,7 +100,7 @@
         
         <!--Font Size Selector-->
             <div >
-                <select id="size-font" class="font-text col-md-3 col-md-offset-1" style="padding:0px">
+                <select id="size-font" class="font-text col-md-3 col-md-offset-1" style="padding-left:7px">
                     <option value="8">8px</option>
                     <option value="10">10px</option>
                     <option value="12">12px</option>
