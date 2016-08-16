@@ -178,7 +178,6 @@ $(document).ready(function(){
                 //$("#previewImage").append(canvas);
                 getCanvas = canvas;
                 var imgageData = getCanvas.toDataURL("image/png");
-                console.log(imgageData);
 
                 $.ajax({
                 type: "POST",

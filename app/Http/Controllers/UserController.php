@@ -12,6 +12,7 @@ use App\User;
 use View;
 use Validator;
 use Illuminate\Support\Facades\Input;
+use File;
 
 
 class UserController extends Controller
@@ -133,12 +134,19 @@ class UserController extends Controller
 
     public function save_image(Request $request)
     {
+        $username=Auth::user()->username;
+
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
-        $name = 'image';
-        $data1=file_put_contents('images/cards/'.$name.'.png', $data);
-
+        $name = str_random(40);
+        $path = public_path() .'\images\\'.$username;   
+        
+        if(!File::exists($path))
+        { 
+            File::makeDirectory($path);
+        } 
+        file_put_contents('images/'. $username .'/'.$name.'.png', $data);
     }
 }
