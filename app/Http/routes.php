@@ -59,4 +59,19 @@ Route::get('idcard', 'HomeController@get_card');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
+Route::post('card_image_upload','UserController@upload_image');
 
+Route::get('admin/categories/list', 'CategoryController@display_category');
+
+Route::get('admin/categories/create', 'CategoryController@create_category');
+Route::post('admin/categories/create', 'CategoryController@create_category_post');
+
+Route::get('admin/categories/edit/{id}', 'CategoryController@edit_category');
+Route::post('admin/categories/edit/{id}', 'CategoryController@edit_category_post');
+
+Route::post('admin/categories/delete', 'CategoryController@delete_category');
+
+Route::get('admin/templates','templateController@template_list');
+
+Route::get('admin/templates/create', 'templateController@create_template');
+Route::post('admin/templates/create', 'templateController@create_template_post');
