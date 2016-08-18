@@ -14,7 +14,16 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}">
+   <!--  <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
+    <link rel="stylesheet" href="{{ url('assets/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
+
+    <!--ColorPicker-->
+    <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
+
+    <!--end-->
+    <link rel="stylesheet" href="{{ url('assets/css/admin.css') }}">
     <style>
         body {
             font-family: 'Lato';

@@ -75,3 +75,8 @@ Route::get('admin/templates','templateController@template_list');
 
 Route::get('admin/templates/create', 'templateController@create_template');
 Route::post('admin/templates/create', 'templateController@create_template_post');
+
+Route::get('admin/templates/edit/{id}', 'templateController@edit_template');
+Route::post('admin/templates/edit/{id}', 'templateController@edit_template_post');
+
+Route::post('admin/templates/delete', 'templateController@delete_template');
