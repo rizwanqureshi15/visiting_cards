@@ -13,6 +13,10 @@ use View;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use File;
+use App\Template;
+use App\UserCard;
+use Response;
+use Config;
 
 
 class UserController extends Controller
@@ -20,14 +24,10 @@ class UserController extends Controller
     //
     public function __construct()
     {
-        if(Auth::guest())
-        {
-            Session::flash('flash_message','Please Login First.');
-            return redirect('login');
-        }
     }
 
-    public function show_profile(Request $request)
+
+    public function edit_profile(Request $request)
     {
         if(Auth::guest())
         {
@@ -35,10 +35,10 @@ class UserController extends Controller
             return redirect('login');
         }
 
-        $user_id=Auth::user()->id;
-        $user=User::where('id',$user_id)->first();
-        return View::make('auth.profile')->with('user',$user);
+        $user = Auth::user();
+        return View::make('auth.profile')->with('user', $user);
     }
+
 
     public function change_profile(Request $request)
     {
@@ -47,8 +47,10 @@ class UserController extends Controller
             Session::flash('flash_message','Please Login First.');
             return redirect('login');
         }
-        $user_id=Auth::user()->id;
-        $v=$validator=Validator::make([
+
+        $user_id = Auth::user()->id;
+
+        $v = $validator=Validator::make([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name
             ],
@@ -56,6 +58,7 @@ class UserController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required'
             ]);
+
         if($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
@@ -83,15 +86,17 @@ class UserController extends Controller
         
     }
 
+
     public function check_username(Request $request)
     {
-        $username=User::where('username', $request->username)->first();
+        $username = User::where('username', $request->username)->first();
         return response()->json($username);
     }
 
+
     public function show_change_password()
     {
-         if(Auth::guest())
+        if(Auth::guest())
         {
             Session::flash('flash_message','Please Login First.');
             return redirect('login');
@@ -107,8 +112,8 @@ class UserController extends Controller
             return redirect('login');
         }
 
-        $user_id=Auth::user()->id;
-        $v=$validator=Validator::make([
+        $user_id = Auth::user()->id;
+        $v = Validator::make([
                 'password' => $request->password,
                 'password_confirmation' => $request->password_confirmation
             ],
@@ -116,11 +121,13 @@ class UserController extends Controller
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required|min:6'
             ]);
+
         if($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
         }
-        $password=bcrypt($request['password']);
+
+        $password = bcrypt($request['password']);
 
         User::where('id',$user_id)
             ->update(array(
@@ -131,6 +138,7 @@ class UserController extends Controller
         return redirect('/');
 
     }
+
 
     public function save_image(Request $request)
     {
@@ -148,5 +156,22 @@ class UserController extends Controller
             File::makeDirectory($path);
         } 
         file_put_contents('images/'. $username .'/'.$name.'.png', $data);
+
+        $user_id = Auth::user()->id;
+
+        UserCard::create(array(
+            'image' => $name.'.png',
+            'user_id' => $user_id
+            ));
+
     }
+
+
+    public function user_image_pagination(Request $request)
+    {
+        $user_id=Auth::user()->id;
+        $user_cards=UserCard::where('user_id',$user_id)->orderBy('created_at','desc')->skip($request->page_no*9)->take(9)->get();
+        return response()->json($user_cards);
+    }
+
 }

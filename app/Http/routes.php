@@ -26,7 +26,7 @@ Route::post('employees/login', 'EmployeeController@login_post');
 Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
 
 
-Route::get('profile','UserController@show_profile');
+Route::get('profile','UserController@edit_profile');
 Route::post('profile','UserController@change_profile');
 
 Route::get('change_password','UserController@show_changepasword_page');
@@ -55,8 +55,12 @@ Route::post('change_password','UserController@change_password');
 Route::get('admin/users_list', 'AdminController@users_list');
 
 
-Route::get('idcard', 'HomeController@get_card');
+Route::get('idcard/{url}', 'Front\TemplatesController@get_template');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
 
+Route::get('gallery','Front\TemplatesController@index');
+Route::post('templates','Front\TemplatesController@ajax_templates');
+
+Route::post('user-images','HomeController@ajax_user_images');
