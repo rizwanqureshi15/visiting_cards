@@ -1,10 +1,9 @@
 <?php
 
 namespace App;
+use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Foundation\Auth\Category as Authenticatable;
-
-class Category extends Authenticatable
+class Category extends Model
 {
     /**
      * The attributes that are mass assignable.

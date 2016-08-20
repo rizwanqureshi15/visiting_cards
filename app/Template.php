@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\Template as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Template extends Authenticatable
+class Template extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -23,4 +23,9 @@ class Template extends Authenticatable
     protected $hidden = [
         
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 }

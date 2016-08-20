@@ -17,7 +17,7 @@ class EmployeesTableSeeder extends Seeder
             'last_name' => 'admin',
             'email' => 'webdesignandsolution15@gmail.com',
             'username' => 'admin',
-            'password' => bcrypt('1s2s2pqr'),
+            'password' => bcrypt('admin'),
             'created_at' => date('Y-m-d H:s:i'),
             'updated_at' => date('Y-m-d H:s:i'), 
             'is_admin' => 1
