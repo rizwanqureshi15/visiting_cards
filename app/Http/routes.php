@@ -71,12 +71,16 @@ Route::post('admin/categories/edit/{id}', 'CategoryController@edit_category_post
 
 Route::post('admin/categories/delete', 'CategoryController@delete_category');
 
-Route::get('admin/templates','templateController@template_list');
+Route::get('admin/templates','TemplateController@template_list');
 
-Route::get('admin/templates/create', 'templateController@create_template');
-Route::post('admin/templates/create', 'templateController@create_template_post');
+Route::get('admin/templates/create', 'TemplateController@create_template');
+Route::post('admin/templates/create', 'TemplateController@create_template_post');
 
-Route::get('admin/templates/edit/{id}', 'templateController@edit_template');
-Route::post('admin/templates/edit/{id}', 'templateController@edit_template_post');
+Route::get('admin/templates/edit/{id}', 'TemplateController@edit_template');
+Route::post('admin/templates/edit/{id}', 'TemplateController@edit_template_post');
 
-Route::post('admin/templates/delete', 'templateController@delete_template');
+Route::post('admin/templates/delete', 'TemplateController@delete_template');
+
+Route::get('admin/templates/{name}', 'CardController@card_display');
+
+Route::post('admin/cards/save', 'CardController@card_save');
