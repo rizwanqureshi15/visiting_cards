@@ -57,11 +57,12 @@
      <label class="col-sm-3 control-label">Background Image</label>
     <div class="col-sm-5" >
       {{ Form::file("background_image") }}
+        @if($errors->first('background_image'))<div class="alert alert-danger">{{ $errors->first('background_image') }}</div>@endif
      
 
     </div>
   </div>
-  <div class="col-md-offset-4 col-md-8" style="padding-bottom:20px;">OR</div>
+ <!--  <div class="col-md-offset-4 col-md-8" style="padding-bottom:20px;">OR</div>
    <div class="form-group">
      <label class="col-sm-3 control-label">Background Color</label>
     <div class="col-sm-4">
@@ -71,7 +72,7 @@
        <div id="colorSelector" class="col-md-5"><div style="background-color: #0000ff"></div></div>
   
   </div>
-
+ -->
    
 
   <div class="form-group">
@@ -88,26 +89,26 @@
 @section('js')
    <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
    <script type="text/javascript">
-     $('#colorSelector').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-          $(colpkr).fadeIn(500);
-          return false;
-        },
-        onHide: function (colpkr) {
-          $(colpkr).fadeOut(500);
-          return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-          $('#colorSelector div').css('backgroundColor', '#' + hex);
-          $('#back-color').val('#'+hex);
-        }
-      });
-     $('#back-color').keyup(function(){
-        var hex =  $('#back-color').val();
-        console.log(hex);
-        $('#colorSelector div').css('backgroundColor', hex);
-     });
+     // $('#colorSelector').ColorPicker({
+     //    color: '#0000ff',
+     //    onShow: function (colpkr) {
+     //      $(colpkr).fadeIn(500);
+     //      return false;
+     //    },
+     //    onHide: function (colpkr) {
+     //      $(colpkr).fadeOut(500);
+     //      return false;
+     //    },
+     //    onChange: function (hsb, hex, rgb) {
+     //      $('#colorSelector div').css('backgroundColor', '#' + hex);
+     //      $('#back-color').val('#'+hex);
+     //    }
+     //  });
+     // $('#back-color').keyup(function(){
+     //    var hex =  $('#back-color').val();
+     //    console.log(hex);
+     //    $('#colorSelector div').css('backgroundColor', hex);
+     // });
      $('#temp_name').keyup(function(){
         var str = $('#temp_name').val();
         str = str.toLowerCase();

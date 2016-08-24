@@ -21,7 +21,9 @@
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
+
     <!--end-->
+    
 
     <style>
         body {
@@ -96,6 +98,11 @@
     <script src="http://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
+    
+    <!--Image cropper-->
+    <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
+    <!--End Image Cropper-->
+    
     @yield('js');
     <!-- JavaScripts -->
     

@@ -17,7 +17,7 @@
    <!--  <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
     <link rel="stylesheet" href="{{ url('assets/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
-
+    <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
@@ -93,6 +93,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
+    <script src="http://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
     
 
     @yield('js');

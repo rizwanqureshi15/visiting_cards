@@ -83,4 +83,6 @@ Route::post('admin/templates/delete', 'TemplateController@delete_template');
 
 Route::get('admin/templates/{name}', 'CardController@card_display');
 
-Route::post('admin/cards/save', 'CardController@card_save');
+Route::post('admin/templates/save_cards', 'CardController@card_save');
+
+Route::post('template_save','CardController@save_image');

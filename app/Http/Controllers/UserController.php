@@ -149,4 +149,16 @@ class UserController extends Controller
         } 
         file_put_contents('images/'. $username .'/'.$name.'.png', $data);
     }
+     public function upload_image(Request $request)
+    {
+      //  dd($request->all());
+        $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $name = 'image';
+        $data1=file_put_contents('templates/temp/'.$name.'.png', $data);
+        echo json_encode(url('templates/temp/'.$name.'.png'));
+    
+    }
 }
