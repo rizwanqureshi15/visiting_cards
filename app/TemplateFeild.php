@@ -12,7 +12,7 @@ class TemplateFeild extends Model
      * @var array
      */
      protected $fillable = [
-        'id', 'name', 'template_id', 'css', 'font_css',
-        
-    ];
+
+        'id', 'name', 'template_id', 'css', 'font_css', 'content', 
+        ];
 }

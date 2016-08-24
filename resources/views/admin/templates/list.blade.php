@@ -20,6 +20,7 @@
 					<th> Type </th>
 					<th> Category </th>
 					<th> Action </th>
+					<th> Feilds </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,8 +36,12 @@
  					<td> {{ $template->category->name }}</td>
  					<td> 
  						<a href="{{ url('admin/templates/edit', $template->id) }}">Edit</a> | 
- 						<a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="{{ $template->id }}" >Delete</a> | 
-						<a href='{{ url("admin/templates/$template->url") }}' class="btn btn-primary">View Feilds</a>
+ 						<a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="{{ $template->id }}" >Delete</a> 
+ 					</td>
+ 					<td>
+ 					<a href='{{ url("admin/templates/$template->url") }}'>View Feilds</a>
+ 					</td>
+
  				</tr>
  				@endforeach
  				@endif

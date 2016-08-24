@@ -1,5 +1,5 @@
 
-<div class="list-group col-md-12" style="margin-top:30px;" id="div1">
+<div class="list-group col-md-12" style="margin-top:30px;">
   <a href="{{ url('admin/employees_list') }}" id="employee_list" class="list-group-item {{ Request::is('admin/employees_list') || Request::segment(2)=='employees' ? 'active' : ''}}">
   	Employees list
   </a>

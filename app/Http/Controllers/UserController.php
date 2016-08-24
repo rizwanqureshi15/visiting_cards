@@ -167,11 +167,11 @@ class UserController extends Controller
     }
 
 
+
     public function user_image_pagination(Request $request)
     {
         $user_id=Auth::user()->id;
         $user_cards=UserCard::where('user_id',$user_id)->orderBy('created_at','desc')->skip($request->page_no*9)->take(9)->get();
         return response()->json($user_cards);
     }
-
 }

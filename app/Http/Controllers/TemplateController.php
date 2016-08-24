@@ -67,20 +67,14 @@ class TemplateController extends Controller
     {
         if(TemplateController::authenticate_admin())
         {
-            if($request->background_image && $request->background_color)
-            { 
-                 Session::flash('err_msg', "You Have to set only one feild Background color or background image");
-            }
-            elseif($request->background_image == "" && $request->background_color == "")
-            {
-                Session::flash('err_msg', "You Have to set one feild Background color or background image");
-               
-            }
+
+
              $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'category_id' => 'required',
                         'type' => 'required',
-                        'url' => 'required|unique:templates'
+                        'url' => 'required|unique:templates',
+                        'background_image' => 'required'
                     ]);
                     
                       
@@ -104,10 +98,51 @@ class TemplateController extends Controller
 
                                 $image = $fileName;
                             }
-                        Template::create(['name' => $request->name, 'background_image' => $image, 'background_color' => $request->background_color,'type' => $request->type, 'category_id' => $request->category_id, 'url'=> $request->url, 'is_delete' => 0]);
+                        Template::create(['name' => $request->name, 'background_image' => $image, 'type' => $request->type, 'category_id' => $request->category_id, 'url'=> $request->url, 'is_delete' => 0]);
                         Session::flash('succ_msg', 'New Template is created Successfully..!');
                         return redirect('admin/templates');
                     } 
+            // if($request->background_image && $request->background_color)
+            // { 
+            //      Session::flash('err_msg', "You Have to set only one feild Background color or background image");
+            // }
+            // elseif($request->background_image == "" && $request->background_color == "")
+            // {
+            //     Session::flash('err_msg', "You Have to set one feild Background color or background image");
+               
+            // }
+            //  $validator = Validator::make($request->all(), [
+            //             'name' => 'required',
+            //             'category_id' => 'required',
+            //             'type' => 'required',
+            //             'url' => 'required|unique:templates'
+            //         ]);
+                    
+                      
+            //         if ($validator->fails()) {
+            //             return redirect()->back()
+            //                         ->withErrors($validator)
+            //                         ->withInput();
+            //         }
+            //         else
+            //         {     
+
+            //             if($request->background_image)
+            //                 {
+                                
+            //                     $file = Input::file('background_image');
+                               
+            //                     $destinationPath = public_path() .'\templates\background-images';
+            //                     $extension = $file->getClientOriginalExtension();
+            //                     $fileName = rand(11111, 99999) . '.' . $extension;
+            //                     $upload_success = $file->move($destinationPath, $fileName); 
+
+            //                     $image = $fileName;
+            //                 }
+            //             Template::create(['name' => $request->name, 'background_image' => $image, 'background_color' => $request->background_color,'type' => $request->type, 'category_id' => $request->category_id, 'url'=> $request->url, 'is_delete' => 0]);
+            //             Session::flash('succ_msg', 'New Template is created Successfully..!');
+            //             return redirect('admin/templates');
+            //         } 
             
             }
              
@@ -137,22 +172,19 @@ class TemplateController extends Controller
 
         if(TemplateController::authenticate_admin())
         {
-            if($request->is_image == "1" && $request->background_color)
-            { 
-                 Session::flash('err_msg', "You Have to set only one feild Background color or background image");
-                 return redirect()->back();
-            }
-            elseif($request->is_image == "0" && $request->background_color == "")
-            {
-                Session::flash('err_msg', "You Have to set one feild Background color or background image");
-                return redirect()->back();
-            }
+
              $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'category_id' => 'required',
                         'type' => 'required',
-                        'url' => 'required|unique:templates,url,'.$id
+                        'url' => 'required|unique:templates,url,'.$id,
+                        //'background_image' => 'required'
                     ]);
+             if($request->is_image=="0" && $request->background_image==NULL)
+             {
+                 Session::flash('err_msg', "background image feild is required");
+                  return redirect()->back();
+             }
                     
                       
                     if ($validator->fails()) {
@@ -166,14 +198,12 @@ class TemplateController extends Controller
 
                         $data = array(
                             'name' => $request->name,                             
-                            'background_color' => $request->background_color,
                             'type' => $request->type, 
                             'category_id' => $request->category_id, 
                         );
 
 
-                        if($request->is_image=="1" && $request->background_color=="")
-                            {    
+                      
                                 if($request->background_image!=NULL)
                                 {
 
@@ -187,18 +217,76 @@ class TemplateController extends Controller
                                 $image = $fileName;
                                 $data['background_image'] = $image;
                                 }
-                            } 
-                            if($request->is_image=="0")
-                            {
-                                $data['background_image'] = NULL;
-                            }
-
+                    
                         Template::where('id',$id)->update($data);
                         Session::flash('succ_msg', 'New Template is updated Successfully..!');
                         return redirect()->back();
                     } 
             
             }
+             
+            // if($request->is_image == "1" && $request->background_color)
+            // { 
+            //      Session::flash('err_msg', "You Have to set only one feild Background color or background image");
+            //      return redirect()->back();
+            // }
+            // elseif($request->is_image == "0" && $request->background_color == "")
+            // {
+            //     Session::flash('err_msg', "You Have to set one feild Background color or background image");
+            //     return redirect()->back();
+            // }
+            //  $validator = Validator::make($request->all(), [
+            //             'name' => 'required',
+            //             'category_id' => 'required',
+            //             'type' => 'required',
+            //             'url' => 'required|unique:templates,url,'.$id
+            //         ]);
+                    
+                      
+            //         if ($validator->fails()) {
+    
+            //             return redirect()->back()
+            //                         ->withErrors($validator)
+            //                         ->withInput();
+            //         }
+            //         else
+            //         {   
+
+            //             $data = array(
+            //                 'name' => $request->name,                             
+            //                 'background_color' => $request->background_color,
+            //                 'type' => $request->type, 
+            //                 'category_id' => $request->category_id, 
+            //             );
+
+
+            //             if($request->is_image=="1" && $request->background_color=="")
+            //                 {    
+            //                     if($request->background_image!=NULL)
+            //                     {
+
+            //                     $file = Input::file('background_image');
+                               
+            //                     $destinationPath = public_path() .'\templates\background-images';
+            //                     $extension = $file->getClientOriginalExtension();
+            //                     $fileName = rand(11111, 99999) . '.' . $extension;
+            //                     $upload_success = $file->move($destinationPath, $fileName); 
+
+            //                     $image = $fileName;
+            //                     $data['background_image'] = $image;
+            //                     }
+            //                 } 
+            //                 if($request->is_image=="0")
+            //                 {
+            //                     $data['background_image'] = NULL;
+            //                 }
+
+            //             Template::where('id',$id)->update($data);
+            //             Session::flash('succ_msg', 'New Template is updated Successfully..!');
+            //             return redirect()->back();
+            //         } 
+            
+            // }
              
         
         else
