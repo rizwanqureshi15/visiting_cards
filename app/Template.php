@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\TemplateFeild;
 
 class Template extends Model
 {
@@ -15,17 +16,13 @@ class Template extends Model
         'id', 'name', 'category_id', 'background_image', 'background_color','url','type','is_delete',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        
-    ];
-
     public function category()
     {
         return $this->belongsTo('App\Category');
+    }
+
+    public function template_feilds()
+    {
+        return $this->hasMany('App\TemplateFeild');
     }
 }

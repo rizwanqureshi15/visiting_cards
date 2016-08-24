@@ -59,7 +59,7 @@
 			
 			if(txt == "")
 			{
-				$(span_element).text("Enter your Name");
+				$(span_element).text("");
 			}	
 			$('#' + str).resizable();
 		});

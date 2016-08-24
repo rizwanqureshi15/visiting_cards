@@ -16,36 +16,14 @@
                     <tr>
                         <th><button class="btn form-control" style="background-color:rgba(181,186,191,0.47)">Add New Text Field</button></th>
                     </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_company_name" name="company_name" placeholder="Enter Company name"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_company_message" name="company_message" placeholder="Company Message"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_full_name" name="full_name" placeholder="Full Name"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_job_title" name="job_title" placeholder="Job Title"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_address1" name="address1" placeholder="Address Line 1"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_address2" name="address2" placeholder="Address Line 2"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_phone" name="phone" placeholder="Phone/Other"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_email" name="email" placeholder="E-mail/Other"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_web" name="web" placeholder="Web/Other"></th>
-                    </tr>
-                    <tr>
-                        <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_your_text" name="your_text" placeholder="Your Text"></th>
-                    </tr>
+
+                    @foreach($template->template_feilds as $card_field)
+
+                        <tr>
+                            <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_{{ str_replace(" ","_",$card_field->name) }}" id="{{ str_replace(" ","_",$card_field->name) }}" placeholder="Enter {{ $card_field->name }}"></th>
+                        </tr>
+
+                    @endforeach
                 </tbody>
             </table>
         </div>  
@@ -64,7 +42,7 @@
             @if($template->background_image)                             
                 
                 <div id="div1" style="height:510px;width:710px;background-color:#fff;">
-                    <div width="700" height="500" style="background-image:url('{{ url('images/'.$card->background_image) }}');height:510px;width:710px">
+                    <div width="700" height="500" style="background-image:url('{{ url('images/'.$template->background_image) }}');height:510px;width:710px">
                         <canvas id="canvas1" width="700" height="500">
                         </canvas>
                         

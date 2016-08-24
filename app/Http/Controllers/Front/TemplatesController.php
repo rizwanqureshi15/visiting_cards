@@ -17,6 +17,7 @@ use App\Template;
 use App\UserCard;
 use Response;
 use Config;
+use App\Category;
 
 
 class TemplatesController extends Controller
@@ -56,19 +57,32 @@ class TemplatesController extends Controller
 
     public function index()
     {
-        $templates = Template::orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
-        return View::make('gallery')->with('cards',$templates);
+        $data['templates'] = Template::orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
+        $data['categories'] = Category::get();
+        
+        return view('gallery',$data);
     }
 
 
     public function ajax_templates(Request $request)
     {
-            $templates = Template::orderBy('created_at','desc')
+        $templates = Template::orderBy('created_at','desc')
                                 ->skip($request->page_no*Config::get('settings.number_of_items'))
-                                ->take(Config::get('settings.number_of_items'))
-                                ->get();
+                                ->take(Config::get('settings.number_of_items'));
 
-            return response()->json($templates);
+        if($request->orientations)
+        {
+            $templates->whereIn('type', $request->orientations);
+        }
+
+        if($request->category)
+        {
+            $templates->whereIn('category_id', $request->category);
+        }
+
+        $data = $templates->get();
+        return response()->json($data);
+
     }
 
 
@@ -79,6 +93,24 @@ class TemplatesController extends Controller
     }
 
 
-    
+    public function filter_ajax(Request $request)
+    {
+        $filtered_templates = Template::orderBy('created_at','desc')
+                                        ->take(Config::get('settings.number_of_items'));
+
+        if($request->orientations)
+        {
+            $filtered_templates->whereIn('type', $request->orientations);
+        }
+
+        if($request->category)
+        {
+            $filtered_templates->whereIn('category_id', $request->category);
+        }
+
+        $data = $filtered_templates->get();
+        return response()->json($data);
+
+    }
 
 }

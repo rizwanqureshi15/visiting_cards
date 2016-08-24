@@ -90,3 +90,5 @@ Route::post('admin/templates/delete', 'TemplateController@delete_template');
 Route::get('admin/templates/{name}', 'CardController@card_display');
 
 Route::post('admin/cards/save', 'CardController@card_save');
+
+Route::post('filter','Front\TemplatesController@filter_ajax');

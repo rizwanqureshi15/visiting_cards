@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\TemplateFeild as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class TemplateFeild extends Authenticatable
+class TemplateFeild extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,13 +13,6 @@ class TemplateFeild extends Authenticatable
      */
      protected $fillable = [
         'id', 'name', 'template_id', 'css', 'font_css',
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
         
     ];
 }
