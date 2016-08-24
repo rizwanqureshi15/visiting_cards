@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <table class="table mytable" border="1" >
+            <table class="table mytable" border="1">
                 <thead>
                     <tr class="mytheadtr">
                         <th class="headtext">Enter Text</th>
@@ -60,22 +60,38 @@
             <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
             -->
 
+        <form id="form1" > 
+            @if($template->background_image)                             
+                
+                <div id="div1" style="height:510px;width:710px;background-color:#fff;">
+                    <div width="700" height="500" style="background-image:url('{{ url('images/'.$card->background_image) }}');height:510px;width:710px">
+                        <canvas id="canvas1" width="700" height="500">
+                        </canvas>
+                        
+                        @foreach($template->template_feilds as $card_field)
+                            <div id="{{ str_replace(" ","_",$card_field->name) }}" class="ui-widget-content textbox-size toolbar-elements" style="{{ $card_field->css }}">
+                                <span id="span_{{ str_replace(" ","_",$card_field->name) }}" style="{{ $card_field->font_css }}">{{ $card_field->name }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @elseif($template->background_color)
+                <div style="height:175px;width:242px;margin-top:20px;widh:100%;">
+                    <div id="div1" style="height:510px;width:710px;background-color:#fff;">
+                        <div width="700" height="500" style="background-color:{{$template->background_color}};height:510px;width:710px">
 
-        <form id="form1">
-        <div id="div1" style="height:510px;width:710px;background-color:#fff;">
-            <div width="700" height="500" style="border-style:dashed;height:510px;width:710px">
 
+                    <canvas id="canvas1" width="700" height="500" >
+                    </canvas>    
 
-        <canvas id="canvas1" width="700" height="500" style="border-style:dashed;">
-        </canvas>
-
-        <div id="company_name" class="ui-widget-content textbox-size toolbar-elements" style="position: absolute;top:30px;left:250px;height:25px;">
-            <span id="span_company_name">Enter your Name</span>
-        </div>
+                        @foreach($template->template_feilds as $card_field) 
+                            <div id="{{ str_replace(" ","_",$card_field->name) }}" class="ui-widget-content textbox-size toolbar-elements" style="{{ $card_field->css }}">
+                                <span id="span_{{ str_replace(" ","_",$card_field->name) }}" style="{{ $card_field->font_css }}">{{ $card_field->name }}</span>
+                            </div>
+                        @endforeach 
+                </div>
+            @endif
         
-        <div id="company_message" class="ui-widget-content textbox-size toolbar-elements" style="position: absolute;top:60px;left:250px;height:25px;">
-            <span id="span_company_message">Company Message</span>
-        </div>
 
         <!--Toolebasr start-->
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
@@ -140,9 +156,10 @@
 
         </div><!--Toolbar end-->
         
-        <button id="btnSave" type="submit" class="btn btn-primary" style="float:right">
+        <button id="btnSave" type="submit" class="btn btn-primary" style="float:right;margin-top:20px;background-color:#38454f">
             Save
-         </button>
+        </button>
+
         </div>
     </form>
     <div id="previewImage">
@@ -181,11 +198,10 @@ $(document).ready(function(){
 
                 $.ajax({
                 type: "POST",
-                url: "card_image_save",
+                url: "{{ url('card_image_save') }}",
                 dataType: 'json',
-                data: { "_token": "{{ csrf_token() }}","image": imgageData},
+                data: {"_token": "{{ csrf_token() }}","image": imgageData},
                 success : function(image){
-
                     alert('image save');
                     } 
                 }).fail(function(data){

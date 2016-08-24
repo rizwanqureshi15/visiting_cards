@@ -24,6 +24,8 @@ class AddIsDeleteToUser extends Migration
      */
     public function down()
     {
-        Schema::dropColumn('is_delete');
+         Schema::table('users', function ($table) {
+            $table->dropColumn('is_delete');
+        });
     }
 }
