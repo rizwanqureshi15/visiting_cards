@@ -8,10 +8,10 @@
             	 <table class="table mytable" border="1" style="margin-top:20px;">
                     <thead>
                         <tr class="mytheadtr">
-                            <th class="headtext">Orientation</th>
+                            <th class="headtext" id="flip">Orientation</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="orientation">
                         <div class="orientation">
                             <tr>
                                 <th><input class="toolbar-elements" rel="horizontal" id="horizontal" type="checkbox" name="orientation" class="chk" value="horizontal"> Horizontal</th>
@@ -23,10 +23,10 @@
                     </tbody>
                     <thead>
                         <tr class="mytheadtr">
-                            <th class="headtext">Category</th>
+                            <th class="headtext" id="flip1">Category</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="category" style="display:none;">
                         <div class="category">
                             @foreach($categories as $category)
                                 <tr>
@@ -42,12 +42,7 @@
 	        	@foreach ($templates as $template)
 	        		<div class="col-md-4">
 	        			<a href="{{ url('idcard/'.$template->url) }}">
-		        			@if($template->background_image)
-		        					<img src="{{ url('images/'.$template->background_image) }}" style="margin-top:20px;width:100%;height:175.16px;"> 
-		        			@elseif($template->background_color)
-		        				<div style="background-color:{{$template->background_color}};margin-top:20px;width:100%;height:175.16px;">    
-		        				</div>
-		        			@endif
+		        			<img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> 
 	        			</a>
 	        		</div>
 	        	@endforeach
@@ -62,6 +57,18 @@
 
 <script>
 
+    $(document).ready(function(){
+
+        $("#flip").click(function(){
+            $("#orientation").slideToggle("slow");
+        });
+
+        $("#flip1").click(function(){
+            $("#category").slideToggle("slow");
+        });
+
+    });
+
     var site_url = "{{url('')}}";
     var page_no=1;
     var last_page=false;
@@ -71,73 +78,6 @@
     var vertical;
 
 $("input[type='checkbox']").on("click",function(){
-
-    /*if($('#horizontal').is(':checked'))
-    {
-        if($.inArray('horizontal', arr) == -1)
-        {
-            console.log('horizontal add');
-            arr.push('horizontal');
-            //console.log('horizontal delete');
-        }
-       
-        //var horizontal="horizontal";
-    }
-
-     if($('#horizontal').is(':checked') == false)
-        {
-            console.log('horizontal delete');
-            arr.splice($.inArray('horizontal', arr),1);
-        }
-        else
-        {
-            arr.push('horizontal');
-        }
-
-    if($('#vertical').is(':checked'))
-    {
-        if($.inArray('vertical', arr) == -1)
-        {
-            console.log('vertical add');
-            arr.push('vertical');
-            //console.log('vertical delete')
-            //arr.remove('vertical');
-        }
-
-        //var vertical="vertical";
-    }
-
-    if($('#vertical').is(':checked') == false)
-        {
-            console.log('vertical delete');
-            arr.splice($.inArray('vertical', arr),1);
-        }
-        else
-        {
-            arr.push('vertical');
-        }
-
-    if(($('#vertical').is(':checked')) && ($('#horizontal').is(':checked')))
-    {
-        console.log('both');
-        arr.length = 0;
-        arr.push('horizontal','vertical');       
-    }*/
-
-    /*$("input[type=checkbox]").change( function() {
-    if($(this).is(":checked")){
-       alert( $(this).val() );
-    }
-  });
-
-    $("input.category[type=checkbox]").change( function() 
-    {
-        if($(this).is(":checked"))
-        {
-           console.log($(this).val());
-           arr.push($(this).val());
-        }
-    });*/
 
     var orientations = [];
     $('input:checkbox[name=orientation]:checked').each(function() {
@@ -160,19 +100,10 @@ $("input[type='checkbox']").on("click",function(){
                 var html = '';
 
                 $.each(orientation, function( i,val ) {
-                html+="<div class='col-md-4'><a href="+site_url+"/idcard/"+val.url +">";
-                    if(val.background_image) 
-                    {
-                        html+="<img src='"+site_url+"/images/"+ val.background_image+"' style='margin-top:20px;width:100%;'>";      
-                                        //html+="<div style='background-image:url('"+site_url+"/images/"+ val.background_image+"');margin-top:20px;width:100%;height:175.17px;'></div>";
-                    } 
-                    else if(val.background_color) 
-                    {
-                        html+="<div style='background-color:"+ val.background_color+";margin-top:20px;width:100%;height:174.17px;'></div>";
-                    }
-
+                    html+="<div class='col-md-4'><a href="+site_url+"/idcard/"+val.url +">";
+                    html+="<img  class='image' src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;width:100%;'>";
                     html+="</a></div>";
-                    });
+                });
 
                 $('#posts').html(html);
 
@@ -218,14 +149,7 @@ $("input[type='checkbox']").on("click",function(){
 
                             $.each(cards, function( i,val ) {
                                 html+="<div class='col-md-4'><a href="+site_url+"/idcard/"+val.url +">";
-                                if(val.background_image) 
-                                {
-                                    html+="<img src='"+site_url+"/images/"+ val.background_image+"' style='margin-top:20px;width:100%;'>";
-                                } 
-                                else if(val.background_color) 
-                                {
-                                     html+="<div style='background-color:"+ val.background_color+";margin-top:20px;width:100%;height:174.17px;'></div>";
-                                }
+                                html+="<img src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;width:100%;'>";
                                 html+="</a></div>";
                              });
 

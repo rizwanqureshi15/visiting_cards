@@ -40,8 +40,10 @@ class TemplateController extends Controller
 	{
 		if(TemplateController::authenticate_admin())
         {
+
                 $data['categories'] = Template::with('category')->get();
         		$data['templates'] = Template::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
+                
                 return view('admin.templates.list', $data);      
         }
         else

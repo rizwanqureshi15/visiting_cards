@@ -17,6 +17,7 @@
      <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
 
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
@@ -101,10 +102,10 @@
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
     
     <!--Image cropper-->
-    <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
+    <!--<script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
     <!--End Image Cropper-->
     
-    @yield('js');
+    @yield('js')
     <!-- JavaScripts -->
     
 </body>

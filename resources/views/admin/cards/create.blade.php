@@ -59,10 +59,10 @@
 
         <form id="form1">
         <div id="div1" style="height:510px;width:710px;background-color:#fff;">
-            <div width="700" height="500" style="border-style:dashed;height:510px;width:710px">
+            <div width="700" height="500" class="myBorder">
 
 
-        <canvas id="canvas1" width="700" height="500" style="border-style:dashed;">
+        <canvas id="canvas1" width="700" height="500">
         </canvas>
         <input type="hidden" id="template_id" value="{{ $templates->id }}"/>
         
@@ -146,10 +146,10 @@
 
         </div><!--Toolbar end-->
          
-        <a id="btnsave" class="btn btn-primary" style="float:right">
+        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:20px;">
             Save
          </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;">
+          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
             Show Border
          </a>
 

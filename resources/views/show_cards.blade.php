@@ -2,33 +2,51 @@
 
 @section('content')
 
-
 <div class="container">
-    <div class="row">
+<div class="row">
         <div class="col-md-3">
-            <table class="table mytable" border="1">
+            <table class="table mytable" border="1" >
                 <thead>
                     <tr class="mytheadtr">
-                        <th class="headtext">Enter Text</th>
+                        <th class="headtext">Add New Feilds</th>
                     </tr>
                 </thead>
-               <tbody>
+               <tbody id="table_body">
+                    
                     <tr>
-                        <th><button class="btn form-control" style="background-color:rgba(181,186,191,0.47)">Add New Text Field</button></th>
+                        <td>
+                        <div class="row">
+                            <div class="col-md-8" style="padding-right:0px">
+                            <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
+                            <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:left">OK</button>
+                            </div> 
+                        </div>
+                        </td>
                     </tr>
+                    @if($template->template_feilds)
+                    @foreach($template->template_feilds as $feild)
+                    <?php
+                         $id = $feild->name;
 
-                    @foreach($template->template_feilds as $card_field)
-
+                        $id = str_replace(" ","_",$feild->name);
+                        $id = strtolower($id);
+                        
+                    ?>
                         <tr>
-                            <th><input class="col-md-12 form-control toolbar-elements" type="text" id="sidebar_{{ str_replace(" ","_",$card_field->name) }}" id="{{ str_replace(" ","_",$card_field->name) }}" placeholder="Enter {{ $card_field->name }}"></th>
+                            <td>
+                                <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">
+                            </td>
                         </tr>
-
                     @endforeach
+                    @endif
+                            
+                       
                 </tbody>
             </table>
         </div>  
 
-        <div class="col-md-8" style="padding-left:90px;padding-right:50px;">
+
+        <div class="col-md-8">
             @if(Session::has('flash_message'))
                     <div class="alert alert-danger">
                          <span class="glyphicon glyphicon-close"></span>
@@ -38,38 +56,32 @@
             <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
             -->
 
-        <form id="form1" > 
-            @if($template->background_image)                             
+
+        <form id="form1">
+        <div  style="height:510px;width:710px;">
+            <div id="div1" class="myBorder" height="505px" width="705px">
+
+                <canvas id="canvas1" width="690" height="490">
+                </canvas>
                 
-                <div id="div1" style="height:510px;width:710px;background-color:#fff;">
-                    <div width="700" height="500" style="background-image:url('{{ url('images/'.$template->background_image) }}');height:510px;width:710px">
-                        <canvas id="canvas1" width="700" height="500">
-                        </canvas>
-                        
-                        @foreach($template->template_feilds as $card_field)
-                            <div id="{{ str_replace(" ","_",$card_field->name) }}" class="ui-widget-content textbox-size toolbar-elements" style="{{ $card_field->css }}">
-                                <span id="span_{{ str_replace(" ","_",$card_field->name) }}" style="{{ $card_field->font_css }}">{{ $card_field->name }}</span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @elseif($template->background_color)
-                <div style="height:175px;width:242px;margin-top:20px;widh:100%;">
-                    <div id="div1" style="height:510px;width:710px;background-color:#fff;">
-                        <div width="700" height="500" style="background-color:{{$template->background_color}};height:510px;width:710px">
-
-
-                    <canvas id="canvas1" width="700" height="500" >
-                    </canvas>    
-
-                        @foreach($template->template_feilds as $card_field) 
-                            <div id="{{ str_replace(" ","_",$card_field->name) }}" class="ui-widget-content textbox-size toolbar-elements" style="{{ $card_field->css }}">
-                                <span id="span_{{ str_replace(" ","_",$card_field->name) }}" style="{{ $card_field->font_css }}">{{ $card_field->name }}</span>
-                            </div>
-                        @endforeach 
-                </div>
-            @endif
+                <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
+                <div id="card_body">
+                    @if($template->template_feilds)
+                        @foreach($template->template_feilds as $field)
+                             <?php
+                                 $id = $feild->name;
+                                $id = str_replace(" ","_",$feild->name);
+                                $id = strtolower($id);
+                             ?>
+                                    <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
+                                         <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
+                                            {{ $feild->content }}
+                                        </span>
+                                    </div>
+                         @endforeach
+                    @endif
+                </div>
 
         <!--Toolebasr start-->
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
@@ -124,7 +136,6 @@
                 <a href="#" style="font-size: 20px;" id="flip">More</a>
             </div>
         </div>
-       
         <!--Toolbar Delete Button end-->
 
         <!--Toolbar Textbox-->
@@ -134,17 +145,39 @@
 
         </div><!--Toolbar end-->
         
-        <button id="btnSave" type="submit" class="btn btn-primary" style="float:right;margin-top:20px;background-color:#38454f">
-            Save
+        <!-- Large modal -->
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="float:right;margin-top:20px;background-color:#38454f;" id="Preview">
+          Preview 
         </button>
 
         </div>
     </form>
-    <div id="previewImage">
-        
-    </div>
+    
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" style="width:745px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Preview</h4>
+              </div>
+              <div class="modal-body">
+                <div id="previewImage" >
+                    
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnSave" type="submit" class="btn btn-primary"  >
+                    Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
 
     </div>
+</div>
 </div>
 
 @endsection
@@ -155,9 +188,11 @@
     <script>
 
 $(document).ready(function(){
+    
     $("#flip").click(function(){
         $("#panel").slideToggle("slow");
     });
+
 });
 
 
@@ -166,11 +201,21 @@ $(document).ready(function(){
     
    var element = $("#div1"); // global variable
     var getCanvas; // global variable
+
+    $("#Preview").on('click', function () {
+            $("#previewImage").html(' ');
+            html2canvas(element, {
+
+                    onrendered: function (canvas) {
+                    getCanvas = canvas;
+                    $("#previewImage").html(canvas);
+                }
+        });
+    });
  
     $("#btnSave").on('click', function () {
          html2canvas(element, {
          onrendered: function (canvas) {
-                //$("#previewImage").append(canvas);
                 getCanvas = canvas;
                 var imgageData = getCanvas.toDataURL("image/png");
 
@@ -180,10 +225,11 @@ $(document).ready(function(){
                 dataType: 'json',
                 data: {"_token": "{{ csrf_token() }}","image": imgageData},
                 success : function(image){
-                    alert('image save');
+
+                    window.location.href = "{{ url('home') }}";
+
                     } 
                 }).fail(function(data){
-                    // on an error show us a warning and write errors to console
                     var errors = data.responseJSON;
                 });
 
@@ -192,12 +238,12 @@ $(document).ready(function(){
          });
     });
 
-    $("#btn-Convert-Html2Image").on('click', function () {
+    /*$("#btn-Convert-Html2Image").on('click', function () {
     var imgageData = getCanvas.toDataURL("image/png");
     // Now browser starts downloading it instead of just showing it
     var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
     $("#btn-Convert-Html2Image").attr("download", "your_pic_name.png").attr("href", newData);
-    });
+    });*/
 
 });
     

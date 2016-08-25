@@ -72,7 +72,7 @@ class UserController extends Controller
         if($request->image)
         {
             $file = Input::file('image');
-            $destinationPath = public_path() .'\images';
+            $destinationPath = public_path().'\images';
             $extension = $file->getClientOriginalExtension();
             $fileName = rand(11111, 99999) . '.' . $extension;
             $upload_success = $file->move($destinationPath, $fileName); 
@@ -159,11 +159,13 @@ class UserController extends Controller
 
         $user_id = Auth::user()->id;
 
-        UserCard::create(array(
+        $save = UserCard::create(array(
             'image' => $name.'.png',
             'user_id' => $user_id
             ));
 
+        Session::flash('flash_message','Card successfully saved.');
+        return response()->json($save);
     }
 
 

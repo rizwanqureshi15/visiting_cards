@@ -17,7 +17,7 @@
                 <div class="col-md-12" id="posts">
                     @foreach($user_cards as $user_card)
                         <div class="col-md-4">
-                            <img src="{{ url('images/'.$username.'/'.$user_card->image) }}" style="width:100%;padding-top:20px;">
+                            <img class="image" src="{{ url('images/'.$username.'/'.$user_card->image) }}">
                         </div>
                     @endforeach
                 </div>
