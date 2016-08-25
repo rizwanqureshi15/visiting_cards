@@ -164,7 +164,7 @@ class UserController extends Controller
             'user_id' => $user_id
             ));
 
-        Session::flash('flash_message','Card successfully saved.');
+        Session::flash('flash_message','Card successfully saved');
         return response()->json($save);
     }
 

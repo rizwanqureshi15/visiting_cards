@@ -128,7 +128,7 @@ class CardController extends Controller
         { 
             File::makeDirectory($path);
         } 
-        file_put_contents('templates/snaps/'. $name .'.png', $data);
+        file_put_contents($path .'/'. $name .'.png', $data);
         return json_encode($name .'.png');
 
     }

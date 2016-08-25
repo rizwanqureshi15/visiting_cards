@@ -11,6 +11,7 @@
                     </div>
              @endif
         </div>
+        
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
@@ -34,7 +35,7 @@
     var username = "{{ $username }}"
     var page_no=1;
     var last_page=false;
-    console.log(username);
+    
     $(document).ready(function() {
         var win = $(window);
         
@@ -50,7 +51,7 @@
                     dataType: 'json',
                     data: {"_token": "{{ csrf_token() }}","page_no":page_no},
                     success: function(user_cards) {
-                        console.log(user_cards.length);
+                        
                         if(user_cards.length == 0){  
                             last_page=true;
                         }
@@ -59,7 +60,7 @@
                         var html = '';
 
                             $.each(user_cards, function( i,val ) 
-                            { console.log(val.image);
+                            {
                                 html+="<div class='col-md-4'><img src='"+site_url+"/images/"+ username+"/"+ val.image +"' style='width:100%;padding-top:20px;'></div>";
                             });
             
