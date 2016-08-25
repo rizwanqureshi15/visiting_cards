@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-md-8" style="padding-right:0px">
                             <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
-                            <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:left">OK</button>
+                            <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:right">OK</button>
                             </div> 
                         </div>
                         </td>
@@ -56,12 +56,10 @@
             <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
             -->
 
-
-        <form id="form1">
-        <div  style="height:510px;width:710px;">
+        <div class="myDiv">
             <div id="div1" class="myBorder" height="505px" width="705px">
 
-                <canvas id="canvas1" width="690" height="490">
+                <canvas id="canvas1">
                 </canvas>
                 
                 <input type="hidden" id="template_id" value="{{ $template->id }}"/>
@@ -146,12 +144,11 @@
         </div><!--Toolbar end-->
         
         <!-- Large modal -->
-        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="float:right;margin-top:20px;background-color:#38454f;" id="Preview">
+        <button class="btn btn-primary btn-lg mybtn" data-toggle="modal" data-target="#myModal" id="Preview">
           Preview 
         </button>
 
         </div>
-    </form>
     
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -185,15 +182,39 @@
 @section('js')
     
 
-    <script>
+<script>
 
-$(document).ready(function(){
+        $("#add-text").click(function(){
+            
+            $("#newFeild").slideToggle("slow");
+            
+        });
+
+        $('#newFeildBtn').click(function(){
+            var feild = $('#newFeildName').val();
+             str = feild;
+             feild = feild.toLowerCase();
+             feild = feild.replace(/\ /g, '_');
+             element_id = feild;
+
+            
+            $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
+            $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+            $('#'+feild).draggable();
+            $('#'+feild).resizable();
+        });
     
-    $("#flip").click(function(){
-        $("#panel").slideToggle("slow");
-    });
+    
 
-});
+   
+    
+    $(document).ready(function(){
+        
+        $("#flip").click(function(){
+            $("#panel").slideToggle("slow");
+        });
+
+    });
 
 
    $(document).ready(function(){
@@ -205,9 +226,7 @@ $(document).ready(function(){
     $("#Preview").on('click', function () {
             $("#previewImage").html(' ');
             html2canvas(element, {
-
                     onrendered: function (canvas) {
-                    getCanvas = canvas;
                     $("#previewImage").html(canvas);
                 }
         });
@@ -256,8 +275,5 @@ $(document).ready(function(){
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/myjs.js') }}"></script>
-    
-    
-    
-@endsection
 
+@endsection
