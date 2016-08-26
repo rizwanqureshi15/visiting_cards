@@ -132,3 +132,30 @@ position: absolute;
     width:100%;  
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
+.myDiv
+{
+     height:510px;
+     width:710px;
+}
+#canvas1
+{
+    height:490px;
+    width:710px;
+}
+.mybtn
+{
+    float:right;
+    margin-top:20px;
+    background-color:#38454f;
+    border-color:#38454f;
+}
+.card-image
+{
+    width:100%;  
+    height:100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.idcard-transperent
+{
+    background:transparent !important;
+}

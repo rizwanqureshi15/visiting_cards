@@ -58,7 +58,10 @@
             -->
 
         <div class="myDiv">
-            <div id="div1" class="myBorder" height="505px" width="705px">
+
+            @foreach($template->template_feilds as $field)
+
+                <div id="div1" class="myBorder" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;">
 
                 <canvas id="canvas1">
                 </canvas>
@@ -67,18 +70,18 @@
         
                 <div id="card_body">
                     @if($template->template_feilds)
-                        @foreach($template->template_feilds as $field)
+                        
                              <?php
                                  $id = $feild->name;
                                 $id = str_replace(" ","_",$feild->name);
                                 $id = strtolower($id);
                              ?>
-                                    <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
+                                    <div id="{{ $id }}" data-name="{{ $feild->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
                                          <span id="span_{{ $id }}" style="{{ $feild->font_css }};">
                                             {{ $feild->content }}
                                         </span>
                                     </div>
-                         @endforeach
+                        
                     @endif
                 </div>
 
@@ -150,7 +153,7 @@
         </button>
 
         </div>
-    
+        @endforeach
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content" style="width:745px;">
@@ -190,6 +193,33 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
+
+        $("#btnSave").on('click', function () {
+         html2canvas(element, {
+         onrendered: function (canvas) {
+                getCanvas = canvas;
+                var imgageData = getCanvas.toDataURL("image/png");
+
+                $.ajax({
+                type: "POST",
+                url: "{{ url('card_image_save') }}",
+                dataType: 'json',
+                data: {"_token": "{{ csrf_token() }}","image": imgageData},
+                success : function(image){
+
+                    window.location.href = "{{ url('home') }}";
+
+                    } 
+                    }).fail(function(data){
+                        var errors = data.responseJSON;
+                    });
+
+
+                 }
+             });
+        });
+
+
     });
     
 </script>

@@ -99,6 +99,7 @@
 		
 		$(document).on('click',".feild-elements", function(event) {
 		     event.stopPropagation();
+		    element_id = $(this).attr('id')	;
 		    var l = $('#' + element_id).css('left');
 		    var t = $('#' + element_id).css('top');
 		    var txt = $('#' +element_id).text();
@@ -242,7 +243,7 @@
                  element_id = feild;
 
                 $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
-                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
                 $('#'+feild).draggable();
                 $('#'+feild).resizable();
 
@@ -264,35 +265,10 @@
             $("#previewImage").html(' ');
             html2canvas(element, {
                     onrendered: function (canvas) {
-                    $('.feild-elements').css('border', '2px dashed black');
+                    
                     $("#previewImage").html(canvas);
                 }
         });
-    });
- 
-    $("#btnSave").on('click', function () {
-         html2canvas(element, {
-         onrendered: function (canvas) {
-                getCanvas = canvas;
-                var imgageData = getCanvas.toDataURL("image/png");
-
-                $.ajax({
-                type: "POST",
-                url: "{{ url('card_image_save') }}",
-                dataType: 'json',
-                data: {"_token": "{{ csrf_token() }}","image": imgageData},
-                success : function(image){
-
-                    window.location.href = "{{ url('home') }}";
-
-                    } 
-                }).fail(function(data){
-                    var errors = data.responseJSON;
-                });
-
-
-             }
-         });
     });
 
 });
