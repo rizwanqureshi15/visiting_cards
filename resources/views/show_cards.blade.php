@@ -19,7 +19,8 @@
                             <div class="col-md-8" style="padding-right:0px">
                             <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
                             <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:right">OK</button>
-                            </div> 
+                            </div>
+                            <div id="error"></div> 
                         </div>
                         </td>
                     </tr>
@@ -73,7 +74,7 @@
                                 $id = strtolower($id);
                              ?>
                                     <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
-                                         <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
+                                         <span id="span_{{ $id }}" style="{{ $feild->font_css }};">
                                             {{ $feild->content }}
                                         </span>
                                     </div>
@@ -92,7 +93,7 @@
                     <b class="myFont" >B</b>
                </div>
                <div class="col-md-4"  id="italic" style="padding:10px;">
-                    <i class="myFont">I</i>
+                    <b class="myFont">I</b>
                </div>
             </div>
         </div>
@@ -184,87 +185,12 @@
 
 <script>
 
-        $("#add-text").click(function(){
-            
-            $("#newFeild").slideToggle("slow");
-            
-        });
-
-        $('#newFeildBtn').click(function(){
-            var feild = $('#newFeildName').val();
-             str = feild;
-             feild = feild.toLowerCase();
-             feild = feild.replace(/\ /g, '_');
-             element_id = feild;
-
-            
-            $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
-            $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
-            $('#'+feild).draggable();
-            $('#'+feild).resizable();
-        });
-    
-    
-
-   
-    
-    $(document).ready(function(){
+   $(document).ready(function(){
         
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
-
     });
-
-
-   $(document).ready(function(){
-
-    
-   var element = $("#div1"); // global variable
-    var getCanvas; // global variable
-
-    $("#Preview").on('click', function () {
-            $("#previewImage").html(' ');
-            html2canvas(element, {
-                    onrendered: function (canvas) {
-                    $("#previewImage").html(canvas);
-                }
-        });
-    });
- 
-    $("#btnSave").on('click', function () {
-         html2canvas(element, {
-         onrendered: function (canvas) {
-                getCanvas = canvas;
-                var imgageData = getCanvas.toDataURL("image/png");
-
-                $.ajax({
-                type: "POST",
-                url: "{{ url('card_image_save') }}",
-                dataType: 'json',
-                data: {"_token": "{{ csrf_token() }}","image": imgageData},
-                success : function(image){
-
-                    window.location.href = "{{ url('home') }}";
-
-                    } 
-                }).fail(function(data){
-                    var errors = data.responseJSON;
-                });
-
-
-             }
-         });
-    });
-
-    /*$("#btn-Convert-Html2Image").on('click', function () {
-    var imgageData = getCanvas.toDataURL("image/png");
-    // Now browser starts downloading it instead of just showing it
-    var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
-    $("#btn-Convert-Html2Image").attr("download", "your_pic_name.png").attr("href", newData);
-    });*/
-
-});
     
 </script>
 

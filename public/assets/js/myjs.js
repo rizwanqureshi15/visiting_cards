@@ -207,26 +207,97 @@
 		});
 
 		$('#toolbardelete').click(function(){
-			var name = $('#'+element_id).data('name');
-			var dlt;
-			$.each(feild_names, function(key,  value){
-				if(value == name)
-				{
-					delete_feilds[delete_feilds.length] = name;
-					dlt=key;
-					for (var i = dlt; i< feild_names.length; i++) {
-					feild_names[i] = feild_names[i+1];
+            
+            $('#'+element_id).remove();
+            $('#sidebar_'+element_id).closest("tr").remove();
+            $("#myToolbar").hide();         
+        });
 
-					}
-					feild_names.pop();
+		$("#add-text").click(function(){
+            
+            $("#newFeild").slideToggle("slow");
+            
+        });
 
-				}
-			});
-			
-			$('#'+element_id).remove();
-			$('#sidebar_'+element_id).closest("tr").remove();
-			$("#myToolbar").hide();			
-		});
+        $('#newFeildBtn').click(function(){
+
+            if (!$('#newFeildName').val()) {
+                if ($("#newFeildName").parent().next(".validation").length == 0) // only add if not added
+                {
+                    //$("#newFeildBtn").parent().after("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Please enter field value</div>");
+                    $("#error").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Please enter field value</div>");
+                }
+                else
+                {
+                    $("#error").html('');
+                }
+            } 
+            else 
+            {
+                $("#error").html(''); // remove it
+                var feild = $('#newFeildName').val();
+                 str = feild;
+                 feild = feild.toLowerCase();
+                 feild = feild.replace(/\ /g, '_');
+                 element_id = feild;
+
+                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
+                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+                $('#'+feild).draggable();
+                $('#'+feild).resizable();
+
+                $('#newFeildName').length = 0;
+        }
+    });
+
+
+	 $(document).ready(function(){
+        
+        
+
+    
+    var element = $("#div1"); // global variable
+    var getCanvas; // global variable
+
+    $("#Preview").on('click', function () {
+        $('.feild-elements').css('border','none'); 
+            $("#previewImage").html(' ');
+            html2canvas(element, {
+                    onrendered: function (canvas) {
+                    $('.feild-elements').css('border', '2px dashed black');
+                    $("#previewImage").html(canvas);
+                }
+        });
+    });
+ 
+    $("#btnSave").on('click', function () {
+         html2canvas(element, {
+         onrendered: function (canvas) {
+                getCanvas = canvas;
+                var imgageData = getCanvas.toDataURL("image/png");
+
+                $.ajax({
+                type: "POST",
+                url: "{{ url('card_image_save') }}",
+                dataType: 'json',
+                data: {"_token": "{{ csrf_token() }}","image": imgageData},
+                success : function(image){
+
+                    window.location.href = "{{ url('home') }}";
+
+                    } 
+                }).fail(function(data){
+                    var errors = data.responseJSON;
+                });
+
+
+             }
+         });
+    });
+
+});
+
+
 });
 
 		// var element_id;
