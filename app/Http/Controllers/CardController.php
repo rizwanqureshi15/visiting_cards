@@ -102,7 +102,7 @@ class CardController extends Controller
             }
             $image = Template::where('id', $request->template_id)->pluck('snap');
             Template::where('id', $request->template_id)->update(["snap" => $request->snap]);
-             unlink(public_path("templates\snaps\\".$image[0]));
+            @unlink(public_path("templates/snaps/".$image[0]));
     
             return json_encode("Successfully Saved..!");
               
@@ -122,7 +122,7 @@ class CardController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $name = str_random(40);
-        $path = public_path() .'\templates\snaps';   
+        $path = public_path() .'/templates/snaps';   
         
         if(!File::exists($path))
         { 

@@ -93,7 +93,7 @@ class TemplateController extends Controller
                                 
                                 $file = Input::file('background_image');
                                
-                                $destinationPath = public_path() .'\templates\background-images';
+                                $destinationPath = public_path() .'/templates/background-images';
                                 $extension = $file->getClientOriginalExtension();
                                 $fileName = rand(11111, 99999) . '.' . $extension;
                                 $upload_success = $file->move($destinationPath, $fileName); 
@@ -211,16 +211,21 @@ class TemplateController extends Controller
 
                                 $file = Input::file('background_image');
                                
-                                $destinationPath = public_path() .'\templates\background-images';
+                                $destinationPath = public_path() .'/templates/background-images';
                                 $extension = $file->getClientOriginalExtension();
                                 $fileName = rand(11111, 99999) . '.' . $extension;
                                 $upload_success = $file->move($destinationPath, $fileName); 
 
                                 $image = $fileName;
                                 $data['background_image'] = $image;
+
+                                $image = Template::where('id', $id)->pluck('background_image');
+                                
+                                @unlink(public_path("templates/background-images/".$image[0]));
                                 }
-                    
+
                         Template::where('id',$id)->update($data);
+                        
                         Session::flash('succ_msg', 'New Template is updated Successfully..!');
                         return redirect()->back();
                     } 

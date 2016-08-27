@@ -72,7 +72,7 @@ class UserController extends Controller
         if($request->image)
         {
             $file = Input::file('image');
-            $destinationPath = public_path().'\images';
+            $destinationPath = public_path().'/images';
             $extension = $file->getClientOriginalExtension();
             $fileName = rand(11111, 99999) . '.' . $extension;
             $upload_success = $file->move($destinationPath, $fileName); 
@@ -149,7 +149,7 @@ class UserController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $name = str_random(40);
-        $path = public_path() .'\images\\'.$username;   
+        $path = public_path() .'/images/'.$username;   
         
         if(!File::exists($path))
         { 

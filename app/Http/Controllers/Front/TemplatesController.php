@@ -37,7 +37,7 @@ class TemplatesController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $name = str_random(40);
-        $path = public_path() .'\images\\'.$username;   
+        $path = public_path() .'/images/'.$username;   
         
         if(!File::exists($path))
         { 
