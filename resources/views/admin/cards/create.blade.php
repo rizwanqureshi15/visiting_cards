@@ -58,7 +58,7 @@
 
 
         <form id="form1">
-        <div id="div1" style="height:510px;width:710px;background-color:#fff;">
+        <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;">
             <div width="700" height="500" class="myBorder">
 
 

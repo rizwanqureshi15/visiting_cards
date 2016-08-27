@@ -59,8 +59,6 @@
 
         <div class="myDiv">
 
-            @foreach($template->template_feilds as $field)
-
                 <div id="div1" class="myBorder" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;">
 
                 <canvas id="canvas1">
@@ -69,19 +67,24 @@
                 <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
                 <div id="card_body">
+
                     @if($template->template_feilds)
-                        
-                             <?php
-                                 $id = $feild->name;
-                                $id = str_replace(" ","_",$feild->name);
+                        @foreach($template->template_feilds as $f)
+                            <?php
+                                
+                                $id = $f->name; 
+                                $id = str_replace(" ","_",$f->name);
                                 $id = strtolower($id);
-                             ?>
-                                    <div id="{{ $id }}" data-name="{{ $feild->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
-                                         <span id="span_{{ $id }}" style="{{ $feild->font_css }};">
-                                            {{ $feild->content }}
-                                        </span>
-                                    </div>
+
+                            ?>
                         
+                            <div id="{{ $id }}" data-name="{{ $f->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $f->css }}">
+                                <span id="span_{{ $id }}" style="{{ $f->font_css }};">
+                                     {{ $f->content }}
+                                </span>
+                            </div>
+                        @endforeach
+
                     @endif
                 </div>
 
@@ -153,7 +156,7 @@
         </button>
 
         </div>
-        @endforeach
+        
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content" style="width:745px;">
