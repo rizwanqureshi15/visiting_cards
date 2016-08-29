@@ -20,6 +20,7 @@
                             <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
                             <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary">OK</button>
                             </div> 
+                            <div id="error"></div>
                         </div>
                         </td>
                     </tr>
@@ -57,8 +58,7 @@
             -->
 
 
-        <form id="form1">
-        <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;">
+        <div id="" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;">
             <div width="700" height="500" class="myBorder">
 
 
@@ -84,6 +84,7 @@
         </div>
 
         <!--Toolebasr start-->
+
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
         <div class="col-md-12" style="padding:0px;">
             <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
@@ -154,7 +155,7 @@
          </a>
 
         </div>
-    </form>
+
 
     </div>
 

@@ -242,21 +242,51 @@
 			
 		});
 
-		$('#newFeildBtn').click(function(){
-			var feild = $('#newFeildName').val();
-			console.log(feild_names.length);
-			 feild_names[feild_names.length] = feild;
-			str = feild;
-			 feild = feild.toLowerCase();
-			 feild = feild.replace(/\ /g, '_');
-			 element_id = feild;
+		// $('#newFeildBtn').click(function(){
+		// 	var feild = $('#newFeildName').val();
+		// 	console.log(feild_names.length);
+		// 	 feild_names[feild_names.length] = feild;
+		// 	str = feild;
+		// 	 feild = feild.toLowerCase();
+		// 	 feild = feild.replace(/\ /g, '_');
+		// 	 element_id = feild;
 
 			
-			$('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
-			$('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
-			$('#'+feild).draggable();
-			$('#'+feild).resizable();
-		});
+		// 	$('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
+		// 	$('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+		// 	$('#'+feild).draggable();
+		// 	$('#'+feild).resizable();
+		// });
+		$('#newFeildBtn').click(function(){
+
+            if (!$('#newFeildName').val()) {
+                if ($("#newFeildName").parent().next(".validation").length == 0) // only add if not added
+                {
+                    //$("#newFeildBtn").parent().after("Please enter field value");
+                    $("#error").html("<div class='validation' style='color:red;bottom:0;margin-left:20px;'>Please Enter Feild value</div>");
+                }
+                else
+                {
+                    $("#error").html('');
+                }
+            } 
+            else 
+            {
+                $("#error").html(''); // remove it
+                var feild = $('#newFeildName').val();
+                 str = feild;
+                 feild = feild.toLowerCase();
+                 feild = feild.replace(/\ /g, '_');
+                 element_id = feild;
+
+                $('#table_body').append("");
+                $('#card_body').append(" "+str+"");
+                $('#'+feild).draggable();
+                $('#'+feild).resizable();
+
+                $('#newFeildName').length = 0;
+        }
+    });
 		$('#btnsave').click(function(){
 			var i=0;
 			feilds=[];
