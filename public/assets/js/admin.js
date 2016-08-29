@@ -1,14 +1,29 @@
 		var element_id
 		var delete_feilds=[];	
 		 var element = $("#div1"); // global variable
+		 var feild_color;
     var getCanvas; 	
 
+    	var hexDigits = new Array
+        ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+		//Function to convert hex format to a rgb color
+		function rgb2hex(rgb) {
+		 rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		 return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+		}
+
+		function hex(x) {
+		  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+		 }
 
 		$('.feild-elements').click(function(){
 			element_id = $(this).attr('id');
 			//console.log(element_id);
 			
 		});
+
+  
 		$("#under_line").click(function(){
 			var check = $("#span_" + element_id).css("text-decoration");
 			//alert(check);
@@ -99,6 +114,7 @@
 			
 		});
 		
+		
 		$(document).on('click',".feild-elements", function(event) {
 		     event.stopPropagation();
 		    var l = $('#' + element_id).css('left');
@@ -118,7 +134,17 @@
 		    {
 		    	t = parseInt(t)-110;
 		    }
-		    
+		  
+			var selectedfont = $('#span_' + element_id).css('font-family');		 
+			$('#font-text').css('font-family', selectedfont);
+			$('#font-text').text(selectedfont);
+			 var selectedfontsize = $('#span_' + element_id).css('font-size');	
+			 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
+			 var hex = $('#span_' + element_id).css('color');	
+			 $('#colorSelector div').css('backgroundColor', '#' + hex);
+			 feild_color = rgb2hex(hex);
+			
+			$('#size-font').val(s).prop('selected', true);
 
 		    t += "px";
 
@@ -185,6 +211,8 @@
         	$('#myToolbar').css('top', tool_height);
 
         });
+       
+
         //end
         //color picker
        
@@ -193,7 +221,8 @@
 		});
 
         $('#colorSelector').ColorPicker({
-			color: '#0000ff',
+
+			color : '#0000ff',
 			onShow: function (colpkr) {
 				$(colpkr).fadeIn(500);
 				return false;
@@ -207,6 +236,7 @@
 				$('#colorSelector div').css('backgroundColor', '#' + hex);
 				$('#span_'+element_id).css('color', '#' + hex)
 			}
+
 		});
 
 		$('#toolbardelete').click(function(){

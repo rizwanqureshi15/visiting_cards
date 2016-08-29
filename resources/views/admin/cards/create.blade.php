@@ -151,7 +151,7 @@
             Save
          </a>
           <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
-            Show Border
+            Show Borders
          </a>
 
         </div>
