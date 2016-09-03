@@ -18,11 +18,12 @@ use App\TemplateFeild;
 use App\Category;
 use Illuminate\Support\Facades\Input;
 use File;
+use App\TemplateImage;
 
 class CardController extends Controller
 {
-	protected $guard = 'employee';
-	public function authenticate_admin()
+    protected $guard = 'employee';
+    public function authenticate_admin()
     {
        
         if((Auth::guard('employee')->user()->is_admin) == 1)
@@ -43,16 +44,26 @@ class CardController extends Controller
     {
         if(CardController::authenticate_admin())
         {
+
                 $data['templates'] = Template::where('is_delete', 0)->where('url', $name)->first();
                 $data['feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->get();
+                $data['images'] = TemplateImage::where('template_id',$data['templates']->id)->get();
+
                 
                 $names = array();
                 foreach($data['feilds'] as $feild)
                 {
                   array_push($names, $feild->name);
                 }
-                
+                $template_images = array();
+
+                foreach($data['images'] as $image)
+                {
+                  array_push($template_images, $image->id);
+                }
+
                 $data['names']= json_encode($names);
+                $data['template_images'] = $template_images;
 
                 return view('admin.cards.create', $data); 
 
@@ -69,7 +80,7 @@ class CardController extends Controller
     {
         if(CardController::authenticate_admin())
         {
-
+           
             $feild_names = TemplateFeild::where('template_id', $request->template_id)->pluck('name','id');
            
             foreach ($request->feilds as $feild) {
@@ -94,6 +105,22 @@ class CardController extends Controller
                 }
                
             }
+            if($request->images!=null)
+            {
+                foreach ($request->images as $image) {
+
+                    TemplateImage::where('id',$image['id'])->update(['css' => $image['css'], 'div_css' => $image['div_css']]);
+                }
+            }
+            if($request->deleted_images!=null)
+            {
+
+                foreach ($request->deleted_images as $value) {
+                    $image_name = TemplateImage::where('id',$value)->first();
+                    unlink(public_path("templates\\images\\".$image_name->src));
+                    TemplateImage::where('id',$value)->delete();
+                }
+            }
             if($request->deleted_feilds!=null)
             {
                 foreach ($request->deleted_feilds as $value) {
@@ -115,23 +142,45 @@ class CardController extends Controller
     }
      public function save_image(Request $request)
     {
-      
 
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
-        $img = str_replace('data:image/png;base64,', '', $img);
-        $img = str_replace(' ', '+', $img);
-        $data = base64_decode($img);
-        $name = str_random(40);
-        $path = public_path() .'/templates/snaps';   
-        
-        if(!File::exists($path))
-        { 
-            File::makeDirectory($path);
-        } 
-        file_put_contents($path .'/'. $name .'.png', $data);
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+            $name = str_random(40);
+            $path = public_path() .'/templates/snaps';   
+
+            if(!File::exists($path))
+            { 
+                File::makeDirectory($path);
+            } 
+            file_put_contents($path .'/'. $name .'.png', $data);  
+      
         return json_encode($name .'.png');
 
     }
-	
+        public function upload_image(Request $request)
+        {
+          
+
+            $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+            $name = str_random(40);
+            $path = public_path() .'/templates/images';   
+            
+            if(!File::exists($path))
+            { 
+                File::makeDirectory($path);
+            } 
+            file_put_contents($path .'/'. $name .'.png', $data);
+            
+           $image_id = TemplateImage::insertGetId(['src' => $name.'.png','css'=> $request->css ,'div_css' => $request->div_css, 'template_id' => $request->template_id]);
+            
+            return json_encode(['name' => $name .'.png','id' => $image_id]);
+
+        }
+    
    
 }
