@@ -92,7 +92,7 @@
         <!--Toolebasr start-->
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
         <div class="col-md-12" style="padding:0px;">
-            <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
+            <div id="panel_1" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
                     <u class="myFont" >U</u>
                </div>
@@ -139,7 +139,7 @@
                 <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:5px;" id="toolbardelete">
             </div>
             <div class="col-md-4" style="height:51px;padding:0px;width:33.33%;padding-left: 14px;border-bottom: 1px solid #b5babf;padding-top:10px;">
-                <a href="#" style="font-size: 20px;" id="flip">More</a>
+                <a href="#" style="font-size: 20px;" id="flip_1">More</a>
             </div>
         </div>
         <!--Toolbar Delete Button end-->
@@ -152,7 +152,7 @@
         </div><!--Toolbar end-->
         
         <!-- Large modal -->
-        <button class="btn btn-primary btn-lg mybtn" data-toggle="modal" data-target="#myModal" id="Preview">
+        <button class="btn btn-primary btn-lg mybtn" data-toggle="modal" data-target="#myModal" id="Previewuser">
             Preview 
         </button>   
         <button class="btn btn-primary btn-lg" id="btn-template-formate" style="margin-top:20px;">  
@@ -169,13 +169,13 @@
                 <h4 class="modal-title" id="myModalLabel">Preview</h4>
               </div>
               <div class="modal-body">
-                <div id="previewImage" >
+                <div id="previewuserImage" >
                     
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="btnSave" type="submit" class="btn btn-primary"  >
+                <button id="save_user_card" type="submit" class="btn btn-primary"  >
                     Save
                 </button>
               </div>
@@ -202,8 +202,8 @@
 
    $(document).ready(function(){
 
-        $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
+        $("#flip_1").click(function(){
+            $("#panel_1").slideToggle("slow");
         });
 
 
@@ -223,7 +223,7 @@
 
         });
 
-        $("#btnSave").on('click', function () {
+        $("#save_user_card").on('click', function () {
             var i=0;
             feilds=[];
 

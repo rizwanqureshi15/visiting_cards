@@ -208,7 +208,24 @@
 		});
 
 		$('#toolbardelete').click(function(){
-            
+            	
+            var name = $('#'+element_id).data('name');
+			var dlt;
+			$.each(field_names, function(key,  value){
+				if(value == name)
+				{
+					delete_feilds[delete_feilds.length] = name;
+					dlt=key;
+					for (var i = dlt; i< field_names.length; i++) {
+					field_names[i] = field_names[i+1];
+
+					}
+					field_names.pop();
+
+				}
+			});
+
+            field_names.pop($('#sidebar_'+element_id).val());
             $('#'+element_id).remove();
             $('#sidebar_'+element_id).closest("tr").remove();
             $("#myToolbar").hide();         
@@ -238,11 +255,14 @@
                 $("#error").html(''); // remove it
                 var feild = $('#newFeildName').val();
                  str = feild;
+
+                 field_names.push(str);
+
                  feild = feild.toLowerCase();
                  feild = feild.replace(/\ /g, '_');
                  element_id = feild;
 
-                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
+                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
                 $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
                 $('#'+feild).draggable();
                 $('#'+feild).resizable();
@@ -267,6 +287,17 @@
                     onrendered: function (canvas) {
                     
                     $("#previewImage").html(canvas);
+                }
+        });
+    });
+
+    $("#Previewuser").on('click', function () {
+        $('.feild-elements').css('border','none'); 
+            $("#previewuserImage").html(' ');
+            html2canvas(element, {
+                    onrendered: function (canvas) {
+                    
+                    $("#previewuserImage").html(canvas);
                 }
         });
     });

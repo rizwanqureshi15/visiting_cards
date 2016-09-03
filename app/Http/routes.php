@@ -94,3 +94,13 @@ Route::post('filter','Front\TemplatesController@filter_ajax');
 Route::post('admin/templates/save_cards', 'CardController@card_save');
 
 Route::post('template_save','CardController@save_image');
+
+Route::post('download-template-formate','Front\TemplatesController@file_formate_download');
+
+Route::get('download_file','Front\TemplatesController@download_file');
+
+Route::post('user_template_save','Front\TemplatesController@save_user_template');
+
+Route::get('mytemplates','Front\TemplatesController@show_user_gallery');
+
+Route::get('mytemplates/{url}','Front\TemplatesController@show_user_template');

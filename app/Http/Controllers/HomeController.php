@@ -9,6 +9,8 @@ use App\TemplateFeild;
 use View;
 use App\UserCard;
 use Auth;
+use App\UserTemplate;
+use Config;
 
 class HomeController extends Controller
 {
@@ -20,20 +22,17 @@ class HomeController extends Controller
    
     public function index()
     {
-        $user = Auth::user();
-        $data['username'] = $user->username;
-        $data['user_cards'] = UserCard::where('user_id',$user->id)->orderBy('created_at','desc')->take(9)->get(); 
-        return view('home',$data);
+        return view('home');
     }
 
 
     public function ajax_user_images(Request $request)
     {
         $user_id = Auth::user()->id;
-        $user_cards = UserCard::where('user_id',$user_id)
+        $user_cards = UserTemplate::where('user_id',$user_id)
                             ->orderBy('created_at','desc')
-                            ->skip($request->page_no*9)
-                            ->take(9)
+                            ->skip($request->page_no * Config::get('settings.number_of_items'))
+                            ->take(Config::get('settings.number_of_items'))
                             ->get();
 
         return response()->json($user_cards);
