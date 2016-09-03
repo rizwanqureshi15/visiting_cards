@@ -59,6 +59,8 @@ Route::get('idcard/{url}', 'Front\TemplatesController@get_template');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
+Route::post('card_image_upload','UserController@upload_image');
+
 
 Route::get('gallery','Front\TemplatesController@index');
 Route::post('templates','Front\TemplatesController@ajax_templates');
@@ -92,5 +94,3 @@ Route::post('filter','Front\TemplatesController@filter_ajax');
 Route::post('admin/templates/save_cards', 'CardController@card_save');
 
 Route::post('template_save','CardController@save_image');
-
-Route::post('upload_template_image','CardController@upload_image');

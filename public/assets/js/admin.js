@@ -1,10 +1,8 @@
-		var element_id;
-		var image_id;
-		var delete_feilds=[];
-		var delete_images=[];	
-		var element = $("#div1"); // global variable
-		var feild_color;
-    	var getCanvas; 	
+		var element_id
+		var delete_feilds=[];	
+		 var element = $("#div1"); // global variable
+		 var feild_color;
+    var getCanvas; 	
 
     	var hexDigits = new Array
         ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
@@ -25,7 +23,6 @@
 			
 		});
 
-		
   
 		$("#under_line").click(function(){
 			var check = $("#span_" + element_id).css("text-decoration");
@@ -115,8 +112,6 @@
 			$('.textbox-size').draggable();
 			$('.textbox-size').resizable();
 			
-			$('.template_image_div').resizable();
-			$('.template_image_div').draggable();
 		});
 		
 		
@@ -277,12 +272,27 @@
 			
 		});
 
+		// $('#newFeildBtn').click(function(){
+		// 	var feild = $('#newFeildName').val();
+		// 	console.log(feild_names.length);
+		// 	 feild_names[feild_names.length] = feild;
+		// 	str = feild;
+		// 	 feild = feild.toLowerCase();
+		// 	 feild = feild.replace(/\ /g, '_');
+		// 	 element_id = feild;
+
+			
+		// 	$('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
+		// 	$('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+		// 	$('#'+feild).draggable();
+		// 	$('#'+feild).resizable();
+		// });
 		$('#newFeildBtn').click(function(){
 
             if (!$('#newFeildName').val()) {
                 if ($("#newFeildName").parent().next(".validation").length == 0) // only add if not added
                 {
-                    
+                    //$("#newFeildBtn").parent().after("Please enter field value");
                     $("#error").html("<div class='validation' style='color:red;bottom:0;margin-left:20px;'>Please Enter Feild value</div>");
                 }
                 else
@@ -294,23 +304,24 @@
             {
                 $("#error").html(''); // remove it
                 var feild = $('#newFeildName').val();
-				 feild_names[feild_names.length] = feild;
-				 str = feild;
-				 feild = feild.toLowerCase();
-				 feild = feild.replace(/\ /g, '_');
-				 element_id = feild;
+                 str = feild;
+                 feild = feild.toLowerCase();
+                 feild = feild.replace(/\ /g, '_');
+                 element_id = feild;
 
-				
-				$('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"'></td></tr>");
-				$('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
-				$('#'+feild).draggable();
-				$('#'+feild).resizable();
+                $('#table_body').append("");
+                $('#card_body').append(" "+str+"");
+                $('#'+feild).draggable();
+                $('#'+feild).resizable();
+
                 $('#newFeildName').length = 0;
         }
     });
 		$('#btnsave').click(function(){
 			var i=0;
-			feilds=[];	
+			feilds=[];
+
+			var template_id = $("#template_id").val();
 
 			$.each(feild_names, function(key,  value){
 
@@ -321,17 +332,6 @@
 				var content = $('#span_'+id).text();
 				var values = { name: value, css: css, font_css: font_css, content: content};
 				feilds[i] = values;
-				//console.log(feilds);
-				i++; 
-			});
-			var images_temp=[];
-			i=0;
-			$.each(upload_images, function(key, value){
-
-				var css = $('#image_'+value).attr('style');
-				var div_css = $('#div_image_'+value).attr('style');
-				var values = { css: css, id: value , div_css: div_css};
-				images_temp[i] = values;
 				//console.log(feilds);
 				i++; 
 			});
@@ -353,7 +353,7 @@
 					        url: site_url+"/admin/templates/save_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "template_id": template_id, "snap": image },
 					        dataType: 'json',
 					        success: function(msg) {
 					        	alert(msg);
@@ -377,150 +377,20 @@
       });
 
 		$(document).on('click','#btnborder', function(){
-			console.log($(this).text());
-			if($(this).text().trim() == "Show Borders")
+			if($(this).text() == "Show Borders")
 			{
 				 $('.feild-elements').css('border', '2px dashed black');
-				 $('.template_image_div').css('border', '2px dashed black');
 				 $(this).text("Hide Borders");
 			}else{
 				$('.feild-elements').css('border', 'none');	
-				$('.template_image_div').css('border', 'none');	
 				 $(this).text("Show Borders");
 
 			}
 		});
 
 
-      
+
 	});
-		$(function() {
-        $('.image-editor').cropit({
-          exportZoom: 1.25,
-          imageBackground: true,
-          imageBackgroundBorderWidth: 20,
-          smallImage: 'allow',
-          height: 250,
-          width: 200,
-          maxZoom: 2,
-        });
-
-        $('.rotate-cw').click(function() {
-          $('.image-editor').cropit('rotateCW');
-        });
-        $('.rotate-ccw').click(function() {
-          $('.image-editor').cropit('rotateCCW');
-        });
-
-        $('.export').click(function() {
-          var imageData = $('.image-editor').cropit('export');
-          $.ajax({
-            url: site_url+"\\upload_template_image",
-            type: "post",
-            async: true,
-            data: { "_token": token,"image": imageData,"css": "height:100%;width:100%;", "div_css": "position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none","template_id": template_id },
-            dataType: 'json',
-            success: function(data) {
-            	$('#card_body').append("<div id='div_image_"+data.id+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='template_image' id='image_"+data.id+"'></div>");
-               	$('#div_image_'+data.id).resizable();
-               	$('#div_image_'+data.id).draggable();
-               	upload_images[upload_images.length] = data.id; 
-               	console.log(upload_images);
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-               console.log(textStatus, errorThrown);
-            }
-        });
-
-               
-        });
-        
-        $(document).on('click','.template_image',function(){
-        	image_id = $(this).attr('id');
-
-        	var l = $('#div_' + image_id).css('left');
-		    var t = $('#div_' + image_id).css('top');
-
-		    t = t.substring(0,t.length - 2);
-		    l = l.substring(0,l.length - 2);
-		    l = parseInt(l) + 15;
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#div_' + image_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 5;
-		    	
-		    }
-		    else
-		    {
-		    	t = parseInt(t)-60;
-		    }
-		  
-			t += "px";
-			l += "px";
-		    $('#imageToolbar').css('left',l);
-		    $('#imageToolbar').css('top',t);
-        	$('#imageToolbar').show();
-        });
-
-        $(document).on('click','.squere_shape', function(){
-
-        	$('.round_shape').css('background-color',"white");
-			$('.squere_shape').css('background-color',"red");
-			$('#'+image_id).css('border-radius','0px');
-			$('#'+image_id).css('border-radius','0px');
-			
-
-		});
-        
-
-        $(document).on('click','.round_shape', function(){
-
-        	$('.round_shape').css('background-color',"red");
-			$('.squere_shape').css('background-color',"white");
-			$('#'+image_id).css('border-radius','100px');
-			$('#'+image_id).css('border-radius','100px');
-			
-
-		});
-
-		$(document).on('click','#image_border', function(){
-			if($(this).text().trim() == "Show Border")
-			{
-				 $('#'+image_id).css('display', 'block');
-				 $('#'+image_id).css('border', '1px solid black');
-
-				 $(this).text("Hide Border");
-			}else{
-				$('#'+image_id).css('border', 'none');	
-				 $(this).text("Show Border");
-
-			}
-		});
-
-		$(document).on('click','#imagetoolbardelete', function(){
-			var id = $('#'+image_id).data('id');
-			$('#'+image_id).remove();
-			$('#div_'+image_id).remove();
-			var dlt;
-			$.each(upload_images, function(key,  value){
-				if(value == id)
-				{
-					delete_images[delete_images.length] = id;
-					dlt=key;
-					console.log(key);
-					for (var i = dlt; i< upload_images.length; i++) {
-					upload_images[i] = upload_images[i+1];
-
-					}
-					upload_images.pop();
-
-				}
-			});
-			console.log(upload_images);
-			$("#imageToolbar").hide();				
-		});
-      });
 
 
 
