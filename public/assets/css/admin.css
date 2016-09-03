@@ -133,3 +133,86 @@ position: absolute;
 .newfeildcss{
     display:none;
 }
+.template_image{
+
+}
+.template_image_div{
+    
+}
+.squere_shape{
+    position: absolute;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    top:10px;
+    background-color: transparent;
+}
+.round_shape{
+    background-color: transparent;
+    position: absolute;
+    top:10px;
+    left:40px;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 50PX;
+}
+.popup-imagetoolbar{
+
+    position: absolute;
+    display: none;
+    box-shadow: 2px 2px 8px -2px #888;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    background-color: #fff;
+    font-size: 11px;
+    -ms-touch-action: none;
+    touch-action: none;
+    
+    height:50px;
+    width:190px;
+    left:0px;
+    top:0px;
+    padding:0px;
+}
+.imagetoolbar_section{
+    height:50px;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    padding:10px;
+}
+
+
+//crop
+  .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 5px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 350px;
+        height: 350px;
+        margin-left:110px;
+      }
+
+      .cropit-preview-image-container {
+        cursor: move;
+      }
+
+      .cropit-preview-background {
+        opacity: .2;
+        cursor: auto;
+      }
+
+      .image-size-label {
+        margin-top: 10px;
+      }
+      .export {
+        /* Use relative position to prevent from being covered by image background */
+        position: relative;
+        z-index: 10;
+        display: block;
+      }
