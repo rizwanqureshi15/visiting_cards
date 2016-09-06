@@ -1,4 +1,5 @@
-		var element_id
+		var element_id;
+		var image_id;
 		var delete_feilds=[];	
 		var delete_images=[];	
 		 var element = $("#div1"); // global variable
@@ -340,106 +341,11 @@
 
 });
 
- $(document).on('click','.squere_shape', function(){
 
-        	$('.round_shape').css('background-color',"white");
-			$('.squere_shape').css('background-color',"red");
-			$('#'+image_id).css('border-radius','0px');
-			$('#'+image_id).css('border-radius','0px');
-			
+	$(document).on('click','.template_image',function(){
+   			image_id = $(this).attr("id");     	
+     });
 
-		});
-        
-
-        $(document).on('click','.round_shape', function(){
-
-        	$('.round_shape').css('background-color',"red");
-			$('.squere_shape').css('background-color',"white");
-			$('#'+image_id).css('border-radius','100px');
-			$('#'+image_id).css('border-radius','100px');
-			
-
-		});
-
-		$(document).on('click','#image_border', function(){
-			if($(this).text().trim() == "Show Border")
-			{
-				 $('#'+image_id).css('display', 'block');
-				 $('#'+image_id).css('border', '1px solid black');
-
-				 $(this).text("Hide Border");
-			}else{
-				$('#'+image_id).css('border', 'none');	
-				 $(this).text("Show Border");
-
-			}
-		});
-
-		$(document).on('click','#imagetoolbardelete', function(){
-			var id = $('#'+image_id).data('id');
-			$('#'+image_id).remove();
-			$('#div_'+image_id).remove();
-			var dlt;
-			console.log(upload_images);
-			$.each(upload_images, function(key,  value){
-				if(value == id)
-				{
-					delete_images[delete_images.length] = id;
-					dlt=key;
-					
-					for (var i = dlt; i< upload_images.length; i++) {
-					upload_images[i] = upload_images[i+1];
-
-					}
-					upload_images.pop();
-
-				}
-			});
-		
-			$("#imageToolbar").hide();				
-		});
-
-		 $(document).on('click','.template_image',function(){
-        	image_id = $(this).attr('id');
-
-        	var l = $('#div_' + image_id).css('left');
-		    var t = $('#div_' + image_id).css('top');
-
-		    t = t.substring(0,t.length - 2);
-		    l = l.substring(0,l.length - 2);
-		    l = parseInt(l) + 15;
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#div_' + image_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 5;
-		    	
-		    }
-		    else
-		    {
-		    	t = parseInt(t)-60;
-		    }
-		  
-			t += "px";
-			l += "px";
-		    $('#imageToolbar').css('left',l);
-		    $('#imageToolbar').css('top',t);
-        	$('#imageToolbar').show();
-        });
-
-		 $(document).on('click','#btnborder', function(){
-			console.log($(this).text());
-			if($(this).text().trim() == "Show Borders")
-			{
-				 $('.feild-elements').css('border', '2px dashed black');
-				 $('.template_image_div').css('border', '2px dashed black');
-				 $(this).text("Hide Borders");
-			}else{
-				$('.feild-elements').css('border', 'none');	
-				$('.template_image_div').css('border', 'none');	
-				 $(this).text("Show Borders");
-
-			}
-		});
 
 });
  $(document).ready(function(){
@@ -465,35 +371,65 @@
 
         });
 
-        $("#save_as_template").on('click', function () {
-            var i=0;
-            feilds=[];
+         $(function() {
+        $('.image-editor').cropit({
+          exportZoom: 1.25,
+          imageBackground: true,
+          imageBackgroundBorderWidth: 20,
+          smallImage: 'allow',
+          height: 250,
+          width: 200,
+          maxZoom: 2,
+        });
 
-            var template_id = $("#template_id").val();
+        $('.rotate-cw').click(function() {
+          $('.image-editor').cropit('rotateCW');
+        });
+        $('.rotate-ccw').click(function() {
+          $('.image-editor').cropit('rotateCCW');
+        });
 
-            $.each(field_names, function(key,  value){
+        $('.export').click(function() {
+          var imageData = $('.image-editor').cropit('export');
+          $('#'+image_id).attr('src', imageData);
+          $('#myModal').modal('hide');
+         
+         });
 
-                var id1  = value.toLowerCase();
-                var id = id1.replace(/\ /g, '_');
-                var css = $('#'+id).attr('style');
-                var font_css = $('#span_'+id).attr('style');
-                var content = $('#span_'+id).text();
-                var values = { name: value, css: css, font_css: font_css, content: content};
-                feilds[i] = values;
-                i++; 
-            });
+    });
 
-            var images_temp=[];
-			i=0;
-			$.each(upload_images, function(key, value){
+         $(document).ready(function(){
+        
+        
 
-				var css = $('#image_'+value).attr('style');
-				var div_css = $('#div_image_'+value).attr('style');
-				var values = { css: css, id: value , div_css: div_css};
-				images_temp[i] = values;
-				//console.log(feilds);
-				i++; 
-			});
+    
+    var element = $("#div1"); // global variable
+    var getCanvas; // global variable
+
+    $("#Preview").on('click', function () {
+        $('.feild-elements').css('border','none'); 
+            $("#previewImage").html(' ');
+            html2canvas(element, {
+                    onrendered: function (canvas) {
+                    
+                    $("#previewImage").html(canvas);
+                }
+        });
+    });
+
+    $("#Previewuser").on('click', function () {
+        $('.feild-elements').css('border','none'); 
+            $("#previewuserImage").html(' ');
+            html2canvas(element, {
+                    onrendered: function (canvas) {
+                    
+                    $("#previewuserImage").html(canvas);
+                }
+        });
+    });
+
+});
+    $("#btnSave").on('click', function () {
          html2canvas(element, {
          onrendered: function (canvas) {
                 getCanvas = canvas;
@@ -501,27 +437,11 @@
 
                 $.ajax({
                 type: "POST",
-                url: site_url+'/card_image_save',
+                url: site_url+'/save_single_card',
                 dataType: 'json',
                 data: {"_token": token ,"image": imgageData},
                 success : function(image){
-
-                    $.ajax({
-                            url: site_url+'/user_template_save',
-                            type: "post",
-                            data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
-                            dataType: 'json',
-                            success: function(msg) {
-                                window.location.href = site_url+"/mytemplates";
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                               console.log(textStatus, errorThrown);
-                            }
-                            
-                        });
-
-                    
-
+                	alert('Your card is Successfuly Saved..!!');
                     } 
                     }).fail(function(data){
                         var errors = data.responseJSON;
@@ -531,6 +451,5 @@
                  }
              });
         });
-
 
     });

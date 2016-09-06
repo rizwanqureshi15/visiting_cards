@@ -25,4 +25,9 @@ class Template extends Model
     {
         return $this->hasMany('App\TemplateFeild');
     }
+
+    public function template_images()
+    {
+        return $this->hasMany('App\TemplateImage');
+    }
 }

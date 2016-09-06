@@ -65,7 +65,7 @@ class CardController extends Controller
                 $data['names']= json_encode($names);
                 $data['template_images'] = $template_images;
 
-                return view('admin.cards.create', $data); 
+                return view('admin.cards.create', $data);
 
         }
         else
@@ -117,7 +117,7 @@ class CardController extends Controller
 
                 foreach ($request->deleted_images as $value) {
                     $image_name = TemplateImage::where('id',$value)->first();
-                    unlink(public_path("templates\\images\\".$image_name->src));
+                    @unlink(public_path("templates\\images\\".$image_name->src));
                     TemplateImage::where('id',$value)->delete();
                 }
             }

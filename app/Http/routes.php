@@ -104,3 +104,5 @@ Route::get('mytemplates','Front\TemplatesController@show_user_gallery');
 Route::get('mytemplates/{url}','Front\TemplatesController@show_user_template');
 Route::post('upload_template_image','CardController@upload_image');
 
+Route::post('save_single_card','Front\TemplatesController@save_card');
+

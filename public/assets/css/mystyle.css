@@ -82,8 +82,7 @@ position: absolute;
 	margin-top:8px;
 	color:black;
 	width:74px;
-	
-	font-size: 17px;
+	font-size: 13px;
 	float: left;
     background-color: white;
     border-radius: 20px;
@@ -160,4 +159,56 @@ position: absolute;
 .idcard-transperent
 {
     background:transparent !important;
+}
+//Image css
+.template_image{
+
+}
+.template_image_div{
+    
+}
+.squere_shape{
+    position: absolute;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    top:10px;
+    background-color: transparent;
+}
+.round_shape{
+    background-color: transparent;
+    position: absolute;
+    top:10px;
+    left:40px;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 50PX;
+}
+.popup-imagetoolbar{
+
+    position: absolute;
+    display: none;
+    box-shadow: 2px 2px 8px -2px #888;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    background-color: #fff;
+    font-size: 11px;
+    -ms-touch-action: none;
+    touch-action: none;
+    
+    height:50px;
+    width:190px;
+    left:0px;
+    top:0px;
+    padding:0px;
+}
+.imagetoolbar_section{
+    height:50px;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    padding:10px;
 }

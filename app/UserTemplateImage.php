@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\TemplateImage as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class UserTemplateImage extends Authenticatable
+class UserTemplateImage extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class UserTemplateImage extends Authenticatable
      * @var array
      */
      protected $fillable = [
-        'id', 'template_id','user_id','src', 'css', 'shape',
+        'id', 'template_id','user_id','src', 'css','div_css', 'shape',
     ];
 
     /**

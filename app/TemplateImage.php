@@ -13,7 +13,7 @@ class TemplateImage extends model
      * @var array
      */
      protected $fillable = [
-        'id', 'template_id', 'src', 'css', 'shape',
+        'id', 'template_id', 'src', 'css','div_css', 'shape',
     ];
    
 }

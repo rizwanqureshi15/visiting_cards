@@ -72,6 +72,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li><a href="{{ url('mytemplates') }}">My Templates</a></li>
                         <li><a href="{{ url('/gallery') }}">Gallery</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -100,9 +101,10 @@
     <script src="{{ url('assets/js/html2canvas.js') }}"></script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
+
     
     <!--Image cropper-->
-    <!--<script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
     <!--End Image Cropper-->
     
     @yield('js')
