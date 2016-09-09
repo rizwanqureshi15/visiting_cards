@@ -156,10 +156,10 @@ class UserController extends Controller
             File::makeDirectory($path);
         } 
         file_put_contents('images/'. $username .'/'.$name.'.png', $data);
-
+       
         $user_id = Auth::user()->id;
-        Session::flash('flash_message','Card successfully saved');
-        return response()->json($save);
+
+        return response()->json($name.'.png');
     }
 
 

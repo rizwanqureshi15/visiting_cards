@@ -99,10 +99,16 @@ Route::get('download_file','Front\TemplatesController@download_file');
 
 Route::post('user_template_save','Front\TemplatesController@save_user_template');
 
-Route::get('mytemplates','Front\TemplatesController@show_user_gallery');
+Route::get('mytemplates',['middleware' => 'auth','uses' => 'Front\TemplatesController@show_user_gallery']);
 
-Route::get('mytemplates/{url}','Front\TemplatesController@show_user_template');
+Route::get('mytemplates/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@show_user_template']);
 Route::post('upload_template_image','CardController@upload_image');
 
 Route::post('save_single_card','Front\TemplatesController@save_card');
 
+Route::get('editmytemplates/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
+Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
+
+Route::get('create-card/{url}', 'Front\TemplatesController@create_single_card');
+
+Route::get('deletemytemplates/{url}', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);

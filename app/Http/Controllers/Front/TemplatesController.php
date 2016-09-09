@@ -113,7 +113,7 @@ class TemplatesController extends Controller
 
         $data['field_names']= json_encode($field_names);
 
-        return view('show_cards',$data);
+        return view('user.templates.create',$data);
     }
 
 
@@ -166,26 +166,30 @@ class TemplatesController extends Controller
                 'url' => $url,
                 'type' => $template->type,
                 'user_id' => $user_id,
-                'snap'=> $request->snap["image"],
+                'snap'=> $request->snap,
                 'created_at' => date('Y-m-d H:s:i'),
                 'updated_at' => date('Y-m-d H:s:i')
         );
 
         $user_template_id = userTemplate::insertGetId($user_fields);
-
-        foreach ($request->feilds as $feild) 
-        { 
-            $feild["template_id"] = $user_template_id; 
-            UserTemplateFeild::create($feild);    
+        if($request->feilds)
+        {
+            foreach ($request->feilds as $feild) 
+            { 
+                $feild["template_id"] = $user_template_id; 
+                UserTemplateFeild::create($feild);    
+            }
         }
 
        
-       
-        foreach ($request->images as $image) {
-            $image_data = TemplateImage::where('id', $image['id'])->first();   
-            UserTemplateImage::create(['template_id' => $user_template_id, 'src' => $image_data->src, 'css' => $image_data->css, 'div_css' => $image_data->div_css, 'shape' => $image_data->shape]);
-             
-       }
+       if($request->images)
+       {
+            foreach ($request->images as $image) {
+                $image_data = TemplateImage::where('id', $image['id'])->first();   
+                UserTemplateImage::create(['template_id' => $user_template_id, 'src' => $image_data->src, 'css' => $image['css'], 'div_css' => $image['div_css'], 'shape' => $image_data->shape]);
+                 
+           }
+        }
             
      
        return json_encode("Template is Saved..!");
@@ -280,7 +284,7 @@ class TemplatesController extends Controller
         $user = Auth::user();
         $data['username'] = $user->username;
         $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
-        return view('user_template_images',$data);
+        return view('user.templates.list',$data);
     }
 
 
@@ -302,10 +306,116 @@ class TemplatesController extends Controller
         }
         $data['field_names']= json_encode($field_names);
         $data['template_images']=json_encode($template_images);
-        return view('user_cards',$data);
+        return view('user.templates.create',$data);
     }
 
+    public function edit_user_template($url)
+    {
+
+        $data['template'] = UserTemplate::where('url',$url)->first(); 
+        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->get();
+        $data['images'] = UserTemplateImage::where('template_id', $data['template']->id)->get();
+        
+
+        $field_names = array();
+        foreach($data['feilds'] as $names)
+        {
+            array_push($field_names, $names->name);
+        }
+        if($data['images']!=null)
+        {
+            $template_images = array();
+             foreach($data['images'] as $names)
+            {
+                array_push($template_images, $names->id);
+            }
+            $data['template_images']=$template_images;
+        }
+        $data['field_names']= json_encode($field_names);
+        
+        return view('user.templates.edit',$data);
+    }
+      public function edit_user_template_post(Request $request)
+    { 
+
+        $template =  Template::where('id',$request->template_id)->first();
+         
+         $user_id=Auth::user()->id;
+       
+            
+        $user_fields=array(
+            
+                'snap'=> $request->snap,
+        );
+
+        userTemplate::where('id', $request->template_id)->update($user_fields);
+
+        foreach ($request->feilds as $feild) 
+        { 
+            $exists = UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($feild['name']))->first();
+            if($exists)
+            {
+                UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($feild['name']))->update(['css' => $feild['css'], 'font_css' => $feild['font_css']]);
+            }
+            else
+            {
+                $feild['template_id'] = $request->template_id;
+                UserTemplateFeild::create($feild);
+            } 
+        }
+
+       
+       
+        foreach ($request->images as $image) {
+
+            UserTemplateImage::where('id', $image['id'])->update(['css' => $image['css'], 'div_css' => $image['div_css']]);
+             
+       }
+            
+     
+       return json_encode("Template is Edited..!");
+
+
+
+    }
+
+    public function delete_user_template($url)
+    {
+        $user_template = UserTemplate::where('url', $url)->where('user_id', Auth::user()->id)->first();
+        UserTemplateImage::where('template_id', $user_template->id)->delete();
+        UserTemplateFeild::where('template_id', $user_template->id)->delete();
+        UserTemplate::where('id', $user_template->id)->delete();
+        return Redirect()->back();
+    }
+
+    public function create_single_card($url)
+    {
+
+        $data['template'] = UserTemplate::where('url',$url)->first(); 
+        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->get();
+        $data['images'] = UserTemplateImage::where('template_id', $data['template']->id)->get();
+        
+
+        $field_names = array();
+        foreach($data['feilds'] as $names)
+        {
+            array_push($field_names, $names->name);
+        }
+        if($data['images']!=null)
+        {
+            $template_images = array();
+             foreach($data['images'] as $names)
+            {
+                array_push($template_images, $names->id);
+            }
+            $data['template_images']=$template_images;
+        }
+        $data['field_names']= json_encode($field_names);
+        
+        return view('user.cards.single_Card_create',$data);
+    }
      public function save_card(Request $request)
+    
     {
         $username=Auth::user()->username;
 

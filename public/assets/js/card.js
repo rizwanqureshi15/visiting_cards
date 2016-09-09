@@ -87,7 +87,8 @@
 			
 			if(txt == "")
 			{
-				$(span_element).text();
+				 txt = str.replace(/\_/g, ' ');
+				$(span_element).text(txt);
 			}	
 			$('#' + str).resizable();
 		});
@@ -277,9 +278,13 @@
         $('#newFeildBtn').click(function(){
 
             if (!$('#newFeildName').val()) {
+               
+
                 if ($("#newFeildName").parent().next(".validation").length == 0) // only add if not added
                 {
                     //$("#newFeildBtn").parent().after("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Please enter field value</div>");
+                    
+
                     $("#error").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Please enter field value</div>");
                 }
                 else
@@ -289,22 +294,44 @@
             } 
             else 
             {
-                $("#error").html(''); // remove it
-                var feild = $('#newFeildName').val();
-                 str = feild;
+            	new_txt = $('#newFeildName').val();
+            	new_txt = new_txt.toLowerCase();
+            	new_txt = new_txt.trim();
+            	var error =false;
+            	$.each(field_names, function(key,  value){
+            		value = value.toLowerCase();
+            		value = value.trim();
+            		if(new_txt == value)
+	            	{
+	            		error = true;
+	            	}
+	            	
+	            });
+	            if(error == true)
+	            {
+	            	error=false;
+	            	$("#error").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Feild Name shoud be unique.. </div>");
+	            }
+	            else
+	            {
+	            	
+	                $("#error").html(''); // remove it
+	                var feild = $('#newFeildName').val();
+	                 str = feild;
 
-                 field_names.push(str);
+	                 field_names.push(str);
 
-                 feild = feild.toLowerCase();
-                 feild = feild.replace(/\ /g, '_');
-                 element_id = feild;
+	                 feild = feild.toLowerCase();
+	                 feild = feild.replace(/\ /g, '_');
+	                 element_id = feild;
 
-                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
-                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
-                $('#'+feild).draggable();
-                $('#'+feild).resizable();
+	                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+	                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+	                $('#'+feild).draggable();
+	                $('#'+feild).resizable();
 
-                $('#newFeildName').length = 0;
+	                $('#newFeildName').length = 0;
+	            }
         }
     });
 
@@ -442,6 +469,7 @@
                 data: {"_token": token ,"image": imgageData},
                 success : function(image){
                 	alert('Your card is Successfuly Saved..!!');
+                	$('#preview_image').modal('hide');
                     } 
                     }).fail(function(data){
                         var errors = data.responseJSON;

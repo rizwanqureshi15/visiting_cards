@@ -138,11 +138,7 @@ position: absolute;
      border: 1px dashed #b5babf;
      background-size:100%;
 }
-#canvas1
-{
-    height:490px;
-    width:710px;
-}
+
 .mybtn
 {
     float:right;

@@ -1,41 +1,10 @@
-@extends('master')
+@extends('layouts.app')
 
 @section('content')
-<style>
-    .cropit-preview {
-        background-color: #f8f8f8;
-        background-size: cover;
-        border: 5px solid #ccc;
-        border-radius: 3px;
-        margin-top: 7px;
-        width: 350px;
-        height: 350px;
-        margin-left:110px;
-      }
 
-      .cropit-preview-image-container {
-        cursor: move;
-      }
-
-      .cropit-preview-background {
-        opacity: .2;
-        cursor: auto;
-      }
-
-      .image-size-label {
-        margin-top: 10px;
-      }
-      .export {
-        /* Use relative position to prevent from being covered by image background */
-        position: relative;
-        z-index: 10;
-        display: block;
-      }
-
-</style>
-
-    <div class="row">
-    @if($templates->type == "horizontal")
+<div class="container">
+<div class="row">
+    @if($template->type == "horizontal")
         <div class="col-md-3">
     @else
         <div class="col-md-3 col-md-offset-2">
@@ -47,95 +16,76 @@
                     </tr>
                 </thead>
                <tbody id="table_body">
-                    
+                
                     <tr>
                         <td>
                         <div class="row">
                             <div class="col-md-8" style="padding-right:0px">
                             <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
-                            <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary">OK</button>
-                            </div> 
-                            <div id="error"></div>
+                            <div class="col-md-4"><a role="button" id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:right">OK</a>
+                            </div>
+                            <div id="error"></div> 
                         </div>
                         </td>
                     </tr>
-                    @if($feilds)
-                    @foreach($feilds as $feild)
-                    <?php
-                         $id = $feild->name;
-
-                        $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
                        
-                    ?>
-                        <tr>
-                            <td>
-                                <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">
-                            </td>
-                        </tr>
-                    @endforeach
-                    @endif
-                            
-                       
-                </tbody>
+                </tbody>  
+            
             </table>
         </div>  
 
-
-        
-            <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
-            -->
-
-            @if($templates->type == 'horizontal')
+            @if($template->type == 'horizontal')
                 <div class="col-md-9">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <div width="680px" height="419px" class="myBorder">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
-                <div width="400" height="648" class="myBorder">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
-            
-     <!--    <input type="hidden" id="template_id" value="{{ $templates->id }}"/> -->
+                
+                <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
-        <div id="card_body">
-            @if($feilds)
-                @foreach($feilds as $feild)
-                     <?php
-                         $id = $feild->name;
-                        $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
-                     ?>
-                            <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
-                                 <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
-                                    {{ $feild->content }}
+                <div id="card_body">
+
+                    @if($template->template_feilds)
+                        @foreach($template->template_feilds as $f)
+                            <?php
+                                
+                                $id = $f->name; 
+                                $id = str_replace(" ","_",$f->name);
+                                $id = strtolower($id);
+
+                            ?>
+                        
+                            <div id="{{ $id }}" data-name="{{ $f->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $f->css }}">
+                                <span id="span_{{ $id }}" style="{{ $f->font_css }};">
+                                     {{ $f->content }}
                                 </span>
                             </div>
-                 @endforeach
-            @endif
+                        @endforeach
 
-            @if($images)
-                @foreach($images as $image)
-                    <?php
-                        $id = $image->id;
-                        $src = $image->src;
-                        $css = $image->css;
-                        $div_css = $image->div_css;
-                    ?>
-                        <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
-                            <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
-                        </div>
-                @endforeach
-            @endif
-        </div>
+                    @endif
+
+                     @if($template->template_images)
+                        @foreach($template->template_images as $image)
+                            <?php
+                                $id = $image->id;
+                                $src = $image->src;
+                                $css = $image->css;
+                                $div_css = $image->div_css;
+                            ?>
+                                <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
+                                    <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+                                </div>
+                        @endforeach
+                    @endif
+                </div>
 
         <!--Toolebasr start-->
-
-        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
+        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;height:54px;">
         <div class="col-md-12" style="padding:0px;">
             <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
@@ -145,11 +95,11 @@
                     <b class="myFont" >B</b>
                </div>
                <div class="col-md-4"  id="italic" style="padding:10px;">
-                    <i class="myFont">I</i>
+                    <b class="myFont">I</b>
                </div>
             </div>
         </div>
-        <!--Font Style Selector-->
+        <!--Font Style S0elector-->
         <div class="col-md-7" style="border-right: 1px solid #b5babf;padding-right:0px;border-bottom: 1px solid #b5babf;padding-bottom: 6px;">
             <div class="toolbar-fontbox col-md-9" style="padding:0px">
                 <input id="font" type="text" />
@@ -187,16 +137,15 @@
                 <a href="#" style="font-size: 20px;" id="flip">More</a>
             </div>
         </div>
-       
         <!--Toolbar Delete Button end-->
 
         <!--Toolbar Textbox-->
 
-        <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />
+       <!--  <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" /> -->
         <!--Toolbar Textbox end-->
 
         </div><!--Toolbar end-->
-         
+
          <!--Image Toolbar Start-->
         <div id="imageToolbar" class="popup-imagetoolbar row col-md-12" style="display:none">
             <!--Image Shape-->
@@ -217,20 +166,19 @@
             <!--Image Delete End-->
         </div>
         <!--Image Toolbar End-->
+        
+        <!-- Large modal -->
+        
 
+        </div>
 
-       
-
-
-
-        <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+           <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Upload Your Image</h4>
+                    <h4 class="modal-title" id="myModalLabel2">Upload Your Image</h4>
                   </div>
                   <div class="modal-body">
                     <div class="image-editor">
@@ -244,67 +192,52 @@
                         </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
-
+                    <button type="button" id="upload2" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
                   </div>
                 </div>
               </div>
             </div>
+            @if($template->type == "horizontal")
+          <div style="margin-right:168px">
+          @else
+          <div style="margin-right:150px;">
+          @endif
+            <button class="btn btn-primary btn-lg mybtn" id="save_as_template">
+                Save as Template
+            </button>   
+            <a id="btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+                Show Borders
+             </a>
+          </div>
         </div>
-    </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:20px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
-    </div>
-    </div>
- 
-
-    </div>
-
+         
+</div>
 
 @endsection
 
 @section('js')
- 
-    <script>
-
-    $(document).ready(function(){
-        $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
-        });
-    });
-
     
+
+<script>
+
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-    var feild_names = {!! json_encode($names) !!};
+    var field_names = {!! json_encode($field_names) !!}; 
     var upload_images = {!! json_encode($template_images) !!};
-    feild_names = feild_names.replace(/\[/g, '');
-    feild_names = feild_names.replace(/\]/g, '');
-    feild_names = feild_names.replace(/\"/g, '');
-    feild_names = feild_names.split(',');
-    var template_id = {{ $templates->id }};
+
+    field_names = field_names.replace(/\[/g, '');
+    field_names = field_names.replace(/\]/g, '');
+    field_names = field_names.replace(/\"/g, '');
+    field_names = field_names.split(',');
     
 </script>
-
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
     <script src="{{ url('assets/js/jquery.fontselect.js') }}"></script>
     <!--Color Picker -->
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
-    <script src="{{ url('assets/js/admin.js') }}"></script>
+    <script src="{{ url('assets/js/myjs.js') }}"></script>
 
 @endsection

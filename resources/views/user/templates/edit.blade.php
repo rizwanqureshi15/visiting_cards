@@ -4,7 +4,11 @@
 
 <div class="container">
 <div class="row">
-        <div class="col-md-3">
+     @if($template->type == "horizontal")
+        <div class="col-md-3 col-md-offset-1">
+    @else
+        <div class="col-md-3 col-md-offset-2">
+    @endif
             <table class="table mytable" border="1" >
                 <thead>
                     <tr class="mytheadtr">
@@ -31,24 +35,24 @@
         </div>  
 
 
-        <div class="col-md-8">
-          
-            <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
-            -->
-
-        
-
-                <div id="div1" class="myBorder canvas-div" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');">
-
-                <canvas id="canvas1">
+        @if($template->type == 'horizontal')
+                <div class="col-md-7">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
+                <canvas id="canvas1" width="680" height="419">
                 </canvas>
+            @else
+                <div class="col-md-6">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
+                <canvas id="canvas1" width="400" height="648">
+                </canvas>
+             @endif
                 
                 <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
                 <div id="card_body">
 
-                    @if($template->template_feilds)
-                        @foreach($template->template_feilds as $f)
+                    @if($feilds)
+                        @foreach($feilds as $f)
                             <?php
                                 
                                 $id = $f->name; 
@@ -66,8 +70,8 @@
 
                     @endif
 
-                     @if($template->template_images)
-                        @foreach($template->template_images as $image)
+                     @if($images)
+                        @foreach($images as $image)
                             <?php
                                 $id = $image->id;
                                 $src = $image->src;
@@ -165,12 +169,7 @@
         <!--Image Toolbar End-->
         
         <!-- Large modal -->
-        <button class="btn btn-primary btn-lg mybtn" id="save_as_template">
-            Save as Template
-        </button>   
-        <button class="btn btn-primary btn-lg" id="btn-template-formate" style="margin-top:20px;">  
-            Download Excel file 
-        </button>
+        
 
         </div>
 
@@ -200,6 +199,18 @@
                 </div>
               </div>
             </div>
+             @if($template->type == "horizontal")
+              <div style="margin-right:-29px">
+              @else
+              <div style="margin-right:150px;">
+              @endif
+                <button class="btn btn-primary btn-lg mybtn" id="save_modifications">
+                Save Modifications
+            </button>   
+            <a id="btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+                Show Borders
+             </a>
+             </div>
         </div>
 </div>
 
@@ -227,6 +238,6 @@
     <!--Color Picker -->
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
-    <script src="{{ url('assets/js/myjs.js') }}"></script>
+    <script src="{{ url('assets/js/card_edit.js') }}"></script>
 
 @endsection

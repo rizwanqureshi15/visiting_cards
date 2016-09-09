@@ -35,7 +35,11 @@
 </style>
 <div class="container">
 <div class="row">
-        <div class="col-md-3">
+    @if($template->type == "horizontal")
+        <div class="col-md-3 col-md-offset-1">
+    @else
+        <div class="col-md-3 col-md-offset-2">
+    @endif
             <table class="table mytable" border="1" >
                 <thead>
                     <tr class="mytheadtr">
@@ -78,17 +82,17 @@
         </div>  
 
 
-        <div class="col-md-8">
-           
-            <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
-            -->
-
-        
-
-                <div id="div1" class="myBorder canvas-div" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');">
-
-                <canvas id="canvas1">
+         @if($template->type == 'horizontal')
+                <div class="col-md-7">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
+                <canvas id="canvas1" width="680" height="419">
                 </canvas>
+            @else
+                <div class="col-md-6">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
+                <canvas id="canvas1" width="400" height="648">
+                </canvas>
+             @endif
                 
                 <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
@@ -189,18 +193,7 @@
         </div><!--Toolbar end-->
         
         <!-- Large modal -->
-        <button class="btn btn-primary mybtn" id="Preview" data-toggle="modal" data-target="#preview_image">
-          Preview
-        </button>   
-         <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
-            Show Borders
-         </a>
-        <!--  <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a> -->
-        <button class="btn btn-primary btn-lg" id="btn-template-formate" style="margin-top:20px;">  
-            Download Excel file 
-        </button>
+       
 
         </div>
 
@@ -255,6 +248,18 @@
                 </div>
             <!--Modal End-->
         </div>
+         @if($template->type == "horizontal")
+          <div style="margin-right:63px">
+          @else
+          <div style="margin-right:255px;">
+          @endif
+             <button class="btn btn-primary mybtn" style="float:right;margin-right:10px;margin-top:20px;" id="Preview" data-toggle="modal" data-target="#preview_image">
+                Preview
+              </button>   
+               <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
+                  Show Borders
+               </a>
+          </div>
 </div>
 
 @endsection

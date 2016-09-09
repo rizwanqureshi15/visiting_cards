@@ -64,7 +64,7 @@ class CardController extends Controller
 
                 $data['names']= json_encode($names);
                 $data['template_images'] = $template_images;
-
+                
                 return view('admin.cards.create', $data);
 
         }
