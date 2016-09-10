@@ -88,14 +88,15 @@
 
             @if($templates->type == 'horizontal')
                 <div class="col-md-9">
+                <div class="canvasBorder" style="height:421px;width:682px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <div width="680px" height="419px" class="myBorder">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
+                <div class="canvasBorder"  style="height:650px;width:402px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
-                <div width="400" height="648" class="myBorder">
+                
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
@@ -207,7 +208,7 @@
             <!--Image Shape End-->
             <!--Image Border-->
                 <div class="col-md-4 imagetoolbar_section" >
-                    <div id="image_border"> Hide Border </div>
+                    <div id="image_border">Show Border</div>
                 </div>
             <!--Image Border End-->
             <!--Image Delete-->
@@ -252,26 +253,28 @@
               </div>
             </div>
         </div>
+        <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
     @if($templates->type == "horizontal")
     <div style="margin-right:20px">
     @else
     <div style="margin-right:57px;">
     @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:20px;">
+        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
             Save
          </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
+          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
             Show Borders
          </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;" data-toggle="modal" data-target="#myModal">
+         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
               Upload Image
         </a>
     </div>
+   
     </div>
- 
-
+    
     </div>
+   
 
 
 @endsection
@@ -284,7 +287,17 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
+        // $( "#slider" ).slider({
+        //     value: 100,
+        //     slide: function( event, ui ) {
+        //         var opacity = $('#slider').slider("value");
+        //         opacity = parseInt(opacity)/100;
+        //         $('#div1').css('opacity', opacity);
+        //         console.log(opacity);
+        //     }
+        // });
     });
+    
 
     
     var token = "{{ csrf_token() }}";
@@ -296,6 +309,7 @@
     feild_names = feild_names.replace(/\"/g, '');
     feild_names = feild_names.split(',');
     var template_id = {{ $templates->id }};
+
     
 </script>
 

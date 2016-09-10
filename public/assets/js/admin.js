@@ -102,6 +102,7 @@
 		$(window).click(function() {
 			
 			$('#myToolbar').hide();
+			$('#imageToolbar').hide();
 			//$('#' + element_id).css('border', 'none');
 		});
 
@@ -110,6 +111,7 @@
 			event.stopPropagation();
 		});
 
+		
 		$(document).ready(function(){
 			
 			$('.textbox-size').draggable();
@@ -335,7 +337,8 @@
 		$('#btnsave').click(function(){
 			var i=0;
 			feilds=[];	
-
+			$('#overlay').show();
+			
 			$.each(feild_names, function(key,  value){
 
 				var id1  = value.toLowerCase();
@@ -380,8 +383,8 @@
 					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
 					        dataType: 'json',
 					        success: function(msg) {
+					        	$('#overlay').hide();
 					        	alert(msg);
-					          	
 					        },
 					        error: function(jqXHR, textStatus, errorThrown) {
 					           console.log(textStatus, errorThrown);
@@ -401,7 +404,7 @@
       });
 
 		$(document).on('click','#btnborder', function(){
-			console.log($(this).text());
+			//console.log($(this).text());
 			if($(this).text().trim() == "Show Borders")
 			{
 				 $('.feild-elements').css('border', '2px dashed black');
@@ -460,7 +463,8 @@
                
         });
         
-        $(document).on('click','.template_image',function(){
+        $(document).on('click','.template_image',function(event){
+        	event.stopPropagation();
         	image_id = $(this).attr('id');
 
         	var l = $('#div_' + image_id).css('left');
@@ -479,7 +483,28 @@
 		    {
 		    	t = parseInt(t)-60;
 		    }
-		  
+
+		    var image_border = $('#'+image_id).css('border');
+		    var image_shape = $('#'+image_id).css('border-radius');
+		    if(image_shape == "100px")
+		    {
+		    	$('.round_shape').css('background-color',"blue");
+				$('.squere_shape').css('background-color',"white");	
+		    }
+		    else
+		    {
+		    	$('.round_shape').css('background-color',"white");
+				$('.squere_shape').css('background-color',"blue");
+		    }
+		    if(image_border == "0px none rgb(51, 51, 51)")
+		    {
+		    	$('#image_border').text("Show Border");
+		    }
+		    else
+		    {
+		    	$('#image_border').text("Hide Border");
+		    }
+
 			t += "px";
 			l += "px";
 		    $('#imageToolbar').css('left',l);
@@ -487,10 +512,10 @@
         	$('#imageToolbar').show();
         });
 
-        $(document).on('click','.squere_shape', function(){
-
+        $(document).on('click','.squere_shape', function(event){
+        	event.stopPropagation();
         	$('.round_shape').css('background-color',"white");
-			$('.squere_shape').css('background-color',"red");
+			$('.squere_shape').css('background-color',"blue");
 			$('#'+image_id).css('border-radius','0px');
 			$('#'+image_id).css('border-radius','0px');
 			
@@ -498,9 +523,10 @@
 		});
         
 
-        $(document).on('click','.round_shape', function(){
+        $(document).on('click','.round_shape', function(event){
+        	event.stopPropagation();
 
-        	$('.round_shape').css('background-color',"red");
+        	$('.round_shape').css('background-color',"blue");
 			$('.squere_shape').css('background-color',"white");
 			$('#'+image_id).css('border-radius','100px');
 			$('#'+image_id).css('border-radius','100px');
@@ -508,7 +534,8 @@
 
 		});
 
-		$(document).on('click','#image_border', function(){
+		$(document).on('click','#image_border', function(event){
+			event.stopPropagation();
 			if($(this).text().trim() == "Show Border")
 			{
 				 $('#'+image_id).css('display', 'block');
@@ -532,7 +559,7 @@
 				{
 					delete_images[delete_images.length] = id;
 					dlt=key;
-					console.log(key);
+					
 					for (var i = dlt; i< upload_images.length; i++) {
 					upload_images[i] = upload_images[i+1];
 

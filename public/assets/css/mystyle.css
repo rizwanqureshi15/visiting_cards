@@ -27,6 +27,7 @@
 	padding-left: 6px;
     padding-bottom: 5px;
 }
+
 .popup-toolbar
 {
 position: absolute;
@@ -119,8 +120,9 @@ position: absolute;
 {
 }
 
-.myBorder
+.canvasBorder
 {
+    border:1px dashed gray;
     
 }
 
@@ -158,6 +160,8 @@ position: absolute;
 }
 //Image css
 .template_image{
+    cursor: pointer;
+
 
 }
 .template_image_div{
@@ -207,4 +211,10 @@ position: absolute;
     border-right: 1px solid #b5babf;
     border-bottom: 1px solid #b5babf;
     padding:10px;
+}
+#imagetoolbardelete{
+    cursor: pointer;
+}
+#image_border{
+    cursor: pointer;   
 }

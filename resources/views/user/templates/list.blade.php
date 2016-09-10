@@ -11,56 +11,38 @@
                     </div>
              @endif
         </div>
-        
+    
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="col-md-12" id="posts">
+                @if(count($user_cards) == 0)
+
+                    <h4>No Templates Found</h4>
+                @else
+               
                     @foreach($user_cards as $user_card)
                         
                          <div class="col-md-4">
                           <!--   <a href="{{ url('create-card/'.$user_card->url) }}"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a>  -->
-                              <a href="{{ url('create-card/'.$user_card->url) }}" > 
+                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a> 
-                            <a href="{{ url('editmytemplates/'.$user_card->url) }}">
+                            <a href="{{ url('mytemplates/'.$user_card->url.'/edit') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;border-radius:0px;">Edit</button>
                             </a>
-                            <a href="{{ url('deletemytemplates/'.$user_card->url) }}">
+                            <a href="{{ url('mytemplates/'.$user_card->url.'/delete') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;margin-right:13px;border-radius:0px;">Delete</button>
                             </a>
                         </div>
                         
                         
                     @endforeach
+                    @endif
                 </div>
             </div>
         </div>
-
-     <!--Modal-->
-             <!-- <div class="modal fade" id="card_options" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content" style="width:745px;">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Create Card Options</h4>
-                      </div>
-                      <div class="modal-body raw" style="height:250px;">
-                        <div class="col-md-6" style="height:200px;">
-                            <a  href="{{ url('create-card/'.$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;"><h2 style="margin-top:70px;">Single</h2></a>
-                        </div>
-                        <div class="col-md-6" style="height:200px;">
-                            <a class="btn btn-primary" style="height:100%;width:100%;"><h2 style="margin-top:70px;">Multiple</h2></a>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-            <!--Modal End--> 
     </div>
 </div>
 @endsection

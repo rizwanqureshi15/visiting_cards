@@ -84,11 +84,13 @@
 
          @if($template->type == 'horizontal')
                 <div class="col-md-7">
+                 <div class="canvasBorder" style="height:421px;width:682px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
+                 <div class="canvasBorder" style="height:650px;width:402px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
@@ -196,7 +198,7 @@
        
 
         </div>
-
+         </div>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">

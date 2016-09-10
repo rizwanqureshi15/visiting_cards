@@ -15,7 +15,7 @@ class CreateUserTemplateFields extends Migration
         Schema::create('user_template_feilds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('user_template_id');
+            $table->integer('template_id');
             $table->integer('user_id');
             $table->text('css');
             $table->text('font_css');

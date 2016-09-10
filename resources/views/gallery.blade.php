@@ -41,7 +41,7 @@
         	<div class="col-md-12" id="posts">
 	        	@foreach ($templates as $template)
 	        		<div class="col-md-4">
-	        			<a href="{{ url('idcard/'.$template->url) }}">
+	        			<a href="{{ url('mytemplates/'.$template->url.'/create') }}">
 		        			@if($template->type=="horizontal")
                             <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> @else
                             <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;margin-left:60px;width:50%;height:175.16px">

@@ -283,6 +283,7 @@ class TemplatesController extends Controller
     {
         $user = Auth::user();
         $data['username'] = $user->username;
+        
         $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
         return view('user.templates.list',$data);
     }
@@ -335,7 +336,8 @@ class TemplatesController extends Controller
         
         return view('user.templates.edit',$data);
     }
-      public function edit_user_template_post(Request $request)
+    
+    public function edit_user_template_post(Request $request)
     { 
 
         $template =  Template::where('id',$request->template_id)->first();
@@ -412,9 +414,10 @@ class TemplatesController extends Controller
         }
         $data['field_names']= json_encode($field_names);
         
-        return view('user.cards.single_Card_create',$data);
+        return view('user.cards.single_card_create',$data);
     }
-     public function save_card(Request $request)
+
+    public function save_card(Request $request)
     
     {
         $username=Auth::user()->username;
