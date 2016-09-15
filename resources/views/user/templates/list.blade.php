@@ -30,15 +30,16 @@
                             <a href="" data-url="{{ $user_card->url }}" data-toggle="modal" data-target="#card_options" class="url"> 
 
                             @if($user_card->type == "horizontal")
-                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
+                            
 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
-                              </a> 
+                              
                             @else
-                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
+                            
                                 <img class="vertical_image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
-                              </a>
+                            
                             @endif
+                            </a>
                             <a href="{{ url('mytemplates/'.$user_card->url.'/edit') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;border-radius:0px;">Edit</button>
                             </a>
