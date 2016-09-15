@@ -47,9 +47,24 @@ class CardController extends Controller
 
                 $data['templates'] = Template::where('is_delete', 0)->where('url', $name)->first();
                 $data['feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->get();
-                $data['images'] = TemplateImage::where('template_id',$data['templates']->id)->get();
-
                 
+                $ids = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
+
+                $data['images'] = TemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->get();
+                
+                $data['image_css'] = TemplateFeild::where('template_id', $data['templates']->id)->whereIn('id', $imageids)->get();
+               
                 $names = array();
                 foreach($data['feilds'] as $feild)
                 {
@@ -57,7 +72,7 @@ class CardController extends Controller
                 }
                 $template_images = array();
 
-                foreach($data['images'] as $image)
+                foreach($data['image_css'] as $image)
                 {
                   array_push($template_images, $image->id);
                 }
@@ -105,20 +120,24 @@ class CardController extends Controller
                 }
                
             }
+             
             if($request->images!=null)
             {
                 foreach ($request->images as $image) {
 
-                    TemplateImage::where('id',$image['id'])->update(['css' => $image['css'], 'div_css' => $image['div_css']]);
+                    TemplateFeild::where('id',$image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
+
                 }
             }
             if($request->deleted_images!=null)
             {
 
                 foreach ($request->deleted_images as $value) {
-                    $image_name = TemplateImage::where('id',$value)->first();
+
+                    $image_name = TemplateImage::where('template_feild_id',$value)->first();
                     @unlink(public_path("templates\\images\\".$image_name->src));
-                    TemplateImage::where('id',$value)->delete();
+                    TemplateImage::where('template_feild_id',$value)->delete();
+                    TemplateFeild::where('id',$value)->delete();
                 }
             }
             if($request->deleted_feilds!=null)
@@ -176,9 +195,11 @@ class CardController extends Controller
             } 
             file_put_contents($path .'/'. $name .'.png', $data);
             
-           $image_id = TemplateImage::insertGetId(['src' => $name.'.png','css'=> $request->css ,'div_css' => $request->div_css, 'template_id' => $request->template_id]);
+            $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+
+           $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
             
-            return json_encode(['name' => $name .'.png','id' => $image_id]);
+            return json_encode(['name' => $name .'.png','image_id' => $image_id, 'template_feild_id' => $feild_id]);
 
         }
     

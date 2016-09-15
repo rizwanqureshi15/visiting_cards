@@ -535,7 +535,8 @@
 
 				var css = $('#image_'+value).attr('style');
 				var div_css = $('#div_image_'+value).attr('style');
-				var values = { css: css, id: value , div_css: div_css};
+				var name = $('#div_image_'+value).attr('name');
+				var values = { css: css, id: value , div_css: div_css, name: name };
 				images_temp[i] = values;
 				//console.log(feilds);
 				i++; 

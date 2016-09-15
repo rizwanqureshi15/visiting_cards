@@ -72,15 +72,21 @@
 
                     @endif
 
-                     @if($images)
+                    @if($images)
                         @foreach($images as $image)
-                            <?php
-                                $id = $image->id;
-                                $src = $image->src;
-                                $css = $image->css;
-                                $div_css = $image->div_css;
-                            ?>
-                                <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
+                            @foreach($image_css as $img_css)
+                                @if($img_css->id == $image->template_feild_id )
+                                     <?php
+                                        $id = $img_css->id;
+                                        $src = $image->src;
+                                        $css = $img_css->font_css;
+                                        $div_css = $img_css->css;
+                                        $name = $img_css->name;
+                                    ?>
+                                @endif
+                            @endforeach
+                           
+                                <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
                                     <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                                 </div>
                         @endforeach
@@ -202,7 +208,7 @@
               </div>
             </div>
              @if($template->type == "horizontal")
-              <div style="margin-right:-29px">
+              <div style="">
               @else
               <div style="margin-right:150px;">
               @endif

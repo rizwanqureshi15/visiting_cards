@@ -26,9 +26,15 @@
                           <!--   <a href="{{ url('create-card/'.$user_card->url) }}"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a>  -->
+                            @if($user_card->type == "horizontal")
                               <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
-                            </a> 
+                              </a> 
+                            @else
+                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
+                                <img class="vertical_image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
+                              </a>
+                            @endif
                             <a href="{{ url('mytemplates/'.$user_card->url.'/edit') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;border-radius:0px;">Edit</button>
                             </a>

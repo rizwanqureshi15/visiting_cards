@@ -121,13 +121,19 @@
 
             @if($images)
                 @foreach($images as $image)
-                    <?php
-                        $id = $image->id;
-                        $src = $image->src;
-                        $css = $image->css;
-                        $div_css = $image->div_css;
-                    ?>
-                        <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
+                    @foreach($image_css as $img_css)
+                        @if($img_css->id == $image->template_feild_id )
+                             <?php
+                                $id = $img_css->id;
+                                $src = $image->src;
+                                $css = $img_css->font_css;
+                                $div_css = $img_css->css;
+                                $name = $img_css->name;
+                            ?>
+                        @endif
+                    @endforeach
+                   
+                        <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
                             <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                         </div>
                 @endforeach
@@ -237,6 +243,9 @@
                     <div class="image-editor">
                           <hr>
                           <input type="file" class="cropit-image-input">
+                          <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
+                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" name="image_name" id="image_name" placeholder="Enter image Feild Name.." required="required" />
+                          <div id="image_error" style="margin-top:10px;"></div>
                           <hr>
                           <div class="cropit-preview"></div>
                           <hr>

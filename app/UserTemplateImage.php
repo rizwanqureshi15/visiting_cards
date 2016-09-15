@@ -12,7 +12,7 @@ class UserTemplateImage extends Model
      * @var array
      */
      protected $fillable = [
-        'id', 'template_id','user_id','src', 'css','div_css', 'shape',
+        'id', 'user_id','src', 'template_feild_id'
     ];
 
     /**
