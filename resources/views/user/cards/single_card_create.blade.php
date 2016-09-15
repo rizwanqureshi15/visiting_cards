@@ -84,11 +84,13 @@
 
          @if($template->type == 'horizontal')
                 <div class="col-md-7">
+                 <div class="canvasBorder" style="height:421px;width:682px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
+                 <div class="canvasBorder" style="height:650px;width:402px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
@@ -112,16 +114,21 @@
                             </div>
                  @endforeach
             @endif
-
             @if($images)
                 @foreach($images as $image)
-                    <?php
-                        $id = $image->id;
-                        $src = $image->src;
-                        $css = $image->css;
-                        $div_css = $image->div_css;
-                    ?>
-                        <div id="div_image_{{ $id }}" style="{{ $div_css }}"  data-toggle="modal" data-target="#myModal" class="template_image_div">
+                    @foreach($image_css as $img_css)
+                        @if($img_css->id == $image->template_feild_id )
+                             <?php
+                                $id = $img_css->id;
+                                $src = $image->src;
+                                $css = $img_css->font_css;
+                                $div_css = $img_css->css;
+                                $name = $img_css->name;
+                            ?>
+                        @endif
+                    @endforeach
+                   
+                        <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
                             <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                         </div>
                 @endforeach
@@ -196,7 +203,7 @@
        
 
         </div>
-
+         </div>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
@@ -249,7 +256,7 @@
             <!--Modal End-->
         </div>
          @if($template->type == "horizontal")
-          <div style="margin-right:63px">
+          <div style="margin-right:72px">
           @else
           <div style="margin-right:255px;">
           @endif

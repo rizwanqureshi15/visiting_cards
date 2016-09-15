@@ -88,14 +88,15 @@
 
             @if($templates->type == 'horizontal')
                 <div class="col-md-9">
+                <div class="canvasBorder" style="height:421px;width:682px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <div width="680px" height="419px" class="myBorder">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
+                <div class="canvasBorder"  style="height:650px;width:402px;">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
-                <div width="400" height="648" class="myBorder">
+                
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
@@ -120,13 +121,19 @@
 
             @if($images)
                 @foreach($images as $image)
-                    <?php
-                        $id = $image->id;
-                        $src = $image->src;
-                        $css = $image->css;
-                        $div_css = $image->div_css;
-                    ?>
-                        <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
+                    @foreach($image_css as $img_css)
+                        @if($img_css->id == $image->template_feild_id )
+                             <?php
+                                $id = $img_css->id;
+                                $src = $image->src;
+                                $css = $img_css->font_css;
+                                $div_css = $img_css->css;
+                                $name = $img_css->name;
+                            ?>
+                        @endif
+                    @endforeach
+                   
+                        <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
                             <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                         </div>
                 @endforeach
@@ -207,7 +214,7 @@
             <!--Image Shape End-->
             <!--Image Border-->
                 <div class="col-md-4 imagetoolbar_section" >
-                    <div id="image_border"> Hide Border </div>
+                    <div id="image_border">Show Border</div>
                 </div>
             <!--Image Border End-->
             <!--Image Delete-->
@@ -236,6 +243,9 @@
                     <div class="image-editor">
                           <hr>
                           <input type="file" class="cropit-image-input">
+                          <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
+                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" name="image_name" id="image_name" placeholder="Enter image Feild Name.." required="required" />
+                          <div id="image_error" style="margin-top:10px;"></div>
                           <hr>
                           <div class="cropit-preview"></div>
                           <hr>
@@ -252,26 +262,28 @@
               </div>
             </div>
         </div>
+        <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
     @if($templates->type == "horizontal")
     <div style="margin-right:20px">
     @else
     <div style="margin-right:57px;">
     @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:20px;">
+        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
             Save
          </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
+          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
             Show Borders
          </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;" data-toggle="modal" data-target="#myModal">
+         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
               Upload Image
         </a>
     </div>
+   
     </div>
- 
-
+    
     </div>
+   
 
 
 @endsection
@@ -284,7 +296,17 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
+        // $( "#slider" ).slider({
+        //     value: 100,
+        //     slide: function( event, ui ) {
+        //         var opacity = $('#slider').slider("value");
+        //         opacity = parseInt(opacity)/100;
+        //         $('#div1').css('opacity', opacity);
+        //         console.log(opacity);
+        //     }
+        // });
     });
+    
 
     
     var token = "{{ csrf_token() }}";
@@ -296,6 +318,7 @@
     feild_names = feild_names.replace(/\"/g, '');
     feild_names = feild_names.split(',');
     var template_id = {{ $templates->id }};
+
     
 </script>
 

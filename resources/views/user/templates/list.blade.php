@@ -11,29 +11,45 @@
                     </div>
              @endif
         </div>
-        
+    
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="col-md-12" id="posts">
+                @if(count($user_cards) == 0)
+
+                    <h4>No Templates Found</h4>
+                @else
+               
                     @foreach($user_cards as $user_card)
                         
                          <div class="col-md-4">
                           <!--   <a href="{{ url('create-card/'.$user_card->url) }}"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a>  -->
+
                             <a href="" data-url="{{ $user_card->url }}" data-toggle="modal" data-target="#card_options" class="url"> 
+
+                            @if($user_card->type == "horizontal")
+                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
+
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
-                            </a> 
-                            <a href="{{ url('editmytemplates/'.$user_card->url) }}">
+                              </a> 
+                            @else
+                              <a href="{{ url('single_card/'.$user_card->url.'/create') }}" > 
+                                <img class="vertical_image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
+                              </a>
+                            @endif
+                            <a href="{{ url('mytemplates/'.$user_card->url.'/edit') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;border-radius:0px;">Edit</button>
                             </a>
-                            <a href="{{ url('deletemytemplates/'.$user_card->url) }}">
+                            <a href="{{ url('mytemplates/'.$user_card->url.'/delete') }}">
                                 <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;margin-right:13px;border-radius:0px;">Delete</button>
                             </a>
                         </div>
                         
                         
                     @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -61,7 +77,7 @@
                   </div>
             </div> 
      <!--Modal End--> 
-    
+
     </div>
 </div>
 @endsection

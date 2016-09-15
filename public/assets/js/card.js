@@ -269,6 +269,21 @@
             $("#myToolbar").hide();         
         });
 
+        $(document).on('click','#btnborder', function(){
+		
+			if($(this).text().trim() == "Show Borders")
+			{
+				 $('.feild-elements').css('border', '2px dashed black');
+				 $('.template_image_div').css('border', '2px dashed black');
+				 $(this).text("Hide Borders");
+			}else{
+				$('.feild-elements').css('border', 'none');	
+				$('.template_image_div').css('border', 'none');	
+				 $(this).text("Show Borders");
+
+			}
+		});
+
 		$("#add-text").click(function(){
             
             $("#newFeild").slideToggle("slow");

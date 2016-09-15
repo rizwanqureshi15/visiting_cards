@@ -23,6 +23,7 @@ use App\UserTemplate;
 use App\UserTemplateFeild;
 use App\UserTemplateImage;
 use App\TemplateImage;
+use App\TemplateFeild;
 
 
 class TemplatesController extends Controller
@@ -93,25 +94,41 @@ class TemplatesController extends Controller
 
     public function get_template($url)
     {
-        $data['template'] = Template::with('template_feilds')->where('url',$url)->first(); 
-        $data['image'] = Template::with('template_images')->where('url',$url)->first(); 
-       
-        $template_images = array();
+                $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
+                $data['feilds'] = TemplateFeild::where('template_id',$data['template']->id)->get();
+                
+                $ids = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
 
-         foreach($data['image']->template_images as $image)
-        {
-              array_push($template_images, $image->id);
-        }
+                $data['images'] = TemplateImage::whereIn('template_feild_id',$ids)->get();
+                 
+                $imageids = array();
+                foreach ($data['images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
 
-        $data['template_images']= $template_images;
-        
-        $field_names = array();
-        foreach($data['template']->template_feilds as $names)
-        {
-            array_push($field_names, $names->name);
-        }
+                $data['feilds'] = TemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->get();
+                
+                $data['image_css'] = TemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+               
+                $names = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($names, $feild->name);
+                }
+                $template_images = array();
 
-        $data['field_names']= json_encode($field_names);
+                foreach($data['image_css'] as $image)
+                {
+                  array_push($template_images, $image->id);
+                }
+
+                $data['field_names']= json_encode($names);
+                $data['template_images'] = $template_images;
+
 
         return view('user.templates.create',$data);
     }
@@ -153,10 +170,11 @@ class TemplatesController extends Controller
     }
     public function save_user_template(Request $request)
     { 
-
+        
         $template =  Template::where('id',$request->template_id)->first();
          
          $user_id=Auth::user()->id;
+         
          $url = TemplatesController::get_unique_url($request->template_id, $user_id);
             
         $user_fields=array(
@@ -177,6 +195,7 @@ class TemplatesController extends Controller
             foreach ($request->feilds as $feild) 
             { 
                 $feild["template_id"] = $user_template_id; 
+                $feild["user_id"] = $user_id;
                 UserTemplateFeild::create($feild);    
             }
         }
@@ -185,8 +204,11 @@ class TemplatesController extends Controller
        if($request->images)
        {
             foreach ($request->images as $image) {
-                $image_data = TemplateImage::where('id', $image['id'])->first();   
-                UserTemplateImage::create(['template_id' => $user_template_id, 'src' => $image_data->src, 'css' => $image['css'], 'div_css' => $image['div_css'], 'shape' => $image_data->shape]);
+
+               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+
+                $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
+                UserTemplateImage::create([ 'src' => $image_data->src, 'template_feild_id' => $id]);
                  
            }
         }
@@ -283,6 +305,7 @@ class TemplatesController extends Controller
     {
         $user = Auth::user();
         $data['username'] = $user->username;
+        
         $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
         return view('user.templates.list',$data);
     }
@@ -305,37 +328,55 @@ class TemplatesController extends Controller
             array_push($template_images, $names->name);
         }
         $data['field_names']= json_encode($field_names);
+
         $data['template_images']=json_encode($template_images);
+
         return view('user.templates.create',$data);
     }
 
     public function edit_user_template($url)
     {
 
-        $data['template'] = UserTemplate::where('url',$url)->first(); 
-        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->get();
-        $data['images'] = UserTemplateImage::where('template_id', $data['template']->id)->get();
-        
+        $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
+                $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->get();
+                
+                $ids = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
 
-        $field_names = array();
-        foreach($data['feilds'] as $names)
-        {
-            array_push($field_names, $names->name);
-        }
-        if($data['images']!=null)
-        {
-            $template_images = array();
-             foreach($data['images'] as $names)
-            {
-                array_push($template_images, $names->id);
-            }
-            $data['template_images']=$template_images;
-        }
-        $data['field_names']= json_encode($field_names);
+                $data['images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->get();
+                
+                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+               
+                $names = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($names, $feild->name);
+                }
+                if($data['images']!=null)
+                {
+                    $template_images = array();
+                    foreach($data['image_css'] as $image)
+                    {
+                      array_push($template_images, $image->id);
+                    }
+                }
+                $data['field_names']= json_encode($names);
+                $data['template_images'] = $template_images;
         
         return view('user.templates.edit',$data);
     }
-      public function edit_user_template_post(Request $request)
+    
+    public function edit_user_template_post(Request $request)
     { 
 
         $template =  Template::where('id',$request->template_id)->first();
@@ -368,7 +409,7 @@ class TemplatesController extends Controller
        
         foreach ($request->images as $image) {
 
-            UserTemplateImage::where('id', $image['id'])->update(['css' => $image['css'], 'div_css' => $image['div_css']]);
+            UserTemplateFeild::where('id', $image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
              
        }
             
@@ -382,7 +423,12 @@ class TemplatesController extends Controller
     public function delete_user_template($url)
     {
         $user_template = UserTemplate::where('url', $url)->where('user_id', Auth::user()->id)->first();
-        UserTemplateImage::where('template_id', $user_template->id)->delete();
+        $feilds = UserTemplateFeild::where('template_id', $user_template->id)->get();
+        $ids = array();
+        foreach ($feilds as $value) {
+            array_push($ids, $value->id); 
+        }
+        UserTemplateImage::whereIn('template_Feild_id', $ids)->delete();
         UserTemplateFeild::where('template_id', $user_template->id)->delete();
         UserTemplate::where('id', $user_template->id)->delete();
         return Redirect()->back();
@@ -391,30 +437,46 @@ class TemplatesController extends Controller
     public function create_single_card($url)
     {
 
-        $data['template'] = UserTemplate::where('url',$url)->first(); 
-        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->get();
-        $data['images'] = UserTemplateImage::where('template_id', $data['template']->id)->get();
-        
+         $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
+                $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->get();
+                
+                $ids = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
 
-        $field_names = array();
-        foreach($data['feilds'] as $names)
-        {
-            array_push($field_names, $names->name);
-        }
-        if($data['images']!=null)
-        {
-            $template_images = array();
-             foreach($data['images'] as $names)
-            {
-                array_push($template_images, $names->id);
-            }
-            $data['template_images']=$template_images;
-        }
-        $data['field_names']= json_encode($field_names);
+                $data['images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->get();
+                
+                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+               
+                $names = array();
+                foreach($data['feilds'] as $feild)
+                {
+                  array_push($names, $feild->name);
+                }
+                if($data['images']!=null)
+                {
+                    $template_images = array();
+                    foreach($data['image_css'] as $image)
+                    {
+                      array_push($template_images, $image->id);
+                    }
+                }
+                $data['field_names']= json_encode($names);
+                $data['template_images'] = $template_images;
         
-        return view('user.cards.single_Card_create',$data);
+        return view('user.cards.single_card_create',$data);
     }
-     public function save_card(Request $request)
+
+    public function save_card(Request $request)
     
     {
         $username=Auth::user()->username;

@@ -55,7 +55,7 @@ Route::post('change_password','UserController@change_password');
 Route::get('admin/users_list', 'AdminController@users_list');
 
 
-Route::get('idcard/{url}', 'Front\TemplatesController@get_template');
+Route::get('mytemplates/{url}/create', 'Front\TemplatesController@get_template');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
@@ -106,12 +106,10 @@ Route::post('upload_template_image','CardController@upload_image');
 
 Route::post('save_single_card','Front\TemplatesController@save_card');
 
-Route::get('editmytemplates/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
+Route::get('mytemplates/{url}/edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
 Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
 
-Route::get('create-card/{url}', 'Front\TemplatesController@create_single_card');
-
-Route::get('deletemytemplates/{url}', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
+Route::get('single_card/{url}/create', 'Front\TemplatesController@create_single_card');
 
 Route::get('multiple_cards/{url}','Front\TemplatesController@show_multiple_cards');
 Route::get('download_file/{url}','Front\TemplatesController@download_excel_file');
@@ -119,4 +117,6 @@ Route::get('download_file/{url}','Front\TemplatesController@download_excel_file'
 Route::post('upload_file/{url}','Front\TemplatesController@upload_excel_file');
 
 Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save');
+
+Route::get('mytemplates/{url}/delete', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
 
