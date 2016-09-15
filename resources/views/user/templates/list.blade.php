@@ -21,7 +21,7 @@
                           <!--   <a href="{{ url('create-card/'.$user_card->url) }}"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a>  -->
-                              <a href="{{ url('create-card/'.$user_card->url) }}" > 
+                            <a href="" data-url="{{ $user_card->url }}" data-toggle="modal" data-target="#card_options" class="url"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">
                             </a> 
                             <a href="{{ url('editmytemplates/'.$user_card->url) }}">
@@ -39,19 +39,19 @@
         </div>
 
      <!--Modal-->
-             <!-- <div class="modal fade" id="card_options" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="card_options" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
-                    <div class="modal-content" style="width:745px;">
+                    <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="myModalLabel">Create Card Options</h4>
                       </div>
                       <div class="modal-body raw" style="height:250px;">
                         <div class="col-md-6" style="height:200px;">
-                            <a  href="{{ url('create-card/'.$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;"><h2 style="margin-top:70px;">Single</h2></a>
+                            <a href="{{ url('create-card',$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;" id="single"><h2 style="margin-top:70px;">Single</h2></a>
                         </div>
                         <div class="col-md-6" style="height:200px;">
-                            <a class="btn btn-primary" style="height:100%;width:100%;"><h2 style="margin-top:70px;">Multiple</h2></a>
+                            <a href="{{ url('multiple_cards',$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;" id="multiple"><h2 style="margin-top:70px;">Multiple</h2></a>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -59,8 +59,9 @@
                       </div>
                     </div>
                   </div>
-                </div> -->
-            <!--Modal End--> 
+            </div> 
+     <!--Modal End--> 
+    
     </div>
 </div>
 @endsection
@@ -89,7 +90,6 @@
                     dataType: 'json',
                     data: {"_token": "{{ csrf_token() }}","page_no":page_no},
                     success: function(user_cards) {
-                        
                         if(user_cards.length == 0){  
                             last_page=true;
                         }
@@ -107,6 +107,24 @@
                 });
                 }
             }
+        });
+
+    
+        $(".url").click(function()
+            {
+                var a = $(this).data('url');
+                var new_url = '{{ url("multiple_cards") }}/'+a+'';
+                
+                $('#multiple').attr('href',new_url);
+
+            });
+
+        $(".url").click(function()
+            {
+                var a = $(this).data('url');
+                var new_url = '{{ url("create-card") }}/'+a+'';
+                $('#single').attr('href',new_url);
+
         });
     
 });

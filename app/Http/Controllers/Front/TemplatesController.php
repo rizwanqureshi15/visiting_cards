@@ -444,4 +444,71 @@ class TemplatesController extends Controller
     }
 
 
+    public function show_multiple_cards($url)
+    {
+        $data['template_url'] = array($url);
+        
+        return view('multiple_cards',$data);
+    }
+
+
+    public function download_excel_file($url)
+    {
+        $user_id = Auth::user()->id;
+        $user_template_id = UserTemplate::where('url',$url)->where('user_id',$user_id)->lists('id');
+        
+        $data = UserTemplateFeild::where('template_id',$user_template_id)->pluck('name'); 
+
+        return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+            $excel->sheet('mySheet', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->export('xls');
+    }
+
+    public function upload_excel_file(Request $request,$url)
+    {
+        $data['template_data'] = UserTemplate::where('url',$url)->get();
+
+        $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->get();
+
+        $data['images'] = UserTemplateImage::where('template_id',$data['template_data'][0]->id)->get();
+        
+        $destinationPath = 'ExcelFiles/';
+        $filename = $request->excel_file->getClientOriginalName();
+        $upload_success = $request->excel_file->move('ExcelFiles/', $filename);
+        
+        $data['cards_data'] = Excel::load('ExcelFiles/'.$filename, function($reader) {
+          
+
+        })->get();
+
+        //$data['cards_data'] = json_encode($data['cards_data']);
+
+        return view('list_multiple_cards_preview',$data);
+    }
+
+    public function multiple_image_save(Request $request)
+    {
+        $username=Auth::user()->username;
+
+        $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $name = str_random(40);
+        $path = public_path() .'/temp/'.$username;   
+        
+        if(!File::exists($path))
+        { 
+            File::makeDirectory($path);
+        } 
+        file_put_contents('temp/'. $username .'/'.$name.'.png', $data);
+
+        
+        return json_encode($name.".png");
+    }
+
+
 }

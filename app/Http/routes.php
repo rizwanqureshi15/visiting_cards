@@ -112,3 +112,11 @@ Route::post('user_template_edit','Front\TemplatesController@edit_user_template_p
 Route::get('create-card/{url}', 'Front\TemplatesController@create_single_card');
 
 Route::get('deletemytemplates/{url}', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
+
+Route::get('multiple_cards/{url}','Front\TemplatesController@show_multiple_cards');
+Route::get('download_file/{url}','Front\TemplatesController@download_excel_file');
+
+Route::post('upload_file/{url}','Front\TemplatesController@upload_excel_file');
+
+Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save');
+
