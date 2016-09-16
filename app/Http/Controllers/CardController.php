@@ -77,7 +77,7 @@ class CardController extends Controller
                   array_push($template_images, $image->id);
                 }
 
-                $data['names']= json_encode($names);
+                $data['names']= $names;
                 $data['template_images'] = $template_images;
                 
                 return view('admin.cards.create', $data);
@@ -199,7 +199,7 @@ class CardController extends Controller
 
            $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
             
-            return json_encode(['name' => $name .'.png','image_id' => $image_id, 'template_feild_id' => $feild_id]);
+            return json_encode(['name' => $name .'.png','image_id' => $image_id, 'id' => $feild_id]);
 
         }
     

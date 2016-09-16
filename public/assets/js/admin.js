@@ -326,10 +326,11 @@
 	                 feild = feild.replace(/\ /g, '_');
 	                 element_id = feild;
 
-	                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+	                $('#feild_body').append("<input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
 	                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
 	                $('#'+feild).draggable();
 	                $('#'+feild).resizable();
+	                $('#newFeildName').val("");
 
 	                $('#newFeildName').length = 0;
 	            }
@@ -389,6 +390,8 @@
 					        	alert(msg);
 					        },
 					        error: function(jqXHR, textStatus, errorThrown) {
+					        	$('#overlay').hide();
+					        	alert("Error");
 					           console.log(textStatus, errorThrown);
 					        }
 							
@@ -396,6 +399,8 @@
 					          
 			        },
 			        error: function(jqXHR, textStatus, errorThrown) {
+			        			$('#overlay').hide();
+					        	alert("Error");
 					           console.log("hello12");
 					}
 
@@ -458,12 +463,13 @@
 	            data: { "_token": token,"image": imageData,"css": "height:100%;width:100%;", "div_css": "position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none","template_id": template_id,"name": $('#image_name').val()},
 	            dataType: 'json',
 	            success: function(data) {
-
+	            	$('#myModal').modal('hide');
 	            	$('#image_name').val();
 	            	$('#card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='template_image' id='image_"+data.id+"'></div>");
 	               	$('#div_image_'+data.id).resizable();
 	               	$('#div_image_'+data.id).draggable();
 	               	upload_images[upload_images.length] = data.id; 
+	               	console.log(data.id);
 	               	
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
@@ -583,7 +589,25 @@
 			
 			$("#imageToolbar").hide();				
 		});
+
+
+		//Lable bar Codding
+
+		$('#slide_feilds').click(function(){
+			$('#table_body_lables').slideToggle();
+			$('#table_body_feilds').slideToggle();
+		});			
+
+
+		//Lable bar Codding end
+
+
+
+
+
+
       });
+
 
 
 
