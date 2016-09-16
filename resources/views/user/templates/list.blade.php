@@ -65,7 +65,7 @@
                       </div>
                       <div class="modal-body raw" style="height:250px;">
                         <div class="col-md-6" style="height:200px;">
-                            <a href="{{ url('create-card',$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;" id="single"><h2 style="margin-top:70px;">Single</h2></a>
+                            <a href="" class="btn btn-primary" style="height:100%;width:100%;" id="single"><h2 style="margin-top:70px;">Single</h2></a>
                         </div>
                         <div class="col-md-6" style="height:200px;">
                             <a href="{{ url('multiple_cards',$user_card->url) }}" class="btn btn-primary" style="height:100%;width:100%;" id="multiple"><h2 style="margin-top:70px;">Multiple</h2></a>
@@ -139,7 +139,7 @@
         $(".url").click(function()
             {
                 var a = $(this).data('url');
-                var new_url = '{{ url("create-card") }}/'+a+'';
+                var new_url = '{{ url("single_card") }}/'+a+'/create';
                 $('#single').attr('href',new_url);
 
         });
