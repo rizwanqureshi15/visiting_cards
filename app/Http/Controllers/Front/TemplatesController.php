@@ -63,7 +63,7 @@ class TemplatesController extends Controller
 
     public function index()
     {
-        $data['templates'] = Template::orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
+        $data['templates'] = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
         $data['categories'] = Category::get();
         
         return view('gallery',$data);
@@ -307,6 +307,10 @@ class TemplatesController extends Controller
         $data['username'] = $user->username;
         
         $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
+        if(count($data['user_cards'])==0)
+        {
+            $data['user_cards'] = false;
+        }
         return view('user.templates.list',$data);
     }
 
