@@ -427,6 +427,9 @@ class TemplatesController extends Controller
     public function delete_user_template($url)
     {
         $user_template = UserTemplate::where('url', $url)->where('user_id', Auth::user()->id)->first();
+        $username = Auth::user()->username;
+
+        @unlink(public_path("images\\".$username."\\".$user_template->snap));
         $feilds = UserTemplateFeild::where('template_id', $user_template->id)->get();
         $ids = array();
         foreach ($feilds as $value) {

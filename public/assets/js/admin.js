@@ -20,7 +20,7 @@
 		  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 		 }
 
-		$('.feild-elements').click(function(){
+		$(document).on('click','.feild-elements', function(){
 			element_id = $(this).attr('id');
 			//console.log(element_id);
 			
@@ -124,6 +124,7 @@
 		
 		
 		$(document).on('click',".feild-elements", function(event) {
+			console.log();
 		     event.stopPropagation();
 		    var l = $('#' + element_id).css('left');
 		    var t = $('#' + element_id).css('top');
