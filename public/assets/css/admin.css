@@ -3,6 +3,7 @@
     border-style: solid;
     border-size:22px;
     border-color:#b5babf;
+    margin-bottom: 0px;
     
 }
 .button-selected{
@@ -125,7 +126,7 @@ position: absolute;
     
 }
 .sidebar-elements{
-
+     margin-top:10px;
 }
 
 //admin css

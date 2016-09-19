@@ -1,7 +1,8 @@
 		var element_id;
 		var image_id;
-		var delete_feilds=[];
-		var delete_images=[];	
+		var delete_feilds = [];
+		var delete_images = [];
+		var delete_labels = [];	
 		var image_name = [];
 		var element = $("#div1"); // global variable
 		var feild_color;
@@ -20,7 +21,7 @@
 		  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 		 }
 
-		$('.feild-elements').click(function(){
+		$(document).on('click','.feild-elements', function(){
 			element_id = $(this).attr('id');
 			//console.log(element_id);
 			
@@ -124,6 +125,7 @@
 		
 		
 		$(document).on('click',".feild-elements", function(event) {
+			console.log();
 		     event.stopPropagation();
 		    var l = $('#' + element_id).css('left');
 		    var t = $('#' + element_id).css('top');
@@ -249,23 +251,45 @@
 
 		$('#toolbardelete').click(function(){
 			var name = $('#'+element_id).data('name');
+			var type = $('#'+element_id).data('type');
 			var dlt;
-			$.each(feild_names, function(key,  value){
-				if(value == name)
-				{
-					delete_feilds[delete_feilds.length] = name;
-					dlt=key;
-					for (var i = dlt; i< feild_names.length; i++) {
-					feild_names[i] = feild_names[i+1];
+			
+			if(type == 'label')
+			{
+				$.each(label_names, function(key,  value){
+					if(value == name)
+					{
+						delete_labels[delete_labels.length] = name;
+						dlt=key;
+						for (var i = dlt; i< label_names.length; i++) {
+						label_names[i] = label_names[i+1];
+
+						}
+						label_names.pop();
 
 					}
-					feild_names.pop();
+				});
+			}
+			else
+			{
+				$.each(feild_names, function(key,  value){
+					if(value == name)
+					{
+						delete_feilds[delete_feilds.length] = name;
+						dlt=key;
+						for (var i = dlt; i< feild_names.length; i++) {
+						feild_names[i] = feild_names[i+1];
 
-				}
-			});
+						}
+						feild_names.pop();
+
+					}
+				});
+				
+			}
 			
 			$('#'+element_id).remove();
-			$('#sidebar_'+element_id).closest("tr").remove();
+			$('#sidebar_'+element_id).remove();
 			$("#myToolbar").hide();			
 		});
 
@@ -299,15 +323,27 @@
             	new_txt = new_txt.toLowerCase();
             	new_txt = new_txt.trim();
             	var error =false;
-            	$.each(feild_names, function(key,  value){
-            		value = value.toLowerCase();
-            		value = value.trim();
-            		if(new_txt == value)
-	            	{
-	            		error = true;
-	            	}
-	            	
-	            });
+            	var error_label = false;
+	            	$.each(feild_names, function(key,  value){
+	            		value = value.toLowerCase();
+	            		value = value.trim();
+	            		if(new_txt == value)
+		            	{
+		            		error = true;
+		            	}
+		            	
+		            });
+
+		             $.each(label_names, function(key,  value){
+	            		value = value.toLowerCase();
+	            		value = value.trim();
+	            		if(new_txt == value)
+		            	{
+		            		error_label = true;
+		            	}
+		            	
+		            });
+	           
 	            if(error == true)
 	            {
 	            	error=false;
@@ -315,26 +351,114 @@
 	            }
 	            else
 	            {
-	            	
-	                $("#error").html(''); // remove it
-	                var feild = $('#newFeildName').val();
-	                 str = feild;
+	            	if(error_label == true)
+		            	{
+		            		error_label=false;
+		            		$("#error_label").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Label Name shoud be unique.. </div>");
+		            	}
+		            	else
+		            	{
+		                $("#error").html(''); // remove it
+		                var feild = $('#newFeildName').val();
+		                 str = feild;
 
-	                 feild_names.push(str);
+		                 feild_names.push(str);
 
-	                 feild = feild.toLowerCase();
-	                 feild = feild.replace(/\ /g, '_');
-	                 element_id = feild;
+		                 feild = feild.toLowerCase();
+		                 feild = feild.replace(/\ /g, '_');
+		                 element_id = feild;
 
-	                $('#table_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
-	                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
-	                $('#'+feild).draggable();
-	                $('#'+feild).resizable();
+		                $('#feild_body').append("<input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+		                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+		                $('#'+feild).draggable();
+		                $('#'+feild).resizable();
+		                $('#newFeildName').val("");
 
-	                $('#newFeildName').length = 0;
 	            }
         }
-    });
+    }
+});
+
+
+		//work on Lable
+
+			$('#newLabelBtn').click(function(){
+
+	            if (!$('#newLabelName').val()) {
+	                if ($("#newLabelName").parent().next(".validation").length == 0) // only add if not added
+	                {
+	                    
+	                    $("#error_label").html("<div class='validation' style='color:red;bottom:0;margin-left:20px;'>Please Enter Lable value</div>");
+	                }
+	                else
+	                {
+	                    $("#error_label").html('');
+	                }
+	            } 
+	            else 
+	            {
+	              new_txt = $('#newLabelName').val();
+	            	new_txt = new_txt.toLowerCase();
+	            	new_txt = new_txt.trim();
+	            	var error =false;
+	            	var error_label = false;
+	            	$.each(feild_names, function(key,  value){
+	            		value = value.toLowerCase();
+	            		value = value.trim();
+	            		if(new_txt == value)
+		            	{
+		            		error = true;
+		            	}
+		            	
+		            });
+
+		             $.each(label_names, function(key,  value){
+	            		value = value.toLowerCase();
+	            		value = value.trim();
+	            		if(new_txt == value)
+		            	{
+		            		error_label = true;
+		            	}
+		            	
+		            });
+		            if(error == true)
+		            {
+		            	error=false;
+		            	$("#error_label").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Label Name shoud be unique.. </div>");
+		            }
+		            else
+		            {
+		            	
+		            	if(error_label == true)
+		            	{
+		            		error_label=false;
+		            		$("#error_label").html("<div class='validation' style='color:red;margin-bottom:05px;margin-left:20px;'>Label Name shoud be unique.. </div>");
+		            	}
+		            	else
+		            	{
+			                $("#error_label").html(''); // remove it
+			                var feild = $('#newLabelName').val();
+			                 str = feild;
+			                 console.log(feild);
+			                 label_names.push(str);
+
+			                 feild = feild.toLowerCase();
+			                 feild = feild.replace(/\ /g, '_');
+			                 element_id = feild;
+
+			                $('#label_body').append("<input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+			                $('#card_body').append("<div id='"+feild+"' data-type='label' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
+			                $('#'+feild).draggable();
+			                $('#'+feild).resizable();
+			                $('#newLabelName').val("");
+
+			                $('#newLabelName').length = 0;
+		            	}
+		        	}
+	       		}
+	    });
+
+		//work on lable end
 		$('#btnsave').click(function(){
 			var i=0;
 			feilds=[];	
@@ -352,6 +476,22 @@
 				//console.log(feilds);
 				i++; 
 			});
+
+			labels = [];
+			i=0;
+			$.each(label_names, function(key,  value){
+
+				var id1  = value.toLowerCase();
+			 	var id = id1.replace(/\ /g, '_');
+				var css = $('#'+id).attr('style');
+				var font_css = $('#span_'+id).attr('style');
+				var content = $('#span_'+id).text();
+				var values = { name: value, css: css, font_css: font_css, content: content};
+				labels[i] = values;
+				//console.log(feilds);
+				i++; 
+			});
+
 			var images_temp=[];
 			i=0;
 			$.each(upload_images, function(key, value){
@@ -382,13 +522,15 @@
 					        url: site_url+"/admin/templates/save_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();
 					        	alert(msg);
 					        },
 					        error: function(jqXHR, textStatus, errorThrown) {
+					        	$('#overlay').hide();
+					        	alert("Error");
 					           console.log(textStatus, errorThrown);
 					        }
 							
@@ -396,6 +538,8 @@
 					          
 			        },
 			        error: function(jqXHR, textStatus, errorThrown) {
+			        			$('#overlay').hide();
+					        	alert("Error");
 					           console.log("hello12");
 					}
 
@@ -458,12 +602,13 @@
 	            data: { "_token": token,"image": imageData,"css": "height:100%;width:100%;", "div_css": "position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none","template_id": template_id,"name": $('#image_name').val()},
 	            dataType: 'json',
 	            success: function(data) {
-
+	            	$('#myModal').modal('hide');
 	            	$('#image_name').val();
 	            	$('#card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='template_image' id='image_"+data.id+"'></div>");
 	               	$('#div_image_'+data.id).resizable();
 	               	$('#div_image_'+data.id).draggable();
 	               	upload_images[upload_images.length] = data.id; 
+	               	console.log(data.id);
 	               	
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
@@ -583,7 +728,25 @@
 			
 			$("#imageToolbar").hide();				
 		});
+
+
+		//Lable bar Codding
+
+		$('#slide_feilds').click(function(){
+			$('#table_body_lables').slideToggle();
+			$('#table_body_feilds').slideToggle();
+		});			
+
+
+		//Lable bar Codding end
+
+
+
+
+
+
       });
+
 
 
 

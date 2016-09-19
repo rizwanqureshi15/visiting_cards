@@ -40,46 +40,76 @@
     @else
         <div class="col-md-3 col-md-offset-2">
     @endif
-            <table class="table mytable" border="1" >
-                <thead>
-                    <tr class="mytheadtr">
-                        <th class="headtext">Add New Feilds</th>
-                    </tr>
-                </thead>
-               <tbody id="table_body">
+  
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Feilds    
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body" id="feild_body">
+            <div class="row">
+                <div class="col-md-8" style="padding-right:0px">
+                    <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+                </div>
+                <div class="col-md-4">
+                    <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+                </div> 
+                <div id="error"></div>
+            </div>
                     
-                    <tr>
-                        <td>
-                        <div class="row">
-                            <div class="col-md-8" style="padding-right:0px">
-                            <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
-                            <div class="col-md-4"><button id="newFeildBtn" class="btn btn-primary">OK</button>
-                            </div> 
-                            <div id="error"></div>
-                        </div>
-                        </td>
-                    </tr>
-                    @if($feilds)
-                    @foreach($feilds as $feild)
+            @if($feilds)
+                @foreach($feilds as $feild)
                     <?php
-                         $id = $feild->name;
-
+                        $id = $feild->name;
                         $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
-                       
-                    ?>
-                        <tr>
-                            <td>
-                                <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">
-                            </td>
-                        </tr>
-                    @endforeach
-                    @endif
-                            
-                       
-                </tbody>
-            </table>
-        </div>  
+                        $id = strtolower($id);   
+                    ?>        
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">               
+                @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Labels                
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-8" style="padding-right:0px">
+                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+              </div>
+              <div class="col-md-4">
+                <button id="newLabelBtn" class="btn btn-primary">OK</button>
+              </div> 
+              <div id="error_label"></div>
+            </div>
+            @if($labels)
+                @foreach($labels as $label)
+                    <?php
+                        $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);   
+                    ?>        
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+                @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+    </div>
+</div>  
 
 
         
@@ -114,6 +144,21 @@
                             <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
                                  <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
                                     {{ $feild->content }}
+                                </span>
+                            </div>
+                 @endforeach
+            @endif
+
+            @if($labels)
+                @foreach($labels as $label)
+                     <?php
+                         $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);
+                     ?>
+                            <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $label->css }}">
+                                 <span id="span_{{ $id }}" style="{{ $label->font_css }}">
+                                    {{ $label->content }}
                                 </span>
                             </div>
                  @endforeach
@@ -313,12 +358,8 @@
     var site_url = "{{ url('') }}";
     var feild_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
-    feild_names = feild_names.replace(/\[/g, '');
-    feild_names = feild_names.replace(/\]/g, '');
-    feild_names = feild_names.replace(/\"/g, '');
-    feild_names = feild_names.split(',');
+    var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $templates->id }};
-
     
 </script>
 
