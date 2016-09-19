@@ -61,8 +61,8 @@ class CardController extends Controller
                     array_push($imageids, $value->template_feild_id);
                 }
 
-                $data['feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->get();
-                
+                $data['feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['labels'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->where('is_label',1)->get();
                 $data['image_css'] = TemplateFeild::where('template_id', $data['templates']->id)->whereIn('id', $imageids)->get();
                
                 $names = array();
@@ -70,16 +70,22 @@ class CardController extends Controller
                 {
                   array_push($names, $feild->name);
                 }
-                $template_images = array();
 
+                $labels = array();
+                foreach($data['labels'] as $label)
+                {
+                  array_push($labels, $label->name);
+                }
+
+                $template_images = array();
                 foreach($data['image_css'] as $image)
                 {
                   array_push($template_images, $image->id);
                 }
 
-                $data['names']= $names;
+                $data['names'] = $names;
                 $data['template_images'] = $template_images;
-                
+                $data['template_labels'] = $labels;
                 return view('admin.cards.create', $data);
 
         }
@@ -96,7 +102,7 @@ class CardController extends Controller
         if(CardController::authenticate_admin())
         {
            
-            $feild_names = TemplateFeild::where('template_id', $request->template_id)->pluck('name','id');
+            $feild_names = TemplateFeild::where('template_id', $request->template_id)->where('is_label', 0)->pluck('name','id');
            
             foreach ($request->feilds as $feild) {
 
@@ -119,6 +125,39 @@ class CardController extends Controller
                     TemplateFeild::create($feild);
                 }
                
+            }
+
+             $label_names = TemplateFeild::where('template_id', $request->template_id)->where('is_label', 1)->pluck('name','id');
+           
+            foreach ($request->labels as $label) {
+
+                $update = 0;
+                $label['template_id'] = $request->template_id;
+                $label['is_label'] = 1;
+                 foreach ($label_names as $key => $value) {
+                        if($value == $label['name'])
+                        {
+                            $id = $key;
+                            $update = 1;
+
+                        }
+                }
+                if($update == 1)
+                {
+                     TemplateFeild::where('id', $id)->update($label);
+                }
+                else
+                {
+                    TemplateFeild::create($label);
+                }
+               
+            }
+
+            if($request->deleted_labels!=null)
+            {
+                foreach ($request->deleted_labels as $value) {
+                    TemplateFeild::where('name',$value)->where('is_label',1)->where('template_id',$request->template_id)->delete();
+                }
             }
              
             if($request->images!=null)

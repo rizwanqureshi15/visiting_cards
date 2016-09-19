@@ -85,16 +85,26 @@
           </h4>
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
+          <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-8" style="padding-right:0px">
-                <input type="text" class="form-control" id="newLableName" placeholder="Enter New Label">
+                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
               </div>
               <div class="col-md-4">
-                <button id="newLableBtn" class="btn btn-primary">OK</button>
+                <button id="newLabelBtn" class="btn btn-primary">OK</button>
               </div> 
-              <div id="error"></div>
+              <div id="error_label"></div>
             </div>
+            @if($labels)
+                @foreach($labels as $label)
+                    <?php
+                        $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);   
+                    ?>        
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+                @endforeach
+            @endif
           </div>
         </div>
       </div>
@@ -134,6 +144,21 @@
                             <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
                                  <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
                                     {{ $feild->content }}
+                                </span>
+                            </div>
+                 @endforeach
+            @endif
+
+            @if($labels)
+                @foreach($labels as $label)
+                     <?php
+                         $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);
+                     ?>
+                            <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $label->css }}">
+                                 <span id="span_{{ $id }}" style="{{ $label->font_css }}">
+                                    {{ $label->content }}
                                 </span>
                             </div>
                  @endforeach
@@ -333,6 +358,7 @@
     var site_url = "{{ url('') }}";
     var feild_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
+    var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $templates->id }};
     
 </script>

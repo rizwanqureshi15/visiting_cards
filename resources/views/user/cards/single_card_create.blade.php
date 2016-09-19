@@ -40,45 +40,74 @@
     @else
         <div class="col-md-3 col-md-offset-2">
     @endif
-            <table class="table mytable" border="1" >
-                <thead>
-                    <tr class="mytheadtr">
-                        <th class="headtext">Add New Feilds</th>
-                    </tr>
-                </thead>
-               <tbody id="table_body">
-                
-                    <tr>
-                        <td>
-                        <div class="row">
-                            <div class="col-md-8" style="padding-right:0px">
-                            <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild"></div>
-                            <div class="col-md-4"><a role="button" id="newFeildBtn" class="btn btn-primary" style="background-color:#38454f;float:right">OK</a>
-                            </div>
-                            <div id="error"></div> 
-                        </div>
-                        </td>
-                    </tr>
-                     @if($feilds)
-                    @foreach($feilds as $feild)
+           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Feilds    
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body" id="feild_body">
+            <div class="row">
+                <div class="col-md-8" style="padding-right:0px">
+                    <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+                </div>
+                <div class="col-md-4">
+                    <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+                </div> 
+                <div id="error"></div>
+            </div>
+                    
+            @if($feilds)
+                @foreach($feilds as $feild)
                     <?php
-                         $id = $feild->name;
-
+                        $id = $feild->name;
                         $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
-                        
-                    ?>
-                        <tr>
-                            <td>
-                                <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">
-                            </td>
-                        </tr>
-                    @endforeach
-                    @endif
-                       
-                </tbody>  
-            
-            </table>
+                        $id = strtolower($id);   
+                    ?>        
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">               
+                @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Labels                
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-8" style="padding-right:0px">
+                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+              </div>
+              <div class="col-md-4">
+                <button id="newLabelBtn" class="btn btn-primary">OK</button>
+              </div> 
+              <div id="error_label"></div>
+            </div>
+            @if($labels)
+                @foreach($labels as $label)
+                    <?php
+                        $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);   
+                    ?>        
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+                @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+    </div>
         </div>  
 
 
@@ -114,6 +143,20 @@
                             </div>
                  @endforeach
             @endif
+            @if($labels)
+                @foreach($labels as $label)
+                     <?php
+                         $id = $label->name;
+                        $id = str_replace(" ","_",$label->name);
+                        $id = strtolower($id);
+                     ?>
+                            <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="background-color: transparent;{{ $label->css }}">
+                                 <span id="span_{{ $id }}" style="{{ $label->font_css }}">
+                                    {{ $label->content }}
+                                </span>
+                            </div>
+                 @endforeach
+            @endif
             @if($images)
                 @foreach($images as $image)
                     @foreach($image_css as $img_css)
@@ -128,7 +171,7 @@
                         @endif
                     @endforeach
                    
-                        <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div" data-toggle='modal' data-target='#myModal'>
+                        <div id="div_image_{{ $id }}" name="{{ $img_css->name }}" style="{{ $div_css }}" class="template_image_div" data-toggle='modal' data-target='#myModal'>
                             <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                         </div>
                 @endforeach
@@ -278,14 +321,10 @@
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-    var field_names = {!! json_encode($field_names) !!}; 
+   var field_names = {!! json_encode($field_names) !!};
     var upload_images = {!! json_encode($template_images) !!};
-
-    field_names = field_names.replace(/\[/g, '');
-    field_names = field_names.replace(/\]/g, '');
-    field_names = field_names.replace(/\"/g, '');
-    field_names = field_names.split(',');
-    
+    var label_names = {!! json_encode($template_labels) !!};;
+    var template_id = {{ $template->id }};
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>

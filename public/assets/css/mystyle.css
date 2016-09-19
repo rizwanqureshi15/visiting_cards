@@ -27,6 +27,9 @@
 	padding-left: 6px;
     padding-bottom: 5px;
 }
+.feild-elements{
+    background-color: transparent;
+}
 
 .popup-toolbar
 {
@@ -157,6 +160,9 @@ position: absolute;
     margin-top:20px;
     background-color:#38454f;
     border-color:#38454f;
+}
+.sidebar-elements{
+    margin-top:10px;
 }
 .card-image
 {
