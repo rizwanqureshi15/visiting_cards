@@ -54,7 +54,6 @@ Route::post('change_password','UserController@change_password');
 
 Route::get('admin/users_list', 'AdminController@users_list');
 
-
 Route::get('mytemplates/{url}/create', 'Front\TemplatesController@get_template');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 
@@ -119,4 +118,3 @@ Route::post('upload_file/{url}','Front\TemplatesController@upload_excel_file');
 Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save');
 
 Route::get('mytemplates/{url}/delete', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
-
