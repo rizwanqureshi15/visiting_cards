@@ -102,6 +102,13 @@
 @section('js')
 
 <script>
+ 
+// $(document).ready(
+//             function() {
+//                 setInterval(function() {
+//                    	location.reload();
+//                 }, 10000);
+// });
 
 	$('#multiple_images').modal({backdrop: 'static', keyboard: false , show: true}); 
 

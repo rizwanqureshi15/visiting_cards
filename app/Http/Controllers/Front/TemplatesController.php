@@ -722,7 +722,8 @@ class TemplatesController extends Controller
         $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
 
         })->get(); 
-
+        $data['username'] = $username;
+       
         //$data['cards_data'] = json_encode($data['cards_data']);
 
         return view('multiple_cards_snap',$data);
