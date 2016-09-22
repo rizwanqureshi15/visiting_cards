@@ -618,12 +618,9 @@ class TemplatesController extends Controller
 
         foreach ($image_feilds_name as $name) 
         {
-            if(sizeof($name) > 1)
-            {
-                Session::flash($name.'_error_message',"$name field is required");
-            }
-        }dd($image_feilds_name);
-        dd(Session::all());
+            $rules[] = $name.'required';
+            //Session::flash($name.'_error_message',"$name field is required");
+        }
         
         $v = Validator::make($request->all(), $rules);
         
@@ -631,7 +628,7 @@ class TemplatesController extends Controller
         {
             return redirect()->back()->withErrors($v->errors());
         }
-
+        
         $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
         
         // Getting File Headers 
