@@ -53,13 +53,24 @@
 
     </div>
   </div>
+  <div class="form-group">
+    <div class="col-sm-5 col-md-offset-3">
+        <input type="checkbox" id="double_card" name="double_side"> Card is Double side
+    </div>
+  </div>
    <div class="form-group">
-     <label class="col-sm-3 control-label">Background Image</label>
-    <div class="col-sm-5" >
+     <label class="col-sm-3 control-label">Background Image - Front</label>
+      <div class="col-sm-5">
       {{ Form::file("background_image") }}
         @if($errors->first('background_image'))<div class="alert alert-danger">{{ $errors->first('background_image') }}</div>@endif
-     
+    </div>
+  </div>
 
+   <div class="form-group" id="back" style="display:none;">
+     <label class="col-sm-3 control-label">Background Image - Back</label>
+    <div class="col-sm-5" >
+      {{ Form::file("back_background_image") }}
+        @if($errors->first('back_background_image'))<div class="alert alert-danger">{{ $errors->first('back_background_image') }}</div>@endif
     </div>
   </div>
  <!--  <div class="col-md-offset-4 col-md-8" style="padding-bottom:20px;">OR</div>
@@ -89,31 +100,22 @@
 @section('js')
    <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
    <script type="text/javascript">
-     // $('#colorSelector').ColorPicker({
-     //    color: '#0000ff',
-     //    onShow: function (colpkr) {
-     //      $(colpkr).fadeIn(500);
-     //      return false;
-     //    },
-     //    onHide: function (colpkr) {
-     //      $(colpkr).fadeOut(500);
-     //      return false;
-     //    },
-     //    onChange: function (hsb, hex, rgb) {
-     //      $('#colorSelector div').css('backgroundColor', '#' + hex);
-     //      $('#back-color').val('#'+hex);
-     //    }
-     //  });
-     // $('#back-color').keyup(function(){
-     //    var hex =  $('#back-color').val();
-     //    console.log(hex);
-     //    $('#colorSelector div').css('backgroundColor', hex);
-     // });
      $('#temp_name').keyup(function(){
         var str = $('#temp_name').val();
         str = str.toLowerCase();
         str = str.replace(/\ /g, '-');
         $('#txt_url').val(str);
+     });
+     $('#double_card').click(function(){
+      if(this.checked)
+      {
+        $('#back').show();
+
+      }
+      else
+      {
+        $('#back').hide();
+      }
      });
     
    </script>

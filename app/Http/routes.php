@@ -124,3 +124,4 @@ Route::get('multiple_card_preview','Front\TemplatesController@show_multiple_imag
 Route::post('delete_image','Front\TemplatesController@delete_image_from_multiple_preview');
 
 Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
+Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');

@@ -4,7 +4,7 @@
 		var delete_images = [];
 		var delete_labels = [];	
 		var image_name = [];
-		var element = $("#div1"); // global variable
+		var element2 = $("#div1"); // global variable
 		var feild_color;
     	var getCanvas; 	
 
@@ -74,23 +74,23 @@
 			 }
 			
 		});
-		$(document).on("keyup", ".sidebar-elements" , function(){
+		// $(document).on("keyup", ".sidebar-elements" , function(){
 			
-			var id = $(this).attr('id');
-			var txt = $(this).val();
-			var str = id.substring(8,id.length);
-			var span_element = '#span_' + str;
+		// 	var id = $(this).attr('id');
+		// 	var txt = $(this).val();
+		// 	var str = id.substring(8,id.length);
+		// 	var span_element = '#span_' + str;
 
-			$(span_element).text(txt);
+		// 	$(span_element).text(txt);
 
-			$('#myTextBox').val(txt);
+		// 	$('#myTextBox').val(txt);
 			
-			if(txt == "")
-			{
-				$(span_element).text();
-			}	
-			$('#' + str).resizable();
-		});
+		// 	if(txt == "")
+		// 	{
+		// 		$(span_element).text();
+		// 	}	
+		// 	$('#' + str).resizable();
+		// });
 
 		$('#myTextBox').keyup(function(){
 			
@@ -124,174 +124,140 @@
 		});
 		
 		
-		$(document).on('click',".feild-elements", function(event) {
-			console.log();
-		     event.stopPropagation();
-		    var l = $('#' + element_id).css('left');
-		    var t = $('#' + element_id).css('top');
-		    var txt = $('#' +element_id).text();
-		    $('#myTextBox').val($.trim(txt));
+		// $(document).on('click',".feild-elements", function(event) {
+		// 	console.log();
+		//      event.stopPropagation();
+		//     var l = $('#' + element_id).css('left');
+		//     var t = $('#' + element_id).css('top');
+		//     var txt = $('#' +element_id).text();
+		//     $('#myTextBox').val($.trim(txt));
 
-		    t = t.substring(0,t.length - 2);
+		//     t = t.substring(0,t.length - 2);
 
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#' + element_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 10;
+		//     if( parseInt(t) < 100 )
+		//     {
+		//     	var txt_hight = $('#' + element_id).css('height');
+		//     	t = parseInt(t) + parseInt(txt_hight) + 10;
 		    	
-		    }
-		    else
-		    {
-		    	t = parseInt(t)-110;
-		    }
+		//     }
+		//     else
+		//     {
+		//     	t = parseInt(t)-110;
+		//     }
 		  
-			var selectedfont = $('#span_' + element_id).css('font-family');		 
-			$('#font-text').css('font-family', selectedfont);
-			$('#font-text').text(selectedfont);
-			 var selectedfontsize = $('#span_' + element_id).css('font-size');	
-			 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
-			 var hex = $('#span_' + element_id).css('color');	
-			 $('#colorSelector div').css('backgroundColor', '#' + hex);
-			 feild_color = rgb2hex(hex);
+		// 	var selectedfont = $('#span_' + element_id).css('font-family');		 
+		// 	$('#font-text').css('font-family', selectedfont);
+		// 	$('#font-text').text(selectedfont);
+		// 	 var selectedfontsize = $('#span_' + element_id).css('font-size');	
+		// 	 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
+		// 	 var hex = $('#span_' + element_id).css('color');	
+		// 	 $('#colorSelector div').css('backgroundColor', '#' + hex);
+		// 	 feild_color = rgb2hex(hex);
 			
-			$('#size-font').val(s).prop('selected', true);
+		// 	$('#size-font').val(s).prop('selected', true);
 
-		    t += "px";
+		//     t += "px";
 
-		    $('#myToolbar').css('left',l);
-		    $('#myToolbar').css('top',t);
+		//     $('#myToolbar').css('left',l);
+		//     $('#myToolbar').css('top',t);
 		    
-		    $("#myToolbar").show();
-		});
-		
+		//     $("#myToolbar").show();
+		// });
 
-		$('.toolbar-elements').droppable({
-			drop: function(event, ui) {
-		    console.log("call");
-		    event.stopPropagation();
-		    var element_id = $(this).attr('id')	;
-		    var l = $('#' + element_id).css('left');
-		    var t = $('#' + element_id).css('top');
-		    var txt = $('#' +element_id).text();
-		    $('#myTextBox').val($.trim(txt));
+		// //Font Style Select
+		// $(function(){
+  //       $('#font').fontselect();
 
-		    t = t.substring(0,t.length - 2);
-
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#' + element_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 10;
-		    	
-		    }
-		    else
-		    {
-		    	t = parseInt(t)-100;
-		    }
-		    
-
-		    t += "px";
-
-		    $('#myToolbar').css('left',l);
-		    $('#myToolbar').css('top',t);
-		   // $('#' + element_id).css('border', '2px dashed black');
-		    $("#myToolbar").show();
-		}
-		});
-
-		//Font Style Select
-		$(function(){
-        $('#font').fontselect();
-
-        $('.font-select').click(function(){
-        	var ft = $('#font-text').text();
-        	$('#span_'+element_id).css('font-family', ft);
-        });
-        $('#size-font').change(function(){
-        	var fs = $('#size-font').val();
+  //       $('.font-select').click(function(){
+  //       	var ft = $('#font-text').text();
+  //       	$('#span_'+element_id).css('font-family', ft);
+  //       });
+  //       $('#size-font').change(function(){
+  //       	var fs = $('#size-font').val();
         	
-        	var size = parseInt(fs) * 10;
-        	fs += 'px';
-        	size += 'px';
-        	$('#span_'+element_id).css('font-size', fs);
-        	$('#'+element_id).css('height', 'auto');
-        	var h = $('#'+element_id).css('height');
-        	var t = $('#'+element_id).css('top');
-        	var tool_height = parseInt(t) + parseInt(h) + 10;
-        	tool_height += 'px';
-        	$('#myToolbar').css('top', tool_height);
+  //       	var size = parseInt(fs) * 10;
+  //       	fs += 'px';
+  //       	size += 'px';
+  //       	$('#span_'+element_id).css('font-size', fs);
+  //       	$('#'+element_id).css('height', 'auto');
+  //       	var h = $('#'+element_id).css('height');
+  //       	var t = $('#'+element_id).css('top');
+  //       	var tool_height = parseInt(t) + parseInt(h) + 10;
+  //       	tool_height += 'px';
+  //       	$('#myToolbar').css('top', tool_height);
 
-        });
+  //       });
        
 
-        //end
-        //color picker
+  //       //end
+  //       //color picker
        
-		$(document).on('click', '.colorpicker', function(event){
-			event.stopPropagation();
-		});
+		// $(document).on('click', '.colorpicker', function(event){
+		// 	event.stopPropagation();
+		// });
 
-        $('#colorSelector').ColorPicker({
+  //       $('#colorSelector').ColorPicker({
 
-			color : '#0000ff',
-			onShow: function (colpkr) {
-				$(colpkr).fadeIn(500);
-				return false;
-			},
-			onHide: function (colpkr) {
-				$(colpkr).fadeOut(500);
-				return false;
-			},
-			onChange: function (hsb, hex, rgb) {
+		// 	color : '#0000ff',
+		// 	onShow: function (colpkr) {
+		// 		$(colpkr).fadeIn(500);
+		// 		return false;
+		// 	},
+		// 	onHide: function (colpkr) {
+		// 		$(colpkr).fadeOut(500);
+		// 		return false;
+		// 	},
+		// 	onChange: function (hsb, hex, rgb) {
 
-				$('#colorSelector div').css('backgroundColor', '#' + hex);
-				$('#span_'+element_id).css('color', '#' + hex)
-			}
+		// 		$('#colorSelector div').css('backgroundColor', '#' + hex);
+		// 		$('#span_'+element_id).css('color', '#' + hex)
+		// 	}
 
-		});
+		// });
 
-		$('#toolbardelete').click(function(){
-			var name = $('#'+element_id).data('name');
-			var type = $('#'+element_id).data('type');
-			var dlt;
+		// $('#toolbardelete').click(function(){
+		// 	var name = $('#'+element_id).data('name');
+		// 	var type = $('#'+element_id).data('type');
+		// 	var dlt;
 			
-			if(type == 'label')
-			{
-				$.each(label_names, function(key,  value){
-					if(value == name)
-					{
-						delete_labels[delete_labels.length] = name;
-						dlt=key;
-						for (var i = dlt; i< label_names.length; i++) {
-						label_names[i] = label_names[i+1];
+		// 	if(type == 'label')
+		// 	{
+		// 		$.each(label_names, function(key,  value){
+		// 			if(value == name)
+		// 			{
+		// 				delete_labels[delete_labels.length] = name;
+		// 				dlt=key;
+		// 				for (var i = dlt; i< label_names.length; i++) {
+		// 				label_names[i] = label_names[i+1];
 
-						}
-						label_names.pop();
+		// 				}
+		// 				label_names.pop();
 
-					}
-				});
-			}
-			else
-			{
-				$.each(feild_names, function(key,  value){
-					if(value == name)
-					{
-						delete_feilds[delete_feilds.length] = name;
-						dlt=key;
-						for (var i = dlt; i< feild_names.length; i++) {
-						feild_names[i] = feild_names[i+1];
+		// 			}
+		// 		});
+		// 	}
+		// 	else
+		// 	{
+		// 		$.each(feild_names, function(key,  value){
+		// 			if(value == name)
+		// 			{
+		// 				delete_feilds[delete_feilds.length] = name;
+		// 				dlt=key;
+		// 				for (var i = dlt; i< feild_names.length; i++) {
+		// 				feild_names[i] = feild_names[i+1];
 
-						}
-						feild_names.pop();
+		// 				}
+		// 				feild_names.pop();
 
-					}
-				});
+		// 			}
+		// 		});
 				
-			}
+		// 	}
 			
-			$('#'+element_id).remove();
-			$('#sidebar_'+element_id).remove();
-			$("#myToolbar").hide();			
-		});
+		// 	$('#'+element_id).remove();
+		// 	$('#sidebar_'+element_id).remove();
+		// 	$("#myToolbar").hide();			
+		// });
 
 		
      
@@ -504,10 +470,12 @@
 				//console.log(feilds);
 				i++; 
 			});
-			html2canvas(element, {
+			
+			html2canvas(element2, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
 	                getCanvas = canvas;
+	               
 	                var imgageData = getCanvas.toDataURL("image/png");
 
 	                $.ajax({
@@ -565,60 +533,58 @@
 		});
 
 
-      
-	});
-		$(function() {
-        $('.image-editor').cropit({
-          exportZoom: 1.25,
-          imageBackground: true,
-          imageBackgroundBorderWidth: 20,
-          smallImage: 'allow',
-          height: 250,
-          width: 200,
-          maxZoom: 2,
-        });
+		// $(function() {
+  //       $('.image-editor').cropit({
+  //         exportZoom: 1.25,
+  //         imageBackground: true,
+  //         imageBackgroundBorderWidth: 20,
+  //         smallImage: 'allow',
+  //         height: 250,
+  //         width: 200,
+  //         maxZoom: 2,
+  //       });
 
-        $('.rotate-cw').click(function() {
-          $('.image-editor').cropit('rotateCW');
-        });
-        $('.rotate-ccw').click(function() {
-          $('.image-editor').cropit('rotateCCW');
-        });
+  //       $('.rotate-cw').click(function() {
+  //         $('.image-editor').cropit('rotateCW');
+  //       });
+  //       $('.rotate-ccw').click(function() {
+  //         $('.image-editor').cropit('rotateCCW');
+  //       });
 
-        $('.export').click(function() {
-        	if($('#image_name').val()=='')
-        	{
-        		$('#image_error').append("<div class='alert-danger form-control'>Name feild is required..!</div>");
-        	}
-        	else
-        	{
-        		var name = $('#image_name').val();
-        		$('#image_error').remove();
-	          var imageData = $('.image-editor').cropit('export');
-	          $.ajax({
-	            url: site_url+"\\upload_template_image",
-	            type: "post",
-	            async: true,
-	            data: { "_token": token,"image": imageData,"css": "height:100%;width:100%;", "div_css": "position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none","template_id": template_id,"name": $('#image_name').val()},
-	            dataType: 'json',
-	            success: function(data) {
-	            	$('#myModal').modal('hide');
-	            	$('#image_name').val();
-	            	$('#card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='template_image' id='image_"+data.id+"'></div>");
-	               	$('#div_image_'+data.id).resizable();
-	               	$('#div_image_'+data.id).draggable();
-	               	upload_images[upload_images.length] = data.id; 
-	               	console.log(data.id);
+  //       $('.export').click(function() {
+  //       	if($('#image_name').val()=='')
+  //       	{
+  //       		$('#image_error').append("<div class='alert-danger form-control'>Name feild is required..!</div>");
+  //       	}
+  //       	else
+  //       	{
+  //       		var name = $('#image_name').val();
+  //       		$('#image_error').remove();
+	 //          var imageData = $('.image-editor').cropit('export');
+	 //          $.ajax({
+	 //            url: site_url+"\\upload_template_image",
+	 //            type: "post",
+	 //            async: true,
+	 //            data: { "_token": token,"image": imageData,"css": "height:100%;width:100%;", "div_css": "position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none","template_id": template_id,"name": $('#image_name').val()},
+	 //            dataType: 'json',
+	 //            success: function(data) {
+	 //            	$('#myModal').modal('hide');
+	 //            	$('#image_name').val();
+	 //            	$('#card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='template_image' id='image_"+data.id+"'></div>");
+	 //               	$('#div_image_'+data.id).resizable();
+	 //               	$('#div_image_'+data.id).draggable();
+	 //               	upload_images[upload_images.length] = data.id; 
+	 //               	console.log(data.id);
 	               	
-	            },
-	            error: function(jqXHR, textStatus, errorThrown) {
-	               console.log(textStatus, errorThrown);
-	            }
-        	});
-	         }
+	 //            },
+	 //            error: function(jqXHR, textStatus, errorThrown) {
+	 //               console.log(textStatus, errorThrown);
+	 //            }
+  //       	});
+	 //         }
 
                
-        });
+  //       });
         
         $(document).on('click','.template_image',function(event){
         	event.stopPropagation();
@@ -739,14 +705,6 @@
 
 
 		//Lable bar Codding end
-
-
-
-
-
-
-      });
-
 
 
 

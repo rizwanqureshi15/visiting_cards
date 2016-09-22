@@ -46,7 +46,7 @@ class CardController extends Controller
         {
 
                 $data['templates'] = Template::where('is_delete', 0)->where('url', $name)->first();
-                $data['feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->get();
+                $data['feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->where('is_back',0)->get();
                 
                 $ids = array();
                 foreach($data['feilds'] as $feild)
@@ -61,9 +61,9 @@ class CardController extends Controller
                     array_push($imageids, $value->template_feild_id);
                 }
 
-                $data['feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['labels'] = TemplateFeild::where('template_id', $data['templates']->id)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-                $data['image_css'] = TemplateFeild::where('template_id', $data['templates']->id)->whereIn('id', $imageids)->get();
+                $data['feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['labels'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['image_css'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
                
                 $names = array();
                 foreach($data['feilds'] as $feild)
@@ -86,7 +86,56 @@ class CardController extends Controller
                 $data['names'] = $names;
                 $data['template_images'] = $template_images;
                 $data['template_labels'] = $labels;
-                return view('admin.cards.create', $data);
+
+
+                $data['back_feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->where('is_back',1)->get();
+                
+                $ids = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
+
+                $data['back_images'] = TemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['back_images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['back_feilds'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['back_labels'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['back_image_css'] = TemplateFeild::where('template_id', $data['templates']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+               
+                $back_names = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($back_names, $feild->name);
+                }
+
+                $back_labels = array();
+                foreach($data['back_labels'] as $label)
+                {
+                  array_push($back_labels, $label->name);
+                }
+
+                $back_template_images = array();
+                foreach($data['back_image_css'] as $image)
+                {
+                  array_push($back_template_images, $image->id);
+                }
+
+                $data['back_names'] = $back_names;
+                $data['back_template_images'] = $back_template_images;
+                $data['back_template_labels'] = $back_labels;
+                if($data['templates']->is_both_side == 1)
+                {
+                    return view('admin.cards.create', $data);
+                }
+                else
+                {
+                    return view('admin.cards.one_side_create', $data);
+                }
 
         }
         else
@@ -102,8 +151,9 @@ class CardController extends Controller
         if(CardController::authenticate_admin())
         {
            
-            $feild_names = TemplateFeild::where('template_id', $request->template_id)->where('is_label', 0)->pluck('name','id');
-           
+            $feild_names = TemplateFeild::where('is_back',0)->where('template_id', $request->template_id)->where('is_label', 0)->pluck('name','id');
+         if($request->feilds)
+         {  
             foreach ($request->feilds as $feild) {
 
                 $update = 0;
@@ -126,33 +176,35 @@ class CardController extends Controller
                 }
                
             }
+        }
 
-             $label_names = TemplateFeild::where('template_id', $request->template_id)->where('is_label', 1)->pluck('name','id');
-           
-            foreach ($request->labels as $label) {
+             $label_names = TemplateFeild::where('is_back',0)->where('template_id', $request->template_id)->where('is_label', 1)->pluck('name','id');
+           if($request->labels)
+           {
+                foreach ($request->labels as $label) {
 
-                $update = 0;
-                $label['template_id'] = $request->template_id;
-                $label['is_label'] = 1;
-                 foreach ($label_names as $key => $value) {
-                        if($value == $label['name'])
-                        {
-                            $id = $key;
-                            $update = 1;
+                    $update = 0;
+                    $label['template_id'] = $request->template_id;
+                    $label['is_label'] = 1;
+                     foreach ($label_names as $key => $value) {
+                            if($value == $label['name'])
+                            {
+                                $id = $key;
+                                $update = 1;
 
-                        }
+                            }
+                    }
+                    if($update == 1)
+                    {
+                         TemplateFeild::where('id', $id)->update($label);
+                    }
+                    else
+                    {
+                        TemplateFeild::create($label);
+                    }
+                   
                 }
-                if($update == 1)
-                {
-                     TemplateFeild::where('id', $id)->update($label);
-                }
-                else
-                {
-                    TemplateFeild::create($label);
-                }
-               
             }
-
             if($request->deleted_labels!=null)
             {
                 foreach ($request->deleted_labels as $value) {
@@ -198,9 +250,115 @@ class CardController extends Controller
         }
         
     }
+     public function back_card_save(Request $request)
+    {
+        if(CardController::authenticate_admin())
+        {
+           
+            $feild_names = TemplateFeild::where('is_back',1)->where('template_id', $request->template_id)->where('is_label', 0)->pluck('name','id');
+         if($request->feilds)
+         {  
+            foreach ($request->feilds as $feild) {
+
+                $update = 0;
+                $feild['template_id'] = $request->template_id;
+                 foreach ($feild_names as $key => $value) {
+                        if($value == $feild['name'])
+                        {
+                            $id = $key;
+                            $update = 1;
+
+                        }
+                }
+                $feild['is_back'] = 1;
+                if($update == 1)
+                {
+                     TemplateFeild::where('id', $id)->update($feild);
+                }
+                else
+                {
+                    TemplateFeild::create($feild);
+                }
+               
+            }
+        }
+
+             $label_names = TemplateFeild::where('is_back',1)->where('template_id', $request->template_id)->where('is_label', 1)->pluck('name','id');
+           if($request->labels)
+           {
+                foreach ($request->labels as $label) {
+
+                    $update = 0;
+                    $label['template_id'] = $request->template_id;
+                    $label['is_label'] = 1;
+                     foreach ($label_names as $key => $value) {
+                            if($value == $label['name'])
+                            {
+                                $id = $key;
+                                $update = 1;
+
+                            }
+                    }
+                    $label['is_back'] = 1;
+                    if($update == 1)
+                    {
+                         TemplateFeild::where('id', $id)->update($label);
+                    }
+                    else
+                    {
+                        TemplateFeild::create($label);
+                    }
+                   
+                }
+            }
+            if($request->deleted_labels!=null)
+            {
+                foreach ($request->deleted_labels as $value) {
+                    TemplateFeild::where('is_back',1)->where('name',$value)->where('is_label',1)->where('template_id',$request->template_id)->delete();
+                }
+            }
+             
+            if($request->images!=null)
+            {
+                foreach ($request->images as $image) {
+
+                    TemplateFeild::where('id',$image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
+
+                }
+            }
+            if($request->deleted_images!=null)
+            {
+
+                foreach ($request->deleted_images as $value) {
+
+                    $image_name = TemplateImage::where('template_feild_id',$value)->first();
+                    @unlink(public_path("templates\\images\\".$image_name->src));
+                    TemplateImage::where('template_feild_id',$value)->delete();
+                    TemplateFeild::where('id',$value)->delete();
+                }
+            }
+            if($request->deleted_feilds!=null)
+            {
+                foreach ($request->deleted_feilds as $value) {
+                    TemplateFeild::where('name',$value)->where('is_back',1)->where('template_id',$request->template_id)->delete();
+                }
+            }
+            $image = Template::where('id', $request->template_id)->pluck('back_snap');
+            Template::where('id', $request->template_id)->update(["back_snap" => $request->snap]);
+            @unlink(public_path("templates/snaps/".$image[0]));
+    
+            return json_encode("Successfully Saved..!");
+              
+        }
+        else
+        {
+                return redirect()->back();
+        }
+        
+    }
      public function save_image(Request $request)
     {
-
+        
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
@@ -234,7 +392,7 @@ class CardController extends Controller
             } 
             file_put_contents($path .'/'. $name .'.png', $data);
             
-            $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+            $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
 
            $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
             
