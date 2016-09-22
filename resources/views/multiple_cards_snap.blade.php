@@ -12,11 +12,16 @@
                     </div>
              @endif
         </div>
-        
-        <!--<div class="col-md-10 col-md-offset-1">
+
+        <!--  style="z-index:1;position: absolute;top: 50%;left: 50%;margin-left: -(X/2)px;margin-top: -(Y/2)px;" -->
+        <div id="user_overlay">
+            <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
+        </div>
+
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="col-md-12">-->
-                    <div class="col-md-3"></div>   
+                <div class="col-md-12">
+
                         @foreach($template_data as $template)
 
                             <div class="col-md-7" style="margin-top:20px;">
@@ -24,8 +29,9 @@
                                 <canvas id="canvas_id" width="680" height="419">
                                 </canvas>
                                     <div id="card_body">
-                                        @if($feilds)
-                                            @foreach($feilds as $f)
+                                        
+                                        @if($user_feilds)
+                                            @foreach($user_feilds as $f)
                                                  <?php
                                                     $id = $f->name;
                                                     $id = str_replace(" ","_",$f->name);
@@ -33,9 +39,9 @@
                                                  ?>
 
                                                   <div id="{{ $id }}" data-name="{{ $f->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $f->css }}">
-                                                      <span id="span_{{ $id }}" style="{{ $f->font_css }};">
-                                                                 
-                                                         </span>
+                                                        <span id="span_{{ $id }}" style="{{ $f->font_css }};">
+                                                                 {{ $f->content }}
+                                                        </span>
                                                   </div>
                                              @endforeach
                                         @endif
@@ -65,12 +71,7 @@
 
                                 </div>
                             </div>
-                        @endforeach
-        <!--        </div>
-            </div>
-        </div> -->
-
-    
+                        @endforeach     
     
     </div>
 </div>
@@ -81,13 +82,14 @@
 <script>
   
 
-    var  site_url = "{{url('')}}";
+    var site_url = "{{url('')}}";
     var page_no = 1;
     var last_page = false;
     var element = $("#multiple_user_card_snap");
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
     var username = "{{ Auth::user()->username }}";
+    var i = 2;
 
     var img_name = {!! json_encode($image_feilds_name) !!};
 
@@ -95,13 +97,13 @@
     $(document).ready(function(){
         $.each(multiple_cards, function( i,val ) 
         {
+            i = i+2;
             $.each(val, function(key, value){
                 $('#span_'+key).text(value);
                 $.each(img_name,function(k, v){
-                    console.log(key+' '+k);
+                    
                     if(key == k)
                     {
-                        
                         $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
                     }
                 });
@@ -120,9 +122,13 @@
                 url: site_url+'/multiple_save_cards',
                 dataType: 'json',
                 data: {"_token": token ,"image": imgageData},
-                success : function(image){
-                        
-                    } 
+                success : function(image)
+                    {
+                        if(multiple_cards.length == i)
+                        {
+                            window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
+                        }
+                    }
                     }).fail(function(data){
                         var errors = data.responseJSON;
                     });
@@ -133,6 +139,9 @@
               
               
         });
+       
+
+       
     });
     $(document).ready(function() {
         var win = $(window);
