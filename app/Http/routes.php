@@ -54,7 +54,6 @@ Route::post('change_password','UserController@change_password');
 
 Route::get('admin/users_list', 'AdminController@users_list');
 
-
 Route::get('mytemplates/{url}/create', 'Front\TemplatesController@get_template');
 Route::post('admin/check_employeename','AdminController@check_employeename');
 

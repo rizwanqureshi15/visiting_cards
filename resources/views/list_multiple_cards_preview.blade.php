@@ -18,45 +18,49 @@
                 <div class="col-md-12">-->
                     <div class="col-md-3"></div>   
                         @foreach($template_data as $template)
+
                             <div class="col-md-7" style="margin-top:20px;">
                                 <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                                 <canvas id="canvas_id" width="680" height="419">
                                 </canvas>
                                     <div id="card_body">
-
                                         @if($feilds)
-
                                             @foreach($feilds as $f)
-                                                <?php
-                                                    
-                                                    $id = $f->name; 
+                                                 <?php
+                                                    $id = $f->name;
                                                     $id = str_replace(" ","_",$f->name);
                                                     $id = strtolower($id);
-                                                    
-                                                ?>
-                                            
-                                                <div id="{{ $id }}" data-name="{{ $f->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $f->css }}">
-                                                    <span id="span_{{ $id }}" style="{{ $f->font_css }};">
-                                                         
-                                                    </span>
-                                                </div>
-                                            @endforeach
+                                                 ?>
 
+                                                  <div id="{{ $id }}" data-name="{{ $f->name }}" class='idcard-transperent ui-widget-content textbox-size feild-elements' style="{{ $f->css }}">
+                                                      <span id="span_{{ $id }}" style="{{ $f->font_css }};">
+                                                                 
+                                                         </span>
+                                                  </div>
+                                             @endforeach
                                         @endif
 
-                                         @if($images)
+
+                                        @if($images)
                                             @foreach($images as $image)
-                                                <?php
-                                                    $id = $image->id;
-                                                    $src = $image->src;
-                                                    $css = $image->css;
-                                                    $div_css = $image->div_css;
-                                                ?>
-                                                    <div id="div_image_{{ $id }}" style="{{ $div_css }}" class="template_image_div">
-                                                        <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+                                                @foreach($image_css as $img_css)
+                                                    @if($img_css->id == $image->template_feild_id )
+                                                         <?php
+                                                            $id = $img_css->id;
+                                                            $src = $image->src;
+                                                            $css = $img_css->font_css;
+                                                            $div_css = $img_css->css;
+                                                            $name = $img_css->name;
+                                                        ?>
+                                                    @endif
+                                                @endforeach
+
+                                                    <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
+                                                        <img src="{{ url('templates/images/'.$name.'', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                                                     </div>
                                             @endforeach
                                         @endif
+
                                         </div>
 
                                 </div>
@@ -83,6 +87,9 @@
     var element = $("#multiple_user_card_snap");
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
+    var username = "{{ Auth::user()->username }}";
+
+    var img_name = {!! json_encode($image_feilds_name) !!};
 
     var multiple_cards = {!! json_encode($cards_data) !!};
     $(document).ready(function(){
@@ -90,6 +97,17 @@
         {
             $.each(val, function(key, value){
                 $('#span_'+key).text(value);
+                $.each(img_name,function(k, v){
+                    console.log(key+' '+k);
+                    if(key == k)
+                    {
+                        
+                        $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
+                    }
+                });
+                
+
+                
             });
             
              html2canvas(element, {
@@ -103,7 +121,7 @@
                 dataType: 'json',
                 data: {"_token": token ,"image": imgageData},
                 success : function(image){
-                        alert('save');
+                        
                     } 
                     }).fail(function(data){
                         var errors = data.responseJSON;
