@@ -223,7 +223,7 @@ class TemplatesController extends Controller
        {
             foreach ($request->images as $image) {
 
-               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'name'=> $image['name'], 'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
 
                 $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
                 UserTemplateImage::create([ 'src' => $image_data->src, 'template_feild_id' => $id]);
@@ -616,19 +616,19 @@ class TemplatesController extends Controller
 
         $rules = ['excel_file' => 'required'];
 
-        foreach ($image_feilds_name as $name) 
-        {
-            $rules[] = $name.'required';
-            //Session::flash($name.'_error_message',"$name field is required");
-        }
-        
-        $v = Validator::make($request->all(), $rules);
-        
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v->errors());
-        }
-        
+        // foreach ($image_feilds_name as $name) 
+        // {
+        //     //Session::flash($name.'_error_message',"$name field is required");
+            
+        // }
+
+        // $v = Validator::make($request->all(), $rules);
+        // dd();
+        // if($v->fails())
+        // {
+        //     return redirect()->back()->withErrors($v->errors());
+        // }
+
         $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
         
         // Getting File Headers 
@@ -698,12 +698,14 @@ class TemplatesController extends Controller
             { 
                 File::makeDirectory($path);
             } 
+
+            $id = str_replace(" ","_",$name);
+            $id = strtolower($id);
           
-            $files = $request->$name;
+            $files = $request->$id;
             
             foreach($files as $file)
             {
-
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
                 $picture = $filename;

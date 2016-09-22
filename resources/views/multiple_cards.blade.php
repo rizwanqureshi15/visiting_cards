@@ -34,11 +34,15 @@
 		    </div>
 		    
 		    @foreach($image_feilds_name as $feild_name)
-
+		    	<?php
+		    		$id = $feild_name->name; 
+                    $id = str_replace(" ","_",$feild_name->name);
+                    $id = strtolower($id);
+		    	?>
 			    <div class="form-group">
 			    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload {{ $feild_name->name }}</label>
 				    <div class="col-sm-5">
-				      <input type="file" class="form-control" id="inputEmail3" name="{{ $feild_name->name }}[]" multiple="multiple" style="margin-top:10px;">
+				      <input type="file" class="form-control" id="inputEmail3" name="{{ $id }}[]" multiple="multiple" style="margin-top:10px;">
 				      
 				      @if(Session::has($feild_name->name.'_error_message'))
 	                    <span class="help-block" style="color:red;">
