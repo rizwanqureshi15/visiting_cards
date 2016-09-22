@@ -119,5 +119,9 @@ Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save
 
 Route::get('mytemplates/{url}/delete', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
 
-Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
+Route::get('multiple_card_preview','Front\TemplatesController@show_multiple_image_preview');
 
+Route::post('delete_image','Front\TemplatesController@delete_image_from_multiple_preview');
+
+Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
+Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
