@@ -33,129 +33,116 @@
       }
 
 </style>
-
-    <div class="row">
-    @if($templates->type == "horizontal")
-        <div class="col-md-3">
-    @else
-        <div class="col-md-3 col-md-offset-2">
-    @endif
-  
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Feilds    
-            </a>
-          </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body" id="feild_body">
-            <div class="row">
-                <div class="col-md-8" style="padding-right:0px">
-                    <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
-                </div>
-                <div class="col-md-4">
-                    <button id="newFeildBtn" class="btn btn-primary">OK</button>     
-                </div> 
-                <div id="error"></div>
-            </div>
-                    
-            @if($feilds)
-                @foreach($feilds as $feild)
-                    <?php
-                        $id = $feild->name;
-                        $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);   
-                    ?>        
-                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">               
-                @endforeach
-            @endif
-          </div>
-        </div>
+<div id="front_side" style="display:block;"> 
+<div class="row">
+  @if($templates->type == "horizontal")
+    <div class="col-md-3" >
+  @else
+    <div class="col-md-3 col-md-offset-2">
+  @endif
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+             Feilds    
+          </a>
+        </h4>
       </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Labels                
-            </a>
-          </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body" id="label_body">
-            <div class="row">
-              <div class="col-md-8" style="padding-right:0px">
-                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
-              </div>
-              <div class="col-md-4">
-                <button id="newLabelBtn" class="btn btn-primary">OK</button>
-              </div> 
-              <div id="error_label"></div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body" id="feild_body">
+          <div class="row">
+            <div class="col-md-8" style="padding-right:0px">
+              <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
             </div>
-            @if($labels)
-                @foreach($labels as $label)
-                    <?php
-                        $id = $label->name;
-                        $id = str_replace(" ","_",$label->name);
-                        $id = strtolower($id);   
-                    ?>        
-                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
-                @endforeach
-            @endif
-          </div>
+            <div class="col-md-4">
+              <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+            </div> 
+            <div id="error"></div>
+          </div>            
+        @if($feilds)
+          @foreach($feilds as $feild)
+            <?php
+              $id = $feild->name;
+              $id = str_replace(" ","_",$feild->name);
+              $id = strtolower($id);  
+            ?>        
+          <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">  @endforeach
+        @endif
         </div>
       </div>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Labels                
+          </a>
+        </h4>
+      </div>
+      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body" id="label_body">
+          <div class="row">
+            <div class="col-md-8" style="padding-right:0px">
+              <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+            </div>
+            <div class="col-md-4">
+              <button id="newLabelBtn" class="btn btn-primary">OK</button>
+            </div> 
+            <div id="error_label"></div>
+          </div>
+          @if($labels)
+            @foreach($labels as $label)
+              <?php
+                $id = $label->name;
+                $id = str_replace(" ","_",$label->name);
+                $id = strtolower($id);   
+              ?>        
+              <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+            @endforeach
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
 </div>  
 
+@if($templates->type == 'horizontal')
+  <div class="col-md-9">
+    <div class="canvasBorder" style="height:421px;width:682px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
+        <canvas id="canvas1" width="680" height="418">
+        </canvas>
+@else
+  <div class="col-md-6">
+    <div class="canvasBorder"  style="height:650px;width:402px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
+        <canvas id="canvas1" width="400" height="648">
+        </canvas>
+@endif
+<div id="card_body" style="">
+  @if($feilds)
+    @foreach($feilds as $feild)
+      <?php
+        $id = $feild->name;
+        $id = str_replace(" ","_",$feild->name);
+        $id = strtolower($id);
+      ?>
+      <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements'  style="{{ $feild->css }}">
+          <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
+            {{ $feild->content }}
+          </span>
+      </div>
+    @endforeach
+  @endif
 
-        
-            <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
-            -->
-
-            @if($templates->type == 'horizontal')
-                <div class="col-md-9">
-                <div class="canvasBorder" style="height:421px;width:682px;">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <canvas id="canvas1" width="680" height="419">
-                </canvas>
-            @else
-                <div class="col-md-6">
-                <div class="canvasBorder"  style="height:650px;width:402px;">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
-                
-                <canvas id="canvas1" width="400" height="648">
-                </canvas>
-             @endif
-            
-     <!--    <input type="hidden" id="template_id" value="{{ $templates->id }}"/> -->
-        
-        <div id="card_body">
-            @if($feilds)
-                @foreach($feilds as $feild)
-                     <?php
-                         $id = $feild->name;
-                        $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
-                     ?>
-                            <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
-                                 <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
-                                    {{ $feild->content }}
-                                </span>
-                            </div>
-                 @endforeach
-            @endif
-
-            @if($labels)
-                @foreach($labels as $label)
-                     <?php
-                         $id = $label->name;
-                        $id = str_replace(" ","_",$label->name);
-                        $id = strtolower($id);
-                     ?>
+  @if($labels)
+    @foreach($labels as $label)
+      <?php
+        $id = $label->name;
+        $id = str_replace(" ","_",$label->name);
+        $id = strtolower($id);
+    ?>
                             <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $label->css }}">
                                  <span id="span_{{ $id }}" style="{{ $label->font_css }}">
                                     {{ $label->content }}
@@ -185,7 +172,251 @@
             @endif
         </div>
 
-        <!--Toolebasr start-->
+        
+         
+         <!--Image Toolbar Start-->
+        <div id="imageToolbar" class="popup-imagetoolbar row col-md-12" style="display:none">
+            <!--Image Shape-->
+                <div class="col-md-5 imagetoolbar_section" >
+                    <div class="squere_shape"></div>
+                    <div class="round_shape"></div>
+                </div>
+            <!--Image Shape End-->
+            <!--Image Border-->
+                <div class="col-md-4 imagetoolbar_section" >
+                    <div id="image_border">Show Border</div>
+                </div>
+            <!--Image Border End-->
+            <!--Image Delete-->
+                <div class="col-md-3 imagetoolbar_Section" style="padding:3px;">
+                  <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:3px;border-radius:0px" id="imagetoolbardelete">
+                </div>
+            <!--Image Delete End-->
+        </div>
+        <!--Image Toolbar End-->
+        </div>
+        <!-- <div id="slider" style="margin-top:20px;"></div> -->
+    </div>
+    @if($templates->type == "horizontal")
+    <div style="margin-right:20px">
+    @else
+    <div style="margin-right:57px;">
+    @endif
+        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
+            Save
+         </a>
+          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
+            Show Borders
+         </a>
+         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
+              Upload Image
+        </a>
+    </div>
+   
+    </div>
+    
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="back_side" style="display:none;">
+  <div class="row">
+  @if($templates->type == "horizontal")
+    <div class="col-md-3" >
+  @else
+    <div class="col-md-3 col-md-offset-2">
+  @endif
+  <div class="panel-group" id="accordion_back" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseOne_back" aria-expanded="true" aria-controls="collapseOne_back">
+             Feilds    
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne_back" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body" id="back_feild_body">
+          <div class="row">
+            <div class="col-md-8" style="padding-right:0px">
+              <input type="text" class="form-control" id="back_newFeildName" placeholder="Enter New Feild">
+            </div>
+            <div class="col-md-4">
+              <button id="back_newFeildBtn" class="btn btn-primary">OK</button>     
+            </div> 
+            <div id="back_error"></div>
+          </div>            
+        @if($back_feilds)
+          @foreach($back_feilds as $feild)
+            <?php
+              $id = $feild->name;
+              $id = str_replace(" ","_",$feild->name);
+              $id = strtolower($id);  
+            ?>        
+          <input type="text" id="back_sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">  @endforeach
+        @endif
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseTwo_back" aria-expanded="false" aria-controls="collapseTwo_back">
+              Labels                
+          </a>
+        </h4>
+      </div>
+      <div id="collapseTwo_back" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body" id="label_body">
+          <div class="row">
+            <div class="col-md-8" style="padding-right:0px">
+              <input type="text" class="form-control" id="back_newLabelName" placeholder="Enter New Label">
+            </div>
+            <div class="col-md-4">
+              <button id="back_newLabelBtn" class="btn btn-primary">OK</button>
+            </div> 
+            <div id="back_error_label"></div>
+          </div>
+          @if($back_labels)
+            @foreach($back_labels as $label)
+              <?php
+                $id = $label->name;
+                $id = str_replace(" ","_",$label->name);
+                $id = strtolower($id);   
+              ?>        
+              <input type="text" id="back_sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+            @endforeach
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+@if($templates->type == 'horizontal')
+  <div class="col-md-9">
+    <div class="canvasBorder" style="height:421px;width:682px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:419px;width:680px;">
+        <canvas id="canvas2" width="680" height="419">
+        </canvas>
+@else
+  <div class="col-md-6">
+    <div class="canvasBorder"  style="height:650px;width:402px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:648px;width:400px;">
+        <canvas id="canvas2" width="400" height="648">
+        </canvas>
+@endif
+<div id="back_card_body" style="">
+  @if($back_feilds)
+    @foreach($back_feilds as $feild)
+      <?php
+        $id = $feild->name;
+        $id = str_replace(" ","_",$feild->name);
+        $id = strtolower($id);
+      ?>
+      <div id="back_{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content back-textbox-size feild-elements'  style="{{ $feild->css }}">
+          <span id="back_span_{{ $id }}" style="{{ $feild->font_css }}">
+            {{ $feild->content }}
+          </span>
+      </div>
+    @endforeach
+  @endif
+
+  @if($back_labels)
+    @foreach($back_labels as $label)
+      <?php
+        $id = $label->name;
+        $id = str_replace(" ","_",$label->name);
+        $id = strtolower($id);
+    ?>
+    <div id="back_{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content back-textbox-size feild-elements' style="{{ $label->css }}">
+       <span id="back_span_{{ $id }}" style="{{ $label->font_css }}">
+        {{ $label->content }}
+      </span>
+    </div>
+    @endforeach
+  @endif
+  @if($back_images)
+    @foreach($back_images as $image)
+      @foreach($back_image_css as $img_css)
+        @if($img_css->id == $image->template_feild_id )
+          <?php
+            $id = $img_css->id;
+            $src = $image->src;
+            $css = $img_css->font_css;
+            $div_css = $img_css->css;
+            $name = $img_css->name;
+          ?>
+         @endif
+      @endforeach
+             
+      <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
+        <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+      </div>
+    @endforeach
+  @endif
+</div>
+         
+         <!--Image Toolbar Start-->
+        <div id="back_imageToolbar" class="popup-imagetoolbar row col-md-12" style="display:none">
+            <!--Image Shape-->
+                <div class="col-md-5 imagetoolbar_section" >
+                    <div class="squere_shape"></div>
+                    <div class="round_shape"></div>
+                </div>
+            <!--Image Shape End-->
+            <!--Image Border-->
+                <div class="col-md-4 imagetoolbar_section" >
+                    <div id="back_image_border">Show Border</div>
+                </div>
+            <!--Image Border End-->
+            <!--Image Delete-->
+                <div class="col-md-3 imagetoolbar_Section" style="padding:3px;">
+                  <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:3px;border-radius:0px" id="back_imagetoolbardelete">
+                </div>
+            <!--Image Delete End-->
+        </div>
+        <!--Image Toolbar End-->
+        </div>
+        <!-- <div id="slider" style="margin-top:20px;"></div> -->
+    </div>
+    @if($templates->type == "horizontal")
+    <div style="margin-right:20px">
+    @else
+    <div style="margin-right:57px;">
+    @endif
+        <a id="back_btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
+            Save
+         </a>
+          <a id="back_btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
+            Show Borders
+         </a>
+         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
+              Upload Image
+        </a>
+    </div>
+   
+    </div>
+    
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2 col-md-offset-3">
+      <button class="btn btn-primary btn-lg" id="front_back">Back</button>
+  </div>
+  <div class="row">
+    <!--Toolebasr start-->
 
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
         <div class="col-md-12" style="padding:0px;">
@@ -248,34 +479,8 @@
         <!--Toolbar Textbox end-->
 
         </div><!--Toolbar end-->
-         
-         <!--Image Toolbar Start-->
-        <div id="imageToolbar" class="popup-imagetoolbar row col-md-12" style="display:none">
-            <!--Image Shape-->
-                <div class="col-md-5 imagetoolbar_section" >
-                    <div class="squere_shape"></div>
-                    <div class="round_shape"></div>
-                </div>
-            <!--Image Shape End-->
-            <!--Image Border-->
-                <div class="col-md-4 imagetoolbar_section" >
-                    <div id="image_border">Show Border</div>
-                </div>
-            <!--Image Border End-->
-            <!--Image Delete-->
-                <div class="col-md-3 imagetoolbar_Section" style="padding:3px;">
-                  <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:3px;border-radius:0px" id="imagetoolbardelete">
-                </div>
-            <!--Image Delete End-->
-        </div>
-        <!--Image Toolbar End-->
-
-
-       
-
-
-
-        <!-- Modal -->
+  </div>
+<!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -306,28 +511,8 @@
                 </div>
               </div>
             </div>
-        </div>
-        <!-- <div id="slider" style="margin-top:20px;"></div> -->
-    </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
-    </div>
-   
-    </div>
-    
-    </div>
+</div>
+
    
 
 
@@ -337,29 +522,38 @@
  
     <script>
 
-    $(document).ready(function(){
-        $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
-        });
-        // $( "#slider" ).slider({
-        //     value: 100,
-        //     slide: function( event, ui ) {
-        //         var opacity = $('#slider').slider("value");
-        //         opacity = parseInt(opacity)/100;
-        //         $('#div1').css('opacity', opacity);
-        //         console.log(opacity);
-        //     }
-        // });
-    });
-    
-
-    
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
     var feild_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
-    var label_names = {!! json_encode($template_labels) !!};;
+    var label_names = {!! json_encode($template_labels) !!};
+    var back_feild_names = {!! json_encode($back_names) !!};
+    var back_upload_images = {!! json_encode($back_template_images) !!};
+    var back_label_names = {!! json_encode($back_template_labels) !!};;
     var template_id = {{ $templates->id }};
+    var side = "back_";
+
+       $(document).ready(function(){
+        $("#flip").click(function(){
+            $("#panel").slideToggle("slow");
+        });
+       $("#front_back").click(function(){
+          if($(this).text() == "Front")
+          {
+              $(this).text("Back");
+              $("#front_side").show();
+              $("#back_side").hide();
+              side = "";
+          }
+          else
+          { 
+              $(this).text("Front");
+              $("#back_side").show();
+              $("#front_side").hide();
+              side = "back_";
+          }
+       });
+    });
     
 </script>
 
@@ -370,5 +564,6 @@
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
+    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
 
 @endsection

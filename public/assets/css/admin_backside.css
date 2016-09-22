@@ -1,0 +1,246 @@
+.mytable
+{
+    border-style: solid;
+    border-size:22px;
+    border-color:#b5babf;
+    margin-bottom: 0px;
+    
+}
+.button-selected{
+    background-color: #d8d9db;
+    box-shadow: -1px 2px 3px #595959 inset;
+}
+.mytheadtr
+{
+    background-color:#38454f;
+}
+.headtext
+{
+    font-size:15px;
+    color:#fff;
+    font-family:Verdana;
+}
+.back-textbox-size
+{
+    border:2px dashed black;
+    width:200px;
+    position: absolute;
+    padding-left: 6px;
+    padding-bottom: 5px;
+    background-color: transparent;
+
+}
+.popup-toolbar
+{
+position: absolute;
+    display: none;
+    box-shadow: 2px 2px 8px -2px #888;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    background-color: #fff;
+    font-size: 11px;
+    -ms-touch-action: none;
+    touch-action: none;
+    
+    height:100px;
+    width:500px;
+    left:0px;
+    top:0px;
+
+}
+.toolbar-textbox{
+    box-sizing: border-box;
+    position: relative;
+    min-height: 30px;
+    padding: 5px .4em 4px .4em;
+    margin: 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    color: #38454f;
+    vertical-align: middle;
+    background-clip: padding-box;
+    outline: 0 none;
+    border: 1px solid #b5babf;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+
+    background-color: #f0f2f3;
+    position: relative;
+    top:10px;
+    left:10px;
+    height: 30px;
+    width: 480px;
+}
+.toolbar-fontbox{
+    height:40px;
+    width:150px;
+}
+
+.font-text
+{
+    height:36px;
+    margin-top:8px;
+    color:black;
+    width:74px;
+    font-size: 13px;
+    float: left;
+    background-color: white;
+    border-radius: 20px;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 8px -5px #000 inset;
+}
+#panel{
+    bottom:0%;
+    position: absolute;
+    left: -100px;
+    text-align: center;
+    display: none;
+    background-color: white;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+}
+.myFont
+{
+    font-size:15px;
+}
+.back-feild-elements
+{
+    cursor: pointer;
+}
+.delete-category{
+    
+}
+.back-sidebar-elements{
+     margin-top:10px;
+}
+
+//admin css
+.background_opacity{
+    margin-top:20px;
+}
+.newfeildcss{
+    display:none;
+}
+.back_template_image{
+    cursor:pointer;
+
+}
+.back_template_image_div{
+    background-color: transparent;
+    
+}
+.squere_shape{
+    position: absolute;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    top:10px;
+    background-color: transparent;
+}
+.round_shape{
+    background-color: transparent;
+    position: absolute;
+    top:10px;
+    left:40px;
+    height:20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 50PX;
+}
+.popup-imagetoolbar{
+
+    position: absolute;
+    display: none;
+    box-shadow: 2px 2px 8px -2px #888;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    background-color: #fff;
+    font-size: 11px;
+    -ms-touch-action: none;
+    touch-action: none;
+    
+    height:50px;
+    width:190px;
+    left:0px;
+    top:0px;
+    padding:0px;
+}
+.imagetoolbar_section{
+    height:50px;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    padding:10px;
+    cursor: pointer;
+}
+#imagetoolbardelete{
+    cursor: pointer;
+}
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    z-index: 3;
+
+}
+#loading {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -28px 0 0 -25px;
+}
+
+//crop
+  .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 5px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 350px;
+        height: 350px;
+        margin-left:110px;
+      }
+
+      .cropit-preview-image-container {
+        cursor: move;
+      }
+
+      .cropit-preview-background {
+        opacity: .2;
+        cursor: auto;
+      }
+
+      .image-size-label {
+        margin-top: 10px;
+      }
+      .export {
+        /* Use relative position to prevent from being covered by image background */
+        position: relative;
+        z-index: 10;
+        display: block;
+      }

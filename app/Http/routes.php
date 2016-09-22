@@ -120,3 +120,5 @@ Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save
 
 Route::get('mytemplates/{url}/delete', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
 
+Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
+
