@@ -361,7 +361,7 @@
       @endforeach
              
       <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
-        <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+        <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="back_template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
       </div>
     @endforeach
   @endif
@@ -531,7 +531,7 @@
     var back_upload_images = {!! json_encode($back_template_images) !!};
     var back_label_names = {!! json_encode($back_template_labels) !!};;
     var template_id = {{ $templates->id }};
-    var side = "back_";
+    var side = "";
 
        $(document).ready(function(){
         $("#flip").click(function(){

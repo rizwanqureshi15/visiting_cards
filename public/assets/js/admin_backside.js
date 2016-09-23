@@ -539,7 +539,7 @@
 					        url: site_url+"/admin/templates/save_back_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();
@@ -631,7 +631,7 @@
 	            success: function(data) {
 	            	$('#myModal').modal('hide');
 	            	$('#'+side+'image_name').val();
-	            	$('#'+side+'card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content back_template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='back_template_image' id='image_"+data.id+"'></div>");
+	            	$('#'+side+'card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='"+side+"template_image' id='image_"+data.id+"'></div>");
 	               	$('#div_image_'+data.id).resizable();
 	               	$('#div_image_'+data.id).draggable();
 	               	if(side == "back_")
@@ -657,15 +657,15 @@
         	event.stopPropagation();
         	image_id = $(this).attr('id');
 
-        	var l = $('#back_div_' + image_id).css('left');
-		    var t = $('#back_div_' + image_id).css('top');
+        	var l = $('#div_' + image_id).css('left');
+		    var t = $('#div_' + image_id).css('top');
 
 		    t = t.substring(0,t.length - 2);
 		    l = l.substring(0,l.length - 2);
 		    l = parseInt(l) + 15;
 		    if( parseInt(t) < 100 )
 		    {
-		    	var txt_hight = $('#back_div_' + image_id).css('height');
+		    	var txt_hight = $('#div_' + image_id).css('height');
 		    	t = parseInt(t) + parseInt(txt_hight) + 5;
 		    	
 		    }
@@ -742,7 +742,7 @@
 		$(document).on('click','#back_imagetoolbardelete', function(){
 			var id = $('#'+image_id).data('id');
 			$('#'+image_id).remove();
-			$('#back_div_'+image_id).remove();
+			$('#div_'+image_id).remove();
 			var dlt;
 			$.each(back_upload_images, function(key,  value){
 				if(value == id)

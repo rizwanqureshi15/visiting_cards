@@ -94,9 +94,8 @@ class TemplatesController extends Controller
 
     public function get_template($url)
     {
-
-                $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
-                $data['feilds'] = TemplateFeild::where('template_id',$data['template']->id)->get();
+  $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
+                $data['feilds'] = TemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
                 
                 $ids = array();
                 foreach($data['feilds'] as $feild)
@@ -111,9 +110,9 @@ class TemplatesController extends Controller
                     array_push($imageids, $value->template_feild_id);
                 }
 
-                $data['feilds'] = TemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['labels'] = TemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-                $data['image_css'] = TemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+                $data['feilds'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['labels'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['image_css'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
                
                 $names = array();
                 foreach($data['feilds'] as $feild)
@@ -133,11 +132,61 @@ class TemplatesController extends Controller
                   array_push($template_images, $image->id);
                 }
 
-                $data['field_names'] = $names;
+                $data['names'] = $names;
                 $data['template_images'] = $template_images;
                 $data['template_labels'] = $labels;
 
-        return view('user.templates.create',$data);
+
+                $data['back_feilds'] = TemplateFeild::where('template_id',$data['template']->id)->where('is_back',1)->get();
+                
+                $ids = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
+
+                $data['back_images'] = TemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['back_images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['back_feilds'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['back_labels'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['back_image_css'] = TemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+               
+                $back_names = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($back_names, $feild->name);
+                }
+
+                $back_labels = array();
+                foreach($data['back_labels'] as $label)
+                {
+                  array_push($back_labels, $label->name);
+                }
+
+                $back_template_images = array();
+                foreach($data['back_image_css'] as $image)
+                {
+                  array_push($back_template_images, $image->id);
+                }
+
+                $data['back_names'] = $back_names;
+                $data['back_template_images'] = $back_template_images;
+                $data['back_template_labels'] = $back_labels;
+                if($data['template']->is_both_side == 1)
+                {
+                   return view('user.templates.create_double_side',$data);
+                }
+                else
+                {
+                    return view('user.templates.create',$data);
+                }
+
+        
     }
 
 
@@ -177,8 +226,7 @@ class TemplatesController extends Controller
     }
     public function save_user_template(Request $request)
     { 
-        
-        $template =  Template::where('id',$request->template_id)->first();
+           $template =  Template::where('id',$request->template_id)->first();
          
          $user_id=Auth::user()->id;
          
