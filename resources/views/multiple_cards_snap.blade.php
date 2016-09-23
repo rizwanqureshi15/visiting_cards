@@ -116,13 +116,17 @@
 
                 
             });
+
+
+            setTimeout(function(){
+                console.log('delay');
+            }, 3000);
             
-            setInterval(function() {
-                 html2canvas(element, {
+         
+                html2canvas(element, {
                     onrendered: function (canvas) {
                     getCanvas = canvas;
                     var imgageData = getCanvas.toDataURL("image/png");
-
 
                     $.ajax({
                     type: "POST",
@@ -142,10 +146,9 @@
                             var errors = data.responseJSON;
                         });
 
-
                      }
-                 }); }, 2000);
-              
+                });
+            
               
         });
        
