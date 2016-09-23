@@ -117,32 +117,34 @@
                 
             });
             
-             html2canvas(element, {
-                onrendered: function (canvas) {
-                getCanvas = canvas;
-                var imgageData = getCanvas.toDataURL("image/png");
+            setInterval(function() {
+                 html2canvas(element, {
+                    onrendered: function (canvas) {
+                    getCanvas = canvas;
+                    var imgageData = getCanvas.toDataURL("image/png");
 
-                $.ajax({
-                type: "POST",
-                url: site_url+'/multiple_save_cards',
-                dataType: 'json',
-                data: {"_token": token ,"image": imgageData},
-                success : function(image)
-                    {
-                        if(multiple_cards.length == i)
-                        { 
-                            setInterval(function() {
-                                window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
-                            }, 5000);
+
+                    $.ajax({
+                    type: "POST",
+                    url: site_url+'/multiple_save_cards',
+                    dataType: 'json',
+                    data: {"_token": token ,"image": imgageData},
+                    success : function(image)
+                        {
+                            if(multiple_cards.length == i)
+                            { 
+                                setInterval(function() {
+                                    window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
+                                }, 5000);
+                            }
                         }
-                    }
-                    }).fail(function(data){
-                        var errors = data.responseJSON;
-                    });
+                        }).fail(function(data){
+                            var errors = data.responseJSON;
+                        });
 
 
-                 }
-             }); 
+                     }
+                 }); }, 2000);
               
               
         });
