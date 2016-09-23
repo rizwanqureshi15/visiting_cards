@@ -73,10 +73,7 @@
 						      <div class="modal-body">
 						      	<div class="row">
 						        	@foreach($user_template_images as $image)
-						        		<?php
-						        			$id = str_replace(" ","_",$image);
-								            $image = strtolower($id);
-						        		?>
+						        		
 							            <div class="col-md-4" id="{{ substr($image,0,-4) }}">
 							                <img class="preview_image" data-image="{{ $image }}" id="delete_single_image" src="{{ url('assets/images/delete.png') }}" style="height:30px;position:absolute;z-index: 1;margin-top: 22px;margin-left:79%;">
 							                <img src="{{ url('temp/'.$username.'/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
