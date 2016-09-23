@@ -177,14 +177,9 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels;
-                if($data['template']->is_both_side == 1)
-                {
-                   return view('user.templates.create_double_side',$data);
-                }
-                else
-                {
+               
                     return view('user.templates.create',$data);
-                }
+               
 
         
     }
