@@ -16,7 +16,7 @@
         <!--  style="z-index:1;position: absolute;top: 50%;left: 50%;margin-left: -(X/2)px;margin-top: -(Y/2)px;" -->
         <div id="user_overlay">
             <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
-        </div>
+        </div> 
 
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -62,7 +62,7 @@
                                                 @endforeach
 
                                                     <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
-                                                        <img src="{{ url('templates/images/'.$name.'', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+                                                        <img src=""  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                                                     </div>
                                             @endforeach
                                         @endif
@@ -89,21 +89,24 @@
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
     var username = "{{ Auth::user()->username }}";
-    var i = 2;
+    var i = 0;
 
     var img_name = {!! json_encode($image_feilds_name) !!};
 
     var multiple_cards = {!! json_encode($cards_data) !!};
+
     $(document).ready(function(){
-        $.each(multiple_cards, function( i,val ) 
+        $.each(multiple_cards, function( j,val ) 
         {
-            i = i+2;
+            i = i+1;
             $.each(val, function(key, value){
                 $('#span_'+key).text(value);
+                
                 $.each(img_name,function(k, v){
                     
-                    if(key == k)
-                    {
+                    var check = k.replace(" ","_");
+                    if(key == check)
+                    {   
                         $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
                     }
                 });
@@ -125,8 +128,10 @@
                 success : function(image)
                     {
                         if(multiple_cards.length == i)
-                        {
-                            window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
+                        { 
+                            setInterval(function() {
+                                window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
+                            }, 5000);
                         }
                     }
                     }).fail(function(data){

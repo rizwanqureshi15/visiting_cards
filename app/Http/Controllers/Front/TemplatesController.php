@@ -271,7 +271,7 @@ class TemplatesController extends Controller
        {
             foreach ($request->images as $image) {
 
-               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'name'=> $image['name'], 'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
 
                 $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
                 UserTemplateImage::create([ 'src' => $image_data->src, 'template_feild_id' => $id]);
@@ -663,12 +663,6 @@ class TemplatesController extends Controller
         $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
 
         $rules = ['excel_file' => 'required'];
-
-        foreach ($image_feilds_name as $name) 
-        {
-            $rules[] = $name.'required';
-            //Session::flash($name.'_error_message',"$name field is required");
-        }
         
         $v = Validator::make($request->all(), $rules);
         
@@ -676,7 +670,7 @@ class TemplatesController extends Controller
         {
             return redirect()->back()->withErrors($v->errors());
         }
-        
+
         $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
         
         // Getting File Headers 
@@ -740,18 +734,24 @@ class TemplatesController extends Controller
 
         foreach ($image_feilds_name as $name) 
         {
+            $id = str_replace(" ","_",$name);
+            $id = strtolower($id);
+
+            $name = $id;
+
             $path = public_path().'/user/'.$username.'/'.$name;   
 
             if(!File::exists($path))
             { 
                 File::makeDirectory($path);
             } 
+
+           
           
-            $files = $request->$name;
+            $files = $request->$id;
             
             foreach($files as $file)
             {
-
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
                 $picture = $filename;
@@ -768,6 +768,7 @@ class TemplatesController extends Controller
         $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
 
         })->get(); 
+        $data['username'] = $username;
 
         //$data['cards_data'] = json_encode($data['cards_data']);
 
