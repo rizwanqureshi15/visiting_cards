@@ -615,19 +615,13 @@ class TemplatesController extends Controller
         $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
 
         $rules = ['excel_file' => 'required'];
-
-        // foreach ($image_feilds_name as $name) 
-        // {
-        //     //Session::flash($name.'_error_message',"$name field is required");
-            
-        // }
-
-        // $v = Validator::make($request->all(), $rules);
-        // dd();
-        // if($v->fails())
-        // {
-        //     return redirect()->back()->withErrors($v->errors());
-        // }
+        
+        $v = Validator::make($request->all(), $rules);
+        
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors());
+        }
 
         $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
         
@@ -692,6 +686,11 @@ class TemplatesController extends Controller
 
         foreach ($image_feilds_name as $name) 
         {
+            $id = str_replace(" ","_",$name);
+            $id = strtolower($id);
+
+            $name = $id;
+
             $path = public_path().'/user/'.$username.'/'.$name;   
 
             if(!File::exists($path))
@@ -699,8 +698,7 @@ class TemplatesController extends Controller
                 File::makeDirectory($path);
             } 
 
-            $id = str_replace(" ","_",$name);
-            $id = strtolower($id);
+           
           
             $files = $request->$id;
             
@@ -723,7 +721,7 @@ class TemplatesController extends Controller
 
         })->get(); 
         $data['username'] = $username;
-       
+
         //$data['cards_data'] = json_encode($data['cards_data']);
 
         return view('multiple_cards_snap',$data);
