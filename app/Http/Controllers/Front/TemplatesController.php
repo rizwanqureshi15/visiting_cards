@@ -266,7 +266,7 @@ class TemplatesController extends Controller
        {
             foreach ($request->images as $image) {
 
-               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+               $id =  UserTemplateFeild::insertGetId(['name' => $image['name'] ,'user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
 
                 $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
                 UserTemplateImage::create([ 'src' => $image_data->src, 'template_feild_id' => $id]);

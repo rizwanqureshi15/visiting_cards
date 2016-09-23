@@ -105,9 +105,10 @@
                 $.each(img_name,function(k, v){
                     
                     var k = k.replace(" ","_");
+                    k = k.toLowerCase();
                     
                     if(key == k)
-                    {   
+                    {
                         $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
                     }
                 });
