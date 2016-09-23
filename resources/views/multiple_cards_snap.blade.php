@@ -105,7 +105,7 @@
                 $.each(img_name,function(k, v){
                     
                     var k = k.replace(" ","_");
-                    alert(k);
+                    
                     if(key == k)
                     {   
                         $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
