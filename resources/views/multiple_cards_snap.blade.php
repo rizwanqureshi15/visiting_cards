@@ -123,7 +123,7 @@
             var currentTime = new Date().getTime();
             while (currentTime + miliseconds >= new Date().getTime()) {
             }
-            console.log("First "+i);
+            
 
                 html2canvas(element, {
                     onrendered: function (canvas) {
@@ -138,7 +138,7 @@
                     data: {"_token": token ,"image": imgageData},
                     success : function(image)
                         {
-                            console.log("second "+count);
+                            
                             if(array_length == count)
                             { 
                                    
