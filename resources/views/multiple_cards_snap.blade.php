@@ -96,6 +96,13 @@
     var multiple_cards = {!! json_encode($cards_data) !!};
 
     $(document).ready(function(){
+
+        function sleep(miliseconds) {
+            var currentTime = new Date().getTime();
+            while (currentTime + miliseconds >= new Date().getTime()) {
+            }
+        }      
+
         $.each(multiple_cards, function( j,val ) 
         {
             i = i+1;
@@ -117,7 +124,8 @@
                 
             });
             
-         
+            sleep(2000);
+
                 html2canvas(element, {
                     onrendered: function (canvas) {
                     getCanvas = canvas;
@@ -133,9 +141,9 @@
                         {
                             if(multiple_cards.length == i)
                             { 
-                                setInterval(function() {
-                                    window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
-                                }, 2000);
+                                sleep(3000);    
+                                window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
+                                
                             }
                         }
                         }).fail(function(data){
@@ -151,43 +159,6 @@
 
        
     });
-    $(document).ready(function() {
-        var win = $(window);
-        
-        
-
-        win.scroll(function() {
-            // End of the document reached?
-        
-            if ($(document).height() - win.height() == win.scrollTop()) {
-                if(last_page == false)
-                {  
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('user-images') }}",
-                    dataType: 'json',
-                    data: {"_token": "{{ csrf_token() }}","page_no":page_no},
-                    success: function(user_cards) {
-                        if(user_cards.length == 0){  
-                            last_page=true;
-                        }
-                        
-                        page_no++;
-                        var html = '';
-
-                            $.each(user_cards, function( i,val ) 
-                            {
-                                html+="<div class='col-md-4'><img src='"+site_url+"/images/"+ username+"/"+ val.image +"' style='width:100%;padding-top:20px;'></div>";
-                            });
-            
-                        $('#posts').append(html);
-                    }
-                });
-                }
-            }
-        });
-    
-});
 
 </script>
 
