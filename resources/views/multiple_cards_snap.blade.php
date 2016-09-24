@@ -90,18 +90,15 @@
     var site_url = "{{ url('') }}";
     var username = "{{ Auth::user()->username }}";
     var i = 0;
+    var count = 1;
 
     var img_name = {!! json_encode($image_feilds_name) !!};
 
     var multiple_cards = {!! json_encode($cards_data) !!};
-
+    var array_length = multiple_cards.length;
     $(document).ready(function(){
 
-        function sleep(miliseconds) {
-            var currentTime = new Date().getTime();
-            while (currentTime + miliseconds >= new Date().getTime()) {
-            }
-        }      
+           
 
         $.each(multiple_cards, function( j,val ) 
         {
@@ -120,11 +117,13 @@
                     }
                 });
                 
-
-                
             });
-            
-            sleep(2000);
+
+            var miliseconds = 2000;
+            var currentTime = new Date().getTime();
+            while (currentTime + miliseconds >= new Date().getTime()) {
+            }
+            console.log("First "+i);
 
                 html2canvas(element, {
                     onrendered: function (canvas) {
@@ -139,12 +138,14 @@
                     data: {"_token": token ,"image": imgageData},
                     success : function(image)
                         {
-                            if(multiple_cards.length == i)
+                            console.log("second "+count);
+                            if(array_length == count)
                             { 
-                                sleep(3000);    
+                                   
                                 window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
                                 
                             }
+                            count = count+1;
                         }
                         }).fail(function(data){
                             var errors = data.responseJSON;
