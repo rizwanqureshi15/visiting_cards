@@ -116,11 +116,6 @@
 
                 
             });
-
-
-            setTimeout(function(){
-                console.log('delay');
-            }, 3000);
             
          
                 html2canvas(element, {
@@ -132,6 +127,7 @@
                     type: "POST",
                     url: site_url+'/multiple_save_cards',
                     dataType: 'json',
+                    async: false,
                     data: {"_token": token ,"image": imgageData},
                     success : function(image)
                         {
@@ -139,7 +135,7 @@
                             { 
                                 setInterval(function() {
                                     window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
-                                }, 5000);
+                                }, 2000);
                             }
                         }
                         }).fail(function(data){
