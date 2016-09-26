@@ -177,9 +177,14 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels;
-               
+                if($data['template']->is_both_side == 1)
+                {
+                   return view('user.templates.create_double_side',$data);
+                }
+                else
+                {
                     return view('user.templates.create',$data);
-               
+                }
 
         
     }
@@ -219,6 +224,61 @@ class TemplatesController extends Controller
         }
         return $url;
     }
+     public function back_save_user_template(Request $request)
+    { 
+         $template =  Template::where('id',$request->template_id)->first();
+        $user_id = Auth::user()->id;
+        $user_fields=array(
+                
+                'background_image_back' => $template->background_image_back,
+                'back_snap'=> $template->back_snap
+        );
+
+        UserTemplate::where('id', $request->user_template_id)->update($user_fields);
+
+        if($request->feilds)
+        {
+            foreach ($request->feilds as $feild) 
+            { 
+                $feild["template_id"] = $request->user_template_id; 
+                $feild["user_id"] = $user_id;
+                $feild["is_back"] = 1;
+                UserTemplateFeild::create($feild);    
+            }
+        }
+
+        if($request->labels)
+        {
+            foreach ($request->labels as $label) 
+            { 
+                $label["template_id"] = $request->user_template_id; 
+                $label["user_id"] = $user_id;
+                $label["is_label"] = 1;
+                $label["is_back"] = 1;
+                UserTemplateFeild::create($label);    
+            }
+        }
+
+       
+       if($request->images)
+       {
+            foreach ($request->images as $image) {
+
+               $id =  UserTemplateFeild::insertGetId(['name'=>$image['name'],'is_back' => 1, 'user_id' => $user_id,'template_id' => $request->user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+
+                $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
+                UserTemplateImage::create(['src' => $image_data->src, 'template_feild_id' => $id]);
+                 
+           }
+        }
+            
+     
+       return json_encode("Template is Saved..!");
+
+
+
+    }
+
     public function save_user_template(Request $request)
     { 
            $template =  Template::where('id',$request->template_id)->first();
@@ -235,6 +295,7 @@ class TemplatesController extends Controller
                 'type' => $template->type,
                 'user_id' => $user_id,
                 'snap'=> $request->snap,
+                'is_both_side' => $template->is_both_side,
                 'created_at' => date('Y-m-d H:s:i'),
                 'updated_at' => date('Y-m-d H:s:i')
         );
@@ -266,7 +327,7 @@ class TemplatesController extends Controller
        {
             foreach ($request->images as $image) {
 
-               $id =  UserTemplateFeild::insertGetId(['user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+               $id =  UserTemplateFeild::insertGetId(['name'=>$image['name'],'user_id' => $user_id,'template_id' => $user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
 
                 $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
                 UserTemplateImage::create([ 'src' => $image_data->src, 'template_feild_id' => $id]);
@@ -275,7 +336,7 @@ class TemplatesController extends Controller
         }
             
      
-       return json_encode("Template is Saved..!");
+       return json_encode($user_template_id);
 
 
 
@@ -321,7 +382,8 @@ class TemplatesController extends Controller
     public function edit_user_template($url)
     {
         $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
-                $data['feilds'] = userTemplateFeild::where('template_id',$data['template']->id)->get();
+                
+                $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
                 
                 $ids = array();
                 foreach($data['feilds'] as $feild)
@@ -336,10 +398,9 @@ class TemplatesController extends Controller
                     array_push($imageids, $value->template_feild_id);
                 }
 
-                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-
-                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
                
                 $names = array();
                 foreach($data['feilds'] as $feild)
@@ -359,16 +420,66 @@ class TemplatesController extends Controller
                   array_push($template_images, $image->id);
                 }
 
-                $data['field_names'] = $names;
+                $data['names'] = $names;
                 $data['template_images'] = $template_images;
-                $data['template_labels'] = $labels;   
-        return view('user.templates.edit',$data);
+                $data['template_labels'] = $labels;
+
+
+                $data['back_feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',1)->get();
+                
+                $ids = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
+
+                $data['back_images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['back_images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['back_feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['back_labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['back_image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+               
+                $back_names = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($back_names, $feild->name);
+                }
+
+                $back_labels = array();
+                foreach($data['back_labels'] as $label)
+                {
+                  array_push($back_labels, $label->name);
+                }
+
+                $back_template_images = array();
+                foreach($data['back_image_css'] as $image)
+                {
+                  array_push($back_template_images, $image->id);
+                }
+
+                $data['back_names'] = $back_names;
+                $data['back_template_images'] = $back_template_images;
+                $data['back_template_labels'] = $back_labels;
+                if($data['template']->is_both_side == 1)
+                {
+                  return view('user.templates.edit_double_side',$data);
+                }
+                else
+                {
+                   return view('user.templates.edit',$data);
+                }  
+        
     }
     
     public function edit_user_template_post(Request $request)
     { 
 
-        $template =  Template::where('id',$request->template_id)->first();
+        //$template =  Template::where('id',$request->template_id)->first();
          
          $user_id=Auth::user()->id;
        
@@ -383,10 +494,10 @@ class TemplatesController extends Controller
         {
             foreach ($request->feilds as $feild) 
             { 
-                $exists = UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($feild['name']))->first();
+                $exists = UserTemplateFeild::where('is_back',0)->where('template_id',$request->template_id)->where('name',trim($feild['name']))->first();
                 if($exists)
                 {
-                    UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($feild['name']))->update(['css' => $feild['css'], 'font_css' => $feild['font_css']]);
+                    UserTemplateFeild::where('is_back',0)->where('template_id',$request->template_id)->where('name',trim($feild['name']))->update(['css' => $feild['css'], 'font_css' => $feild['font_css']]);
                 }
                 else
                 {
@@ -399,10 +510,10 @@ class TemplatesController extends Controller
         {
             foreach ($request->labels as $label) 
             { 
-                $exists = UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($label['name']))->first();
+                $exists = UserTemplateFeild::where('is_back',0)->where('template_id',$request->template_id)->where('name',trim($label['name']))->first();
                 if($exists)
                 {
-                    UserTemplateFeild::where('template_id',$request->template_id)->where('name',trim($label['name']))->update(['css' => $label['css'], 'font_css' => $label['font_css']]);
+                    UserTemplateFeild::where('is_back',0)->where('template_id',$request->template_id)->where('name',trim($label['name']))->update(['css' => $label['css'], 'font_css' => $label['font_css']]);
                 }
                 else
                 {
@@ -415,7 +526,7 @@ class TemplatesController extends Controller
         if($request->deleted_feilds)
         {
             foreach ($request->deleted_feilds as  $feild) {
-                UserTemplateFeild::where('template_id', $request->template_id)->where('name', trim($feild))->delete();
+                UserTemplateFeild::where('is_back',0)->where('template_id', $request->template_id)->where('name', trim($feild))->delete();
             }
 
         }
@@ -424,7 +535,7 @@ class TemplatesController extends Controller
         if($request->deleted_labels)
         {
             foreach ($request->deleted_labels as  $label) {
-                UserTemplateFeild::where('name',trim($label))->where('is_label',1)->where('template_id',$request->template_id)->delete();
+                UserTemplateFeild::where('is_back',0)->where('name',trim($label))->where('is_label',1)->where('template_id',$request->template_id)->delete();
             }
 
         }
@@ -437,14 +548,102 @@ class TemplatesController extends Controller
                     $image_name = UserTemplateImage::where('template_feild_id',$value)->first();
                     @unlink(public_path("templates\\images\\".$image_name->src));
                     UserTemplateImage::where('template_feild_id',$value)->delete();
-                    userTemplateFeild::where('id',$value)->delete();
+                    userTemplateFeild::where('is_back',0)->where('id',$value)->delete();
                 }
             }
        
        if($request->images)
        {
            foreach ($request->images as $image) {
-            UserTemplateFeild::where('id', $image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
+            UserTemplateFeild::where('is_back',0)->where('id', $image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
+            }
+        }
+            
+     
+       return json_encode('saved.!');
+    }
+    public function edit_user_template_back_post(Request $request)
+    { 
+
+        //$template =  Template::where('id',$request->template_id)->first();
+         
+         $user_id=Auth::user()->id;
+       
+            
+        $user_fields=array(
+            
+                'back_snap'=> $request->snap,
+        );
+
+        userTemplate::where('id', $request->template_id)->update($user_fields);
+        if($request->feilds)
+        {
+            foreach ($request->feilds as $feild) 
+            { 
+                $exists = UserTemplateFeild::where('is_back',1)->where('template_id',$request->template_id)->where('name',trim($feild['name']))->first();
+                if($exists)
+                {
+                    UserTemplateFeild::where('is_back',1)->where('template_id',$request->template_id)->where('name',trim($feild['name']))->update(['css' => $feild['css'], 'font_css' => $feild['font_css']]);
+                }
+                else
+                {
+                    $feild['template_id'] = $request->template_id;
+                    $feild['is_back'] = 1;
+                    UserTemplateFeild::create($feild);
+                } 
+            }
+        }
+        if($request->labels)
+        {
+            foreach ($request->labels as $label) 
+            { 
+                $exists = UserTemplateFeild::where('is_back',1)->where('template_id',$request->template_id)->where('name',trim($label['name']))->first();
+                if($exists)
+                {
+                    UserTemplateFeild::where('is_back',1)->where('template_id',$request->template_id)->where('name',trim($label['name']))->update(['css' => $label['css'], 'font_css' => $label['font_css']]);
+                }
+                else
+                {
+                    $label['template_id'] = $request->template_id;
+                    $label['is_label'] = 1;
+                    $label['is_back'] = 1;
+                    UserTemplateFeild::create($label);
+                } 
+        }
+    }
+        if($request->deleted_feilds)
+        {
+            foreach ($request->deleted_feilds as  $feild) {
+                UserTemplateFeild::where('is_back',1)->where('template_id', $request->template_id)->where('name', trim($feild))->delete();
+            }
+
+        }
+       
+
+        if($request->deleted_labels)
+        {
+            foreach ($request->deleted_labels as  $label) {
+                UserTemplateFeild::where('is_back',1)->where('name',trim($label))->where('is_label',1)->where('template_id',$request->template_id)->delete();
+            }
+
+        }
+
+         if($request->deleted_images!=null)
+            {
+
+                foreach ($request->deleted_images as $value) {
+
+                    $image_name = UserTemplateImage::where('template_feild_id',$value)->first();
+                    @unlink(public_path("templates\\images\\".$image_name->src));
+                    UserTemplateImage::where('template_feild_id',$value)->delete();
+                    userTemplateFeild::where('is_back',1)->where('id',$value)->delete();
+                }
+            }
+       
+       if($request->images)
+       {
+           foreach ($request->images as $image) {
+            UserTemplateFeild::where('is_back',1)->where('id', $image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
             }
         }
             
@@ -476,7 +675,8 @@ class TemplatesController extends Controller
     {
 
                 $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
-                $data['feilds'] = userTemplateFeild::where('template_id',$data['template']->id)->get();
+                
+                $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
                 
                 $ids = array();
                 foreach($data['feilds'] as $feild)
@@ -491,10 +691,9 @@ class TemplatesController extends Controller
                     array_push($imageids, $value->template_feild_id);
                 }
 
-                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-
-                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->whereIn('id', $imageids)->get();
+                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
                
                 $names = array();
                 foreach($data['feilds'] as $feild)
@@ -514,11 +713,61 @@ class TemplatesController extends Controller
                   array_push($template_images, $image->id);
                 }
 
-                $data['field_names'] = $names;
+                $data['names'] = $names;
                 $data['template_images'] = $template_images;
                 $data['template_labels'] = $labels;
+
+
+                $data['back_feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',1)->get();
+                
+                $ids = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($ids, $feild->id);
+                }
+
+                $data['back_images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+                $imageids = array();
+                foreach ($data['back_images'] as $key => $value) {
+                    array_push($imageids, $value->template_feild_id);
+                }
+
+                $data['back_feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+                $data['back_labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+                $data['back_image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+               
+                $back_names = array();
+                foreach($data['back_feilds'] as $feild)
+                {
+                  array_push($back_names, $feild->name);
+                }
+
+                $back_labels = array();
+                foreach($data['back_labels'] as $label)
+                {
+                  array_push($back_labels, $label->name);
+                }
+
+                $back_template_images = array();
+                foreach($data['back_image_css'] as $image)
+                {
+                  array_push($back_template_images, $image->id);
+                }
+
+                $data['back_names'] = $back_names;
+                $data['back_template_images'] = $back_template_images;
+                $data['back_template_labels'] = $back_labels;
+                if($data['template']->is_both_side == 1)
+                {
+                  return view('user.cards.single_card_double_side_create',$data);
+                }
+                else
+                {
+                   return view('user.cards.single_card_create',$data);
+                }  
              
-        return view('user.cards.single_card_create',$data);
+        
     }
 
     public function save_card(Request $request)

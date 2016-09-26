@@ -13,7 +13,20 @@ class UserTemplate extends Model
      * @var array
      */
      protected $fillable = [
-        'id', 'name', 'category_id','user_id','background_image', 'background_color','url','type','is_delete','template_id','snap'
+        'id',
+        'name',
+        'category_id',
+        'user_id',
+        'background_image',
+        'background_color',
+        'url',
+        'type',
+        'is_delete',
+        'template_id',
+        'snap',
+        'background_image_back',
+        'back_snap',
+        'is_both_side',
     ];
 
     public function category()

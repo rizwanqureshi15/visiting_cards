@@ -330,7 +330,7 @@ class CardController extends Controller
             {
 
                 foreach ($request->deleted_images as $value) {
-
+                    
                     $image_name = TemplateImage::where('template_feild_id',$value)->first();
                     @unlink(public_path("templates\\images\\".$image_name->src));
                     TemplateImage::where('template_feild_id',$value)->delete();

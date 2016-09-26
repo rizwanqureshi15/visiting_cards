@@ -107,6 +107,7 @@ Route::post('save_single_card','Front\TemplatesController@save_card');
 
 Route::get('mytemplates/{url}/edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
 Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
+Route::post('user_template_edit_back','Front\TemplatesController@edit_user_template_back_post');
 
 Route::get('single_card/{url}/create', 'Front\TemplatesController@create_single_card');
 
@@ -125,3 +126,4 @@ Route::post('delete_image','Front\TemplatesController@delete_image_from_multiple
 
 Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
 Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
+Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');

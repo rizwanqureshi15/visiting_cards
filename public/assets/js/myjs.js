@@ -5,6 +5,7 @@
 		var delete_labels = [];	
 		var image_name = [];
 		var feild_color;
+		
 		 var element = $("#div1"); // global variable
     var getCanvas; 	
 
@@ -24,14 +25,14 @@
 
 		$('.feild-elements').click(function(){
 			element_id = $(this).attr('id');
+			if(side == "back_")
+			{
+				element_id = element_id.substring(5,element_id.length);
+			}
 			//console.log(element_id);
 			
 		});
 
-		$('.feild-elements').click(function(){
-			element_id = $(this).attr('id');
-			
-		});
 		$("#under_line").click(function(){
 			var check = $("#span_" + element_id).css("text-decoration");
 			
@@ -77,23 +78,23 @@
 			 }
 			
 		});
-		$(document).on("keyup", ".sidebar-elements" , function(){
+		// $(document).on("keyup", ".sidebar-elements" , function(){
 			
-			var id = $(this).attr('id');
-			var txt = $(this).val();
-			var str = id.substring(8,id.length);
-			var span_element = '#span_' + str;
+		// 	var id = $(this).attr('id');
+		// 	var txt = $(this).val();
+		// 	var str = id.substring(8,id.length);
+		// 	var span_element = '#span_' + str;
 
-			$(span_element).text(txt);
+		// 	$(span_element).text(txt);
 
-			$('#myTextBox').val(txt);
+		// 	$('#myTextBox').val(txt);
 			
-			if(txt == "")
-			{
-				$(span_element).text();
-			}	
-			$('#' + str).resizable();
-		});
+		// 	if(txt == "")
+		// 	{
+		// 		$(span_element).text();
+		// 	}	
+		// 	$('#' + str).resizable();
+		// });
 
 		$('#myTextBox').keyup(function(){
 			
@@ -102,6 +103,67 @@
 			$('#span_'+element_id).text(txt);
 			$('#sidebar_'+element_id).val(txt);
 			$('#'+element_id).resizable();
+		});
+
+		$(document).on('click',".feild-elements", function(event) {
+		     event.stopPropagation();
+		    var l = $('#'+side+element_id).css('left');
+		    if(template_both_side == 1)
+		    {
+			    l = l.substring(0,l.length - 2);
+			    l = parseInt(l) + 400;
+			    l += "px";
+		    }
+		    var t = $('#'+side + element_id).css('top');
+		    var txt = $('#'+side +element_id).text();
+		    $('#myTextBox').val($.trim(txt));
+		   
+		    t = t.substring(0,t.length - 2);
+		    
+		    if( parseInt(t) < 100 )
+		    {
+		   
+		    	var txt_hight = $('#'+side+element_id).css('height');
+		    	txt_hight = txt_hight.substring(0,txt_hight.length - 2);
+		    	if(template_both_side == 1)
+		    	{
+		    		t = parseInt(t) + parseInt(txt_hight) + 80;
+		    	}else
+		    	{
+		    		t = parseInt(t) + parseInt(txt_hight) + 10;
+		    	}
+		    }
+		    else
+		    {
+		 		if(template_both_side == 1)
+		    	{
+		    		t = parseInt(t) - 0;
+		    	}else
+		    	{
+		    		t = parseInt(t) - 70;
+		    	}
+		    	
+		    
+		    }
+		  
+			var selectedfont = $('#'+side+'span_' + element_id).css('font-family');		 
+			$('#font-text').css('font-family', selectedfont);
+			$('#font-text').text(selectedfont);
+			 var selectedfontsize = $('#'+side+'span_' + element_id).css('font-size');
+			 console.log(selectedfontsize);	
+			 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
+			 var hex = $('#'+side+'span_' + element_id).css('color');	
+			 $('#colorSelector div').css('backgroundColor', '#' + hex);
+			 feild_color = rgb2hex(hex);
+			
+			$('#size-font').val(s).prop('selected', true);
+
+		    t += "px";
+
+		    $('#myToolbar').css('left',l);
+		    $('#myToolbar').css('top',t);
+		    
+		    $("#myToolbar").show();
 		});
 
 		$(window).click(function() {
@@ -124,91 +186,14 @@
 			$('.template_image_div').resizable();
 			$('.template_image_div').draggable();
 		});
-		
-		$(document).on('click',".feild-elements", function(event) {
-		     event.stopPropagation();
-		    element_id = $(this).attr('id')	;
-		    var l = $('#' + element_id).css('left');
-		    var t = $('#' + element_id).css('top');
-
-		    var txt = $('#' +element_id).text();
-		    $('#myTextBox').val($.trim(txt));
-
-		    t = t.substring(0,t.length - 2);
-
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#' + element_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 10;
-		    	
-		    }
-		    else
-		    {
-		    	t = parseInt(t)-parseInt($("#myToolbar").css('height'))-10;
-		    }
-		   var selectedfont = $('#span_' + element_id).css('font-family');		 
-			$('#font-text').css('font-family', selectedfont);
-			$('#font-text').text(selectedfont);
-			 var selectedfontsize = $('#span_' + element_id).css('font-size');	
-			 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
-			 var hex = $('#span_' + element_id).css('color');	
-			 $('#colorSelector div').css('backgroundColor', '#' + hex);
-			 feild_color = rgb2hex(hex);
-			
-			$('#size-font').val(s).prop('selected', true);
- 
-
-		    t += "px";
-
-		    $('#myToolbar').css('left',l);
-		    $('#myToolbar').css('top',t);
-		    
-		    $("#myToolbar").show();
-		});
-		
-
-		$('.toolbar-elements').droppable({
-			drop: function(event, ui) {
-		    event.stopPropagation();
-		    var element_id = $(this).attr('id')	;
-		    var l = $('#' + element_id).css('left');
-		    var t = $('#' + element_id).css('top');
-		    var txt = $('#' +element_id).text();
-		    $('#myTextBox').val($.trim(txt));
-
-		    t = t.substring(0,t.length - 2);
-
-		    if( parseInt(t) < 100 )
-		    {
-		    	var txt_hight = $('#' + element_id).css('height');
-
-		    	t = parseInt(t) + parseInt(txt_hight) + 10;
-		    	
-		    }
-		    else
-		    {
-
-		    	t = parseInt(t)-parseInt($("#myToolbar").css('height'));
-		    	console.log(t);
-		    }
-		    
-
-		    t += "px";
-
-		    $('#myToolbar').css('left',l);
-		    $('#myToolbar').css('top',t);
-		   
-		    $("#myToolbar").show();
-		}
-		});
-
-		//Font Style Select
+	
 		$(function(){
         $('#font').fontselect();
 
         $('.font-select').click(function(){
         	var ft = $('#font-text').text();
-        	$('#span_'+element_id).css('font-family', ft);
+        	
+        	$('#'+side+'span_'+element_id).css('font-family', ft);
         });
         $('#size-font').change(function(){
         	var fs = $('#size-font').val();
@@ -216,24 +201,30 @@
         	var size = parseInt(fs) * 10;
         	fs += 'px';
         	size += 'px';
-        	$('#span_'+element_id).css('font-size', fs);
-        	$('#'+element_id).css('height', 'auto');
-        	var h = $('#'+element_id).css('height');
-        	var t = $('#'+element_id).css('top');
-        	var tool_height = parseInt(t) + parseInt(h) + 10;
+        	$('#'+side+'span_'+element_id).css('font-size', fs);
+        	$('#'+side+element_id).css('height', 'auto');
+        	var h = $('#'+side+element_id).css('height');
+        	var t = $('#'+side+element_id).css('top');
+        	t = t.substring(0,t.length-2);
+        	h = h.substring(0,h.length-2); 
+        	var tool_height = parseInt(t) + parseInt(h) + 70;
         	tool_height += 'px';
         	$('#myToolbar').css('top', tool_height);
 
         });
-        //end
-        //color picker
        
+
 		$(document).on('click', '.colorpicker', function(event){
 			event.stopPropagation();
 		});
 
+	$(document).on('click', '.colorpicker', function(event){
+			event.stopPropagation();
+		});
+
         $('#colorSelector').ColorPicker({
-			color: '#0000ff',
+
+			color : '#0000ff',
 			onShow: function (colpkr) {
 				$(colpkr).fadeIn(500);
 				return false;
@@ -245,16 +236,52 @@
 			onChange: function (hsb, hex, rgb) {
 
 				$('#colorSelector div').css('backgroundColor', '#' + hex);
-				$('#span_'+element_id).css('color', '#' + hex)
+				$('#'+side+'span_'+element_id).css('color', '#' + hex)
 			}
+
 		});
-
 		$('#toolbardelete').click(function(){
-            	
-            var name = $('#'+element_id).data('name');
-            var type = $('#'+element_id).data('type');
+			var name = $('#'+side+element_id).data('name');
+			var type = $('#'+side+element_id).data('type');
 			var dlt;
+		if(side == "back_")
+		{
+			if(type == 'label')
+			{
+				$.each(back_label_names, function(key,  value){
+					if(value == name)
+					{
+						back_delete_labels[back_delete_labels.length] = name;
+						dlt=key;
+						for (var i = dlt; i< back_label_names.length; i++) {
+						back_label_names[i] = back_label_names[i+1];
 
+						}
+						back_label_names.pop();
+
+					}
+				});
+			}
+			else
+			{
+				$.each(back_feild_names, function(key,  value){
+					if(value == name)
+					{
+						back_delete_feilds[back_delete_feilds.length] = name;
+						dlt=key;
+						for (var i = dlt; i< back_feild_names.length; i++) {
+						back_feild_names[i] = back_feild_names[i+1];
+
+						}
+						back_feild_names.pop();
+
+					}
+				});
+				
+			}
+		}
+		else
+		{
 			if(type == 'label')
 			{
 				$.each(label_names, function(key,  value){
@@ -273,29 +300,27 @@
 			}
 			else
 			{
-				$.each(field_names, function(key,  value){
+				$.each(feild_names, function(key,  value){
 					if(value == name)
 					{
 						delete_feilds[delete_feilds.length] = name;
 						dlt=key;
-						for (var i = dlt; i< field_names.length; i++) {
-						field_names[i] = field_names[i+1];
+						for (var i = dlt; i< feild_names.length; i++) {
+						feild_names[i] = feild_names[i+1];
 
 						}
-						field_names.pop();
+						feild_names.pop();
 
 					}
 				});
 				
 			}
-			
+		}	
+			$('#'+side+element_id).remove();
+			$('#'+side+'sidebar_'+element_id).remove();
+			$("#myToolbar").hide();			
+		});
 
-           
-            $('#'+element_id).remove();
-            $('#sidebar_'+element_id).remove();
-
-            $("#myToolbar").hide();         
-        });
 
 		$("#add-text").click(function(){
             
@@ -492,26 +517,26 @@
 
 });
 
- 	$(document).on('click','.squere_shape', function(event){
- 			event.stopPropagation();
-        	$('.round_shape').css('background-color',"white");
-			$('.squere_shape').css('background-color',"blue");
-			$('#'+image_id).css('border-radius','0px');
-			$('#'+image_id).css('border-radius','0px');
+ 	// $(document).on('click','.squere_shape', function(event){
+ 	// 		event.stopPropagation();
+  //       	$('.round_shape').css('background-color',"white");
+		// 	$('.squere_shape').css('background-color',"blue");
+		// 	$('#'+image_id).css('border-radius','0px');
+		// 	$('#'+image_id).css('border-radius','0px');
 			
 
-		});
+		// });
         
 
-        $(document).on('click','.round_shape', function(event){
-        	event.stopPropagation();
-        	$('.round_shape').css('background-color',"blue");
-			$('.squere_shape').css('background-color',"white");
-			$('#'+image_id).css('border-radius','100px');
-			$('#'+image_id).css('border-radius','100px');
+  //       $(document).on('click','.round_shape', function(event){
+  //       	event.stopPropagation();
+  //       	$('.round_shape').css('background-color',"blue");
+		// 	$('.squere_shape').css('background-color',"white");
+		// 	$('#'+image_id).css('border-radius','100px');
+		// 	$('#'+image_id).css('border-radius','100px');
 			
 
-		});
+		// });
 		 $(document).on('click','#btnborder', function(event){
 		 	event.stopPropagation();
 			//console.log($(this).text());
@@ -527,21 +552,21 @@
 
 			}
 		});
+});
+		// $(document).on('click','#image_border', function(event){
+		// 	event.stopPropagation();
+		// 	if($(this).text().trim() == "Show Border")
+		// 	{
+		// 		 $('#'+image_id).css('display', 'block');
+		// 		 $('#'+image_id).css('border', '1px solid black');
 
-		$(document).on('click','#image_border', function(event){
-			event.stopPropagation();
-			if($(this).text().trim() == "Show Border")
-			{
-				 $('#'+image_id).css('display', 'block');
-				 $('#'+image_id).css('border', '1px solid black');
+		// 		 $(this).text("Hide Border");
+		// 	}else{
+		// 		$('#'+image_id).css('border', 'none');	
+		// 		 $(this).text("Show Border");
 
-				 $(this).text("Hide Border");
-			}else{
-				$('#'+image_id).css('border', 'none');	
-				 $(this).text("Show Border");
-
-			}
-		});
+		// 	}
+		// });
 
 		$(document).on('click','#imagetoolbardelete', function(){
 			var id = $('#'+image_id).data('id');
@@ -616,9 +641,6 @@
         	$('#imageToolbar').show();
         });
 
-		
-
-});
  $(document).ready(function(){
 
         $("#flip").click(function(){
@@ -645,8 +667,7 @@
         $("#save_as_template").on('click', function () {
             var i=0;
             feilds=[];
-
-            var template_id = $("#template_id").val();
+            $('#overlay').show();
 
             $.each(field_names, function(key,  value){
 
@@ -682,6 +703,7 @@
 				var css = $('#image_'+value).attr('style');
 				var div_css = $('#div_image_'+value).attr('style');
 				var name = $('#div_image_'+value).attr('name');
+
 				var values = { css: css, id: value , div_css: div_css, name: name };
 				images_temp[i] = values;
 				//console.log(feilds);
@@ -704,8 +726,114 @@
                             type: "post",
                             data: {"_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
                             dataType: 'json',
+                            success: function(template_id_json) {
+                            	if(template_both_side == 0)
+                            	{
+                            		window.location.href = site_url+"/mytemplates";
+                            	}
+                            	else
+                            	{
+                            		alert("Front side of card is successfully saved..!");
+                                	$('#front_side').hide();
+                                	$('#back_side').show();
+                                	new_template_id = template_id_json;
+                                	side = "back_";
+                            	}
+                            	$('#overlay').hide();
+                             
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                            	$('#overlay').hide();
+                               console.log(textStatus, errorThrown);
+                            }
+                            
+                        });
+
+                    
+
+                    } 
+                    }).fail(function(data){
+                        var errors = data.responseJSON;
+                    });
+
+
+                 }
+             });
+        });
+        $("#save_modifications").on('click', function () {
+            var i=0;
+            feilds=[];
+
+            $.each(field_names, function(key,  value){
+
+                var id1  = value.toLowerCase();
+                var id = id1.replace(/\ /g, '_');
+                var css = $('#'+id).attr('style');
+                var font_css = $('#span_'+id).attr('style');
+                var content = $('#span_'+id).text();
+                var values = { name: value, css: css, font_css: font_css, content: content};
+                feilds[i] = values;
+                i++; 
+            });
+
+            labels = [];
+			i=0;
+			$.each(label_names, function(key,  value){
+
+				var id1  = value.toLowerCase();
+			 	var id = id1.replace(/\ /g, '_');
+				var css = $('#'+id).attr('style');
+				var font_css = $('#span_'+id).attr('style');
+				var content = $('#span_'+id).text();
+				var values = { name: value, css: css, font_css: font_css, content: content};
+				labels[i] = values;
+				//console.log(feilds);
+				i++; 
+			});
+
+            var images_temp=[];
+			i=0;
+			console.log(upload_images);
+			$.each(upload_images, function(key, value){
+
+				var css = $('#image_'+value).attr('style');
+				var div_css = $('#div_image_'+value).attr('style');
+				var values = { css: css, id: value , div_css: div_css};
+				images_temp[i] = values;
+				//console.log(feilds);
+				i++; 
+			});
+         html2canvas(element, {
+         onrendered: function (canvas) {
+                getCanvas = canvas;
+                var imgageData = getCanvas.toDataURL("image/png");
+
+                $.ajax({
+                type: "POST",
+                url: site_url+'/card_image_save',
+                dataType: 'json',
+                data: {"_token": token ,"image": imgageData},
+                success : function(image){
+
+                    $.ajax({
+                            url: site_url+'/user_template_edit',
+                            type: "post",
+                            data: {"_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+                            dataType: 'json',
                             success: function(msg) {
-                                window.location.href = site_url+"/mytemplates";
+                            	if(template_both_side == 0)
+                            	{
+                            		window.location.href = site_url+"/mytemplates";
+                            	}
+                            	else
+                            	{
+                            		alert("Front side of card is successfully edited..!");
+                                	$('#front_side').hide();
+                                	$('#back_side').show();
+                                	new_template_id = template_id_json;
+                                	side = "back_";
+                            	}
+                            	$('#overlay').hide();
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                console.log(textStatus, errorThrown);
