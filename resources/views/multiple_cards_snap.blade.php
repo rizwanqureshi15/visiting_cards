@@ -90,12 +90,16 @@
     var site_url = "{{ url('') }}";
     var username = "{{ Auth::user()->username }}";
     var i = 0;
+    var count = 1;
 
     var img_name = {!! json_encode($image_feilds_name) !!};
 
     var multiple_cards = {!! json_encode($cards_data) !!};
-
+    var array_length = multiple_cards.length;
     $(document).ready(function(){
+
+           
+
         $.each(multiple_cards, function( j,val ) 
         {
             i = i+1;
@@ -105,87 +109,57 @@
                 $.each(img_name,function(k, v){
                     
                     var k = k.replace(" ","_");
-                    alert(k);
+                    k = k.toLowerCase();
+                    
                     if(key == k)
-                    {   
+                    {
                         $('#image_'+v).attr('src',site_url+'/user/'+username+'/'+k+'/'+value);
                     }
                 });
                 
-
-                
             });
+
+            var miliseconds = 2000;
+            var currentTime = new Date().getTime();
+            while (currentTime + miliseconds >= new Date().getTime()) {
+            }
             
-             html2canvas(element, {
-                onrendered: function (canvas) {
-                getCanvas = canvas;
-                var imgageData = getCanvas.toDataURL("image/png");
 
-                $.ajax({
-                type: "POST",
-                url: site_url+'/multiple_save_cards',
-                dataType: 'json',
-                data: {"_token": token ,"image": imgageData},
-                success : function(image)
-                    {
-                        if(multiple_cards.length == i)
-                        { 
-                            setInterval(function() {
+                html2canvas(element, {
+                    onrendered: function (canvas) {
+                    getCanvas = canvas;
+                    var imgageData = getCanvas.toDataURL("image/png");
+
+                    $.ajax({
+                    type: "POST",
+                    url: site_url+'/multiple_save_cards',
+                    dataType: 'json',
+                    async: false,
+                    data: {"_token": token ,"image": imgageData},
+                    success : function(image)
+                        {
+                            
+                            if(array_length == count)
+                            { 
+                                   
                                 window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
-                            }, 5000);
+                                
+                            }
+                            count = count+1;
                         }
-                    }
-                    }).fail(function(data){
-                        var errors = data.responseJSON;
-                    });
+                        }).fail(function(data){
+                            var errors = data.responseJSON;
+                        });
 
-
-                 }
-             }); 
-              
+                     }
+                });
+            
               
         });
        
 
        
     });
-    $(document).ready(function() {
-        var win = $(window);
-        
-        
-
-        win.scroll(function() {
-            // End of the document reached?
-        
-            if ($(document).height() - win.height() == win.scrollTop()) {
-                if(last_page == false)
-                {  
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('user-images') }}",
-                    dataType: 'json',
-                    data: {"_token": "{{ csrf_token() }}","page_no":page_no},
-                    success: function(user_cards) {
-                        if(user_cards.length == 0){  
-                            last_page=true;
-                        }
-                        
-                        page_no++;
-                        var html = '';
-
-                            $.each(user_cards, function( i,val ) 
-                            {
-                                html+="<div class='col-md-4'><img src='"+site_url+"/images/"+ username+"/"+ val.image +"' style='width:100%;padding-top:20px;'></div>";
-                            });
-            
-                        $('#posts').append(html);
-                    }
-                });
-                }
-            }
-        });
-    
-});
 
 </script>
 
