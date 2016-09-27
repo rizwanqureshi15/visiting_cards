@@ -289,6 +289,7 @@ class TemplatesController extends Controller
             
         $user_fields=array(
                 'name' => $template->name,
+                'price' => $template->price,
                 'template_id' => $template->id,
                 'background_image' => $template->background_image,
                 'url' => $url,

@@ -127,3 +127,13 @@ Route::post('delete_image','Front\TemplatesController@delete_image_from_multiple
 Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
 Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
 Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');
+
+Route::get('admin/materials/create', 'MaterialController@create');
+Route::post('admin/materials/create', 'MaterialController@create_post');
+
+Route::get('admin/materials/edit/{id}', 'MaterialController@edit');
+Route::post('admin/materials/edit/{id}', 'MaterialController@edit_post');
+
+Route::post('admin/materials/delete', 'MaterialController@delete');
+
+Route::get('admin/materials/list', 'MaterialController@materials_list');
