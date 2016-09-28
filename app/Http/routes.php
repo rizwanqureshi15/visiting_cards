@@ -107,6 +107,7 @@ Route::post('save_single_card','Front\TemplatesController@save_card');
 
 Route::get('mytemplates/{url}/edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
 Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
+Route::post('user_template_edit_back','Front\TemplatesController@edit_user_template_back_post');
 
 Route::get('single_card/{url}/create', 'Front\TemplatesController@create_single_card');
 
@@ -127,3 +128,17 @@ Route::get('delete_folder/{url}','Front\TemplatesController@delete_multiple_prev
 Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
 
 Route::post('upload_images/{url}','Front\TemplatesController@upload_images');
+
+Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
+Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
+Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');
+
+Route::get('admin/materials/create', 'MaterialController@create');
+Route::post('admin/materials/create', 'MaterialController@create_post');
+
+Route::get('admin/materials/edit/{id}', 'MaterialController@edit');
+Route::post('admin/materials/edit/{id}', 'MaterialController@edit_post');
+
+Route::post('admin/materials/delete', 'MaterialController@delete');
+
+Route::get('admin/materials/list', 'MaterialController@materials_list');

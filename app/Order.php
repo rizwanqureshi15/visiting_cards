@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserTemplateFeild extends Model
+class Order extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,9 @@ class UserTemplateFeild extends Model
      * @var array
      */
      protected $fillable = [
+        'id', 'user_id', 'material_id', 'amount', 'quantity', 'is_cancel', 'status', 'is_delete' , 'order_no' 
+    ];
 
-        'id', 'name', 'template_id','user_id','css', 'font_css', 'content', 'is_label', 'is_back',
-        ];
+    
+   
 }

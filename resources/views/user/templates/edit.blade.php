@@ -268,7 +268,7 @@
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-     var field_names = {!! json_encode($field_names) !!};
+     var field_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $template->id }};

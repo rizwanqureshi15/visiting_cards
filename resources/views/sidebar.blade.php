@@ -12,6 +12,9 @@
   <a href="{{ url('admin/categories/list') }}" id="template" class="list-group-item {{ Request::is('admin/categories') || Request::segment(2)=='categories' ? 'active' : ''}}">
     Template Categories
   </a>
+  <a href="{{ url('admin/materials/list') }}" id="template" class="list-group-item {{ Request::is('admin/materials') || Request::segment(2)=='materials' ? 'active' : ''}}">
+    Card Material
+  </a>
   <a href="{{ url('admin/logout') }}" id="logout" class="list-group-item {{ Request::is('admin/logout') ? 'active' : ''}}">
   	Logout
   </a>

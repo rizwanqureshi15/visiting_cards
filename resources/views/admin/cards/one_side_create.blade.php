@@ -360,6 +360,8 @@
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $templates->id }};
+    var side = "";
+    var template_both_side = {{ $templates->is_both_side }};
     
 </script>
 
@@ -370,5 +372,6 @@
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
+    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
 
 @endsection

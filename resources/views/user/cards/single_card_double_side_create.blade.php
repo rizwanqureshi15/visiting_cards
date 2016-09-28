@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 
 @section('content')
 <style>
@@ -35,11 +35,7 @@
 </style>
 <div id="front_side" style="display:block;"> 
 <div class="row">
-  @if($templates->type == "horizontal")
-    <div class="col-md-3" >
-  @else
-    <div class="col-md-3 col-md-offset-2">
-  @endif
+    <div class="col-md-3 col-md-offset-1">
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
@@ -72,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -103,20 +99,20 @@
           @endif
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>  
 
-@if($templates->type == 'horizontal')
-  <div class="col-md-9">
+@if($template->type == 'horizontal')
+  <div class="col-md-8">
     <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas1" width="680" height="418">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas1" width="400" height="648">
         </canvas>
 @endif
@@ -151,7 +147,7 @@
                  @endforeach
             @endif
 
-            @if($images)
+           @if($images)
                 @foreach($images as $image)
                     @foreach($image_css as $img_css)
                         @if($img_css->id == $image->template_feild_id )
@@ -165,7 +161,7 @@
                         @endif
                     @endforeach
                    
-                        <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
+                        <div id="div_image_{{ $id }}" name="{{ $img_css->name }}" style="{{ $div_css }}" class="template_image_div" data-toggle='modal' data-target='#myModal'>
                             <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
                         </div>
                 @endforeach
@@ -196,25 +192,8 @@
         <!--Image Toolbar End-->
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
+    </div>  
     </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
-    </div>
-   
-    </div>
-    
     </div>
 </div>
 
@@ -229,10 +208,11 @@
 
 
 
+
 <div id="back_side" style="display:none;">
   <div class="row">
-  @if($templates->type == "horizontal")
-    <div class="col-md-3" >
+  @if($template->type == "horizontal")
+    <div class="col-md-3 col-md-offset-1" >
   @else
     <div class="col-md-3 col-md-offset-2">
   @endif
@@ -277,7 +257,7 @@
         </h4>
       </div>
       <div id="collapseTwo_back" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-        <div class="panel-body" id="label_body">
+        <div class="panel-body" id="back_label_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
               <input type="text" class="form-control" id="back_newLabelName" placeholder="Enter New Label">
@@ -303,16 +283,16 @@
   </div>
 </div>  
 
-@if($templates->type == 'horizontal')
-  <div class="col-md-9">
+@if($template->type == 'horizontal')
+  <div class="col-md-8">
     <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:419px;width:680px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas2" width="680" height="419">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:648px;width:400px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas2" width="400" height="648">
         </canvas>
 @endif
@@ -360,7 +340,7 @@
          @endif
       @endforeach
              
-      <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
+      <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div" data-toggle='modal' data-target='#myModal'>
         <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="back_template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
       </div>
     @endforeach
@@ -390,30 +370,20 @@
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="back_btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="back_btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
     </div>
-   
-    </div>
-    
-    </div>
+</div>
 </div>
 
 <div class="row">
-  <div class="col-md-2 col-md-offset-3">
-      <button class="btn btn-primary btn-lg" id="front_back">Back</button>
+  <div class="col-md-5 col-md-offset-6" style="margin-top:10px;">
+      <button class="btn btn-primary btn-lg" id="front_back"  style="margin-left:130px">Back</button>
+      <button class="btn btn-primary btn-lg" style="" id="Preview" data-toggle="modal" data-target="#preview_image">
+        Preview
+      </button>
+      <a id="btnborder" class="btn btn-primary btn-lg">
+        Show Borders
+      </a>
+  </div>
   </div>
   <div class="row">
     <!--Toolebasr start-->
@@ -493,24 +463,49 @@
                     <div class="image-editor">
                           <hr>
                           <input type="file" class="cropit-image-input">
-                          <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
-                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" name="image_name" id="image_name" placeholder="Enter image Feild Name.." required="required" />
-                          <div id="image_error" style="margin-top:10px;"></div>
                           <hr>
                           <div class="cropit-preview"></div>
                           <hr>
-                          <input type="range" class="cropit-image-zoom-input" />
+                          <input type="range" class="cropit-image-zoom-input"/>
                         
-                        </div>
+                    </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
-
                     <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
                   </div>
                 </div>
               </div>
             </div>
+            <!--Modal End-->
+  <!--Modal-->
+             <div class="modal fade" id="preview_image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content" style="width:745px;">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Preview</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div id="previewImageFront" style="display:block;">
+                            
+                        </div>
+                        <div id="previewImageBack" style="display:none;">
+                            
+                        </div>
+                        <button id="preview_front_back" class="btn btn-primary">
+                            Back
+                        </button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="btnSave" type="submit" class="btn btn-primary"  >
+                            Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <!--Modal End-->
 </div>
 
    
@@ -524,15 +519,15 @@
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-    var feild_names = {!! json_encode($names) !!};
+    var field_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};
     var back_feild_names = {!! json_encode($back_names) !!};
     var back_upload_images = {!! json_encode($back_template_images) !!};
-    var back_label_names = {!! json_encode($back_template_labels) !!};;
-    var template_id = {{ $templates->id }};
+    var back_label_names = {!! json_encode($back_template_labels) !!};
+    var template_id = {{ $template->id }};
+    var template_both_side = {{ $template->is_both_side }};
     var side = "";
-    var template_both_side = {{ $templates->is_both_side }};
 
        $(document).ready(function(){
         $("#flip").click(function(){
@@ -564,7 +559,7 @@
     <!--Color Picker -->
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
-    <script src="{{ url('assets/js/admin.js') }}"></script>
-    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
+    <script src="{{ url('assets/js/card.js') }}"></script>
+    <script src="{{ url('assets/js/card_backside.js') }}"></script>
 
 @endsection

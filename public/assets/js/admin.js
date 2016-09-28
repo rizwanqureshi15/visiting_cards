@@ -23,7 +23,10 @@
 
 		$(document).on('click','.feild-elements', function(){
 			element_id = $(this).attr('id');
-			//console.log(element_id);
+			if(side == "back_")
+			{
+				element_id = element_id.substring(5,element_id.length);
+			}
 			
 		});
 

@@ -208,7 +208,7 @@
             <!--Image Border End-->
             <!--Image Delete-->
                 <div class="col-md-3 imagetoolbar_Section" style="padding:3px;">
-                  <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:3px;border-radius:0px" id="imagetoolbardelete">
+                  <img src="{{ url('assets/images/delete.png') }}" style="width:40px; margin-top:3px;border-radius:0px" id="imagetoolbardelete">
                 </div>
             <!--Image Delete End-->
         </div>
@@ -274,7 +274,9 @@
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $template->id }};
-    
+    var new_template_id;
+    var template_both_side = {{ $template->is_both_side }};
+    var side = "";
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
@@ -283,5 +285,6 @@
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/myjs.js') }}"></script>
+    <script src="{{ url('assets/js/myjs_backside.js') }}"></script>
 
 @endsection

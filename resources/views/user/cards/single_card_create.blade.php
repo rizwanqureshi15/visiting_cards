@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <!-- <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -106,7 +106,7 @@
             @endif
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
         </div>  
 
@@ -171,8 +171,8 @@
                         @endif
                     @endforeach
                    
-                        <div id="div_image_{{ $id }}" name="{{ $img_css->name }}" style="{{ $div_css }}" class="template_image_div" data-toggle='modal' data-target='#myModal'>
-                            <img src="{{ url('templates/images', $src) }}"  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+                        <div id="div_image_{{ $id }}" name="{{ $img_css->name }}" style="{{ $div_css }}" class="template_image_div">
+                            <img src="{{ url('templates/images', $src) }}"  data-toggle='modal' data-target='#myModal'  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}" data-toggle='modal' data-target='#myModal'>
                         </div>
                 @endforeach
             @endif
@@ -303,7 +303,7 @@
           @else
           <div style="margin-right:255px;">
           @endif
-             <button class="btn btn-primary mybtn" style="float:right;margin-right:10px;margin-top:20px;" id="Preview" data-toggle="modal" data-target="#preview_image">
+             <button class="btn btn-primary mybtn" style="float:right;margin-right:10px;margin-top:20px;" id="Preview_single" data-toggle="modal" data-target="#preview_image">
                 Preview
               </button>   
                <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
@@ -321,10 +321,12 @@
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-   var field_names = {!! json_encode($field_names) !!};
+   var field_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $template->id }};
+    var side ="";
+    var template_both_side = {{ $template->is_both_side }};
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>

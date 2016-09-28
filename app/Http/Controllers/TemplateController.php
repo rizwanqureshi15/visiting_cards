@@ -76,7 +76,8 @@ class TemplateController extends Controller
                         'category_id' => 'required',
                         'type' => 'required',
                         'url' => 'required|unique:templates',
-                        'background_image' => 'required'
+                        'background_image' => 'required',
+                        'price' => 'required|numeric'
                     ]);
                     
                       
@@ -111,7 +112,8 @@ class TemplateController extends Controller
 
                             $data = array(
                             'name' => $request->name, 
-                            'background_image' => $image,  
+                            'background_image' => $image,
+                            'price' => $request->price,  
                             'type' => $request->type, 
                             'category_id' => $request->category_id,
                              'url'=> $request->url, 
@@ -170,6 +172,7 @@ class TemplateController extends Controller
                         'category_id' => 'required',
                         'type' => 'required',
                         'url' => 'required|unique:templates,url,'.$id,
+                        'price' => 'required|numeric'
                         //'background_image' => 'required'
                     ]);
             if($request->is_image=="0" && $request->background_image==NULL)
@@ -208,7 +211,8 @@ class TemplateController extends Controller
                     'name' => $request->name,                             
                     'type' => $request->type, 
                     'category_id' => $request->category_id, 
-                    'is_both_side' => $is_back_side
+                    'is_both_side' => $is_back_side,
+                    'price' => $request->price
                     );
 
                 if($request->background_image)

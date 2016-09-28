@@ -32,6 +32,18 @@
   </div>
 
   <div class="form-group">
+     <label class="col-sm-3 control-label">Price</label>
+    <div class="col-sm-5">
+      {{ Form::text('price', null , $attributes= ['class' => 'form-control','placeholder' => 'Template Price']) }}
+      @if($errors->first('price'))
+        <div class="alert alert-danger">
+          {{ $errors->first('price') }}
+        </div>
+      @endif
+    </div>
+  </div>
+
+  <div class="form-group">
      <label class="col-sm-3 control-label">Category</label>
     <div class="col-sm-5">
       <select class="form-control" name="category_id">

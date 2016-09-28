@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 
 @section('content')
 <style>
@@ -34,8 +34,9 @@
 
 </style>
 <div id="front_side" style="display:block;"> 
+<div class="container">
 <div class="row">
-  @if($templates->type == "horizontal")
+  @if($template->type == "horizontal")
     <div class="col-md-3" >
   @else
     <div class="col-md-3 col-md-offset-2">
@@ -60,15 +61,6 @@
             </div> 
             <div id="error"></div>
           </div>            
-        @if($feilds)
-          @foreach($feilds as $feild)
-            <?php
-              $id = $feild->name;
-              $id = str_replace(" ","_",$feild->name);
-              $id = strtolower($id);  
-            ?>        
-          <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">  @endforeach
-        @endif
         </div>
       </div>
     </div>
@@ -91,32 +83,23 @@
             </div> 
             <div id="error_label"></div>
           </div>
-          @if($labels)
-            @foreach($labels as $label)
-              <?php
-                $id = $label->name;
-                $id = str_replace(" ","_",$label->name);
-                $id = strtolower($id);   
-              ?>        
-              <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
-            @endforeach
-          @endif
         </div>
       </div>
     </div>
+
   </div>
 </div>  
 
-@if($templates->type == 'horizontal')
+@if($template->type == 'horizontal')
   <div class="col-md-9">
     <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas1" width="680" height="418">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas1" width="400" height="648">
         </canvas>
 @endif
@@ -128,7 +111,7 @@
         $id = str_replace(" ","_",$feild->name);
         $id = strtolower($id);
       ?>
-      <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements'  style="{{ $feild->css }}">
+      <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements'  style="background-color: transparent;{{ $feild->css }}">
           <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
             {{ $feild->content }}
           </span>
@@ -143,7 +126,7 @@
         $id = str_replace(" ","_",$label->name);
         $id = strtolower($id);
     ?>
-                            <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $label->css }}">
+                            <div id="{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content textbox-size feild-elements' style="background-color: transparent;{{ $label->css }}">
                                  <span id="span_{{ $id }}" style="{{ $label->font_css }}">
                                     {{ $label->content }}
                                 </span>
@@ -197,25 +180,21 @@
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
+        @if($template->type == "horizontal")
+          <div style="margin-right:168px">
+          @else
+          <div style="margin-right:150px;">
+          @endif
+            <button class="btn btn-primary btn-lg mybtn" id="save_as_template">
+                Save as Template
+            </button>   
+            <a id="btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+                Show Borders
+             </a>
+          </div>
+        </div>
     </div>
-   
-    </div>
-    
-    </div>
+  </div>
 </div>
 
 
@@ -230,8 +209,9 @@
 
 
 <div id="back_side" style="display:none;">
+  <div class="container">
   <div class="row">
-  @if($templates->type == "horizontal")
+  @if($template->type == "horizontal")
     <div class="col-md-3" >
   @else
     <div class="col-md-3 col-md-offset-2">
@@ -256,15 +236,6 @@
             </div> 
             <div id="back_error"></div>
           </div>            
-        @if($back_feilds)
-          @foreach($back_feilds as $feild)
-            <?php
-              $id = $feild->name;
-              $id = str_replace(" ","_",$feild->name);
-              $id = strtolower($id);  
-            ?>        
-          <input type="text" id="back_sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">  @endforeach
-        @endif
         </div>
       </div>
     </div>
@@ -287,32 +258,22 @@
             </div> 
             <div id="back_error_label"></div>
           </div>
-          @if($back_labels)
-            @foreach($back_labels as $label)
-              <?php
-                $id = $label->name;
-                $id = str_replace(" ","_",$label->name);
-                $id = strtolower($id);   
-              ?>        
-              <input type="text" id="back_sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
-            @endforeach
-          @endif
         </div>
       </div>
     </div>
   </div>
 </div>  
 
-@if($templates->type == 'horizontal')
+@if($template->type == 'horizontal')
   <div class="col-md-9">
     <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:419px;width:680px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas2" width="680" height="419">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100%;height:648px;width:400px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas2" width="400" height="648">
         </canvas>
 @endif
@@ -324,7 +285,7 @@
         $id = str_replace(" ","_",$feild->name);
         $id = strtolower($id);
       ?>
-      <div id="back_{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content back-textbox-size feild-elements'  style="{{ $feild->css }}">
+      <div id="back_{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content back-textbox-size feild-elements'  style="background-color: transparent;{{ $feild->css }}">
           <span id="back_span_{{ $id }}" style="{{ $feild->font_css }}">
             {{ $feild->content }}
           </span>
@@ -339,7 +300,7 @@
         $id = str_replace(" ","_",$label->name);
         $id = strtolower($id);
     ?>
-    <div id="back_{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content back-textbox-size feild-elements' style="{{ $label->css }}">
+    <div id="back_{{ $id }}" data-type="label" data-name="{{ $label->name }}" class='ui-widget-content back-textbox-size feild-elements' style="background-color: transparent;{{ $label->css }}">
        <span id="back_span_{{ $id }}" style="{{ $label->font_css }}">
         {{ $label->content }}
       </span>
@@ -390,35 +351,32 @@
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="back_btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="back_btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
-    </div>
+        @if($template->type == "horizontal")
+          <div style="margin-right:168px">
+          @else
+          <div style="margin-right:150px;">
+          @endif
+            <button class="btn btn-primary btn-lg mybtn" id="back_save_as_template">
+                Save as Template
+            </button>   
+            <a id="back_btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+                Show Borders
+             </a>
+          </div>
+        </div>
    
+     </div>
     </div>
-    
     </div>
 </div>
 
 <div class="row">
   <div class="col-md-2 col-md-offset-3">
-      <button class="btn btn-primary btn-lg" id="front_back">Back</button>
   </div>
   <div class="row">
     <!--Toolebasr start-->
 
-        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
+        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;height:54px;">
         <div class="col-md-12" style="padding:0px;">
             <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
@@ -475,7 +433,7 @@
 
         <!--Toolbar Textbox-->
 
-        <input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />
+        <!--<input type="text" id="myTextBox" class="toolbar-textbox form-control" placeholder="Enter Data" />-->
         <!--Toolbar Textbox end-->
 
         </div><!--Toolbar end-->
@@ -524,15 +482,17 @@
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-    var feild_names = {!! json_encode($names) !!};
+    var field_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};
     var back_feild_names = {!! json_encode($back_names) !!};
     var back_upload_images = {!! json_encode($back_template_images) !!};
     var back_label_names = {!! json_encode($back_template_labels) !!};;
-    var template_id = {{ $templates->id }};
+    var template_id = {{ $template->id }};
+    var template_both_side = {{ $template->is_both_side }};
+    var new_template_id;
+
     var side = "";
-    var template_both_side = {{ $templates->is_both_side }};
 
        $(document).ready(function(){
         $("#flip").click(function(){
@@ -564,7 +524,7 @@
     <!--Color Picker -->
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
-    <script src="{{ url('assets/js/admin.js') }}"></script>
-    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
+    <script src="{{ url('assets/js/myjs.js') }}"></script>
+    <script src="{{ url('assets/js/myjs_backside.js') }}"></script>
 
 @endsection
