@@ -41,7 +41,7 @@
   </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav id="navbar" class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -102,7 +102,8 @@
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
 
-    
+    <script src="{{ url('assets/js/jquery.validate.js') }}"></script>
+
     <!--Image cropper-->
     <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
     <!--End Image Cropper-->
