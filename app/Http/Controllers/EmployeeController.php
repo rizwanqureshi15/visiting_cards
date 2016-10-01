@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;	
 use Session;
+use App\Order;
+use App\OrderItem;
+use Config;
+use Datatables;
+use File;
+use App\FinalOrder;
 
 
 class EmployeeController extends Controller
@@ -35,7 +41,6 @@ class EmployeeController extends Controller
             return false;
         }
     }
-
     public function login_post(Request $request)
     {
     	//Auth::guard('Newgardname'); [specify guerd name by which you want to authenticate
@@ -46,7 +51,7 @@ class EmployeeController extends Controller
     		{
                 if(Auth::guard('employee')->user()->is_delete == 0)
                     {   
-                       return redirect('employees/dashboard');  
+                       return redirect('orders/list');  
                     }
                     else
                     {
@@ -69,8 +74,143 @@ class EmployeeController extends Controller
         }
     }
 
-    public function dashboard_display()
+    public function order_list()
     {
-    	return view('employee.dashboard');
+        if(Auth::guard('employee')->user())
+        {
+            return view('employee.order_list');    
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    	
+    }
+
+    public function new_order_list()
+    {
+        if(Auth::guard('employee')->user())
+        {
+            return view('employee.new_orders_list');    
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
+    public function new_order_datatable()
+    {
+
+         $orders = Order::with('user')->where('is_delete',0)->where('is_confirmed', 0)->get();
+
+         return Datatables::of($orders)
+                    ->addColumn('action', function ($data) {
+                           
+                            $button = '<a href='.url("admin/new_orders/" . $data->id . "/list").'>View</a>';
+                            return $button;
+                        })
+                    ->editColumn('user_id', function ($data) {
+                            $username = $data->user->first_name . " " . $data->user->last_name;
+                            return $username;
+                        })
+                    ->make(true);
+    }
+
+    public function datatable()
+    {
+
+         $orders = Order::with('user')->where('is_delete',0)->where('is_confirmed', 1)->get();
+
+         return Datatables::of($orders)
+                    ->addColumn('action', function ($data) {
+                            if($data->status == "Done")
+                            {
+                            $button = '<a href='.url("admin/orders/final/" . $data->id . "/list").'>Final Order</a>';
+                            
+                            }else{
+                            $button = '<a href='.url("admin/orders/" . $data->id . "/list").'>List</a>';    
+                            }
+                            return $button;
+                        })
+                    ->editColumn('user_id', function ($data) {
+                            $username = $data->user->first_name . " " . $data->user->last_name;
+                            return $username;
+                        })
+                    ->make(true);
+    }
+
+    public function list_cards($id)
+    {
+
+        Order::where('id', $id)->update(['status' => 'In Process']);
+        $order = Order::with('user')->where('id', $id)->first();
+        $data['cards'] = OrderItem::where('order_id',$id)->get();
+        $data['username'] = $order->user->username;
+        return view('employee.orders.list',$data);
+
+    }
+
+    public function new_list_cards($id)
+    {
+
+        //Order::where('id', $id)->update(['status' => 'In Process']);
+        $order = Order::with('user')->where('id', $id)->first();
+        $data['cards'] = OrderItem::where('order_id',$id)->paginate('20');
+        $data['username'] = $order->user->username;
+        $data['order_id'] = $id;
+        return view('employee.orders.order_items_view',$data);
+
+    }
+
+    public function confirm_order($id)
+    {
+        Order::where('id', $id)->update(['is_confirmed' => '1']);
+        return redirect('new_orders/list');
+    }
+
+    public function order_snap_list($id)
+    {
+
+        $order = Order::with('user')->where('id', $id)->first();
+        $data['cards'] = FinalOrder::where('order_id',$id)->paginate(1);
+        $data['username'] = $order->user->username;
+
+        return view('employee.orders.order_snaps',$data);
+
+    }
+
+    public function save_list_snap(Request $request)
+    {
+
+        $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $name = str_random(40);
+        $path = public_path() .'/orders/snaps';   
+
+        if(!File::exists($path))
+        { 
+            File::makeDirectory($path);
+        } 
+
+        file_put_contents($path .'/'. $name .'.png', $data);  
+        $save = [
+            'order_id' => $request->order_id, 
+            'snap' => $name.'.png'
+        ];
+
+        if($request->is_back)
+        {
+            $save['is_back'] = 1;
+        }
+        FinalOrder::create($save);
+         if($request->status)
+        {
+            
+            //Order::where('id', $request->order_id)->update(['status' => "Done"]);
+        }
+        return json_encode($name .'.png');
     }
 }

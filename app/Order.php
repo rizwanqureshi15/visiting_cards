@@ -12,9 +12,12 @@ class Order extends Model
      * @var array
      */
      protected $fillable = [
-        'id', 'user_id', 'material_id', 'amount', 'quantity', 'is_cancel', 'status', 'is_delete' , 'order_no' 
+        'id', 'user_id', 'material_id', 'amount', 'quantity', 'is_cancel', 'status', 'is_delete' , 'order_no', 'is_confirmed',
     ];
 
     
-   
+  public function user()
+  {
+  	 return $this->belongsTo('App\User');
+  }
 }

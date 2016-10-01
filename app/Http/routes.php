@@ -23,7 +23,8 @@ Route::get('/home', 'HomeController@index');
 Route::get('employees/login', 'EmployeeController@login');
 Route::post('employees/login', 'EmployeeController@login_post');
 
-Route::get('employees/dashboard', 'EmployeeController@dashboard_display');
+Route::get('orders/list', 'EmployeeController@order_list');
+Route::get('new_orders/list', 'EmployeeController@new_order_list');
 
 
 Route::get('profile','UserController@edit_profile');
@@ -137,3 +138,14 @@ Route::post('admin/materials/edit/{id}', 'MaterialController@edit_post');
 Route::post('admin/materials/delete', 'MaterialController@delete');
 
 Route::get('admin/materials/list', 'MaterialController@materials_list');
+
+Route::get('admin/order-datatable', 'EmployeeController@datatable');
+Route::get('admin/new-order-datatable', 'EmployeeController@new_order_datatable');
+
+Route::get('admin/orders/{id}/list', 'EmployeeController@list_cards');
+Route::get('admin/new_orders/{id}/list', 'EmployeeController@new_list_cards');
+
+Route::post('card_list_snap', 'EmployeeController@save_list_snap');
+Route::get('admin/orders/final/{id}/list', 'EmployeeController@order_snap_list');
+
+Route::get('order/confirm/{id}', 'EmployeeController@confirm_order');
