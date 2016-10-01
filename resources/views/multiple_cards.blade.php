@@ -4,61 +4,84 @@
 
 <div class="container">
 	<div class="row">
-		<!--<div class="col-md-12">
+		<div class="col-md-12">
 			 @if(Session::has('flash_message'))
                     <div class="alert alert-danger">
                          <span class="glyphicon glyphicon-close"></span>
                             <em> {!! session('flash_message') !!}</em>
                     </div>
              @endif
-		</div>-->
+              @if(Session::has('flash_success'))
+                    <div class="alert alert-success">
+                         <span class="glyphicon glyphicon-ok"></span>
+                            <em> {!! session('flash_success') !!}</em>
+                    </div>
+             @endif
+		</div>
 
 		<a class="btn btn-primary" href="{{ url('download_file',$template_url) }}">
 			Download Excel File
 		</a>
 
-		<form method="post" action="{{ url('upload_file',$template_url) }}" enctype='multipart/form-data'>
+	   @foreach($image_feilds_name as $feild_name)
+		    <?php
+		    	$name = $feild_name->name; 
+                $name = str_replace(" ","_",$feild_name->name);
+                $name = strtolower($name); 
+		   	?>
+		<form id="form_{{ $name }}" method="post" action="{{ url('upload_images',$template_url) }}" enctype='multipart/form-data'>
 			{{ Form::token() }}
 
-			<div class="form-group">
-		    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label">Upload Excel File</label>
-			    <div class="col-sm-5">
-			      <input type="file" class="form-control" id="inputEmail3" name="excel_file" >
-			    
-				    @if ($errors->has('excel_file'))
-	                    <span class="help-block" style="color:red;">
-	                        <strong>{{ $errors->first('excel_file') }}</strong>
-	                    </span>
-	                @endif
-			    </div>
-		    </div>
-		    
-		    @foreach($image_feilds_name as $feild_name)
-		    	<?php
-		    		$id = $feild_name->name; 
-                    $id = str_replace(" ","_",$feild_name->name);
-                    $id = strtolower($id);
-		    	?>
+				<input type="hidden" value="{{ $name }}" name="{{ $name }}">
 			    <div class="form-group">
 			    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload {{ $feild_name->name }}</label>
 				    <div class="col-sm-5">
-				      <input type="file" class="form-control" id="inputEmail3" name="{{ $id }}[]" multiple="multiple" style="margin-top:10px;" required>
-				      
-				      @if(Session::has($feild_name->name.'_error_message'))
-	                    <span class="help-block" style="color:red;">
-	                        <strong> {{ session($feild_name->name.'_error_message') }}</strong>
-	                    </span>
-	                  @endif
+					    <div class="col-md-10">
+					      <input type="file" class="form-control" id="{{ $name }}" name="{{ $name }}[]" multiple="multiple" style="margin-top:10px;">
+					      <div id="error_{{ $name }}" style="color:red"></div>
+					      @if(Session::has($feild_name->name.'_error_message'))
+		                    <span class="help-block" style="color:red;">
+		                        <strong> {{ session($feild_name->name.'_error_message') }}</strong>
+		                    </span>
+		                  @endif
+		            	</div>
 
+		            	<div class="col-md-2">
+		                  <input type="submit" class="btn btn-primary submit" data-id="{{ $name }}" name="submit" Value="Upload" style="margin-top:10px;">
+		                </div>
 				    </div>
 			    </div>
-			@endforeach
+
+		</form>
+
+	   @endforeach
+
+		
+		<form  method="post" action="{{ url('upload_file',$template_url) }}" enctype='multipart/form-data'>
+			{{ Form::token() }}
 
 			<div class="form-group">
-			    <div class="col-sm-10">
-			      	<input type="submit" class="btn btn-primary" id="inputEmail3" name="submit" Value="Upload" style="float:right;margin-top:10px;">
-                </div>
-		    </div>	    
+		    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload Excel File</label>
+			    <div class="col-sm-5">
+				    <div class="col-md-10">
+				      <input type="file" class="form-control" id="inputEmail3" name="excel_file" style="margin-top:10px;">
+				    
+					    @if ($errors->has('excel_file'))
+		                    <span class="help-block" style="color:red;">
+		                        <strong>{{ $errors->first('excel_file') }}</strong>
+		                    </span>
+		                @endif
+
+		            </div>
+	                <div class="col-md-2">
+		                  <input type="submit" class="btn btn-primary" id="inputEmail3" name="submit" Value="Upload" style="margin-top:10px;">
+		            </div>
+
+			    </div>
+		    </div>
+
+		</form>
+
 
 		    @if($user_template_images)
 
@@ -82,7 +105,7 @@
 							    </div>
 						      </div>
 						      <div class="modal-footer">
-						        <a href="{{ url('delete_folder') }}">
+						        <a href="{{ url('delete_folder',$template_url) }}">
 						        	<button type="button" class="btn btn-default" >Close</button>
 						       	</a>
 						        <button type="button" class="btn btn-primary">Save</button>
@@ -104,6 +127,8 @@
 
 <script>
 
+$(document).ready(function () {
+
 	$('#multiple_images').modal({backdrop: 'static', keyboard: false , show: true}); 
 
 	$(".preview_image").click(function()
@@ -123,6 +148,30 @@
                 });
 
     });
+
+	$(document).ready(function() {
+		$('.submit').bind("click",function() 	
+		{ 
+			$("#error_"+name).text("");
+			var name = $(this).data('id'); 
+			var form_name = "form_"+name;
+			var field_name = $("#"+name).val();
+			
+			if(field_name=='')
+			{ 
+				$("#error_"+name).text("This field is required");
+				return false; 
+			} 
+			else
+			{
+				return true; 
+			}
+
+			
+		}); 
+	});
+
+});
 
 </script>
 

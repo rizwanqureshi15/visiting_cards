@@ -80,7 +80,8 @@
 @section('js')
 
 <script>
-  
+
+    $('#navbar').css("display","none");  
 
     var site_url = "{{url('')}}";
     var page_no = 1;
@@ -96,9 +97,8 @@
 
     var multiple_cards = {!! json_encode($cards_data) !!};
     var array_length = multiple_cards.length;
-    $(document).ready(function(){
 
-           
+    $(document).ready(function(){
 
         $.each(multiple_cards, function( j,val ) 
         {
@@ -124,7 +124,6 @@
             while (currentTime + miliseconds >= new Date().getTime()) {
             }
             
-
                 html2canvas(element, {
                     onrendered: function (canvas) {
                     getCanvas = canvas;
@@ -138,14 +137,13 @@
                     data: {"_token": token ,"image": imgageData},
                     success : function(image)
                         {
-                            
                             if(array_length == count)
-                            { 
-                                   
+                            {     
                                 window.location.href = "{{ url('multiple_cards',Request::segment(2)) }}"; 
-                                
                             }
+
                             count = count+1;
+
                         }
                         }).fail(function(data){
                             var errors = data.responseJSON;

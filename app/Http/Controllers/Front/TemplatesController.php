@@ -873,13 +873,305 @@ class TemplatesController extends Controller
         $username = $user->username;
         $user_id = $user->id;
 
+        $v = Validator::make([
+                'excel_file' => $request->excel_file
+            ],
+            [
+                'excel_file' => 'required'
+            ]);
+
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors()); 
+        }
 
         $data['template_data'] = UserTemplate::where('url',$url)->where('user_id',$user_id)->get();
         
         $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->get();
 
+        $user_template_ids = array();
+        foreach ($data['feilds'] as $feild) {
+            $user_template_ids[] = $feild->id;
+        }
+
         $data['user_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->get();
+            
+        $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label','0')->get();            
+
+        $data['images'] = UserTemplateImage::whereIn('template_feild_id',$user_template_ids)->get();
         
+        $imageids = array();
+        foreach ($data['images'] as $key => $value) {
+            array_push($imageids, $value->template_feild_id);
+        }
+
+        $data['image_css'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereIn('id', $imageids)->get();   
+
+        $template_images = array();
+        foreach($data['image_css'] as $image)
+        {
+            array_push($template_images, $image->id);
+        }
+        $data['template_images'] = $template_images;
+
+        $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
+
+        $data['image_feilds_name'] = $image_name;
+
+        $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
+
+        //Check image folders are available or not 
+
+            foreach ($image_feilds_name as $name) 
+            {
+                $name = str_replace(" ","_",$name);
+                $name = strtolower($name);
+            
+                $check = public_path().'/user/'.$username.'/'.$name;
+                if(!File::exists($check))
+                { 
+                    Session::flash('flash_message','First you must upload images');
+                    return redirect()->back();
+                } 
+
+                $check_folder = scandir($directory = public_path().'/user/'.$username.'/'.$name);    
+
+                unset($check_folder[0]);
+                unset($check_folder[1]);
+                
+                if($check_folder == null)
+                {
+                    Session::flash('flash_message','First you must upload images');
+                    return redirect()->back();
+                }
+            }
+            
+        //End Checking
+
+        // Getting File Headers 
+
+            $filename = $request->excel_file->getClientOriginalName();
+            $upload_success = $request->excel_file->move('excelfiles/', $filename);
+           
+            $file_headers = Excel::load('excelfiles/'.$filename, function($reader) { 
+
+            })->first(); 
+
+            if($file_headers == null)
+            {
+                Session::flash('flash_message','File is null');
+                @unlink('excelfiles/'.$filename);
+                return redirect()->back();
+            }
+
+            $header_names = array();
+            foreach($file_headers as $key => $header)
+            {
+                array_push($header_names, $key);
+            }
+
+        //End Getting Headers
+
+        //Get name of database feilds
+            
+            $feild_names = array();
+            foreach($feilds_name as $name)
+            {
+                $name = str_replace(" ","_",$name->name);
+                $name = strtolower($name);
+
+                array_push($feild_names,$name);
+            }
+           
+        //End getting
+
+        //Comparing Feilds
+            
+            $new_feild_names = array();
+            foreach ($feild_names as $value) 
+            {
+                $new_val = str_replace(' ', '_', $value);
+                array_push($new_feild_names,$new_val);
+            }
+
+            if($new_feild_names === $header_names) {
+                
+            } 
+            else
+            {
+                @unlink('excelfiles/'.$filename);
+                Session::flash('flash_message','Please Upload Proper File');
+                return redirect()->back();
+            }
+
+        //End Comparing
+
+        $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
+
+        })->get(); 
+
+        $data['username'] = $username;
+
+        return view('multiple_cards_snap',$data);
+
+
+        // $data['template_data'] = UserTemplate::where('url',$url)->where('user_id',$user_id)->get();
+        
+        // $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->get();
+
+        // $data['user_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->get();
+        
+        // $user_template_ids = array();
+        // foreach ($data['feilds'] as $feild) {
+        //     $user_template_ids[] = $feild->id;
+        // }
+
+        // $data['images'] = UserTemplateImage::whereIn('template_feild_id',$user_template_ids)->get();
+                 
+        // $imageids = array();
+        // foreach ($data['images'] as $key => $value) {
+        //     array_push($imageids, $value->template_feild_id);
+        // }
+        
+        // $data['feilds'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereNotIn('id', $imageids)->get();
+              
+        // $data['image_css'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereIn('id', $imageids)->get();
+      
+        
+        // $template_images = array();
+
+        // foreach($data['image_css'] as $image)
+        // {
+        //     array_push($template_images, $image->id);
+        // }
+        // $data['template_images'] = $template_images;
+        
+        // $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
+
+        // $rules = ['excel_file' => 'required'];
+        
+        // $v = Validator::make($request->all(), $rules);
+        
+        // if($v->fails())
+        // {
+        //     return redirect()->back()->withErrors($v->errors());
+        // }
+
+        // $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
+        
+        // // Getting File Headers 
+        //     $filename = $request->excel_file->getClientOriginalName();
+        //     $upload_success = $request->excel_file->move('excelfiles/', $filename);
+           
+        //     $file_headers = Excel::load('excelfiles/'.$filename, function($reader) { 
+
+        //     })->first(); 
+
+        //     if($file_headers == null)
+        //     {
+        //         Session::flash('flash_message','File is null');
+        //         return redirect()->back();
+        //     }
+
+        //     $header_names = array();
+        //     foreach($file_headers as $key => $header)
+        //     {
+        //         array_push($header_names, $key);
+        //     }
+        // //End Getting Headers
+
+        // //Get name of database feilds
+        //     $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label','0')->get();
+            
+        //     $feild_names = array();
+        //     foreach($feilds_name as $name)
+        //     {
+        //         array_push($feild_names,$name->name);
+        //     }
+        // //End getting
+
+        // //Comparing Feilds
+        //     $feild_names = array_map('strtolower', $feild_names);
+        //     $header_names = array_map('strtolower', $header_names);
+
+        //     $new_feild_names = array();
+        //     foreach ($feild_names as $value) 
+        //     {
+        //         $new_val = str_replace(' ', '_', $value);
+        //         array_push($new_feild_names,$new_val);
+        //     }
+            
+        //     if(array_intersect($new_feild_names, $header_names)) {
+                
+        //     } 
+        //     else
+        //     {
+        //         Session::flash('flash_message','Please Upload Proper File');
+        //         return redirect()->back();
+        //     }
+        // //End Comparing
+    
+        // $data['image_feilds_name'] = $image_name;
+        // $path = public_path().'/user/'.$username;
+        // if(!File::exists($path))
+        // { 
+        //     File::makeDirectory($path);
+        // }
+
+        // foreach ($image_feilds_name as $name) 
+        // {
+        //     $id = str_replace(" ","_",$name);
+        //     $id = strtolower($id);
+
+        //     $name = $id;
+
+        //     $path = public_path().'/user/'.$username.'/'.$name;   
+
+        //     if(!File::exists($path))
+        //     { 
+        //         File::makeDirectory($path);
+        //     } 
+
+           
+          
+        //     $files = $request->$id;
+            
+        //     foreach($files as $file)
+        //     {
+        //         $filename = $file->getClientOriginalName();
+        //         $extension = $file->getClientOriginalExtension();
+        //         $picture = $filename;
+        //         $destinationPath = public_path().'/user/'.$username.'/'.$name; 
+        //         $file->move($destinationPath, $picture);
+        //     }
+        // }
+
+        // $data['image_feilds_name_folders'] = $image_feilds_name;
+
+        // $filename = $request->excel_file->getClientOriginalName();
+        // //$upload_success = $request->excel_file->move('excelfiles/', $filename);
+        
+        // $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
+
+        // })->get(); 
+        // $data['username'] = $username;
+
+        // //$data['cards_data'] = json_encode($data['cards_data']);
+
+        // return view('multiple_cards_snap',$data);
+    }
+
+
+    public function upload_images(Request $request,$url)
+    {      
+        $user = Auth::user();
+        $username = $user->username;
+        $user_id = $user->id;
+
+        $data['template_data'] = UserTemplate::where('url',$url)->where('user_id',$user_id)->first();
+            
+        $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data']->id)->where('user_id',$user_id)->get();
+
         $user_template_ids = array();
         foreach ($data['feilds'] as $feild) {
             $user_template_ids[] = $feild->id;
@@ -892,9 +1184,9 @@ class TemplatesController extends Controller
             array_push($imageids, $value->template_feild_id);
         }
         
-        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereNotIn('id', $imageids)->get();
+        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template_data']->id)->whereNotIn('id', $imageids)->get();
               
-        $data['image_css'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereIn('id', $imageids)->get();
+        $data['image_css'] = UserTemplateFeild::where('template_id', $data['template_data']->id)->whereIn('id', $imageids)->get();
       
         
         $template_images = array();
@@ -907,71 +1199,11 @@ class TemplatesController extends Controller
         
         $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
 
-        $rules = ['excel_file' => 'required'];
-        
-        $v = Validator::make($request->all(), $rules);
-        
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v->errors());
-        }
-
         $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
-        
-        // Getting File Headers 
-            $filename = $request->excel_file->getClientOriginalName();
-            $upload_success = $request->excel_file->move('excelfiles/', $filename);
-           
-            $file_headers = Excel::load('excelfiles/'.$filename, function($reader) { 
 
-            })->first(); 
-
-            if($file_headers == null)
-            {
-                Session::flash('flash_message','File is null');
-                return redirect()->back();
-            }
-
-            $header_names = array();
-            foreach($file_headers as $key => $header)
-            {
-                array_push($header_names, $key);
-            }
-        //End Getting Headers
-
-        //Get name of database feilds
-            $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label','0')->get();
-            
-            $feild_names = array();
-            foreach($feilds_name as $name)
-            {
-                array_push($feild_names,$name->name);
-            }
-        //End getting
-
-        //Comparing Feilds
-            $feild_names = array_map('strtolower', $feild_names);
-            $header_names = array_map('strtolower', $header_names);
-
-            $new_feild_names = array();
-            foreach ($feild_names as $value) 
-            {
-                $new_val = str_replace(' ', '_', $value);
-                array_push($new_feild_names,$new_val);
-            }
-            
-            if(array_intersect($new_feild_names, $header_names)) {
-                
-            } 
-            else
-            {
-                Session::flash('flash_message','Please Upload Proper File');
-                return redirect()->back();
-            }
-        //End Comparing
-    
         $data['image_feilds_name'] = $image_name;
         $path = public_path().'/user/'.$username;
+
         if(!File::exists($path))
         { 
             File::makeDirectory($path);
@@ -981,7 +1213,6 @@ class TemplatesController extends Controller
         {
             $id = str_replace(" ","_",$name);
             $id = strtolower($id);
-
             $name = $id;
 
             $path = public_path().'/user/'.$username.'/'.$name;   
@@ -990,35 +1221,26 @@ class TemplatesController extends Controller
             { 
                 File::makeDirectory($path);
             } 
-
-           
           
             $files = $request->$id;
-            
-            foreach($files as $file)
+            if($request->$id)
             {
-                $filename = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension();
-                $picture = $filename;
-                $destinationPath = public_path().'/user/'.$username.'/'.$name; 
-                $file->move($destinationPath, $picture);
+                foreach($files as $file)
+                {
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $picture = $filename;
+                    $destinationPath = public_path().'/user/'.$username.'/'.$name; 
+                    $file->move($destinationPath, $picture);
+                }
             }
         }
 
-        $data['image_feilds_name_folders'] = $image_feilds_name;
-
-        $filename = $request->excel_file->getClientOriginalName();
-        //$upload_success = $request->excel_file->move('excelfiles/', $filename);
+        Session::flash('flash_success','Photoes successfully uploaded.');
+        return redirect()->back();
         
-        $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
-
-        })->get(); 
-        $data['username'] = $username;
-
-        //$data['cards_data'] = json_encode($data['cards_data']);
-
-        return view('multiple_cards_snap',$data);
     }
+
 
     public function multiple_image_save(Request $request)
     {
@@ -1062,10 +1284,14 @@ class TemplatesController extends Controller
     }
 
 
-    public function delete_multiple_preview_folder()
-    {   
-        $directory = public_path()."/temp/".Auth::user()->username;
+    public function delete_multiple_preview_folder($url)
+    {  
+        $user = Auth::user();
+        $username = $user->username;
+        $user_id = $user->id;
 
+        $directory = public_path()."/temp/".$username;
+        
         foreach(glob("{$directory}/*") as $file)
         {
             if(is_dir($file)) { 
@@ -1075,7 +1301,51 @@ class TemplatesController extends Controller
             }
         }
         rmdir($directory);
+
+        $template_data = UserTemplate::where('url',$url)->where('user_id',$user_id)->first();
+        $feilds = UserTemplateFeild::where('template_id',$template_data->id)->where('user_id',$user_id)->get();
         
+        $user_template_ids = array();
+        foreach ($feilds as $feild) {
+            $user_template_ids[] = $feild->id;
+        }
+
+        $images = UserTemplateImage::whereIn('template_feild_id',$user_template_ids)->get();
+                        
+        $imageids = array();
+        foreach ($images as $key => $value) {
+            array_push($imageids, $value->template_feild_id);
+        }
+        
+        $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
+
+        $image_feild_name = array();
+        foreach ($image_feilds_name as $value) {
+            $name = str_replace(" ","_", $value); 
+            $name = strtolower($name); 
+            array_push($image_feild_name, $name);
+        }
+
+        foreach ($image_feild_name as $name) 
+        {   
+            $directory = public_path()."/user/".$username."/".$name;
+        
+            foreach(glob("{$directory}/*") as $file)
+            {
+                if(is_dir($file)) { 
+                    recursiveRemoveDirectory($file);
+                } else {
+                    unlink($file);
+                }
+            }
+
+            rmdir($directory);
+
+        }
+
+        rmdir(public_path()."/user/".$username);
+        @unlink(public_path()."/excelfiles/".$username." ".$url.".xls");
+
         return redirect()->back();
     }
 
