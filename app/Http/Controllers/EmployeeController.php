@@ -13,6 +13,9 @@ use Config;
 use Datatables;
 use File;
 use App\FinalOrder;
+use App\User;
+use Mail;
+
 
 
 class EmployeeController extends Controller
@@ -102,12 +105,12 @@ class EmployeeController extends Controller
     public function new_order_datatable()
     {
 
-         $orders = Order::with('user')->where('is_delete',0)->where('is_confirmed', 0)->get();
+         $orders = Order::with('user')->where('is_delete',0)->where('is_cancel', 0)->where('is_confirmed', 0)->get();
 
          return Datatables::of($orders)
                     ->addColumn('action', function ($data) {
                            
-                            $button = '<a href='.url("admin/new_orders/" . $data->id . "/list").'>View</a>';
+                            $button = '<a href='.url("admin/new_orders/" . $data->id . "/list").'>View</a> |  <a id="is_cancel" class="cancel_order" data-id='. $data->id .'>Cancel</a>';
                             return $button;
                         })
                     ->editColumn('user_id', function ($data) {
@@ -117,20 +120,24 @@ class EmployeeController extends Controller
                     ->make(true);
     }
 
+    
+
     public function datatable()
     {
 
-         $orders = Order::with('user')->where('is_delete',0)->where('is_confirmed', 1)->get();
+         $orders = Order::with('user')->where('is_cancel', 0)->where('is_delete',0)->where('is_confirmed', 1)->get();
 
          return Datatables::of($orders)
                     ->addColumn('action', function ($data) {
                             if($data->status == "Done")
                             {
-                            $button = '<a href='.url("admin/orders/final/" . $data->id . "/list").'>Final Order</a>';
+                            $button = '<a href='.url("admin/orders/final/" . $data->id . "/list").'>Final Order</a> 
+                            |  <a id="is_cancel" class="cancel_order" data-id='. $data->id .'>Cancel</a>';
                             
                             }else{
-                            $button = '<a href='.url("admin/orders/" . $data->id . "/list").'>List</a>';    
+                            $button = '<a href='.url("admin/orders/" . $data->id . "/list").'>List</a>| <a  id="is_cancel" class="cancel_order" data-id='. $data->id .'> Cancel</a>';    
                             }
+
                             return $button;
                         })
                     ->editColumn('user_id', function ($data) {
@@ -165,6 +172,22 @@ class EmployeeController extends Controller
 
     public function confirm_order($id)
     {
+        $order = Order::where('id', $id)->first();
+        
+        $data['user'] = User::where('id', $order->user_id)->first();
+        $data['order'] = $order;
+        $user = $data['user'];
+
+        // Mail::send('emails.confirmation_email', $data , function ($m) use ($user) 
+        // {
+        //     $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order Confirmation');
+        // });
+        // dd(view('emails.admin_confirmation_email', $data)->render());
+        // Mail::send('emails.admin_confirmation_email', $data , function ($m) use ($user) 
+        // {
+        //     $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order Confirmation');
+        // });
+
         Order::where('id', $id)->update(['is_confirmed' => '1']);
         return redirect('new_orders/list');
     }
@@ -213,4 +236,43 @@ class EmployeeController extends Controller
         }
         return json_encode($name .'.png');
     }
+
+    public function cancel_order_list()
+    {
+         if(Auth::guard('employee')->user())
+        {
+            return view('employee.orders.cancel_order_list');    
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
+    public function cancel_order_datatable()
+    {
+
+         $orders = Order::with('user')->where('is_delete',0)->where('is_cancel', 1)->get();
+
+         return Datatables::of($orders)
+                    ->editColumn('user_id', function ($data) {
+                            $username = $data->user->first_name . " " . $data->user->last_name;
+                            return $username;
+                        })
+                    ->make(true);
+    }
+
+    public function cancel_order(Request $request)
+    {
+        if(Auth::guard('employee')->user())
+        {
+           Order::where('id', $request->order_id)->update(['is_cancel' => 1]);
+           return "successfully canceled.!";   
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
 }

@@ -154,3 +154,7 @@ Route::post('card_list_snap', 'EmployeeController@save_list_snap');
 Route::get('admin/orders/final/{id}/list', 'EmployeeController@order_snap_list');
 
 Route::get('order/confirm/{id}', 'EmployeeController@confirm_order');
+Route:: get('cancel_orders/list', 'EmployeeController@cancel_order_list');
+
+Route::get('admin/cancel-order-datatable', 'EmployeeController@cancel_order_datatable');
+Route::post('cancel_order', 'EmployeeController@cancel_order');

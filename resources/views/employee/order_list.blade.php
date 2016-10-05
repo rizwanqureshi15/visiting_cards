@@ -33,7 +33,9 @@
 @section('js')
 	<script>
     $(document).ready(function(){
-      $('.datatable').DataTable({
+    	var site_url = "{{ url('') }}";
+    	var token = "{{ csrf_token() }}";
+       $('.datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: '{{ url("admin/order-datatable") }}',
@@ -49,6 +51,39 @@
                 { "sClass": "text-center", "aTargets": [ 0,1,2,3,4,5 ] },
               ]
         });
+    var table = $('#order_table').DataTable();
+    $('#order_table tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+    $(document).on("click",'.cancel_order', function(){
+    	
+    	var order_id = $(this).data('id');
+    	var val = confirm("Are you sure you want to Cancel Order ?");
+		if(val)
+		{
+			$(this).closest("tr").hide();
+			$.ajax({
+            type: "POST",
+            url: site_url+'/cancel_order',
+            dataType: 'json',
+            async: false,
+            data: {"_token": token ,"order_id":order_id},
+            success : function(image)
+            {
+            }})	
+            table.draw();
+		}
+		else
+		{
+
+		}
+		});
     });
   </script>
 	
