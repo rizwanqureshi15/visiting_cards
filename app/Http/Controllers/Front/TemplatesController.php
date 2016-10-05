@@ -826,7 +826,7 @@ class TemplatesController extends Controller
         $data['image_feilds_name'] = UserTemplateFeild::whereIn('id',$image_feilds_ids)->get();
 
         $username=Auth::user()->username;
-        $directory = public_path().'/temp/'.$username.'/';
+        $directory = public_path().'/temp/'.$username.'/front';
 
         if(File::exists($directory))
         { 
@@ -836,10 +836,10 @@ class TemplatesController extends Controller
         if(count(glob("$directory/*")) === 0)
         {
             $data['user_template_images'] = array();
-        }
+        } 
         else
         {
-            $directory = public_path().'/temp/'.$username.'/';
+            $directory = public_path().'/temp/'.$username.'/front';
             $data['user_template_images'] = scandir($directory);
             $data['username'] = $username;
             
@@ -847,6 +847,27 @@ class TemplatesController extends Controller
             unset($data['user_template_images'][1]);
         }
 
+       // dd($data['user_template_images']);
+        $directory2 = public_path().'/temp/'.$username.'/back';
+
+        if(File::exists($directory2))
+        { 
+            $user_template_images = scandir($directory2);
+        } 
+        
+        if(count(glob("$directory2/*")) === 0)
+        {
+            $data['user_template_back_images'] = array();
+        }
+        else
+        {
+            $directory2 = public_path().'/temp/'.$username.'/back';
+            $data['user_template_back_images'] = scandir($directory2);
+
+            unset($data['user_template_back_images'][0]);
+            unset($data['user_template_back_images'][1]);
+        }
+        
         return view('multiple_cards',$data);
     }
 
@@ -887,19 +908,21 @@ class TemplatesController extends Controller
 
         $data['template_data'] = UserTemplate::where('url',$url)->where('user_id',$user_id)->get();
         
-        $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->get();
+        $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->where('is_back',0)->get();
+
+        $data['template_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->get();
 
         $user_template_ids = array();
-        foreach ($data['feilds'] as $feild) {
+        foreach ($data['template_feilds'] as $feild) {
             $user_template_ids[] = $feild->id;
         }
 
-        $data['user_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->get();
+        $data['user_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('is_back','0')->get();
             
-        $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label','0')->get();            
+        $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label',0)->where('is_back','0')->get();            
 
         $data['images'] = UserTemplateImage::whereIn('template_feild_id',$user_template_ids)->get();
-        
+
         $imageids = array();
         foreach ($data['images'] as $key => $value) {
             array_push($imageids, $value->template_feild_id);
@@ -914,10 +937,10 @@ class TemplatesController extends Controller
         }
         $data['template_images'] = $template_images;
 
-        $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
+        $image_name = UserTemplateFeild::whereIn('id',$imageids)->where('is_back',0)->lists('id','name');
 
         $data['image_feilds_name'] = $image_name;
-
+        
         $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
 
         //Check image folders are available or not 
@@ -974,8 +997,10 @@ class TemplatesController extends Controller
 
         //Get name of database feilds
             
+            $img_feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label',0)->get();            
+
             $feild_names = array();
-            foreach($feilds_name as $name)
+            foreach($img_feilds_name as $name)
             {
                 $name = str_replace(" ","_",$name->name);
                 $name = strtolower($name);
@@ -1010,160 +1035,68 @@ class TemplatesController extends Controller
 
         })->get(); 
 
+        $data['quentity'] = count($data['cards_data']);
         $data['username'] = $username;
 
-        return view('multiple_cards_snap',$data);
+
+        $data['back_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('is_back',1)->get();
+               
+        $ids = array();
+        foreach($data['back_feilds'] as $feild)
+        {
+            array_push($ids, $feild->id);
+        }
+
+        $data['back_images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+        $imageids = array();
+        foreach ($data['back_images'] as $key => $value) {
+            array_push($imageids, $value->template_feild_id);
+        }
+
+        $data['back_feilds'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+        $data['back_labels'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+        $data['back_image_css'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+             
+        $back_names = array();
+        foreach($data['back_feilds'] as $feild)
+        {
+            array_push($back_names, $feild->name);
+        }
+
+        $back_labels = array();
+        foreach($data['back_labels'] as $label)
+        {
+            array_push($back_labels, $label->name);
+        }
+
+        $back_template_images = array();
+        foreach($data['back_image_css'] as $image)
+        {
+            array_push($back_template_images, $image->id);
+        }
+
+        $data['back_template_images_name'] = UserTemplateFeild::whereIn('id',$back_template_images)->lists('id','name');
+
+        $data['back_names'] = $back_names; 
+        $data['back_template_images'] = $back_template_images;
+        $data['back_template_labels'] = $back_labels;
+
+        if($data['template_data'][0]->is_both_side == 1)
+        {  
+            return view('user.multiple_double_side_cards_snap',$data);
+        }   
+        else
+        {
+            return view('user.multiple_cards_snap',$data);
+        }
 
 
-        // $data['template_data'] = UserTemplate::where('url',$url)->where('user_id',$user_id)->get();
-        
-        // $data['feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->where('user_id',$user_id)->get();
-
-        // $data['user_feilds'] = UserTemplateFeild::where('template_id',$data['template_data'][0]->id)->get();
-        
-        // $user_template_ids = array();
-        // foreach ($data['feilds'] as $feild) {
-        //     $user_template_ids[] = $feild->id;
-        // }
-
-        // $data['images'] = UserTemplateImage::whereIn('template_feild_id',$user_template_ids)->get();
-                 
-        // $imageids = array();
-        // foreach ($data['images'] as $key => $value) {
-        //     array_push($imageids, $value->template_feild_id);
-        // }
-        
-        // $data['feilds'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereNotIn('id', $imageids)->get();
-              
-        // $data['image_css'] = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->whereIn('id', $imageids)->get();
-      
-        
-        // $template_images = array();
-
-        // foreach($data['image_css'] as $image)
-        // {
-        //     array_push($template_images, $image->id);
-        // }
-        // $data['template_images'] = $template_images;
-        
-        // $image_feilds_name = UserTemplateFeild::whereIn('id',$imageids)->lists('name');
-
-        // $rules = ['excel_file' => 'required'];
-        
-        // $v = Validator::make($request->all(), $rules);
-        
-        // if($v->fails())
-        // {
-        //     return redirect()->back()->withErrors($v->errors());
-        // }
-
-        // $image_name = UserTemplateFeild::whereIn('id',$imageids)->lists('id','name');
-        
-        // // Getting File Headers 
-        //     $filename = $request->excel_file->getClientOriginalName();
-        //     $upload_success = $request->excel_file->move('excelfiles/', $filename);
-           
-        //     $file_headers = Excel::load('excelfiles/'.$filename, function($reader) { 
-
-        //     })->first(); 
-
-        //     if($file_headers == null)
-        //     {
-        //         Session::flash('flash_message','File is null');
-        //         return redirect()->back();
-        //     }
-
-        //     $header_names = array();
-        //     foreach($file_headers as $key => $header)
-        //     {
-        //         array_push($header_names, $key);
-        //     }
-        // //End Getting Headers
-
-        // //Get name of database feilds
-        //     $feilds_name = UserTemplateFeild::whereIn('id',$user_template_ids)->where('is_label','0')->get();
-            
-        //     $feild_names = array();
-        //     foreach($feilds_name as $name)
-        //     {
-        //         array_push($feild_names,$name->name);
-        //     }
-        // //End getting
-
-        // //Comparing Feilds
-        //     $feild_names = array_map('strtolower', $feild_names);
-        //     $header_names = array_map('strtolower', $header_names);
-
-        //     $new_feild_names = array();
-        //     foreach ($feild_names as $value) 
-        //     {
-        //         $new_val = str_replace(' ', '_', $value);
-        //         array_push($new_feild_names,$new_val);
-        //     }
-            
-        //     if(array_intersect($new_feild_names, $header_names)) {
-                
-        //     } 
-        //     else
-        //     {
-        //         Session::flash('flash_message','Please Upload Proper File');
-        //         return redirect()->back();
-        //     }
-        // //End Comparing
-    
-        // $data['image_feilds_name'] = $image_name;
-        // $path = public_path().'/user/'.$username;
-        // if(!File::exists($path))
-        // { 
-        //     File::makeDirectory($path);
-        // }
-
-        // foreach ($image_feilds_name as $name) 
-        // {
-        //     $id = str_replace(" ","_",$name);
-        //     $id = strtolower($id);
-
-        //     $name = $id;
-
-        //     $path = public_path().'/user/'.$username.'/'.$name;   
-
-        //     if(!File::exists($path))
-        //     { 
-        //         File::makeDirectory($path);
-        //     } 
-
-           
-          
-        //     $files = $request->$id;
-            
-        //     foreach($files as $file)
-        //     {
-        //         $filename = $file->getClientOriginalName();
-        //         $extension = $file->getClientOriginalExtension();
-        //         $picture = $filename;
-        //         $destinationPath = public_path().'/user/'.$username.'/'.$name; 
-        //         $file->move($destinationPath, $picture);
-        //     }
-        // }
-
-        // $data['image_feilds_name_folders'] = $image_feilds_name;
-
-        // $filename = $request->excel_file->getClientOriginalName();
-        // //$upload_success = $request->excel_file->move('excelfiles/', $filename);
-        
-        // $data['cards_data'] = Excel::load('excelfiles/'.$filename, function($reader) { 
-
-        // })->get(); 
-        // $data['username'] = $username;
-
-        // //$data['cards_data'] = json_encode($data['cards_data']);
-
-        // return view('multiple_cards_snap',$data);
     }
 
 
     public function upload_images(Request $request,$url)
-    {      
+    {   
         $user = Auth::user();
         $username = $user->username;
         $user_id = $user->id;
@@ -1243,7 +1176,7 @@ class TemplatesController extends Controller
 
 
     public function multiple_image_save(Request $request)
-    {
+    {   
         $username=Auth::user()->username;
 
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
@@ -1251,14 +1184,55 @@ class TemplatesController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $name = str_random(40);
-        $path = public_path() .'/temp/'.$username;   
-        
+        $path = public_path() .'/temp/'.$username;  
+
         if(!File::exists($path))
         { 
             File::makeDirectory($path);
         } 
-        file_put_contents('temp/'. $username .'/'.$name.'.png', $data);
 
+        $path = public_path() .'/temp/'.$username.'/front';  
+        if(!File::exists($path))
+        { 
+            File::makeDirectory($path);
+        } 
+
+        if($request->image_name)
+        {
+            if($request->is_back)
+            {
+                $path = public_path().'/temp/'.$username.'/back';
+                $count = count(glob($path."/*"));
+
+                $name = $count + 1;
+
+                if(!File::exists($path))
+                { 
+                    File::makeDirectory($path);
+                } 
+
+                file_put_contents('temp/'. $username .'/back/'.$request->image_name.'.png', $data);
+                return json_encode($request->image_name);
+            }
+            else
+            {
+                $path = public_path().'/temp/'.$username.'/front';
+                $count = count(glob($path."/*"));
+
+                $name = $count + 1;
+                
+                if(!File::exists($path))
+                { 
+                    File::makeDirectory($path);
+                } 
+
+                file_put_contents('temp/'. $username .'/front/'.$request->image_name.'.png', $data);
+                
+                return json_encode($request->image_name);
+            }
+        } 
+
+        file_put_contents('temp/'. $username .'/front/'.$name.'.png', $data);
         
         return json_encode($name.".png");
     }
@@ -1266,10 +1240,10 @@ class TemplatesController extends Controller
     public function show_multiple_image_preview()
     {
         $username = Auth::user()->username;
-        $directory = public_path().'/temp/'.$username.'/';
+        $directory = public_path().'/temp/'.$username.'/front/'; 
         $data['user_template_images'] = scandir($directory);
         $data['username'] = $username;
-        
+
         unset($data['user_template_images'][0]);
         unset($data['user_template_images'][1]);
     
@@ -1279,10 +1253,15 @@ class TemplatesController extends Controller
 
     public function delete_image_from_multiple_preview(Request $request)
     {
-        @unlink(public_path("temp/".Auth::user()->username.'/'.$request->image_name));
+        @unlink(public_path("temp/".Auth::user()->username.'/front/'.$request->image_name));
         return response()->json("save");
     }
 
+    public function delete_back_image_from_multiple_preview(Request $request)
+    {
+        @unlink(public_path("temp/".Auth::user()->username.'/back/'.$request->image_name));
+        return response()->json("save");
+    }
 
     public function delete_multiple_preview_folder($url)
     {  
@@ -1290,17 +1269,38 @@ class TemplatesController extends Controller
         $username = $user->username;
         $user_id = $user->id;
 
-        $directory = public_path()."/temp/".$username;
+        $dir = public_path()."/temp/".$username.'/front';
         
-        foreach(glob("{$directory}/*") as $file)
+        foreach(glob("{$dir}/*") as $file)
         {
             if(is_dir($file)) { 
                 recursiveRemoveDirectory($file);
             } else {
                 unlink($file);
             }
+
         }
-        rmdir($directory);
+        rmdir($dir);
+
+        $dir = public_path()."/temp/".$username.'/back';
+
+        if(File::exists($dir))
+        { 
+            foreach(glob("{$dir}/*") as $file)
+            {
+                if(is_dir($file)) { 
+                    recursiveRemoveDirectory($file);
+                } else {
+                    unlink($file);
+                }
+
+            }
+            rmdir($dir);
+        } 
+
+        
+
+        rmdir(public_path()."/temp/".$username);
 
         $template_data = UserTemplate::where('url',$url)->where('user_id',$user_id)->first();
         $feilds = UserTemplateFeild::where('template_id',$template_data->id)->where('user_id',$user_id)->get();
@@ -1342,8 +1342,7 @@ class TemplatesController extends Controller
             rmdir($directory);
 
         }
-
-        rmdir(public_path()."/user/".$username);
+        //rmdir(public_path()."/user/".$username);
         @unlink(public_path()."/excelfiles/".$username." ".$url.".xls");
 
         return redirect()->back();

@@ -142,3 +142,7 @@ Route::post('admin/materials/edit/{id}', 'MaterialController@edit_post');
 Route::post('admin/materials/delete', 'MaterialController@delete');
 
 Route::get('admin/materials/list', 'MaterialController@materials_list');
+
+Route::get('order_multiple_cards/{url}','OrderController@order_multiple_cards');
+
+Route::post('delete_back_image','Front\TemplatesController@delete_back_image_from_multiple_preview');

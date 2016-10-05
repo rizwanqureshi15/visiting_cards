@@ -709,6 +709,21 @@
 				//console.log(feilds);
 				i++; 
 			});
+
+			var images_back_temp=[];
+			i=0;
+			$.each(upload_images, function(key, value){
+
+				var css = $('#back_image_'+value).attr('style');
+				var div_css = $('#div_back_image_'+value).attr('style');
+				var name = $('#div_back_image_'+value).attr('name');
+
+				var values = { css: css, id: value , div_css: div_css, name: name };
+				images_back_temp[i] = values;
+				//console.log(feilds);
+				i++; 
+			});
+
          html2canvas(element, {
          onrendered: function (canvas) {
                 getCanvas = canvas;
