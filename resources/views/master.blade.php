@@ -25,6 +25,11 @@
 
     <!--end-->
 
+    <!--DataTable-->
+    <link rel="stylesheet" href="{{ url('assets/css/dataTables.bootstrap.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('assets/css/jquery.dataTables.css') }}" type="text/css" />
+    <!--end-->
+
    
 
     <link rel="stylesheet" href="{{ url('assets/css/admin.css') }}">
@@ -39,8 +44,8 @@
         }
     </style>
 </head>
-<body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
+<body id="app-layout" style="display:block;">
+    <nav class="navbar navbar-default navbar-static-top" id="admin_navbar">
         <div class="container">
             <div class="navbar-header">
 
@@ -80,13 +85,11 @@
    <div class="container" style="">
       <div class="row">
       @if(Auth::guard('employee')->user())
-    
 
-        @if(Auth::guard('employee')->user()->is_admin == 1)
         <div class="col-md-2" style="padding-right:0px;padding-left:0px;">
             @include('sidebar')
         </div>
-        @endif
+ 
       @endif
         <div class="col-md-10">
             @yield('content')
@@ -95,6 +98,9 @@
        <div id="overlay" style="display:none;">
         <img id="loading" src="{{ url('assets\images\ajax-loader.gif') }}">
     </div>
+    <div id="user_overlay" style="display:none;">
+            <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
+        </div>
     </div>
     
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -103,7 +109,8 @@
     <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/js/html2canvas.js') }}"></script>
     <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
-  
+    <script src="{{ url('assets/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ url('assets/js/dataTables.bootstrap.js') }}"></script>
     @yield('js');
 
   </body>

@@ -529,7 +529,7 @@
     var label_names = {!! json_encode($template_labels) !!};
     var back_feild_names = {!! json_encode($back_names) !!};
     var back_upload_images = {!! json_encode($back_template_images) !!};
-    var back_label_names = {!! json_encode($back_template_labels) !!};;
+    var back_label_names = {!! json_encode($back_template_labels) !!};
     var template_id = {{ $templates->id }};
     var side = "";
     var template_both_side = {{ $templates->is_both_side }};
