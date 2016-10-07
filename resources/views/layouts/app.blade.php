@@ -72,6 +72,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li><a href="{{ url('myorders') }}">My Orders</a></li>
                         <li><a href="{{ url('mytemplates') }}">My Templates</a></li>
                         <li><a href="{{ url('/gallery') }}">Gallery</a></li>
                         <li class="dropdown">

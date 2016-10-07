@@ -162,3 +162,9 @@ Route:: get('cancel_orders/list', 'EmployeeController@cancel_order_list');
 
 Route::get('admin/cancel-order-datatable', 'EmployeeController@cancel_order_datatable');
 Route::post('cancel_order', 'EmployeeController@cancel_order');
+
+Route::get('myorders',['middleware' => 'auth','uses' => 'OrderController@show_user_order']);
+
+Route::get('view_order/{order_id}','OrderController@view_user_order');
+
+Route::post('scroll_pagination','OrderController@ajax_pagination');
