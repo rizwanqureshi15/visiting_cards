@@ -97,18 +97,33 @@
 						      	<div class="row">
 						        	@foreach($user_template_images as $image)
 						        		
-							            <div class="col-md-4" id="{{ substr($image,0,-4) }}">
-							                <img class="preview_image" data-image="{{ $image }}" id="delete_single_image" src="{{ url('assets/images/delete.png') }}" style="height:30px;position:absolute;z-index: 1;margin-top: 22px;margin-left:79%;">
-							                <img src="{{ url('temp/'.$username.'/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
+							            <div class="col-md-3" id="{{ substr($image,0,-4) }}">
+							                <img class="preview_image" data-image="{{ $image }}" id="delete_single_image" src="{{ url('assets/images/delete.png') }}" style="height:30px;position:absolute;z-index: 1;margin-top: 22px;margin-left:72%;">
+							                <img src="{{ url('temp/'.$username.'/front/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
 							            </div>
-							        @endforeach
+
+							        
+
+							        @if($user_template_back_images)
+							        	
+								        	<div class="col-md-3" id="{{ substr($image,0,-4) }}">
+								                <img class="preview_back_image" data-image="{{ $image }}" id="delete_back_image" src="{{ url('assets/images/delete.png') }}" style="height:30px;position:absolute;z-index: 1;margin-top: 22px;margin-left:72%;">
+								                <img src="{{ url('temp/'.$username.'/back/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
+								            </div>
+								    @endif
+								    @endforeach
+
+							        
+
 							    </div>
 						      </div>
 						      <div class="modal-footer">
 						        <a href="{{ url('delete_folder',$template_url) }}">
 						        	<button type="button" class="btn btn-default" >Close</button>
-						       	</a>
-						        <button type="button" class="btn btn-primary">Save</button>
+						       	</a> 
+						       	<a href="{{ url('order_multiple_cards',$template_url) }}">
+						        	<button type="button" class="btn btn-primary">Save</button>
+						     	</a>
 						      </div>
 						    </div>
 						  </div>
@@ -140,6 +155,24 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: "{{ url('delete_image') }}",
+                    dataType: 'json',
+                    data: {"_token": "{{ csrf_token() }}","image_name": image_name},
+                    success: function(image) {
+                       
+                    }
+                });
+
+    });
+
+    $(".preview_back_image").click(function()
+    {
+                var image_name = $(this).data('image');
+                var div = image_name.slice(0,-4);
+                $('#'+div).remove();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('delete_back_image') }}",
                     dataType: 'json',
                     data: {"_token": "{{ csrf_token() }}","image_name": image_name},
                     success: function(image) {

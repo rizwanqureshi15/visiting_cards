@@ -144,6 +144,10 @@ Route::post('admin/materials/delete', 'MaterialController@delete');
 
 Route::get('admin/materials/list', 'MaterialController@materials_list');
 
+Route::get('order_multiple_cards/{url}','OrderController@order_multiple_cards');
+
+Route::post('delete_back_image','Front\TemplatesController@delete_back_image_from_multiple_preview');
+
 Route::get('admin/order-datatable', 'EmployeeController@datatable');
 Route::get('admin/new-order-datatable', 'EmployeeController@new_order_datatable');
 
@@ -163,3 +167,4 @@ Route::get('orders/done/{id}', 'EmployeeController@done_order');
 
 Route::get('orders/history/list', 'EmployeeController@order_history_list');
 Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
+
