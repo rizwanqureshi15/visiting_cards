@@ -42,7 +42,7 @@
 </head>
 <body id="app-layout">
     <nav id="navbar" class="navbar navbar-default navbar-static-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->

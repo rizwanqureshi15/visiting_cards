@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-md-3"><h2>Orders</h2></div>
+		<div class="col-md-5"><h2>Confirmed Orders</h2></div>
 		<div class="col-md-12" style="margin-top:20px;">
 			@if(Session::get('succ_msg'))
 				<div class="alert alert-success" role="alert">
@@ -84,6 +84,27 @@
 
 		}
 		});
+    	$(document).on('click', '.done_order', function(){
+
+    		var order_id = $(this).data('id');
+    		var val = confirm("Are you sure Order is Complate ?");
+			if(val)
+			{
+				$.ajax({
+	            type: "POST",
+	            url: site_url+'/done_order',
+	            dataType: 'json',
+	            async: false,
+	            data: {"_token": token ,"order_id":order_id},
+	            success : function(image)
+	            {
+	            }})	
+	            table.draw();
+			}
+			else
+			{
+			}
+    	});
     });
   </script>
 	
