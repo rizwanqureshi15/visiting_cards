@@ -27,6 +27,9 @@
   <a href="{{ url('cancel_orders/list') }}" id="employee_list" class="list-group-item {{ Request::is('cancel_orders/list') || Request::segment(2)=='cancel_orders' ? 'active' : ''}}">
     Cancelled Orders
   </a>
+  <a href="{{ url('orders/history/list') }}" id="employee_list" class="list-group-item {{ Request::is('orders/history/list') || Request::segment(2)=='history' ? 'active' : ''}}">
+    Order's History
+  </a>
   <a href="{{ url('admin/logout') }}" id="logout" class="list-group-item {{ Request::is('admin/logout') ? 'active' : ''}}">
   	Logout
   </a>

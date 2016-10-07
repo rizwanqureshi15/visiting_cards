@@ -125,17 +125,18 @@ class EmployeeController extends Controller
     public function datatable()
     {
 
-         $orders = Order::with('user')->where('is_cancel', 0)->where('is_delete',0)->where('is_confirmed', 1)->get();
+         $orders = Order::with('user')->where('is_cancel', 0)->where('is_delete',0)->where('is_confirmed', 1)->whereNotIn('status' , [Config::get('status.done')])->get();
 
          return Datatables::of($orders)
                     ->addColumn('action', function ($data) {
-                            if($data->status == "Done")
+                            if($data->status == Config::get("status.confirmed"))
                             {
-                            $button = '<a href='.url("admin/orders/final/" . $data->id . "/list").'>Final Order</a> 
-                            |  <a id="is_cancel" class="cancel_order" data-id='. $data->id .'>Cancel</a>';
+                                $button = '<a href='.url("admin/orders/" . $data->id . "/list").'>List</a> | <a  id="is_cancel" class="cancel_order" data-id='. $data->id .'> Cancel</a>'; 
                             
                             }else{
-                            $button = '<a href='.url("admin/orders/" . $data->id . "/list").'>List</a>| <a  id="is_cancel" class="cancel_order" data-id='. $data->id .'> Cancel</a>';    
+                                 $button = '<a href='.url("admin/orders/final/" . $data->id . "/list").'>Final Order</a> 
+                                |  <a id="is_cancel" class="cancel_order" data-id='. $data->id .'>Cancel</a> | <a href="'. url("orders/done/".$data->id).'"> Done </a>';
+                               
                             }
 
                             return $button;
@@ -150,7 +151,7 @@ class EmployeeController extends Controller
     public function list_cards($id)
     {
 
-        Order::where('id', $id)->update(['status' => 'In Process']);
+        Order::where('id', $id)->update(['status' => Config::get('status.in_process')]);
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = OrderItem::where('order_id',$id)->get();
         $data['username'] = $order->user->username;
@@ -188,7 +189,7 @@ class EmployeeController extends Controller
         //     $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order Confirmation');
         // });
 
-        Order::where('id', $id)->update(['is_confirmed' => '1']);
+        Order::where('id', $id)->update(['is_confirmed' => '1', 'status' => Config::get('status.confirmed')]);
         return redirect('new_orders/list');
     }
 
@@ -232,7 +233,7 @@ class EmployeeController extends Controller
          if($request->status)
         {
             
-            //Order::where('id', $request->order_id)->update(['status' => "Done"]);
+            Order::where('id', $request->order_id)->update(['status' => Config::get('status.in_process')]);
         }
         return json_encode($name .'.png');
     }
@@ -274,5 +275,58 @@ class EmployeeController extends Controller
             return redirect()->back();
         }
     }
+
+    public function done_order($id)
+    {
+       if(Auth::guard('employee')->user())
+        {
+            $data['order'] = Order::with('user')->where('id',$id)->first();
+            $user = User::where('id', $data['order']->user_id)->first();
+            $data['user'] = $user;
+
+            // Mail::send('emails.done_order_email', $data , function ($m) use ($user) 
+            // {
+            //     $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order is Delivered');
+            // });
+            // dd(view('emails.admin_done_order_email', $data)->render());
+            // Mail::send('emails.admin_done_order_email', $data , function ($m) use ($user) 
+            // {
+            //     $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order is Delivered');
+            // });
+        Order::where('id', $id)->update(['status' => Config::get('status.done')]);  
+           return redirect()->back();   
+        }
+        else
+        {
+            return redirect()->back();
+        } 
+    }
+
+    public function order_history_list()
+    {
+        if(Auth::guard('employee')->user())
+        {
+            return view('employee.orders.history.list');    
+        }
+        else
+        {
+            return redirect()->back();
+        }
+        
+    } 
+
+
+    public function order_history_datatable()
+    {
+
+         $orders = Order::with('user')->whereIn('status', [Config::get('status.done')])->get();
+
+         return Datatables::of($orders)
+                    ->editColumn('user_id', function ($data) {
+                            $username = $data->user->first_name . " " . $data->user->last_name;
+                            return $username;
+                        })
+                    ->make(true);
+    } 
 
 }

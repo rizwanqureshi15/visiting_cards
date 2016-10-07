@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-md-5"><h2>Cancelled Orders</h2></div>
+		<div class="col-md-3"><h2>Order's History</h2></div>
 		<div class="col-md-12" style="margin-top:20px;">
 			@if(Session::get('succ_msg'))
 				<div class="alert alert-success" role="alert">
@@ -16,7 +16,7 @@
 					<th> Order No. </th>
 					<th> Username </th>
 					<th> Quantity </th>
-					<th> Amount </th>		
+					<th> Amount </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,18 +31,16 @@
 
 @section('js')
 	<script>
-	var site_url = "{{ url('') }}";
-	var token = "{{ csrf_token() }}";
     $(document).ready(function(){
       $('.datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ url("admin/cancel-order-datatable") }}',
+            ajax: '{{ url("order-history-datatable") }}',
             columns:[
             	{data: 'order_no', name: 'order_no' , orderable: true, searchable: true},
             	{data: 'user_id', name: 'user_id', orderable: true, searchable: true},
             	{data: 'quantity', name: 'quantity', orderable: true, searchable: false},
-            	{data: 'amount', name: 'amount', orderable: true, searchable: false}
+            	{data: 'amount', name: 'amount', orderable: true, searchable: false},
             ],
             "aoColumnDefs": [
                 { "sClass": "text-center", "aTargets": [ 0,1,2,3] },
@@ -50,5 +48,5 @@
         });
     });
   </script>
-		
+	
 @endsection
