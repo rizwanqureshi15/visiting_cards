@@ -71,7 +71,7 @@
 
                 <div>
                   <h1><i class="fa fa-heart"></i> Identity Cards!</h1>
-                  <p>©2016 All Rights Reserved. Privacy and Terms</p>
+                  <p>©2016 All Rights Reserved By Web Design & Solutions.</p>
                 </div>
               </div>
             </form>
