@@ -13,6 +13,7 @@ use Form;
 use Validator;
 use App\User;
 use Config;
+use Datatables;
 
 class AdminController extends Controller
 {
@@ -63,13 +64,32 @@ class AdminController extends Controller
 
         if(AdminController::authenticate_admin())
         {
-                 $data['employees'] = Employee::where('is_delete', 0)->where('is_admin', 0)->paginate(Config::get('settings.number_of_rows'));
-                return view('admin.employees_list', $data);        
+                return view('admin.employees_list');        
         }
         else
         {
                 return redirect()->back();
         }
+    }
+
+    public function employee_datatable()
+    {
+         $employees = Employee::where('is_delete', 0)->where('is_admin', 0)->get();
+         return Datatables::of($employees)
+                    ->addColumn('action', function ($data) {
+                        $links = '<a href="'.url('admin/employees/edit', $data->id).'">Edit</a> | 
+                            <a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> | 
+                            <button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="'. $data->id .'">
+                              Reset Password
+                            </button>'; 
+
+                            return $links;
+                        })
+                    ->editColumn('first_name', function ($data) {
+                            $username = $data->first_name . " " . $data->last_name;
+                            return $username;
+                        })
+                    ->make(true);
     }
 
     public function create_employee()
@@ -214,15 +234,24 @@ class AdminController extends Controller
     public function users_list()
     {
          if(AdminController::authenticate_admin())
-        {
-
-            $data['users'] = User::paginate(Config::get('settings.number_of_rows'));
-            return view('admin.users_list', $data);
+        {   
+            return view('admin.users_list');
         }
         else
         {
                 return redirect()->back();
         }
+    }
+
+    public function users_datatable()
+    {
+         $users = User::where('is_delete',0)->get();
+         return Datatables::of($users)
+                    ->editColumn('first_name', function ($data) {
+                            $username = $data->first_name . " " . $data->last_name;
+                            return $username;
+                        })
+                    ->make(true);
     }
 
     public function check_employeename(Request $request)

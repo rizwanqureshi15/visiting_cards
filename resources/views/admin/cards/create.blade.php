@@ -198,20 +198,32 @@
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
     @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
+    <div  class="row">
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" style="margin-left:10px;">
+        Show Borders
+      </a>
+      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#myModal">
+        Upload Image
+      </a>
+      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" >
+        Save
+      </a>
+    </div>
     @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
+    <div class="row">
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons-verticle" style="margin-left:10px;">
+          Show Borders
+        </a>
+        <a type="button" class="btn btn-primary col-md-3 card-buttons-verticle" data-toggle="modal" data-target="#myModal">
+          Upload Image
+        </a>
+        <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
+          Save
         </a>
     </div>
+    @endif
+        
+          
    
     </div>
     
@@ -391,20 +403,32 @@
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
     @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
-    @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="back_btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="back_btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
-        </a>
+    <div class="row">
+      <a id="back_btnborder" class="btn btn-primary card-buttons"  style="margin-left:10px;">
+        Show Borders
+      </a>
+      <a type="button" class="btn btn-primary card-buttons" data-toggle="modal" data-target="#myModal">
+        Upload Image
+      </a>
+      <a id="back_btnsave" class="btn btn-primary card-buttons">
+        Save
+      </a>
     </div>
+    @else
+    <div class="row">
+      <a id="back_btnborder" class="btn btn-primary card-buttons-verticle"  style="margin-left:10px;">
+        Show Borders
+      </a>
+      <a type="button" class="btn btn-primary card-buttons-verticle" data-toggle="modal" data-target="#myModal">
+        Upload Image
+      </a>
+      <a id="back_btnsave" class="btn btn-primary card-buttons-verticle">
+        Save
+      </a>
+    </div>
+    @endif
+        
+        
    
     </div>
     
@@ -412,8 +436,16 @@
 </div>
 
 <div class="row">
-  <div class="col-md-2 col-md-offset-3">
-      <button class="btn btn-primary btn-lg" id="front_back">Back</button>
+  
+    @if($templates->type == "horizontal")
+    <div class="col-md-8 col-md-offset-3">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:682px;" id="front_back">Back</button>
+    </div>
+    @else
+    <div class="col-md-4 col-md-offset-5">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:400px;" id="front_back">Back</button>
+    </div>
+    @endif
   </div>
   <div class="row">
     <!--Toolebasr start-->

@@ -173,4 +173,10 @@ Route::post('scroll_pagination','OrderController@ajax_pagination');
 Route::get('orders/done/{id}', 'EmployeeController@done_order');
 
 Route::get('orders/history/list', 'EmployeeController@order_history_list');
+
 Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
+Route::get('admin/employees-datatable', 'AdminController@employee_datatable');
+Route::get('admin/users-datatable', 'AdminController@users_datatable');
+Route::get('admin/templates-datatable', 'TemplateController@templates_datatable');
+Route::get('admin/category-datatable', 'CategoryController@category_datatable');
+Route::get('admin/material-datatable', 'MaterialController@material_datatable');
