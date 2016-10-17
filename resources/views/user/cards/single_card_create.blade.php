@@ -320,11 +320,11 @@
     
 
 <script>
-  
+
     var template_url = "{{ $template->url }}";
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
-   var field_names = {!! json_encode($names) !!};
+    var field_names = {!! json_encode($names) !!};
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $template->id }};

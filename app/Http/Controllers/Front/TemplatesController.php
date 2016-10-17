@@ -64,7 +64,7 @@ class TemplatesController extends Controller
     public function index()
     {
         $data['templates'] = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
-        $data['categories'] = Category::get();
+        $data['categories'] = Category::where('is_delete',0)->get();
         
         return view('gallery',$data);
     }
@@ -205,7 +205,7 @@ class TemplatesController extends Controller
             $filtered_templates->whereIn('category_id', $request->category);
         }
 
-        $data = $filtered_templates->get();
+        $data = $filtered_templates->where('is_delete',0)->get();
         return response()->json($data);
 
     }

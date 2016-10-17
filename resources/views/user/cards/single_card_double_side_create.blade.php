@@ -68,11 +68,11 @@
         </div>
       </div>
     </div>
-    <!-- <div class="panel panel-default">
+    <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Labels                
+              <h3 class="sidebar-heading">Labels</h3>                
           </a>
         </h4>
       </div>
@@ -80,10 +80,10 @@
         <div class="panel-body" id="label_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+              <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
             </div>
             <div class="col-md-4">
-              <button id="newLabelBtn" class="btn btn-primary">OK</button>
+              <button id="newLabelBtn" class="sidebar-btn">OK</button>
             </div> 
             <div id="error_label"></div>
           </div>
@@ -99,7 +99,7 @@
           @endif
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>  
 
@@ -248,7 +248,7 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
+    <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseTwo_back" aria-expanded="false" aria-controls="collapseTwo_back">
@@ -285,13 +285,13 @@
 
 @if($template->type == 'horizontal')
   <div class="col-md-8">
-    <div class="canvasBorder" style="height:421px;width:682px;">
+    <div class="canvasBorder-horizontal">
       <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas2" width="680" height="419">
         </canvas>
 @else
   <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
+    <div class="canvasBorder-verticle">
       <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas2" width="400" height="648">
         </canvas>
@@ -516,6 +516,7 @@
  
     <script>
 
+    var template_url = "{{ $template->url }}";
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
     var field_names = {!! json_encode($names) !!};

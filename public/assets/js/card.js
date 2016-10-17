@@ -706,7 +706,7 @@ $(document).ready(function(){
                 type: "POST",
                 url: site_url+'/save_single_card',
                 dataType: 'json',
-                data: {"_token": token ,"image": imgageData ,"url": template_url},
+                data: {"_token": token ,"image": imgageData ,"url": template_url ,"is_back": 0},
                 success : function(image){
           
                     } 
@@ -717,31 +717,35 @@ $(document).ready(function(){
 
                  }
              });
-         $('#back_side').show();
-         html2canvas(element2, {
-         onrendered: function (canvas) {
-                getCanvas = canvas;
-                var imgageData = getCanvas.toDataURL("image/png");
 
-                $.ajax({
-                type: "POST",
-                url: site_url+'/save_single_card',
-                dataType: 'json',
-                data: {"_token": token ,"image": imgageData ,"url": template_url},
-                success : function(image){
-                	
-                	window.location.href = "{{ url('myorders'}}"; 
+         if(template_both_side == 1)
+         {
+	         $('#back_side').show();
+	         html2canvas(element2, {
+	         onrendered: function (canvas) {
+	                getCanvas = canvas;
+	                var imgageData = getCanvas.toDataURL("image/png");
 
-                	$('#preview_image').modal('hide');
-                    } 
-                    }).fail(function(data){
-                        var errors = data.responseJSON;
-                    });
+	                $.ajax({
+	                type: "POST",
+	                url: site_url+'/save_single_card',
+	                dataType: 'json',
+	                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1},
+	                success : function(image){
+	                	
+	                	window.location.href = "{{ url('myorders'}}"; 
+
+	                	$('#preview_image').modal('hide');
+	                    } 
+	                    }).fail(function(data){
+	                        var errors = data.responseJSON;
+	                    });
 
 
-                 }
-             });
-         $('#back_side').hide();
+	                 }
+	             });
+	         	$('#back_side').hide();
+     	}
         });
 
     });

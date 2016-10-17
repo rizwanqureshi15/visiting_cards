@@ -145,8 +145,6 @@ class OrderController extends Controller
 
             foreach($front_images as $image)
             {   
-                
-
                 $source = public_path().'/temp/'.$username.'/front/'.$image;
                 $destination = $directory.'/'.$image;
                 copy($source, $destination);
@@ -389,16 +387,24 @@ class OrderController extends Controller
                 $order_no = $count; 
             }
         }
-            
-        Order::create([
+
+        $img = $request->image; 
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+            $name = str_random(40);
+
+        if($template->is_both_side == 0)
+        {
+             Order::create([
                 'user_id' => $user_id,
                 'material_id' => '1',
                 'amount' => $amount,
                 'order_no' => $order_no,
                 'status' => 'new'
-        ]);
+            ]);
 
-        $order_id = Order::where('order_no',$order_no)->first();
+            $order_id = Order::where('order_no',$order_no)->first();
 
             OrderItem::create([
                 'order_id' => $order_id->id,
@@ -422,11 +428,95 @@ class OrderController extends Controller
             {
                 File::makeDirectory($directory);
             }
-           
-            $source = public_path().'/temp/'.$username.'/front/'.$request->image;
-            $destination = $directory.'/'.$request->image;
-            copy($source, $destination);
-            @unlink($source);
+
+            
+            
+            if(!File::exists($directory))
+            { 
+                File::makeDirectory($directory);
+            } 
+            file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name.'.png', $data);
+
+        }
+        else
+        {
+            if($request->is_back == 0)
+            {
+                 Order::create([
+                    'user_id' => $user_id,
+                    'material_id' => '1',
+                    'amount' => $amount,
+                    'order_no' => $order_no,
+                    'status' => 'new'
+                ]);
+
+                $order_id = Order::where('order_no',$order_no)->first();
+
+                OrderItem::create([
+                    'order_id' => $order_id->id,
+                    'front_snap' => $request->image
+                 ]);
+
+                $directory = public_path().'/order/'.$username;
+                if(!File::exists($directory))
+                {
+                    File::makeDirectory($directory);
+                }
+
+                $directory = public_path().'/order/'.$username.'/'.$order_id->order_no;
+
+                if(!File::exists($directory))
+                {
+                   File::makeDirectory($directory);
+                }
+                $directory = public_path().'/order/'.$username.'/'.$order_id->order_no.'/front';
+                if(!File::exists($directory))
+                {
+                    File::makeDirectory($directory);
+                }
+                
+                if(!File::exists($directory))
+                { 
+                    File::makeDirectory($directory);
+                } 
+                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name.'.png', $data);
+            }
+            else
+            {
+                $order_id = Order::where('order_no',$order_no)->first();
+
+                OrderItem::create([
+                    'order_id' => $order_id->id,
+                    'back_snap' => $request->image
+                 ]);
+
+                $directory = public_path().'/order/'.$username;
+                if(!File::exists($directory))
+                {
+                    File::makeDirectory($directory);
+                }
+
+                $directory = public_path().'/order/'.$username.'/'.$order_id->order_no;
+
+                if(!File::exists($directory))
+                {
+                   File::makeDirectory($directory);
+                }
+                $directory = public_path().'/order/'.$username.'/'.$order_id->order_no.'/back';
+                if(!File::exists($directory))
+                {
+                    File::makeDirectory($directory);
+                }
+                
+                if(!File::exists($directory))
+                { 
+                    File::makeDirectory($directory);
+                } 
+                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/back/'.$name.'.png', $data);
+            }
+
+        }
+
     }
 
 }
