@@ -191,6 +191,7 @@ Route::get('admin/templates-datatable', 'TemplateController@templates_datatable'
 Route::get('admin/category-datatable', 'CategoryController@category_datatable');
 Route::get('admin/material-datatable', 'MaterialController@material_datatable');
 
+
 Route::get('admin/faqs-datatable', 'FAQController@faq_datatable');
 
 Route::get('admin/faqs/list', 'FAQController@faqs_list');
@@ -199,3 +200,4 @@ Route::post('admin/faqs/create', 'FAQController@create_post');
 Route::get('admin/faq/edit/{id}', 'FAQController@edit');	
 Route::post('admin/faq/edit/{id}', 'FAQController@edit_post');
 Route::post('admin/faq/delete', 'FAQController@delete');
+
