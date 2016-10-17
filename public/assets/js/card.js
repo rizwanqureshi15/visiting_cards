@@ -5,8 +5,10 @@
 		var delete_labels = [];	
 		var image_name = [];
 		var feild_color;
+		var element2;
 		
-		 var element = $("#div1"); // global variable
+		 var element = $("#div1");
+		  // global variable
     var getCanvas; 	
 
 
@@ -704,7 +706,7 @@ $(document).ready(function(){
                 type: "POST",
                 url: site_url+'/save_single_card',
                 dataType: 'json',
-                data: {"_token": token ,"image": imgageData},
+                data: {"_token": token ,"image": imgageData ,"url": template_url},
                 success : function(image){
           
                     } 
@@ -725,9 +727,11 @@ $(document).ready(function(){
                 type: "POST",
                 url: site_url+'/save_single_card',
                 dataType: 'json',
-                data: {"_token": token ,"image": imgageData},
+                data: {"_token": token ,"image": imgageData ,"url": template_url},
                 success : function(image){
-                	alert('Your card is Successfuly Saved..!!');
+                	
+                	window.location.href = "{{ url('myorders'}}"; 
+
                 	$('#preview_image').modal('hide');
                     } 
                     }).fail(function(data){

@@ -37,11 +37,11 @@
 <div class="row">
     <div class="col-md-3 col-md-offset-1">
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
+    <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             Feilds    
+             <h3 class="sidebar-heading">Feilds</h3>    
           </a>
         </h4>
       </div>
@@ -49,10 +49,10 @@
         <div class="panel-body" id="feild_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+              <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
             </div>
             <div class="col-md-4">
-              <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+              <button id="newFeildBtn" class="sidebar-btn">OK</button>     
             </div> 
             <div id="error"></div>
           </div>            
@@ -63,7 +63,7 @@
               $id = str_replace(" ","_",$feild->name);
               $id = strtolower($id);  
             ?>        
-          <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">  @endforeach
+          <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">  @endforeach
         @endif
         </div>
       </div>
@@ -105,13 +105,13 @@
 
 @if($template->type == 'horizontal')
   <div class="col-md-8">
-    <div class="canvasBorder" style="height:421px;width:682px;">
+    <div class="canvasBorder-horizontal">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas1" width="680" height="418">
         </canvas>
 @else
   <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
+    <div class="canvasBorder-verticle">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas1" width="400" height="648">
         </canvas>
@@ -217,11 +217,11 @@
     <div class="col-md-3 col-md-offset-2">
   @endif
   <div class="panel-group" id="accordion_back" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
+    <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
           <a role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseOne_back" aria-expanded="true" aria-controls="collapseOne_back">
-             Feilds    
+             <h3 class="sidebar-heading">Feilds </h3>   
           </a>
         </h4>
       </div>
@@ -229,10 +229,10 @@
         <div class="panel-body" id="back_feild_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="back_newFeildName" placeholder="Enter New Feild">
+              <input type="text" class="form-control sidebar-textbox" id="back_newFeildName" placeholder="Enter New Feild">
             </div>
             <div class="col-md-4">
-              <button id="back_newFeildBtn" class="btn btn-primary">OK</button>     
+              <button id="back_newFeildBtn" class="sidebar-btn">OK</button>     
             </div> 
             <div id="back_error"></div>
           </div>            
@@ -252,7 +252,7 @@
       <div class="panel-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseTwo_back" aria-expanded="false" aria-controls="collapseTwo_back">
-              Labels                
+              <h3 class="sidebar-heading">Labels </h3>               
           </a>
         </h4>
       </div>
@@ -260,10 +260,10 @@
         <div class="panel-body" id="back_label_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="back_newLabelName" placeholder="Enter New Label">
+              <input type="text" class="form-control sidebar-textbox" id="back_newLabelName" placeholder="Enter New Label">
             </div>
             <div class="col-md-4">
-              <button id="back_newLabelBtn" class="btn btn-primary">OK</button>
+              <button id="back_newLabelBtn" class="sidebar-btn">OK</button>
             </div> 
             <div id="back_error_label"></div>
           </div>
@@ -376,11 +376,11 @@
 
 <div class="row">
   <div class="col-md-5 col-md-offset-6" style="margin-top:10px;">
-      <button class="btn btn-primary btn-lg" id="front_back"  style="margin-left:130px">Back</button>
-      <button class="btn btn-primary btn-lg" style="" id="Preview" data-toggle="modal" data-target="#preview_image">
+      <button class="btn-blog" id="front_back"  style="margin-right:40px">Back</button>
+      <button class="btn-blog" id="Preview" data-toggle="modal" data-target="#preview_image" style="margin-right: 20px;">
         Preview
       </button>
-      <a id="btnborder" class="btn btn-primary btn-lg">
+      <a id="btnborder" class="btn-blog" style="margin-right: 20px;">
         Show Borders
       </a>
   </div>
@@ -492,24 +492,23 @@
                         <div id="previewImageBack" style="display:none;">
                             
                         </div>
-                        <button id="preview_front_back" class="btn btn-primary">
-                            Back
-                        </button>
+                        
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="btnSave" type="submit" class="btn btn-primary"  >
+                        <button id="preview_front_back" class="model-btn">
+                            Back
+                        </button>
+                        <button id="btnSave" type="submit" class="model-btn">
                             Save
                         </button>
+                        
+                        <button type="button" class="btn btn-default model-btn" data-dismiss="modal" >Close</button>
                       </div>
                     </div>
                   </div>
                 </div>
             <!--Modal End-->
 </div>
-
-   
-
 
 @endsection
 

@@ -18,10 +18,11 @@
                     </div>
              @endif
 		</div>
-
-		<a class="btn btn-primary" href="{{ url('download_file',$template_url) }}">
-			Download Excel File
-		</a>
+		<div class="row">
+			<a class="sidebar-btn" href="{{ url('download_file',$template_url) }}" style="float:left">
+				Download Excel File
+			</a>
+		</div>
 
 	   @foreach($image_feilds_name as $feild_name)
 		    <?php
@@ -36,8 +37,8 @@
 			    <div class="form-group">
 			    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload {{ $feild_name->name }}</label>
 				    <div class="col-sm-5">
-					    <div class="col-md-10">
-					      <input type="file" class="form-control" id="{{ $name }}" name="{{ $name }}[]" multiple="multiple" style="margin-top:10px;">
+					    <div class="col-md-9">
+					      <input type="file" class="form-control file-textbox" id="{{ $name }}" name="{{ $name }}[]" multiple="multiple" style="margin-top:10px;">
 					      <div id="error_{{ $name }}" style="color:red"></div>
 					      @if(Session::has($feild_name->name.'_error_message'))
 		                    <span class="help-block" style="color:red;">
@@ -45,9 +46,8 @@
 		                    </span>
 		                  @endif
 		            	</div>
-
 		            	<div class="col-md-2">
-		                  <input type="submit" class="btn btn-primary submit" data-id="{{ $name }}" name="submit" Value="Upload" style="margin-top:10px;">
+		                  <input type="submit" class="sidebar-btn" data-id="{{ $name }}" name="submit" Value="Upload" style="margin-top:10px;">
 		                </div>
 				    </div>
 			    </div>
@@ -63,8 +63,8 @@
 			<div class="form-group">
 		    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload Excel File</label>
 			    <div class="col-sm-5">
-				    <div class="col-md-10">
-				      <input type="file" class="form-control" id="inputEmail3" name="excel_file" style="margin-top:10px;">
+				    <div class="col-md-9">
+				      <input type="file" class="form-control file-textbox" id="inputEmail3" name="excel_file" style="margin-top:10px;margin-right:10px;">
 				    
 					    @if ($errors->has('excel_file'))
 		                    <span class="help-block" style="color:red;">
@@ -74,7 +74,7 @@
 
 		            </div>
 	                <div class="col-md-2">
-		                  <input type="submit" class="btn btn-primary" id="inputEmail3" name="submit" Value="Upload" style="margin-top:10px;">
+		                  <input type="submit" class="sidebar-btn" id="inputEmail3" name="submit" Value="Upload" style="margin-top:10px;">
 		            </div>
 
 			    </div>
@@ -119,10 +119,10 @@
 						      </div>
 						      <div class="modal-footer">
 						        <a href="{{ url('delete_folder',$template_url) }}">
-						        	<button type="button" class="btn btn-default" >Close</button>
+						        	<button type="button" class="model-btn" >Close</button>
 						       	</a> 
 						       	<a href="{{ url('order_multiple_cards',$template_url) }}">
-						        	<button type="button" class="btn btn-primary">Save</button>
+						        	<button type="button" class="model-btn">Save</button>
 						     	</a>
 						      </div>
 						    </div>

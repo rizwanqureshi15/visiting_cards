@@ -60,7 +60,7 @@ Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
 
-Route::get('gallery','Front\TemplatesController@index');
+Route::get('cards','Front\TemplatesController@index');
 Route::post('templates','Front\TemplatesController@ajax_templates');
 
 Route::post('user-images','HomeController@ajax_user_images');
@@ -104,7 +104,7 @@ Route::get('mytemplates',['middleware' => 'auth','uses' => 'Front\TemplatesContr
 Route::get('mytemplates/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@show_user_template']);
 Route::post('upload_template_image','CardController@upload_image');
 
-Route::post('save_single_card','Front\TemplatesController@save_card');
+// Route::post('save_single_card','Front\TemplatesController@save_card');
 
 Route::get('mytemplates/{url}/edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
 Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
@@ -175,11 +175,22 @@ Route::get('orders/done/{id}', 'EmployeeController@done_order');
 Route::get('orders/history/list', 'EmployeeController@order_history_list');
 
 Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
+
+Route::get('terms_condition','HomeController@show_terms_condition');
+
+Route::get('privacy_policy','HomeController@show_privacy_policy');
+
+Route::get('about','HomeController@show_about');
+
+Route::post('save_single_card','OrderController@save_single_card');
+
+Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
 Route::get('admin/employees-datatable', 'AdminController@employee_datatable');
 Route::get('admin/users-datatable', 'AdminController@users_datatable');
 Route::get('admin/templates-datatable', 'TemplateController@templates_datatable');
 Route::get('admin/category-datatable', 'CategoryController@category_datatable');
 Route::get('admin/material-datatable', 'MaterialController@material_datatable');
+
 Route::get('admin/faqs-datatable', 'FAQController@faq_datatable');
 
 Route::get('admin/faqs/list', 'FAQController@faqs_list');

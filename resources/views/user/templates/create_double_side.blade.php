@@ -42,11 +42,11 @@
     <div class="col-md-3 col-md-offset-2">
   @endif
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
+    <div class="panel-default">
+      <div class="panel-heading sidebar-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             Feilds    
+          <a class="anchor-tag" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+             <h3 class="sidebar-heading">Feilds</h3>    
           </a>
         </h4>
       </div>
@@ -54,21 +54,21 @@
         <div class="panel-body" id="feild_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+              <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
             </div>
             <div class="col-md-4">
-              <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+              <button id="newFeildBtn" class="sidebar-btn">OK</button>     
             </div> 
             <div id="error"></div>
           </div>            
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingTwo">
+    <div class="panel-default">
+      <div class="panel-heading sidebar-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
-          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Labels                
+          <a class="collapsed anchor-tag" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <h3 class="sidebar-heading">Labels</h3>              
           </a>
         </h4>
       </div>
@@ -76,10 +76,10 @@
         <div class="panel-body" id="label_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+              <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
             </div>
             <div class="col-md-4">
-              <button id="newLabelBtn" class="btn btn-primary">OK</button>
+              <button id="newLabelBtn" class="sidebar-btn">OK</button>
             </div> 
             <div id="error_label"></div>
           </div>
@@ -92,13 +92,13 @@
 
 @if($template->type == 'horizontal')
   <div class="col-md-9">
-    <div class="canvasBorder" style="height:421px;width:682px;">
+    <div class="canvasBorder-horizontal">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas1" width="680" height="418">
         </canvas>
 @else
   <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
+    <div class="canvasBorder-verticle">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
         <canvas id="canvas1" width="400" height="648">
         </canvas>
@@ -185,12 +185,12 @@
           @else
           <div style="margin-right:150px;">
           @endif
-            <button class="btn btn-primary btn-lg mybtn" id="save_as_template">
+            <button class="btn-blog" id="save_as_template" style="margin-top:10px;">
                 Save as Template
             </button>   
-            <a id="btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+            <button id="btnborder" class="btn-blog" style="margin-right:20px;margin-top:10px;">
                 Show Borders
-             </a>
+             </button>
           </div>
         </div>
     </div>
@@ -217,11 +217,11 @@
     <div class="col-md-3 col-md-offset-2">
   @endif
   <div class="panel-group" id="accordion_back" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
+    <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
           <a role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseOne_back" aria-expanded="true" aria-controls="collapseOne_back">
-             Feilds    
+             <h3 class="sidebar-heading">Feilds </h3>   
           </a>
         </h4>
       </div>
@@ -229,21 +229,21 @@
         <div class="panel-body" id="back_feild_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="back_newFeildName" placeholder="Enter New Feild">
+              <input type="text" class="form-control sidebar-textbox" id="back_newFeildName" placeholder="Enter New Feild">
             </div>
             <div class="col-md-4">
-              <button id="back_newFeildBtn" class="btn btn-primary">OK</button>     
+              <button id="back_newFeildBtn" class="sidebar-btn">OK</button>     
             </div> 
             <div id="back_error"></div>
           </div>            
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
+    <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingTwo">
         <h4 class="panel-title">
           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseTwo_back" aria-expanded="false" aria-controls="collapseTwo_back">
-              Labels                
+              <h3 class="sidebar-heading">Labels </h3>               
           </a>
         </h4>
       </div>
@@ -251,10 +251,10 @@
         <div class="panel-body" id="label_body">
           <div class="row">
             <div class="col-md-8" style="padding-right:0px">
-              <input type="text" class="form-control" id="back_newLabelName" placeholder="Enter New Label">
+              <input type="text" class="form-control sidebar-textbox" id="back_newLabelName" placeholder="Enter New Label">
             </div>
             <div class="col-md-4">
-              <button id="back_newLabelBtn" class="btn btn-primary">OK</button>
+              <button id="back_newLabelBtn" class="sidebar-btn">OK</button>
             </div> 
             <div id="back_error_label"></div>
           </div>
@@ -266,7 +266,7 @@
 
 @if($template->type == 'horizontal')
   <div class="col-md-9">
-    <div class="canvasBorder" style="height:421px;width:682px;">
+    <div class="canvasBorder-horizontal">
       <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
         <canvas id="canvas2" width="680" height="419">
         </canvas>
@@ -356,10 +356,10 @@
           @else
           <div style="margin-right:150px;">
           @endif
-            <button class="btn btn-primary btn-lg mybtn" id="back_save_as_template">
+            <button class="btn-blog" id="back_save_as_template">
                 Save as Template
             </button>   
-            <a id="back_btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+            <a id="back_btnborder" class="btn-blog" style="margin-right:10px;">
                 Show Borders
              </a>
           </div>

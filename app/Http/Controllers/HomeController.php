@@ -38,4 +38,20 @@ class HomeController extends Controller
         return response()->json($user_cards);
     }
 
+    public function show_terms_condition()
+    {
+        return view('terms_condition');
+    }
+
+
+    public function show_privacy_policy()
+    {
+        return view('privacy_policy');
+    }
+
+    public function show_about()
+    {
+        return view('about');
+    }
+
 }

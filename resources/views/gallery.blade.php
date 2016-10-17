@@ -8,29 +8,29 @@
             	 <table class="table mytable" border="1" style="margin-top:20px;">
                     <thead>
                         <tr class="mytheadtr">
-                            <th class="headtext" id="flip">Orientation</th>
+                            <th class="headtext" id="orientation-flip">Orientation</th>
                         </tr>
                     </thead>
-                    <tbody id="orientation">
-                        <div class="orientation">
+                    <tbody id="orientation" class="panel-body">
+                        <div class="orientation">  
                             <tr>
-                                <th><input class="toolbar-elements" rel="horizontal" id="horizontal" type="checkbox" name="orientation" class="chk" value="horizontal"> Horizontal</th>
+                                <th><input class="toolbar-elements" rel="horizontal" id="horizontal" type="checkbox" name="orientation" class="chk" value="horizontal"> <span>Horizontal</span></th>
                             </tr>
                             <tr>
-                                <th><input class="toolbar-elements" rel="vertical" id="vertical" type="checkbox" name="orientation" class="chk" value="vertical"> Vertical</th>
+                                <th><input class="toolbar-elements" rel="vertical" id="vertical" type="checkbox" name="orientation" class="chk" value="vertical"> <span>Vertical</span></th>
                             </tr>
                         </div>
                     </tbody>
                     <thead>
                         <tr class="mytheadtr">
-                            <th class="headtext" id="flip1">Category</th>
+                            <th class="headtext" id="category-flip">Category</th>
                         </tr>
                     </thead>
-                    <tbody id="category" style="display:none;">
+                    <tbody id="category" style="display:none;" class="panel-body">
                         <div class="category">
                             @foreach($categories as $category)
                                 <tr>
-                                    <th><input class="category" id="{{ $category->id }}" type="checkbox" name="category" value="{{ $category->id }}"> {{ $category->name }}</th>
+                                    <th><input class="category" id="{{ $category->id }}" type="checkbox" name="category" value="{{ $category->id }}"> <span>{{ $category->name }}</span></th>
                                 </tr>
                             @endforeach
                         </div>
@@ -39,12 +39,17 @@
         </div>
         <div class="col-md-9" >
         	<div class="col-md-12" id="posts">
-	        	@foreach ($templates as $template)
-	        		<div class="col-md-4">
+	        	@foreach ($templates as $template) 
+	        		<div class="col-sm-4 col-xs-12">
 	        			<a href="{{ url('mytemplates/'.$template->url.'/create') }}">
 		        			@if($template->type=="horizontal")
-                            <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> @else
-                            <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;margin-left:60px;width:50%;height:175.16px">
+                                <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> 
+                                <span class="cards-data">{{ $template->name }}</span><br>
+                                <span class="cards-data"><h3>Rs. {{ $template->price }}</h3></span>
+                            @else
+                                <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;margin-left:60px;width:50%;height:175.16px">
+                                <span class="cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">{{ $template->name }}</span><br>
+                                <span class="cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12"><h3>Rs. {{ $template->price }}</h3></span>
                             @endif
 	        			</a>
 	        		</div>
@@ -62,12 +67,14 @@
 
     $(document).ready(function(){
 
-        $("#flip").click(function(){
+        $("#orientation-flip").click(function(){
             $("#orientation").slideToggle("slow");
+            $("#category").hide();
         });
 
-        $("#flip1").click(function(){
+        $("#category-flip").click(function(){
             $("#category").slideToggle("slow");
+            $("#orientation").hide();
         });
 
     });

@@ -14,36 +14,42 @@
         </div>
 
         <div class="col-md-12">
-	        <table class="table table-condensed">
-
-	        	<thead>
-	        		<th>Order No.</th>
-	        		<th>Material</th>
-	        		<th>Amount</th>
-	        		<th>Quentity</th>
-	        		<th>Status</th>
-	        		<th>View</th>
-	        	</thead>
-
-	        	<tbody>
-	        		@if(count($user_orders) == 0)
-	        			<td>No data found...</td>
-	        		@endif
-	        		@foreach($user_orders as $order)
+        	<div class="innerWrapper">
+        		<h4>All Orders</h4>
+		        <table class="table table-condensed">
+		        	<thead>
 		        		<tr>
-		        			<td>{{ $order->order_no }}</td>
-		        			<td>{{ $order->material_id }}</td>
-		        			<td>{{ $order->amount }}</td>
-		        			<td>{{ $order->quantity }}</td>
-		        			<td>{{ $order->status }}</td>
-		        			<td><a href="{{ url('view_order',$order->id) }}">
-		        				View Cards
-		        			</a></td>
-		        		</tr>
-		        	@endforeach
-	        	</tbody>
+			        		<th>Order No.</th>
+			        		<th>Material</th>
+			        		<th>Amount</th>
+			        		<th>Quentity</th>
+			        		<th>Status</th>
+			        		<th style="text-align:center;">View</th>
+			        	</tr>
+		        	</thead>
 
-	        </table>
+		        	<tbody>
+		        		@if(count($user_orders) == 0)
+			        		<tr>
+			        			<td>No data found...</td>
+			        		</tr>
+		        		@endif
+		        		@foreach($user_orders as $order)
+			        		<tr>
+			        			<td>{{ $order->order_no }}</td>
+			        			<td>{{ $order->material_id }}</td>
+			        			<td>{{ $order->amount }}</td>
+			        			<td>{{ $order->quantity }}</td>
+			        			<td>{{ $order->status }}</td>
+			        			<td style="text-align:center;"><a class="model-btn" href="{{ url('view_order',$order->id) }}">
+			        				View Cards
+			        			</a></td>
+			        		</tr>
+			        	@endforeach
+		        	</tbody>
+
+		        </table>
+	    	</div>
 	    </div>
 
     </div>
