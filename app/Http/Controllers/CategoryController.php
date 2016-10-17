@@ -15,6 +15,7 @@ use App\User;
 use Config;
 use App\Template;
 use App\Category;
+use Datatables;
 
 class CategoryController extends Controller
 {
@@ -42,13 +43,28 @@ class CategoryController extends Controller
         if(CategoryController::authenticate_admin())
         {
                
-               $data['categories'] = Category::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
-                return view('admin.categories.list', $data);     
+               
+                return view('admin.categories.list');     
         }
         else
         {
                 return redirect()->back();
         }
+    }
+
+     public function category_datatable()
+    {
+
+         $category = Category::where('is_delete', 0)->get();
+
+         return Datatables::of($category)
+                    ->addColumn('action', function ($data) {
+                           
+                                
+                            $button = '<a data-toggle="modal"  style="cursor: pointer" class="delete_category" data-target="#onDelete" data-delete="'.$data->id.'" >Delete</a>';
+                            return $button;
+                        })
+                    ->make(true);
     }
 
     public function create_category()

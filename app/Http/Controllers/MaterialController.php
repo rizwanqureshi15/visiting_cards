@@ -14,6 +14,7 @@ use Config;
 use App\Material;
 use Validator;
 use Session;
+use Datatables;
 
 class MaterialController extends Controller
 {
@@ -141,11 +142,27 @@ class MaterialController extends Controller
         if(MaterialController::authenticate_admin())
         {
             $data['materials'] = Material::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
+                                        
+
             return view('admin.materials.list', $data);        
         }
         else
         {
             return redirect()->back();
         }
+    }
+
+    public function material_datatable()
+    {
+
+         $materials = Material::where('is_delete', 0)->get();
+
+         return Datatables::of($materials)
+                    ->addColumn('action', function ($data) {
+                           
+                            $button = '<a data-toggle="modal"  style="cursor: pointer" class="delete_material" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
+                            return $button;
+                        })
+                    ->make(true);
     }
 }

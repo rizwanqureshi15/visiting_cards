@@ -297,4 +297,28 @@ position: absolute;
     left: 50%;
     margin: -28px 0 0 -25px;
 }
+.panel-default>.panel-heading{
+    background-color: #2a3f54;
+    color:white;
+}
 
+.card-buttons{
+    width:224px;
+    border-radius: 0px;
+    margin-top: 3px;
+}
+.card-buttons-verticle{
+    width:130px;
+    border-radius: 0px;
+    margin-top: 3px;
+}
+.alert{
+    padding:8px;
+    margin-top: 3px;
+}
+.alert-success .alert-link{
+    color:white;
+}
+.alert-danger {
+    color:white;
+}

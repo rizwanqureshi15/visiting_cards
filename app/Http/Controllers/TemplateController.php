@@ -16,6 +16,7 @@ use Config;
 use App\Template;
 use App\Category;
 use Illuminate\Support\Facades\Input;
+use Datatables;
 
 class TemplateController extends Controller
 {
@@ -52,6 +53,31 @@ class TemplateController extends Controller
         }
 		
 	}
+
+     public function templates_datatable()
+    {
+
+         $template = Template::with('category')->where('is_delete',0)->get();
+
+         return Datatables::of($template)
+                    ->addColumn('action', function ($data) {
+                           
+                            $button = '<a href="'. url('admin/templates/edit', $data->id).'">Edit</a> | 
+                        <a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
+                            return $button;
+                        })
+                    ->addColumn('feilds', function ($data) {
+                           
+                            $button = '<a href="'.url("admin/templates/".$data->url) .'">View Feilds</a>';
+                            return $button;
+                        })
+                    ->editColumn('category_id', function ($data) {
+                            $category = $data->category->name;
+                            return $category;
+                        })
+                    ->make(true);
+    }
+
     public function create_template()
     {
         if(TemplateController::authenticate_admin())

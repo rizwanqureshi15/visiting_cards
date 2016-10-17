@@ -1,12 +1,8 @@
 @extends('master')
 @section('content')
-
+<div class="container">
 	<div class="row">
-		<div class="col-md-3"><h2>Employees</h2></div>
-		<div class="" style="margin-top:30px;">
-			<a href="{{ url('admin/employees/create') }}" class="btn btn-primary pull-right">Add Employee</a>
-		</div>
-		<div class="col-md-12" style="margin-top:20px;">
+		<div class="col-md-12">
 			@if(Session::get('reset_msg'))
 				<div class="alert alert-success" role="alert">
 				  <a class="alert-link">{{ Session::get('reset_msg') }}</a>
@@ -27,40 +23,31 @@
 				  <a class="alert-link">{{ Session::get('create_msg') }}</a>
 				</div>
 			@endif
-			<table class="table table-condensed">
-			<thead>
-				<tr>
-					<th> Name </th>
-					<th> Username </th>
-					<th> Action </th>
-				</tr>
-			</thead>
-			<tbody>
-				@if($employees->count() == 0)
-				<tr>
-					<td>Data Not Found..!</td>
-				</tr>
-				@else
- 				@foreach($employees as $employee)
- 				<tr>
- 					<td> {{ $employee->first_name }} {{ $employee->last_name }}</td>
- 					<td> {{ $employee->username }}</td>
- 					<td> 
- 						<a href="{{ url('admin/employees/edit', $employee->id) }}">Edit</a> | 
- 						<a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="{{ $employee->id }}" >Delete</a> | 
- 						<button type="button" class="btn btn-default reset_password" data-toggle="modal" data-target="#myModal" data-id="{{ $employee->id }}">
-						  Reset Password
-						</button>
- 				</tr>
- 				@endforeach
- 				@endif
- 			</tbody>
- 			
-			</table>
-
 		</div>
-		<div class="col-md-8 col-md-offset-4">
-			{{ $employees->links() }}
+
+		<div class="col-md-12 col-sm-12 col-xs-12">	
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Employees</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<a href="{{ url('admin/employees/create') }}" class="btn btn-primary pull-right">Add Employee</a>
+	                </ul>
+	                <div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<table class="table table-hover datatable">
+						<thead>
+							<tr>
+								<th> Name </th>
+								<th> Username </th>
+								<th> Action </th>
+							</tr>
+						</thead>
+						<tbody>
+			 			</tbody>
+			 		</table>
+				</div>
+			</div>
 		</div>
 		</div>
 	
@@ -130,8 +117,9 @@
 			    </div>
 			  </div>
 			</div>
-			
+	</div>			
 </div>
+
 	@endsection
 
 	@section('js')
@@ -161,5 +149,23 @@
 
 	    	$('#myModal').modal('show');
 		}
+		$(document).ready(function(){
+	        var site_url = "{{ url('') }}";
+	    	var token = "{{ csrf_token() }}";
+	      $('.datatable').DataTable({
+	            processing: true,
+	            serverSide: true,
+	            ajax: '{{ url("admin/employees-datatable") }}',
+	            columns:[
+	            	{data: 'first_name', name: 'first_name' , orderable: true, searchable: true},
+	            	{data: 'username', name: 'username', orderable: true, searchable: true},
+	            	{data: 'action', name: 'action', orderable: false, searchable: false}
+	            	
+	            ],
+	            "aoColumnDefs": [
+	                { "sClass": "text-center", "aTargets": [ 0,1,2 ] },
+	              ]
+	        });
+	  });
 	</script>
 	@endsection

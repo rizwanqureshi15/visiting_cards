@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Identity Cards</title>
-
+     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
     <!-- Fonts -->
-    <link rel="stylesheet" href="{{ url('assets/css/font-awesome.min.css') }}" >
+     <link rel="stylesheet" href="{{ url('assets/css/font-awesome.css') }}" >
     <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">-->
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
+   
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
    <!--  <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
     <link rel="stylesheet" href="{{ url('assets/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
-    <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}">
+
+    <!-- <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
@@ -29,6 +30,15 @@
     <link rel="stylesheet" href="{{ url('assets/css/dataTables.bootstrap.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('assets/css/jquery.dataTables.css') }}" type="text/css" />
     <!--end-->
+
+    <!--template styles-->
+        <!-- NProgress -->
+        <link href="{{ url('assets/css/nprogress.css') }}" rel="stylesheet">
+        <!-- jQuery custom content scroller -->
+        <link href="{{ url('assets/css/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet"/>
+        <!-- Custom Theme Style -->
+        <link href="{{ url('assets/css/gentelella.min.css') }}" rel="stylesheet">
+    <!--end template-->
 
    
 
@@ -44,65 +54,23 @@
         }
     </style>
 </head>
-<body id="app-layout" style="display:block;">
-    <nav class="navbar navbar-default navbar-static-top" id="admin_navbar">
-        <div class="container">
-            <div class="navbar-header">
+ <body class="nav-md"  style="background-color:#fff;">
+@include('include.sidebar')
+@include('include.header')
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Identity Cards
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                  
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-
-    
-   <div class="container" style="">
-      <div class="row">
-      @if(Auth::guard('employee')->user())
-
-        <div class="col-md-2" style="padding-right:0px;padding-left:0px;">
-            @include('sidebar')
-        </div>
- 
-      @endif
-        <div class="col-md-10">
-            @yield('content')
-        </div>
-      </div>
-       <div id="overlay" style="display:none;">
+    <!--Page Content-->
+    <div class="right_col" role="main">
+        @yield('content')
+    </div>
+    <div id="overlay" style="display:none;">
         <img id="loading" src="{{ url('assets\images\ajax-loader.gif') }}">
     </div>
     <div id="user_overlay" style="display:none;">
             <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
-        </div>
     </div>
-    
+    <!--End Page Content-->
+
+    @include('include.footer')
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url('assets/js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -111,6 +79,11 @@
     <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
     <script src="{{ url('assets/js/jquery.dataTables.js') }}"></script>
     <script src="{{ url('assets/js/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ url('assets/js/fastclick.js') }}"></script>
+    <script src="{{ url('assets/js/nprogress.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+     <script src="{{ url('assets/js/custom.min.js') }}"></script>
+
     @yield('js');
 
   </body>

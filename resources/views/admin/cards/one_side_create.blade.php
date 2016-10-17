@@ -110,48 +110,43 @@
       </div>
     </div>
 </div>  
+<!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>-->
 
-
-        
-            <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>
-            -->
-
-            @if($templates->type == 'horizontal')
-                <div class="col-md-9">
-                <div class="canvasBorder" style="height:421px;width:682px;">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <canvas id="canvas1" width="680" height="419">
-                </canvas>
-            @else
-                <div class="col-md-6">
-                <div class="canvasBorder"  style="height:650px;width:402px;">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
-                
-                <canvas id="canvas1" width="400" height="648">
-                </canvas>
-             @endif
+@if($templates->type == 'horizontal')
+  <div class="col-md-9">
+    <div class="canvasBorder" style="height:421px;width:682px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:419px;width:680px;">
+        <canvas id="canvas1" width="680" height="419">
+        </canvas>
+@else
+  <div class="col-md-6">
+    <div class="canvasBorder"  style="height:650px;width:402px;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100%;height:648px;width:400px;">
+        <canvas id="canvas1" width="400" height="648">
+        </canvas>
+@endif
             
-     <!--    <input type="hidden" id="template_id" value="{{ $templates->id }}"/> -->
+     <!--<input type="hidden" id="template_id" value="{{ $templates->id }}"/> -->
         
         <div id="card_body">
-            @if($feilds)
-                @foreach($feilds as $feild)
-                     <?php
-                         $id = $feild->name;
-                        $id = str_replace(" ","_",$feild->name);
-                        $id = strtolower($id);
-                     ?>
-                            <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
-                                 <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
-                                    {{ $feild->content }}
-                                </span>
-                            </div>
-                 @endforeach
-            @endif
+          @if($feilds)
+            @foreach($feilds as $feild)
+              <?php
+                $id = $feild->name;
+                $id = str_replace(" ","_",$feild->name);
+                $id = strtolower($id);
+              ?>
+                <div id="{{ $id }}" data-name="{{ $feild->name }}" class='ui-widget-content textbox-size feild-elements' style="{{ $feild->css }}">
+                  <span id="span_{{ $id }}" style="{{ $feild->font_css }}">
+                    {{ $feild->content }}
+                  </span>
+                </div>
+            @endforeach
+          @endif
 
-            @if($labels)
-                @foreach($labels as $label)
-                     <?php
+          @if($labels)
+            @foreach($labels as $label)
+              <?php
                          $id = $label->name;
                         $id = str_replace(" ","_",$label->name);
                         $id = strtolower($id);
@@ -309,25 +304,33 @@
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
-    @if($templates->type == "horizontal")
-    <div style="margin-right:20px">
+        @if($templates->type == "horizontal")
+    <div  class="row">
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" style="margin-left:10px;">
+        Show Borders
+      </a>
+      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#myModal">
+        Upload Image
+      </a>
+      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" >
+        Save
+      </a>
+    </div>
     @else
-    <div style="margin-right:57px;">
-    @endif
-        <a id="btnsave" class="btn btn-primary" style="float:right;margin-top:40px;">
-            Save
-         </a>
-          <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;">
-            Show Borders
-         </a>
-         <a type="button" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:40px;" data-toggle="modal" data-target="#myModal">
-              Upload Image
+    <div class="row">
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons-verticle" style="margin-left:10px;">
+          Show Borders
+        </a>
+        <a type="button" class="btn btn-primary col-md-3 card-buttons-verticle" data-toggle="modal" data-target="#myModal">
+          Upload Image
+        </a>
+        <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
+          Save
         </a>
     </div>
-   
-    </div>
-    
-    </div>
+    @endif
+  </div>    
+</div>
    
 
 
