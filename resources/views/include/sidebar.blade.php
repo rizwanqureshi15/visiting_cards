@@ -59,7 +59,15 @@
                       <li><a href="{{ url('cancel_orders/list') }}">Cancelled</a></li>
                       <li><a href="{{ url('orders/history/list') }}">History</a></li>
                     </ul>
+                  </li>
+
+                  @if(Auth::guard('employee')->user()->is_admin == 1)
+                  <li><a><i class="fa fa-question-circle "></i> FAQs <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ url('admin/faqs/list') }}">list</a></li>
+                    </ul>
                   </li> 
+                  @endif
                 </ul>
               </div>
             </div>

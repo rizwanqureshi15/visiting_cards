@@ -17,7 +17,7 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}" >
             <div class="form-group">
               <label class="col-sm-2 control-label">Name</label>
-              <div class="col-sm-5">
+              <div class="col-sm-9">
                 {{ Form::text('name', null , $attributes= ['class' => 'form-control','placeholder' => 'Category Name']) }}
               @if($errors->first('name'))
                 <div class="alert alert-danger">
