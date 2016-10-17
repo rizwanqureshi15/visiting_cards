@@ -94,7 +94,7 @@ class TemplatesController extends Controller
 
     public function get_template($url)
     {
-  $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
+                $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
                 $data['feilds'] = TemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
                 
                 $ids = array();
@@ -758,7 +758,7 @@ class TemplatesController extends Controller
 
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
-                $data['back_template_labels'] = $back_labels;
+                $data['back_template_labels'] = $back_labels; 
                 if($data['template']->is_both_side == 1)
                 {
                   return view('user.cards.single_card_double_side_create',$data);

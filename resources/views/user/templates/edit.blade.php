@@ -10,11 +10,11 @@
         <div class="col-md-3 col-md-offset-2">
     @endif
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default">
+      <div class=" panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Feilds    
+                <h3 class="sidebar-heading">Feilds </h3>   
             </a>
           </h4>
         </div>
@@ -22,10 +22,10 @@
           <div class="panel-body" id="feild_body">
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
-                    <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+                    <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
                 </div>
                 <div class="col-md-4">
-                    <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+                    <button id="newFeildBtn" class="sidebar-btn">OK</button>     
                 </div> 
                 <div id="error"></div>
             </div>
@@ -33,11 +33,11 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class=" panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Labels                
+              <h3 class="sidebar-heading">Labels </h3>              
             </a>
           </h4>
         </div>
@@ -45,10 +45,10 @@
           <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-8" style="padding-right:0px">
-                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+                <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
               </div>
               <div class="col-md-4">
-                <button id="newLabelBtn" class="btn btn-primary">OK</button>
+                <button id="newLabelBtn" class="sidebar-btn">OK</button>
               </div> 
               <div id="error_label"></div>
             </div>
@@ -61,13 +61,13 @@
 
         @if($template->type == 'horizontal')
                 <div class="col-md-7">
-                 <div class="canvasBorder" style="height:421px;width:682px;">
+                 <div class="canvasBorder-horizontal">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
-                 <div class="canvasBorder" style="height:650px;width:402px;">
+                 <div class="canvasBorder-verticle">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
@@ -249,14 +249,16 @@
               @else
               <div style="margin-right:150px;">
               @endif
-                <button class="btn btn-primary btn-lg mybtn" id="save_modifications">
+                <button class="btn-blog" id="save_modifications">
                 Save Modifications
             </button>   
-            <a id="btnborder" class="btn btn-primary btn-lg" style="float:right;margin-right:10px;margin-top:20px;">
+            <a id="btnborder" class="btn-blog" style="margin-right:10px">
                 Show Borders
              </a>
              </div>
         </div>
+</div>
+</div>
 </div>
 
 @endsection

@@ -34,7 +34,7 @@
 
 </style>
 <div class="container">
-<div class="row">
+<div class="row"> 
     @if($template->type == "horizontal")
         <div class="col-md-3 col-md-offset-1">
     @else
@@ -45,7 +45,7 @@
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Feilds    
+                <h3 class="sidebar-heading">Feilds</h3>   
             </a>
           </h4>
         </div>
@@ -53,10 +53,10 @@
           <div class="panel-body" id="feild_body">
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
-                    <input type="text" class="form-control" id="newFeildName" placeholder="Enter New Feild">
+                    <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
                 </div>
                 <div class="col-md-4">
-                    <button id="newFeildBtn" class="btn btn-primary">OK</button>     
+                    <button id="newFeildBtn" class="sidebar-btn">OK</button>     
                 </div> 
                 <div id="error"></div>
             </div>
@@ -68,7 +68,7 @@
                         $id = str_replace(" ","_",$feild->name);
                         $id = strtolower($id);   
                     ?>        
-                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $feild->name }}">               
+                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">               
                 @endforeach
             @endif
           </div>
@@ -113,13 +113,13 @@
 
          @if($template->type == 'horizontal')
                 <div class="col-md-7">
-                 <div class="canvasBorder" style="height:421px;width:682px;">
+                 <div class="canvasBorder-horizontal">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
-                 <div class="canvasBorder" style="height:650px;width:402px;">
+                 <div class="canvasBorder-verticle">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
@@ -268,7 +268,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
+                    <button type="button" class="model-btn export" style="display:inline-block;">Upload</button>
                   </div>
                 </div>
               </div>
@@ -288,8 +288,8 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="btnSave" type="submit" class="btn btn-primary"  >
+                        <button type="button" class="btn btn-default model-btn" data-dismiss="modal">Close</button>
+                        <button id="btnSave" type="submit" class="model-btn sidebar-btn">
                             Save
                         </button>
                       </div>
@@ -303,13 +303,15 @@
           @else
           <div style="margin-right:255px;">
           @endif
-             <button class="btn btn-primary mybtn" style="float:right;margin-right:10px;margin-top:20px;" id="Preview_single" data-toggle="modal" data-target="#preview_image">
+             <button class="btn-blog" id="Preview_single" data-toggle="modal" data-target="#preview_image">
                 Preview
               </button>   
-               <a id="btnborder" class="btn btn-primary" style="float:right;margin-right:10px;margin-top:20px;">
+               <a id="btnborder" class="btn-blog" style="margin-right:20px;">
                   Show Borders
                </a>
           </div>
+</div>
+</div>
 </div>
 
 @endsection
@@ -318,7 +320,8 @@
     
 
 <script>
-
+  
+    var template_url = "{{ $template->url }}";
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
    var field_names = {!! json_encode($names) !!};

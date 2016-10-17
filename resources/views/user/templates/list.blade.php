@@ -41,10 +41,10 @@
                             @endif
                             </a>
                             <a href="{{ url('mytemplates/'.$user_card->url.'/edit') }}">
-                                <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;border-radius:0px;">Edit</button>
+                                <button class="btn-blog col-md-5">Edit</button>
                             </a>
                             <a href="{{ url('mytemplates/'.$user_card->url.'/delete') }}">
-                                <button class="btn btn-primary" style="margin-top:10px;float:right;width:130px;margin-right:13px;border-radius:0px;">Delete</button>
+                                <button class="btn-blog col-md-6" style="margin-right:22px;">Delete</button>
                             </a>
                         </div>
                         
@@ -65,14 +65,14 @@
                       </div>
                       <div class="modal-body raw" style="height:250px;">
                         <div class="col-md-6" style="height:200px;">
-                            <a href="" class="btn btn-primary" style="height:100%;width:100%;" id="single"><h2 style="margin-top:70px;">Single</h2></a>
+                            <a href="" class="btn-blog" style="height:100%;width:100%;text-align:center" id="single"><h2 style="margin-top:70px;">Single</h2></a>
                         </div>
                         <div class="col-md-6" style="height:200px;">
-                            <a href="" class="btn btn-primary" style="height:100%;width:100%;" id="multiple"><h2 style="margin-top:70px;">Multiple</h2></a>
+                            <a href="" class="btn-blog" style="height:100%;width:100%;text-align:center" id="multiple"><h2 style="margin-top:70px;">Multiple</h2></a>
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="model-btn btn btn-default" data-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
