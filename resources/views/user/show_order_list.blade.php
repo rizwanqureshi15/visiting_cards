@@ -41,7 +41,7 @@
 			        			<td>{{ $order->amount }}</td>
 			        			<td>{{ $order->quantity }}</td>
 			        			<td>{{ $order->status }}</td>
-			        			<td style="text-align:center;"><a class="model-btn" href="{{ url('view_order',$order->id) }}">
+			        			<td><a class="model-btn" href="{{ url('view_order',$order->id) }}">
 			        				View Cards
 			        			</a></td>
 			        		</tr>
@@ -49,6 +49,9 @@
 		        	</tbody>
 
 		        </table>
+		        <div>
+		        	{{ $user_orders->links() }}
+		        </div>
 	    	</div>
 	    </div>
 

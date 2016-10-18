@@ -493,7 +493,7 @@ a:hover
     padding: 0;
     height: 55px;
     vertical-align: middle;
-    text-align: left;
+    text-align: center !important;
     font-size: 15px;
     color: #ffffff;
     padding-left: 20px;
@@ -655,6 +655,12 @@ a:hover
 .table-condensed tbody tr td
 {
     border-bottom: 3px solid #f0f0f0;
+    text-align:center;
+}
+
+.table-condensed thead tr th
+{
+    text-align:center;
 }
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
@@ -701,3 +707,4 @@ a:hover
 {
     min-height: 348px;
 }
+

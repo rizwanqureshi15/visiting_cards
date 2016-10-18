@@ -284,7 +284,7 @@ class OrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $data['user_orders'] = Order::where('user_id',$user_id)->orderBy('id','desc')->get();
+        $data['user_orders'] = Order::where('user_id',$user_id)->orderBy('id','desc')->paginate(Config::get('settings.no_of_columns'));
 
         return view('user.show_order_list',$data);
     }
@@ -441,7 +441,7 @@ class OrderController extends Controller
             { 
                 File::makeDirectory($directory);
             } 
-            file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name.'.png', $data);
+            file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name, $data);
 
         }
         else
