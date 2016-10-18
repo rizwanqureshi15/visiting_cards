@@ -668,6 +668,19 @@ a:hover
     border-color: #47bac1;
 }
 
+.pagination>li>a, .pagination>li>span 
+{
+    position: relative;
+    font-weight: bold;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #47bac1;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
 .left-quote{
     color:gray;
     font-size:20px;

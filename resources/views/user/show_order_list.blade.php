@@ -49,7 +49,7 @@
 		        	</tbody>
 
 		        </table>
-		        <div>
+		        <div class="text-center">
 		        	{{ $user_orders->links() }}
 		        </div>
 	    	</div>
