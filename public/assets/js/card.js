@@ -6,6 +6,7 @@
 		var image_name = [];
 		var feild_color;
 		var element2;
+		var order_no;
 		
 		 var element = $("#div1");
 		  // global variable
@@ -707,8 +708,38 @@ $(document).ready(function(){
                 url: site_url+'/save_single_card',
                 dataType: 'json',
                 data: {"_token": token ,"image": imgageData ,"url": template_url ,"is_back": 0},
-                success : function(image){
-          
+                success : function(data){
+          				order_no = data;
+          				if(template_both_side == 1)
+				        {
+					         $('#back_side').show();
+					         html2canvas(element2, {
+					         onrendered: function (canvas) {
+					                getCanvas = canvas;
+					                var imgageData = getCanvas.toDataURL("image/png");
+
+					                $.ajax({
+					                type: "POST",
+					                url: site_url+'/save_single_card',
+					                dataType: 'json',
+					                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1,"order_no": order_no},
+					                success : function(image)
+					                {
+					                	window.location.href = site_url+'/myorders'; 
+
+					                    } 
+					                    }).fail(function(data){
+					                        var errors = data.responseJSON;
+					                    });
+					                 }
+					             });
+					         	$('#back_side').hide();
+				     	}
+				     	else
+				     	{
+				     		window.location.href = site_url+'/myorders'; 
+				     	}
+				     		
                     } 
                     }).fail(function(data){
                         var errors = data.responseJSON;
@@ -730,7 +761,7 @@ $(document).ready(function(){
 	                type: "POST",
 	                url: site_url+'/save_single_card',
 	                dataType: 'json',
-	                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1},
+	                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1,"order_no": order_no},
 	                success : function(image){
 	                	
 	                	window.location.href = "{{ url('myorders'}}"; 

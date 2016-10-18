@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row block">
         <div class="col-md-10 col-md-offset-1">
              @if(Session::has('flash_message'))
                     <div class="alert alert-success">
@@ -72,7 +72,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="model-btn btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="model-btn" data-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-	<div class="row">
+	<div class="row block">
 		<div class="col-md-12">
 			 @if(Session::has('flash_message'))
                     <div class="alert alert-danger">

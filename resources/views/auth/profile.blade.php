@@ -16,7 +16,7 @@
             
             <div class="">
 
-                @if($user->image)
+                @if($user->image != "")
                     <div class="col-md-2 col-sm-3 col-xs-12">
                         
                         <img src="images/{{ $user->image }}">
@@ -34,7 +34,7 @@
                 @else
                      <div class="col-md-2 col-sm-3 col-xs-12">
 
-                        <img src="images/user.png" >
+                        <img src="{{ url('assets/images/user.png') }}" class="col-md-12">
 
                         <label for="image" class="form-textbox control-label profile-lable">Image : </label>
                         <input type="file"  class="form-control textbox-controll" id="inputEmail3" name="image" value="{{ old('image') }}" style="margin:0px 0px 10px 0px;">

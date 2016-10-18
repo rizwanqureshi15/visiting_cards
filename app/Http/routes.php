@@ -182,7 +182,7 @@ Route::get('privacy_policy','HomeController@show_privacy_policy');
 
 Route::get('about','HomeController@show_about');
 
-Route::post('save_single_card','OrderController@save_single_card');
+Route::post('save_single_card','OrderController@order_single_card');
 
 Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
 Route::get('admin/employees-datatable', 'AdminController@employee_datatable');

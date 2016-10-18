@@ -36,6 +36,7 @@ class UserController extends Controller
         }
 
         $user = Auth::user();
+        
         return View::make('auth.profile')->with('user', $user);
     }
 

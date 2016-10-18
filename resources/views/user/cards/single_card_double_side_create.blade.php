@@ -63,7 +63,7 @@
               $id = str_replace(" ","_",$feild->name);
               $id = strtolower($id);  
             ?>        
-          <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">  @endforeach
+          <input type="text" id="sidebar_{{ $id }}" class="sidebar-textbox form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">  @endforeach
         @endif
         </div>
       </div>
@@ -94,7 +94,7 @@
                 $id = str_replace(" ","_",$label->name);
                 $id = strtolower($id);   
               ?>        
-              <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+              <input type="text" id="sidebar_{{ $id }}" class="sidebar-textbox form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
             @endforeach
           @endif
         </div>
@@ -471,7 +471,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
+                    <button type="button" class="model-btn export" style="display:inline-block;">Upload</button>
                   </div>
                 </div>
               </div>

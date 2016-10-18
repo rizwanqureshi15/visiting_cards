@@ -334,11 +334,12 @@ class OrderController extends Controller
 
     }
 
-    public function save_single_card(Request $request)
+    public function order_single_card(Request $request)
     {
         $user = Auth::user();
         $user_id = $user->id;
         $username = $user->username;
+        $order_no = "";
 
         $url = $request->url;
 
@@ -348,7 +349,11 @@ class OrderController extends Controller
 
         $material_price = Material::where('id','1')->first();
 
-        $amount = $card_price->price * $material_price->price; 
+        $directory = public_path().'/temp/'.$username.'/front';
+        $files = scandir($directory);
+        $quantity = 1;
+
+        $amount = $card_price->price * $material_price->price * $quantity; 
 
         $count = Order::get();
         if(count($count) == 0)
@@ -389,10 +394,10 @@ class OrderController extends Controller
         }
 
         $img = $request->image; 
-            $img = str_replace('data:image/png;base64,', '', $img);
-            $img = str_replace(' ', '+', $img);
-            $data = base64_decode($img);
-            $name = str_random(40);
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $name = str_random(40).".png"; 
 
         if($template->is_both_side == 0)
         {
@@ -400,6 +405,7 @@ class OrderController extends Controller
                 'user_id' => $user_id,
                 'material_id' => '1',
                 'amount' => $amount,
+                'quantity' => $quantity,
                 'order_no' => $order_no,
                 'status' => 'new'
             ]);
@@ -408,7 +414,7 @@ class OrderController extends Controller
 
             OrderItem::create([
                 'order_id' => $order_id->id,
-                'front_snap' => $request->image
+                'front_snap' => $name
              ]);
 
             $directory = public_path().'/order/'.$username;
@@ -446,6 +452,7 @@ class OrderController extends Controller
                     'user_id' => $user_id,
                     'material_id' => '1',
                     'amount' => $amount,
+                    'quantity' => $quantity,
                     'order_no' => $order_no,
                     'status' => 'new'
                 ]);
@@ -454,7 +461,7 @@ class OrderController extends Controller
 
                 OrderItem::create([
                     'order_id' => $order_id->id,
-                    'front_snap' => $request->image
+                    'front_snap' => $name
                  ]);
 
                 $directory = public_path().'/order/'.$username;
@@ -479,16 +486,16 @@ class OrderController extends Controller
                 { 
                     File::makeDirectory($directory);
                 } 
-                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name.'.png', $data);
+                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/front/'.$name, $data);
             }
             else
-            {
-                $order_id = Order::where('order_no',$order_no)->first();
+            { 
+                $order_no = $request->order_no; 
 
-                OrderItem::create([
-                    'order_id' => $order_id->id,
-                    'back_snap' => $request->image
-                 ]);
+                $order_id = Order::where('order_no',$order_no)->first();
+               
+                OrderItem::where('order_id',$order_id->id)
+                    ->update(['back_snap' => $name]);
 
                 $directory = public_path().'/order/'.$username;
                 if(!File::exists($directory))
@@ -512,10 +519,12 @@ class OrderController extends Controller
                 { 
                     File::makeDirectory($directory);
                 } 
-                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/back/'.$name.'.png', $data);
+                file_put_contents('order/'. $username.'/'.$order_id->order_no.'/back/'.$name, $data);
             }
 
         }
+
+        return response()->json($order_no);
 
     }
 

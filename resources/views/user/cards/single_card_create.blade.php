@@ -41,7 +41,7 @@
         <div class="col-md-3 col-md-offset-2">
     @endif
            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default">
+      <div class=" panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -68,18 +68,18 @@
                         $id = str_replace(" ","_",$feild->name);
                         $id = strtolower($id);   
                     ?>        
-                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">               
+                    <input type="text" id="sidebar_{{ $id }}" class="sidebar-textbox form-control sidebar-elements sidebar-textbox" placeholder="Enter {{ $feild->name }}">               
                 @endforeach
             @endif
           </div>
         </div>
       </div>
 
-      <!-- <div class="panel panel-default">
+      <div class=" panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Labels                
+                <h3 class="sidebar-heading">Labels</h3>                
             </a>
           </h4>
         </div>
@@ -87,10 +87,10 @@
           <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-8" style="padding-right:0px">
-                <input type="text" class="form-control" id="newLabelName" placeholder="Enter New Label">
+                <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
               </div>
               <div class="col-md-4">
-                <button id="newLabelBtn" class="btn btn-primary">OK</button>
+                <button id="newLabelBtn" class="sidebar-btn">OK</button>
               </div> 
               <div id="error_label"></div>
             </div>
@@ -101,12 +101,12 @@
                         $id = str_replace(" ","_",$label->name);
                         $id = strtolower($id);   
                     ?>        
-                    <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
+                    <input type="text" id="sidebar_{{ $id }}" class="sidebar-textbox form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
                 @endforeach
             @endif
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
         </div>  
 

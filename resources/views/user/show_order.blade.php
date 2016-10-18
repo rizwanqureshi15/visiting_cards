@@ -3,16 +3,16 @@
 @section('content')
 
 </div class="container">
-	<div class="row">
+	<div class="row block">
 		<div class="col-md-12" id="scroll">
 			@foreach($user_cards as $card)
 				<div class="col-md-3">
-					<img class="col-md-12" id="multiple_order_image" src="{{ url('order/'.$username.'/'.$order_no.'/front/'.$card->front_snap) }}" >
+					<img class="col-md-12" id="order_images" src="{{ url('order/'.$username.'/'.$order_no.'/front/'.$card->front_snap) }}" >
 				</div>
 
 				@if($is_back == true)
 				<div class="col-md-3">
-					<img class="col-md-12" id="multiple_order_image" src="{{ url('order/'.$username.'/'.$order_no.'/back/'.$card->front_snap) }}" >
+					<img class="col-md-12" id="order_images" src="{{ url('order/'.$username.'/'.$order_no.'/back/'.$card->back_snap) }}" >
 				</div>				
 				@endif
 

@@ -211,7 +211,7 @@ body
 
 .panel 
 {
-    margin-bottom: 50px !important;
+    margin-bottom: 0px !important;
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -248,7 +248,7 @@ body
     border-top: 0;
 }
 
-#multiple_order_image
+#order_images
 {
     margin-top:20px;
 } 
@@ -655,4 +655,9 @@ a:hover
 .table-condensed tbody tr td
 {
     border-bottom: 3px solid #f0f0f0;
+}
+
+.block
+{
+    min-height: 348px;
 }
