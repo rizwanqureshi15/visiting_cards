@@ -66,7 +66,12 @@
                     <ul class="nav child_menu">
                       <li><a href="{{ url('admin/faqs/list') }}">list</a></li>
                     </ul>
-                  </li> 
+                  </li>
+                  <li><a><i class="fa fa-phone-square"></i> Contacts <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ url('admin/contacts') }}">List</a></li>
+                    </ul>
+                  </li>  
                   @endif
                 </ul>
               </div>

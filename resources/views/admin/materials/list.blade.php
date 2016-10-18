@@ -66,7 +66,7 @@
 @section('js')
 	<script type="text/javascript">
 		
-		$('.delete_material').click(function(){
+		$(document).on('click','.delete_material', function(){
 			var id = $(this).data('delete');
 			$('#material_delete_id').val(id);
 		});

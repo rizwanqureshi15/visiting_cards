@@ -61,7 +61,7 @@
 
 	@section('js')
 	<script type="text/javascript">
-	$('.delete_category').click(function(){
+	$(document).on('click','.delete_category', function(){
 				var delete_id = $(this).data('delete');
 				$('#category_delete_id').val(delete_id);
 

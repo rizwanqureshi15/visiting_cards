@@ -63,7 +63,7 @@ class TemplateController extends Controller
                     ->addColumn('action', function ($data) {
                            
                             $button = '<a href="'. url('admin/templates/edit', $data->id).'">Edit</a> | 
-                        <a data-toggle="modal"  style="cursor: pointer" class="delete_password" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
+                        <a data-toggle="modal"  style="cursor: pointer" class="delete_template" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
                             return $button;
                         })
                     ->addColumn('feilds', function ($data) {

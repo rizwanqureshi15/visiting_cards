@@ -126,20 +126,20 @@
 
 	<script type="text/javascript">
 		var err = "{{ $errors->first('password') }}";
-		$('.reset_password').click(function(){
+		$(document).on('click','.reset_password', function(){
 				//$('#employee_id').val($('.reset_password').data('id'));
 				var id = $(this).data('id');
 				$('#employee_id').val(id);
 
 			});
 
-		$('.delete_password').click(function(){
+		$(document).on('click','.delete_password', function(){
 				var delete_id = $(this).data('delete');
 				$('#employee_delete_id').val(delete_id);
 
 			});
 
-		$('#random_password').click(function(){
+		$(document).on('click','#random_password', function(){
 			var str = Math.floor((Math.random() * 100000000) + 1);
 			$('#new_password').val(str);
 		});

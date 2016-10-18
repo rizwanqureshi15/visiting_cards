@@ -197,3 +197,7 @@ Route::post('admin/faqs/create', 'FAQController@create_post');
 Route::get('admin/faq/edit/{id}', 'FAQController@edit');	
 Route::post('admin/faq/edit/{id}', 'FAQController@edit_post');
 Route::post('admin/faq/delete', 'FAQController@delete');
+
+Route::resource('admin/contacts', 'ContactController' , ['only' => ['show','index']]);
+Route::get('admin/contact-datatable', 'ContactController@contact_datatable');
+Route::post('admin/contacts/delete', 'ContactController@destroy');
