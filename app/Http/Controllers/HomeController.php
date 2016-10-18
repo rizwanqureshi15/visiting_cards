@@ -11,6 +11,7 @@ use App\UserCard;
 use Auth;
 use App\UserTemplate;
 use Config;
+use App\Faq;
 
 class HomeController extends Controller
 {
@@ -43,6 +44,12 @@ class HomeController extends Controller
         return view('terms_condition');
     }
 
+    public function show_faqs()
+    {
+        $data['faqs'] = Faq::where('is_delete',0)->paginate(Config::get('settings.number_of_rows'));
+        
+        return view('faqs', $data);
+    }
 
     public function show_privacy_policy()
     {

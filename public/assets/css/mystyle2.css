@@ -657,6 +657,46 @@ a:hover
     border-bottom: 3px solid #f0f0f0;
 }
 
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #47bac1;
+    border-color: #47bac1;
+}
+
+.left-quote{
+    color:gray;
+    font-size:20px;
+    padding-right:10px;
+}
+
+.right-quote{
+    color:gray;
+    font-size:20px;
+    padding-left:10px;
+}
+
+.subscript{
+    bottom:-1.25em;
+}
+
+.answer-space{
+    padding-left:20px;
+    padding-right:20px;
+}
+
+
+.faq-heading
+{
+    background-color: #47bac1;
+    border-radius: 0;
+    padding: 0 15px;
+    line-height: 45px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white !important; 
+    height: 50px;
+    text-align: left !important;
+}
 .block
 {
     min-height: 348px;

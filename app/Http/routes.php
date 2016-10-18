@@ -178,6 +178,8 @@ Route::get('order-history-datatable', 'EmployeeController@order_history_datatabl
 
 Route::get('terms_condition','HomeController@show_terms_condition');
 
+Route::get('faqs','HomeController@show_faqs');
+
 Route::get('privacy_policy','HomeController@show_privacy_policy');
 
 Route::get('about','HomeController@show_about');
