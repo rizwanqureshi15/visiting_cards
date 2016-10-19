@@ -3,7 +3,22 @@
 @extends('master')
 
 @section('content')
-
+<div class="page-title">
+  <div class="title_left">
+    <h3>Templates</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <ol class="breadcrumb">
+          <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
+          <li>Templates</li>
+          <li class="active">Create</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -17,7 +32,7 @@
       <div class="x_panel">
           
           <div class="x_title">
-              <h2>Add New Template</h2>
+              <h2>Create</h2>
               <div class="clearfix"></div>
           </div>
           

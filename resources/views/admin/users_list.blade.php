@@ -1,6 +1,19 @@
 @extends('master')
 @section('content')
-
+<div class="page-title">
+  <div class="title_left">
+    <h3>Users</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+        <ol class="breadcrumb">
+          <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
+          <li>Users</li>
+          <li class="active">List</li>
+        </ol>
+    </div>
+  </div>
+</div>
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">

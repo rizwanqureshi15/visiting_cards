@@ -1,5 +1,22 @@
 @extends('master')
 @section('content')
+<div class="page-title">
+  <div class="title_left">
+    <h3>Contacts</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <ol class="breadcrumb">
+          <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
+          <li>Contacts</li>
+          <li class="active">List</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">	
@@ -10,7 +27,7 @@
 			@endif
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>Contacts</h2>
+					<h2>List</h2>
 					<ul class="nav navbar-right panel_toolbox">
 	                </ul>
 	                <div class="clearfix"></div>

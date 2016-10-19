@@ -13,7 +13,7 @@ class Material extends model
      * @var array
      */
      protected $fillable = [
-        'id', 'name', 'price', 'description', 'is_delete'
+        'id', 'name', 'price', 'description', 'is_delete' ,'image'
     ];
    
 }

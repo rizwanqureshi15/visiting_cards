@@ -322,3 +322,11 @@ position: absolute;
 .alert-danger {
     color:white;
 }
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: ">\00a0";
+}
+.page-title .title_right {
+    height: 60px;
+}
