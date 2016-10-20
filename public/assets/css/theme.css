@@ -106,7 +106,7 @@ body
 
  .footer-span
  {
-    color: #acacac;
+    color: #656565;
     text-transform: uppercase;
     margin-bottom: 13px;
     font-size: 14px;
@@ -735,7 +735,7 @@ a:hover
     min-height: 348px;
 }
 
-<<<<<<< HEAD
+
 .darkSection
 {
     background-image: url(../images/store-bg.jpg);
@@ -883,4 +883,41 @@ a:hover
     padding: 0 5px;
     color: #ccc;
     content: ">\00a0";
+}
+
+.download-btn
+{
+    border-radius: 3px !important;
+    background-color: #47bac1;
+    border: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10;
+    /* line-height: 50px; */
+    color: #fff;
+    margin-top: 20px;
+    padding: 11px;
+}
+
+.download-instruction-box
+{
+    margin-top:15px;
+}
+
+.download-instruction-box span
+{
+    content: "";
+    width: 8px;
+    height: 8px;
+    position: relative;
+    left: -10px;
+    top: -1px;
+    background: #47bac1;
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    display: inline-block;
 }

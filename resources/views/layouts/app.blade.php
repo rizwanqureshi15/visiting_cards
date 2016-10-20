@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
 
-    <link rel="stylesheet" href="{{ url('assets/css/mystyle2.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/theme.css') }}">
 
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
