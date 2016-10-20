@@ -12,6 +12,10 @@ use Auth;
 use App\UserTemplate;
 use Config;
 use App\Faq;
+use App\Contact;
+use Validator;
+use Session;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -59,6 +63,53 @@ class HomeController extends Controller
     public function show_about()
     {
         return view('about');
+    }
+
+
+    public function show_contact_page()
+    {
+        return view('contact');
+    }
+
+
+    public function submit_contact(Request $request)
+    {
+        $v=$validator= Validator::make(
+        [
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'content' => $request->content
+        ],
+        [
+            'email' => 'email|required',
+            'name' => 'required',
+            'subject' => 'required',
+            'content' => 'required'
+        ]
+        );
+
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors());
+        }
+
+        $data['contact'] = Contact::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'content' => $request->content
+        ]); 
+
+        $contact = $data['contact'];
+        
+        Mail::send('contact_email', $data , function ($m) use ($contact) 
+        {
+            $m->to(Config::get('settings.admin_email'),'Admin')->subject($contact->subject);
+        });
+
+       Session::flash('flash_message','Your email successfuly sent');
+       return redirect('contact');
     }
 
 }

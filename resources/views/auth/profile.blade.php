@@ -20,7 +20,7 @@
                     <div class="col-md-2 col-sm-3 col-xs-12">
                         
                         <img src="images/{{ $user->image }}">
-                         <label for="image" class="form-textbox control-label profile-lable">Image : </label>
+                         <label for="image" class="form-textbox control-label form-lable">Image : </label>
 
                                 <input type="file"  class="form-control textbox-controll" id="inputEmail3" name="image" value="{{ old('image') }}" style="margin:0px 0px 10px 0px;">
 
@@ -36,7 +36,7 @@
 
                         <img src="{{ url('assets/images/user.png') }}" class="col-md-12">
 
-                        <label for="image" class="form-textbox control-label profile-lable">Image : </label>
+                        <label for="image" class="form-textbox control-label form-lable">Image : </label>
                         <input type="file"  class="form-control textbox-controll" id="inputEmail3" name="image" value="{{ old('image') }}" style="margin:0px 0px 10px 0px;">
 
                         @if ($errors->has('image'))
@@ -53,7 +53,7 @@
 
                         <div class="form-group{{ $errors->has('first_name') ? ' ' : '' }}">
                             <div class="col-md-2 col-sm-3">
-                                <label for="first_name" class="form-textbox control-label profile-lable">First Name</label>
+                                <label for="first_name" class="form-textbox control-label form-lable">First Name</label>
                             </div>
 
                             <div class="col-md-10 col-sm-9">
@@ -70,7 +70,7 @@
                         <div class="form-group{{ $errors->has('last_name') ? ' ' : '' }}">
                             
                             <div class="col-md-2 col-sm-3">
-                                <label for="last_name" class="form-textbox control-label">Last Name</label>
+                                <label for="last_name" class="form-textbox form-lable">Last Name</label>
                             </div>
 
                             <div class="col-md-10 col-sm-9">

@@ -2,8 +2,8 @@
 
 @section('content')
 
-</div class="container">
-	<div class="row block">
+<div class="container">
+	<div class="row">
 		<div class="col-md-12" id="scroll">
 			@foreach($user_cards as $card)
 				<div class="col-md-3">

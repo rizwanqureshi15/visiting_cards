@@ -265,6 +265,19 @@ body
     padding-top: 0;
 }
 
+.textarea-controll
+{
+    border-radius: 0;
+    background-color: #f0f0f0;
+    border: none;
+    height: 80px !important;
+    margin: 5px 20px 20px 20px;
+    width: 93%;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+
 .btn-blog
 {
     border-radius: 3px !important;
@@ -522,9 +535,10 @@ a:hover
     color:#47bac1;
 }
 
-.profile-lable
+.form-lable
 {
     line-height: 50px;
+    float: right;
 }
 
 .file-textbox
@@ -716,8 +730,149 @@ a:hover
     height: 50px;
     text-align: left !important;
 }
-.block
+.main-content
 {
     min-height: 348px;
 }
 
+.darkSection
+{
+    background-image: url(../images/store-bg.jpg);
+    background-attachment: fixed;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #ffffff;
+    padding-bottom: 100px;
+}
+
+.darkSection h3 
+{
+    color: #ffffff;
+    text-transform: capitalize;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+.darkSection .thumbnail {
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+    border-color: rgba(0,0,0,0.4);
+}
+
+.thumbnail 
+{
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+.thumbnail 
+{
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.darkSection .thumbnail h5 
+{
+    color: #ffffff;
+    text-transform: capitalize;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.darkSection .thumbnail address 
+{
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 22px;
+    font-style: normal;
+    line-height: 1.42857143;
+}
+
+.darkSection .contact-thumbnail 
+{
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    
+    margin-bottom: 30px;
+    border-color: rgba(0,0,0,0.4);
+}
+
+.contact-thumbnail 
+{
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+.contact-thumbnail 
+{
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 430px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.darkSection .btn-default 
+{
+    width: 141px;
+    height: 45px;
+    background-color: transparent;
+    border: 2px solid rgba(172,224,227,0.5);
+    border: 2px solid rgba(71,186,193,0.5);
+    border-radius: 0;
+    color: #ffffff;
+    padding: 0;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 700;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    float:right;
+    margin-right: 20px;
+}
+
+.darkSection .btn-default:hover
+{
+    color:#FFF;
+    background-color: #47bac1;
+}
+
+
+.contact-textbox-controll 
+{
+    border-radius: 0;
+    background-color: #f0f0f0;
+    border: none;
+    height: 50px;
+    margin: 5px 20px 10px 20px;
+    width: 93%;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+.error-message
+{
+    padding-left: 20px;
+    color:red;
+}
