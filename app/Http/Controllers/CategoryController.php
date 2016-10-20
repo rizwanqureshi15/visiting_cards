@@ -16,6 +16,7 @@ use Config;
 use App\Template;
 use App\Category;
 use Datatables;
+use Illuminate\Support\Facades\Input;
 
 class CategoryController extends Controller
 {
@@ -61,7 +62,7 @@ class CategoryController extends Controller
                     ->addColumn('action', function ($data) {
                            
                                 
-                            $button = '<a data-toggle="modal"  style="cursor: pointer" class="delete_category" data-target="#onDelete" data-delete="'.$data->id.'" >Delete</a>';
+                            $button = '<a href="'. url('admin/categories/edit/'.$data->id) .'">Edit</a> | <a data-toggle="modal"  style="cursor: pointer" class="delete_category" data-target="#onDelete" data-delete="'.$data->id.'" >Delete</a>';
                             return $button;
                         })
                     ->make(true);
@@ -85,7 +86,8 @@ class CategoryController extends Controller
         if(CategoryController::authenticate_admin())
             {
                    $validator = Validator::make($request->all(), [
-                        'name' => 'required'
+                        'name' => 'required',
+                        'image' => 'required'
                         
                     ]);
                     
@@ -96,8 +98,16 @@ class CategoryController extends Controller
                                     ->withInput();
                     }
                     else
-                    {     
-                        Category::create(['name' => $request->name, 'is_delete' => 0]);
+                    {   
+
+                        $file = Input::file('image');             
+                        $destinationPath = public_path() .'/categories';
+                        $extension = $file->getClientOriginalExtension();
+                        $fileName = str_random(40) . '.' . $extension;
+                        $upload_success = $file->move($destinationPath, $fileName); 
+                        $image = $fileName;  
+                        
+                        Category::create(['name' => $request->name,'image' => $image, 'is_delete' => 0]);
                         Session::flash('succ_msg', 'New Category is created Successfully..!');
                         return redirect('admin/categories/list');
                     } 
@@ -139,7 +149,22 @@ class CategoryController extends Controller
                     }
                     else
                     {     
-                        Category::where('id', $id)->update(['name' => $request->name, 'is_delete' => 0]);
+                        $data = [
+                        'name' => $request->name, 
+                        'is_delete' => 0
+                        ];
+                        if($request->image)
+                        {
+                            $category = Category::where('id', $id)->first();
+                            @unlink(public_path("categories\\".$category->image));
+                            $file = Input::file('image');                
+                            $destinationPath = public_path() .'/categories';
+                            $extension = $file->getClientOriginalExtension();
+                            $fileName = str_random(40) . '.' . $extension;
+                            $upload_success = $file->move($destinationPath, $fileName); 
+                            $data['image'] = $fileName;
+                        }
+                        Category::where('id', $id)->update($data);
                         Session::flash('succ_msg', 'Category is Edited Successfully..!');
                         return redirect('admin/categories/list');
                     } 

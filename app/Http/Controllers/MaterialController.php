@@ -15,6 +15,7 @@ use App\Material;
 use Validator;
 use Session;
 use Datatables;
+use Illuminate\Support\Facades\Input;
 
 class MaterialController extends Controller
 {
@@ -55,7 +56,8 @@ class MaterialController extends Controller
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'price' => 'required',
-                        'description' => 'required'
+                        'description' => 'required',
+                        'image' => 'required'
                     ]);
                               
             if($validator->fails()){
@@ -64,9 +66,18 @@ class MaterialController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             
-            }else{
+            }
+            else
+            {
+                $file = Input::file('image');               
+                $destinationPath = public_path() .'/materials';
+                $extension = $file->getClientOriginalExtension();
+                $fileName = str_random(40) . '.' . $extension;
+                $upload_success = $file->move($destinationPath, $fileName); 
+                $image = $fileName;
 
-                Material::create(['name' => $request->name, 'price' => $request->price, 'description' => $request->description, 'is_delete' => 0]);
+                Material::create(['name' => $request->name, 'price' => $request->price, 'description' => $request->description, 'is_delete' => 0, 'image' => $image]);
+
                 Session::flash('succ_msg', 'New type of Material is added Successfully..!');
                 return redirect('admin/materials/list');
             
@@ -109,8 +120,26 @@ class MaterialController extends Controller
                     ->withInput();
             
             }else{
+                $data = [
+                    'name' => $request->name, 
+                    'price' => $request->price, 
+                    'description' => $request->description, 
+                    'is_delete' => 0
+                    ];
 
-                Material::where('id', $id)->update(['name' => $request->name, 'price' => $request->price, 'description' => $request->description, 'is_delete' => 0]);
+                if($request->image)
+                {
+                    $material = Material::where('id', $id)->first();
+                    @unlink(public_path("materials\\".$material->image));
+                    $file = Input::file('image');               
+                    $destinationPath = public_path() .'/materials';
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = str_random(40) . '.' . $extension;
+                    $upload_success = $file->move($destinationPath, $fileName); 
+                    $data['image'] = $fileName;
+                }
+
+                Material::where('id', $id)->update($data);
                 Session::flash('succ_msg', 'Material is Edited Successfully..!');
                 return redirect('admin/materials/list');
             
@@ -160,7 +189,7 @@ class MaterialController extends Controller
          return Datatables::of($materials)
                     ->addColumn('action', function ($data) {
                            
-                            $button = '<a data-toggle="modal"  style="cursor: pointer" class="delete_material" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
+                            $button = '<a href="'. url('admin/materials/edit/'.$data->id) .'">Edit</a> | <a data-toggle="modal"  style="cursor: pointer" class="delete_material" data-target="#onDelete" data-delete="'. $data->id .'" >Delete</a> ';
                             return $button;
                         })
                     ->make(true);

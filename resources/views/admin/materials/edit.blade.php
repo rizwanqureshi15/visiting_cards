@@ -1,6 +1,22 @@
 @extends('master')
 
 @section('content')
+<div class="page-title">
+  <div class="title_left">
+    <h3>Materials</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <ol class="breadcrumb">
+          <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
+          <li>Materials</li>
+          <li class="active">Edit</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="col-md-12 col-sm-12 col-xs-12">
   @if(Session::get('err_msg'))
     <div class="alert alert-danger" role="alert">
@@ -9,7 +25,7 @@
   @endif
   <div class="x_panel">
     <div class="x_title">
-      <h2>Add New Material</h2>
+      <h2>Edit</h2>
       <ul class="nav navbar-right panel_toolbox">
       </ul>
       <div class="clearfix"></div>
@@ -48,6 +64,24 @@
             @if($errors->first('description'))
               <div class="alert alert-danger">
                 {{ $errors->first('description') }}
+              </div>
+            @endif
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Image</label>
+          <div class="col-sm-9">
+            <img src="{{ url('materials/'.$materials->image) }}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-9 col-md-offset-3">
+            {{ Form::file('image') }}
+            @if($errors->first('image'))
+              <div class="alert alert-danger">
+                {{ $errors->first('image') }}
               </div>
             @endif
           </div>

@@ -735,6 +735,7 @@ a:hover
     min-height: 348px;
 }
 
+<<<<<<< HEAD
 .darkSection
 {
     background-image: url(../images/store-bg.jpg);
@@ -875,4 +876,11 @@ a:hover
 {
     padding-left: 20px;
     color:red;
+}
+
+.breadcrumb>li+li:before 
+{
+    padding: 0 5px;
+    color: #ccc;
+    content: ">\00a0";
 }
