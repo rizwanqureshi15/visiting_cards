@@ -6,7 +6,7 @@
  #navbar
  {
  	background-color: #ffffff;
- 	padding:15px;
+ 	padding: 15px 15px 0px 15px;
  }
 
  .navbar-brand
@@ -920,4 +920,42 @@ a:hover
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     display: inline-block;
+}
+
+.pull-right a
+{
+    color:#fff;
+}
+.slider-image
+{
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+}
+
+.carousel-control.left 
+{
+    background-color: none !important;
+    background-image: none !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+}
+
+.carousel-control.right 
+{
+    background-color: none !important;
+    background-image: none !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+}
+
+.title1 span 
+{
+    width: 100%;
+    text-align: left;
+    color: #000;
+    font-weight: 400;
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 0 0 10px 0;
+    border-bottom: 3px solid #f0f0f0;
+    margin: 20px 0 20px;
 }

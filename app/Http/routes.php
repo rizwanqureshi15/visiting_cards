@@ -18,8 +18,6 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-
 Route::get('employees/login', 'EmployeeController@login');
 Route::post('employees/login', 'EmployeeController@login_post');
 

@@ -24,12 +24,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-   
-    public function index()
-    {
-        return view('home');
-    }
-
 
     public function ajax_user_images(Request $request)
     {

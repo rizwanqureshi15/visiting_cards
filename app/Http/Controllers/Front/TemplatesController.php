@@ -85,7 +85,7 @@ class TemplatesController extends Controller
         {
             $templates->whereIn('category_id', $request->category);
         }
-
+        
         $data = $templates->get();
         return response()->json($data);
 

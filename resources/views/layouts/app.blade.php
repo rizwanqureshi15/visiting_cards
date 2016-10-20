@@ -58,7 +58,9 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="list-inline pull-right col-md-offset-7" id="top-left">
-                        <a href="{{ url('login') }}"><span>Login</span></a><span id="small_span"> or </span><a href="{{ url('register') }}"><span>Create Account</span></a>
+                        @if (Auth::guest())
+                            <a href="{{ url('login') }}"><span>Login</span></a><span id="small_span"> or </span><a href="{{ url('register') }}"><span>Create Account</span></a>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -92,15 +94,15 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                     <li><a href="{{ url('/about') }}">About</a></li>
                     <li><a href="{{ url('/cards') }}">Cards</a></li>
                     <li><a href="{{ url('/terms_condition') }}">Terms & Condition</a></li>
                     <li><a href="{{ url('/privacy_policy') }}">Privacy Policy</a></li>
                     <li><a href="{{ url('/contact') }}">Contact Us</a></li>
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <!-- <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li> -->
                     @else
                         <li><a href="{{ url('mytemplates') }}">My Templates</a></li>
                         <li><a href="{{ url('myorders') }}">My Orders</a></li>
