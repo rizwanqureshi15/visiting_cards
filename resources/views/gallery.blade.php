@@ -128,7 +128,7 @@ $("input[type='checkbox']").on("click",function(){
 
                     if(val.type == "horizontal")
                                 {
-                                    html+="<div class='col-md-4'><a href="+site_url+"/idcard/"+val.url +">";
+                                    html+="<div class='col-md-4'><a href="+site_url+"/mytemplates/"+val.url +"/create>";
                                     html+="<img src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;width:100%;height:175.16px;'>";
                                     html+="</a>";
                                     html+="<span class='cards-data'>"+val.name+"</span><br>";
@@ -137,7 +137,7 @@ $("input[type='checkbox']").on("click",function(){
                                 }
                                 else
                                 { 
-                                    html+="<div class='col-md-4'><a href="+site_url+"/idcard/"+val.url +">";
+                                    html+="<div class='col-md-4'><a href="+site_url+"/mytemplates/"+val.url +"/create>";
                                     html+="<img src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;margin-left:60px;width:50%;height:175.16px'>";
                                     html+="</a>";
                                     html+="<span class='cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12'>"+val.name+"</span><br>";
