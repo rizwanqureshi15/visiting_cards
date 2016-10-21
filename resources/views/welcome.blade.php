@@ -62,10 +62,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="title1">
-                <span>Cards</span>
-            </div>
+                <div class="col-xs-12">
+                  <h4 class="title">Cards</h4>
+                </div>
+
+                <div class="col-xs-12">
+                  @foreach ($categories as $category) 
+                    <div class="col-sm-4 col-xs-12">
+                      <a href="{{ url('cards',$category->name) }}">
+                          <img class="category-image" src="{{ url('categories/'.$category->image) }}"> 
+                      </a>
+
+                      <p class="category-data">{{ $category->name }}</p>
+                   
+                    </div>
+                  @endforeach
+                </div>
         </div>
     </div>
 </div>

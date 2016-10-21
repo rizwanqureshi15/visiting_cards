@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 
 Route::auth();
@@ -58,7 +56,7 @@ Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
 
-Route::get('cards','Front\TemplatesController@index');
+Route::get('cards/{category_name?}','Front\TemplatesController@index');
 Route::post('templates','Front\TemplatesController@ajax_templates');
 
 Route::post('user-images','HomeController@ajax_user_images');

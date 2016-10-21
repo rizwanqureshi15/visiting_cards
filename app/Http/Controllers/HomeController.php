@@ -16,6 +16,7 @@ use App\Contact;
 use Validator;
 use Session;
 use Mail;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,14 @@ class HomeController extends Controller
      *
      * @return void
      */
+
+    public function index()
+    {
+        $categories = Category::where('is_delete',0)->paginate(Config::get('settings.number_of_categories'));
+        $data['categories'] = $categories;
+        return view('welcome',$data);
+    }
+
 
     public function ajax_user_images(Request $request)
     {

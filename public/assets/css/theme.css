@@ -947,7 +947,7 @@ a:hover
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
 }
 
-.title1 span 
+.innerWrapper span 
 {
     width: 100%;
     text-align: left;
@@ -956,6 +956,70 @@ a:hover
     font-size: 24px;
     text-transform: uppercase;
     padding: 0 0 10px 0;
-    border-bottom: 3px solid #f0f0f0;
     margin: 20px 0 20px;
+}
+
+.category-data
+{
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #252525;
+    font-weight: 700;
+    padding-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.category-data:hover
+{
+    text-decoration: none!important;
+    color:#47bac1;
+}
+
+.demo-cards-data h3
+{
+    color: #c5c5c5;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.verticle-card-price
+{
+    margin-top: 20px;
+}
+
+.vertical-price
+{
+    margin-top: 10px;
+}
+
+.title
+{
+    font-size: 30px;
+    margin-top: 30px;
+    border-bottom: 5px solid #e4e4e4;
+    padding-bottom: 10px;
+}
+
+.blog-box
+{
+    width: 100%;
+    display: block;
+    border: 3px solid #f0f0f0;
+    padding: 30px;
+}
+
+.category-image
+{
+    height: 230px;
+    margin-top:20px;
+    width:100%;
+    margin-left: 20px;
+    border: 1px solid #ebebeb;
+    padding: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
