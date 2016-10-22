@@ -203,3 +203,7 @@ Route::post('admin/faq/delete', 'FAQController@delete');
 Route::resource('admin/contacts', 'ContactController' , ['only' => ['show','index']]);
 Route::get('admin/contact-datatable', 'ContactController@contact_datatable');
 Route::post('admin/contacts/delete', 'ContactController@destroy');
+
+Route::get('payment','Front\PaymentsController@index');
+Route::post('payment','Front\PaymentsController@payment');
+Route::get('test','Front\PaymentsController@test');
