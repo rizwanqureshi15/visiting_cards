@@ -6,7 +6,7 @@
  #navbar
  {
  	background-color: #ffffff;
- 	padding:15px;
+ 	padding: 15px 15px 0px 15px;
  }
 
  .navbar-brand
@@ -106,7 +106,7 @@ body
 
  .footer-span
  {
-    color: #acacac;
+    color: #656565;
     text-transform: uppercase;
     margin-bottom: 13px;
     font-size: 14px;
@@ -264,6 +264,19 @@ body
     box-shadow: none;
     padding-top: 0;
 }
+
+.textarea-controll
+{
+    border-radius: 0;
+    background-color: #f0f0f0;
+    border: none;
+    height: 80px !important;
+    margin: 5px 20px 20px 20px;
+    width: 93%;
+    box-shadow: none;
+    padding-top: 0;
+}
+
 
 .btn-blog
 {
@@ -522,9 +535,10 @@ a:hover
     color:#47bac1;
 }
 
-.profile-lable
+.form-lable
 {
     line-height: 50px;
+    float: right;
 }
 
 .file-textbox
@@ -716,12 +730,296 @@ a:hover
     height: 50px;
     text-align: left !important;
 }
-.block
+.main-content
 {
     min-height: 348px;
 }
 
-.breadcrumb>li+li:before {
+
+.darkSection
+{
+    background-image: url(../images/store-bg.jpg);
+    background-attachment: fixed;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #ffffff;
+    padding-bottom: 100px;
+}
+
+.darkSection h3 
+{
+    color: #ffffff;
+    text-transform: capitalize;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+.darkSection .thumbnail {
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+    border-color: rgba(0,0,0,0.4);
+}
+
+.thumbnail 
+{
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+.thumbnail 
+{
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.darkSection .thumbnail h5 
+{
+    color: #ffffff;
+    text-transform: capitalize;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.darkSection .thumbnail address 
+{
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 22px;
+    font-style: normal;
+    line-height: 1.42857143;
+}
+
+.darkSection .contact-thumbnail 
+{
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    
+    margin-bottom: 30px;
+    border-color: rgba(0,0,0,0.4);
+}
+
+.contact-thumbnail 
+{
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+.contact-thumbnail 
+{
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 430px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.darkSection .btn-default 
+{
+    width: 141px;
+    height: 45px;
+    background-color: transparent;
+    border: 2px solid rgba(172,224,227,0.5);
+    border: 2px solid rgba(71,186,193,0.5);
+    border-radius: 0;
+    color: #ffffff;
+    padding: 0;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 700;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    float:right;
+    margin-right: 20px;
+}
+
+.darkSection .btn-default:hover
+{
+    color:#FFF;
+    background-color: #47bac1;
+}
+
+
+.contact-textbox-controll 
+{
+    border-radius: 0;
+    background-color: #f0f0f0;
+    border: none;
+    height: 50px;
+    margin: 5px 20px 10px 20px;
+    width: 93%;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+.error-message
+{
+    padding-left: 20px;
+    color:red;
+}
+
+.breadcrumb>li+li:before 
+{
     padding: 0 5px;
     color: #ccc;
     content: ">\00a0";
+}
+
+.download-btn
+{
+    border-radius: 3px !important;
+    background-color: #47bac1;
+    border: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10;
+    /* line-height: 50px; */
+    color: #fff;
+    margin-top: 20px;
+    padding: 11px;
+}
+
+.download-instruction-box
+{
+    margin-top:15px;
+}
+
+.download-instruction-box span
+{
+    content: "";
+    width: 8px;
+    height: 8px;
+    position: relative;
+    left: -10px;
+    top: -1px;
+    background: #47bac1;
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    display: inline-block;
+}
+
+.pull-right a
+{
+    color:#fff;
+}
+.slider-image
+{
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+}
+
+.carousel-control.left 
+{
+    background-color: none !important;
+    background-image: none !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+}
+
+.carousel-control.right 
+{
+    background-color: none !important;
+    background-image: none !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+}
+
+.innerWrapper span 
+{
+    width: 100%;
+    text-align: left;
+    color: #000;
+    font-weight: 400;
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 0 0 10px 0;
+    margin: 20px 0 20px;
+}
+
+.category-data
+{
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #252525;
+    font-weight: 700;
+    padding-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.category-data:hover
+{
+    text-decoration: none!important;
+    color:#47bac1;
+}
+
+.demo-cards-data h3
+{
+    color: #c5c5c5;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.verticle-card-price
+{
+    margin-top: 20px;
+}
+
+.vertical-price
+{
+    margin-top: 10px;
+}
+
+.title
+{
+    font-size: 30px;
+    margin-top: 30px;
+    border-bottom: 5px solid #e4e4e4;
+    padding-bottom: 10px;
+}
+
+.blog-box
+{
+    width: 100%;
+    display: block;
+    border: 3px solid #f0f0f0;
+    padding: 30px;
+}
+
+.category-image
+{
+    height: 230px;
+    margin-top:20px;
+    width:100%;
+    margin-left: 20px;
+    border: 1px solid #ebebeb;
+    padding: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}

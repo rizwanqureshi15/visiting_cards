@@ -16,12 +16,10 @@
             <div class="panel panel-default">
                 <div class="col-md-12" id="posts">
                 @if($user_cards == false)
-
                     <h4>No Templates Found</h4>
                 @else
                
                     @foreach($user_cards as $user_card)
-                        
                          <div class="col-md-4">
                           <!--   <a href="{{ url('create-card/'.$user_card->url) }}"> 
                                 <img class="image" src="{{ url('images/'.$username.'/'.$user_card->snap) }}">

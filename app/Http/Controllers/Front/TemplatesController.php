@@ -61,11 +61,22 @@ class TemplatesController extends Controller
     }
     
 
-    public function index()
+    public function index($category_name = null)
     {
-        $data['templates'] = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
-        $data['categories'] = Category::where('is_delete',0)->get();
+        $template = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items')); 
+        $data['category_id'] = null;
         
+        if($category_name)
+        {
+            $category = Category::where('is_delete',0)->where('name',$category_name)->first();
+            $template->where('category_id',$category->id)->orderBy('created_at','asec'); 
+            
+            $data['category_id'] = $category->id;
+        }
+
+        $data['templates'] = $template->get();
+        $data['categories'] = Category::where('is_delete',0)->get();
+
         return view('gallery',$data);
     }
 
@@ -85,7 +96,7 @@ class TemplatesController extends Controller
         {
             $templates->whereIn('category_id', $request->category);
         }
-
+        
         $data = $templates->get();
         return response()->json($data);
 
@@ -202,7 +213,7 @@ class TemplatesController extends Controller
 
         if($request->category)
         {
-            $filtered_templates->whereIn('category_id', $request->category);
+            $filtered_templates->whereIn('category_id', $request->category)->where('is_delete',0);
         }
 
         $data = $filtered_templates->where('is_delete',0)->get();

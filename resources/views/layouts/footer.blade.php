@@ -5,8 +5,10 @@
 				<div class="col-md-3">
 					<span class="footer-span">GET IN TOUCH</span>
 					<ul class="list-unstyled">
-						<li>Call us at (555)-555-5555</li>
-						<li>support@iamabdus.com</li>
+						<li>Tariq Complex,</li>
+						<li>Ashapura ring-road,</li>
+						<li>Bhuj-Kutch.</li>
+						<li>www.webdesignandsolution.com</li>
 					</ul>
 				</div>
 				<div class="col-md-9">

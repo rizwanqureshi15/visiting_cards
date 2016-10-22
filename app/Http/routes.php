@@ -11,14 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 
 Route::auth();
-
-Route::get('/home', 'HomeController@index');
 
 Route::get('employees/login', 'EmployeeController@login');
 Route::post('employees/login', 'EmployeeController@login_post');
@@ -60,7 +56,7 @@ Route::post('admin/check_employeename','AdminController@check_employeename');
 
 Route::post('card_image_save','UserController@save_image');
 
-Route::get('cards','Front\TemplatesController@index');
+Route::get('cards/{category_name?}','Front\TemplatesController@index');
 Route::post('templates','Front\TemplatesController@ajax_templates');
 
 Route::post('user-images','HomeController@ajax_user_images');
@@ -207,3 +203,7 @@ Route::post('admin/contacts/delete', 'ContactController@destroy');
 Route::get('payment','Front\PaymentsController@index');
 Route::post('payment','Front\PaymentsController@payment');
 Route::get('test','Front\PaymentsController@test');
+
+Route::get('contact','HomeController@show_contact_page');
+Route::post('submit_contact','HomeController@submit_contact');
+

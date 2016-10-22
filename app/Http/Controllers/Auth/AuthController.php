@@ -102,7 +102,7 @@ class AuthController extends Controller
        if (Auth::attempt(['email' => $email, 'password' => $password, 'is_delete' => 0]) OR Auth::attempt(['username' => $email, 'password' => $password, 'is_delete' => 0]))
         {   
             Session::flash('flash_message','Successfully Login');
-            return redirect('/home');
+            return redirect('/mytemplates');
         }
         else
         {

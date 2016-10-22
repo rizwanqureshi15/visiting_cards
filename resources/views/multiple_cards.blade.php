@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-	<div class="row block">
+	<div class="row">
 		<div class="col-md-12">
 			 @if(Session::has('flash_message'))
                     <div class="alert alert-danger">
@@ -18,13 +18,19 @@
                     </div>
              @endif
 		</div>
-		<div class="row">
-			<a class="sidebar-btn" href="{{ url('download_file',$template_url) }}" style="float:left">
-				Download Excel File
+		<div class="col-md-3 download-instruction-box">
+			<span></span><font>Please download formated excel file first.</font><br><br>
+			<span></span><font>Please put proper content downloaded excel file.</font><br><br>
+			<span></span><font>Than upload exel file.</font><br>
+			<a class="text-center" href="{{ url('download_file',$template_url) }}">
+				<button class="download-btn col-md-12">
+					Download Excel File
+				</button>
 			</a>
 		</div>
 
-	   @foreach($image_feilds_name as $feild_name)
+		<div class="col-md-9">
+	    @foreach($image_feilds_name as $feild_name)
 		    <?php
 		    	$name = $feild_name->name; 
                 $name = str_replace(" ","_",$feild_name->name);
@@ -35,8 +41,10 @@
 
 				<input type="hidden" value="{{ $name }}" name="{{ $name }}">
 			    <div class="form-group">
-			    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload {{ $feild_name->name }}</label>
-				    <div class="col-sm-5">
+			    	<div class="col-sm-3">
+			    		<label for="inputEmail3" class="control-label" >Upload {{ $feild_name->name }}</label>
+				    </div>
+				    <div class="col-sm-9">
 					    <div class="col-md-9">
 					      <input type="file" class="form-control file-textbox" id="{{ $name }}" name="{{ $name }}[]" multiple="multiple" style="margin-top:10px;">
 					      <div id="error_{{ $name }}" style="color:red"></div>
@@ -44,10 +52,10 @@
 		                    <span class="help-block" style="color:red;">
 		                        <strong> {{ session($feild_name->name.'_error_message') }}</strong>
 		                    </span>
-		                  @endif
+		                  @endif	
 		            	</div>
 		            	<div class="col-md-2">
-		                  <input type="submit" class="sidebar-btn" data-id="{{ $name }}" name="submit" Value="Upload" style="margin-top:10px;">
+		                  <input type="submit" class="sidebar-btn submit" data-id="{{ $name }}" name="submit" Value="Upload" style="margin-top:10px;">
 		                </div>
 				    </div>
 			    </div>
@@ -61,8 +69,10 @@
 			{{ Form::token() }}
 
 			<div class="form-group">
-		    	<label for="inputEmail3" class="col-sm-2 col-md-offset-3 control-label" style="margin-top:10px;">Upload Excel File</label>
-			    <div class="col-sm-5">
+				<div class="col-md-3">
+		    		<label for="inputEmail3" class="control-label" >Upload Excel File</label>
+			    </div>
+			    <div class="col-sm-9">
 				    <div class="col-md-9">
 				      <input type="file" class="form-control file-textbox" id="inputEmail3" name="excel_file" style="margin-top:10px;margin-right:10px;">
 				    
@@ -81,6 +91,7 @@
 		    </div>
 
 		</form>
+	</div>
 
 
 		    @if($user_template_images)
