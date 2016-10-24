@@ -17,6 +17,7 @@ use Validator;
 use Session;
 use Mail;
 use App\Category;
+use App\Material;
 
 class HomeController extends Controller
 {
@@ -28,8 +29,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        $categories = Category::where('is_delete',0)->paginate(Config::get('settings.number_of_categories'));
-        $data['categories'] = $categories;
+        $data['categories'] = Category::where('is_delete',0)->paginate(Config::get('settings.number_of_categories'));
+
+        $data['materials'] = Material::where('is_delete',0)->paginate(Config::get('settings.number_of_materials'));
+
         return view('welcome',$data);
     }
 

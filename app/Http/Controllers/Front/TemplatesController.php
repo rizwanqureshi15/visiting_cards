@@ -24,6 +24,7 @@ use App\UserTemplateFeild;
 use App\UserTemplateImage;
 use App\TemplateImage;
 use App\TemplateFeild;
+use App\Material;
 
 
 class TemplatesController extends Controller
@@ -65,7 +66,7 @@ class TemplatesController extends Controller
     {
         $template = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items')); 
         $data['category_id'] = null;
-        
+
         if($category_name)
         {
             $category = Category::where('is_delete',0)->where('name',$category_name)->first();
@@ -74,9 +75,11 @@ class TemplatesController extends Controller
             $data['category_id'] = $category->id;
         }
 
+        $data['materials'] = Material::where('is_delete',0)->get();
+
         $data['templates'] = $template->get();
         $data['categories'] = Category::where('is_delete',0)->get();
-
+        
         return view('gallery',$data);
     }
 
@@ -364,6 +367,9 @@ class TemplatesController extends Controller
         {
             $data['user_cards'] = false;
         }
+
+        $data['materials'] = Material::where('is_delete',0)->get();
+        
         return view('user.templates.list',$data);
     }
 
@@ -1357,6 +1363,13 @@ class TemplatesController extends Controller
         @unlink(public_path()."/excelfiles/".$username." ".$url.".xls");
 
         return redirect()->back();
+    }
+
+
+    public function get_material_id($material_id)
+    {
+        Session::push('material_id',$material_id);
+        return redirect('cards');
     }
 
 

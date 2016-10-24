@@ -947,7 +947,7 @@ a:hover
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
 }
 
-.innerWrapper span 
+/*.innerWrapper span 
 {
     width: 100%;
     text-align: left;
@@ -957,7 +957,7 @@ a:hover
     text-transform: uppercase;
     padding: 0 0 10px 0;
     margin: 20px 0 20px;
-}
+}*/
 
 .category-data
 {
@@ -997,10 +997,11 @@ a:hover
 
 .title
 {
-    font-size: 30px;
+    font-size: 25px;
     margin-top: 30px;
     border-bottom: 5px solid #e4e4e4;
     padding-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .blog-box
@@ -1011,7 +1012,7 @@ a:hover
     padding: 30px;
 }
 
-.category-image
+.demo-images
 {
     height: 230px;
     margin-top:20px;
@@ -1023,3 +1024,11 @@ a:hover
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
+
+/*#order_images:hover
+{
+    width:500px;
+    height: 400px;
+    z-index: 9999;
+}
+*/

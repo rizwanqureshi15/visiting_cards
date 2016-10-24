@@ -11,6 +11,7 @@ use App\OrderItem;
 use App\Material;
 use File;
 use Config;
+use Session;
 
 
 class OrderController extends Controller
@@ -284,7 +285,7 @@ class OrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $data['user_orders'] = Order::where('user_id',$user_id)->orderBy('id','desc')->paginate(Config::get('settings.no_of_columns'));
+        $data['user_orders'] = Order::where('user_id',$user_id)->orderBy('id','desc')->paginate(Config::get('settings.number_of_rows'));
 
         return view('user.show_order_list',$data);
     }
@@ -399,11 +400,13 @@ class OrderController extends Controller
         $data = base64_decode($img);
         $name = str_random(40).".png"; 
 
+        $material_id = Session::get('material_id'); 
+
         if($template->is_both_side == 0)
         {
-             Order::create([
+            $order = Order::create([
                 'user_id' => $user_id,
-                'material_id' => '1',
+                'material_id' => $material_id[0],
                 'amount' => $amount,
                 'quantity' => $quantity,
                 'order_no' => $order_no,
@@ -450,7 +453,7 @@ class OrderController extends Controller
             {
                  Order::create([
                     'user_id' => $user_id,
-                    'material_id' => '1',
+                    'material_id' => $material_id[0],
                     'amount' => $amount,
                     'quantity' => $quantity,
                     'order_no' => $order_no,

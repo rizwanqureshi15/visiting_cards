@@ -8,7 +8,7 @@
                             <em> {!! session('flash_message') !!}</em>
                     </div>
                 @endif
-            </div>
+          </div>
         <!-- <div class="col-md-10 col-md-offset-1">
             
             <div class="panel panel-default">
@@ -70,10 +70,27 @@
                   @foreach ($categories as $category) 
                     <div class="col-sm-4 col-xs-12">
                       <a href="{{ url('cards',$category->name) }}">
-                          <img class="category-image" src="{{ url('categories/'.$category->image) }}"> 
+                          <img class="demo-images" src="{{ url('categories/'.$category->image) }}"> 
                       </a>
 
                       <p class="category-data">{{ $category->name }}</p>
+                   
+                    </div>
+                  @endforeach
+                </div>
+
+                <div class="col-xs-12">
+                  <h4 class="title">Materials</h4>
+                </div>
+
+                <div class="col-xs-12">
+                  @foreach ($materials as $material)
+                    <div class="col-sm-4 col-xs-12">
+                      <a href="{{ url('material',$material->id) }}">
+                          <img class="demo-images" src="{{ url('materials/'.$material->image) }}"> 
+                      </a>
+
+                      <p class="category-data">{{ $material->name }}</p>
                    
                     </div>
                   @endforeach
