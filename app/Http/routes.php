@@ -89,9 +89,7 @@ Route::post('admin/templates/save_cards', 'CardController@card_save');
 
 Route::post('template_save','CardController@save_image');
 
-Route::post('download-template-formate','Front\TemplatesController@file_formate_download');
-
-Route::get('download_file','Front\TemplatesController@download_file');
+Route::get('download_file',['middleware' => 'auth','uses' => 'Front\TemplatesController@download_file']);
 
 Route::post('user_template_save','Front\TemplatesController@save_user_template');
 
@@ -103,32 +101,32 @@ Route::post('upload_template_image','CardController@upload_image');
 // Route::post('save_single_card','Front\TemplatesController@save_card');
 
 Route::get('mytemplates/{url}/edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template']);
-Route::post('user_template_edit','Front\TemplatesController@edit_user_template_post');
-Route::post('user_template_edit_back','Front\TemplatesController@edit_user_template_back_post');
+Route::post('user_template_edit',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template_post']);
+Route::post('user_template_edit_back',['middleware' => 'auth','uses' => 'Front\TemplatesController@edit_user_template_back_post']);
 
-Route::get('single_card/{url}/create', 'Front\TemplatesController@create_single_card');
+Route::get('single_card/{url}/create', ['middleware' => 'auth','uses' => 'Front\TemplatesController@create_single_card']);
 
-Route::get('multiple_cards/{url}','Front\TemplatesController@show_multiple_cards');
-Route::get('download_file/{url}','Front\TemplatesController@download_excel_file');
+Route::get('multiple_cards/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@show_multiple_cards']);
+Route::get('download_file/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@download_excel_file']);
 
-Route::post('upload_file/{url}','Front\TemplatesController@upload_excel_file');
+Route::post('upload_file/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@upload_excel_file']);
 
 Route::post('multiple_save_cards','Front\TemplatesController@multiple_image_save');
 
 Route::get('mytemplates/{url}/delete', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_user_template']);
 
-Route::get('multiple_card_preview','Front\TemplatesController@show_multiple_image_preview');
+Route::get('multiple_card_preview',['middleware' => 'auth','uses' => 'Front\TemplatesController@show_multiple_image_preview']);
 
-Route::post('delete_image','Front\TemplatesController@delete_image_from_multiple_preview');
+Route::post('delete_image',['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_image_from_multiple_preview']);
 
-Route::get('delete_folder/{url}','Front\TemplatesController@delete_multiple_preview_folder');
+Route::get('delete_folder/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_multiple_preview_folder']);
+Route::post('admin/templates/save_back_cards','CardController@back_card_save');
+
+Route::post('upload_images/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@upload_images']);
+
+Route::get('delete_folder', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_multiple_preview_folder']);
 Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
-
-Route::post('upload_images/{url}','Front\TemplatesController@upload_images');
-
-Route::get('delete_folder','Front\TemplatesController@delete_multiple_preview_folder');
-Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
-Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');
+Route::post('user_template_back_save', ['middleware' => 'auth','uses' => 'Front\TemplatesController@back_save_user_template']);
 
 Route::get('admin/materials/create', 'MaterialController@create');
 Route::post('admin/materials/create', 'MaterialController@create_post');
@@ -140,9 +138,9 @@ Route::post('admin/materials/delete', 'MaterialController@delete');
 
 Route::get('admin/materials/list', 'MaterialController@materials_list');
 
-Route::get('order_multiple_cards/{url}','OrderController@order_multiple_cards');
+Route::get('order_multiple_cards/{url}',['middleware' => 'auth','uses' => 'OrderController@order_multiple_cards']);
 
-Route::post('delete_back_image','Front\TemplatesController@delete_back_image_from_multiple_preview');
+Route::post('delete_back_image',['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_back_image_from_multiple_preview']);
 
 Route::get('admin/order-datatable', 'EmployeeController@datatable');
 Route::get('admin/new-order-datatable', 'EmployeeController@new_order_datatable');
@@ -162,7 +160,7 @@ Route::post('cancel_order', 'EmployeeController@cancel_order');
 
 Route::get('myorders',['middleware' => 'auth','uses' => 'OrderController@show_user_order']);
 
-Route::get('view_order/{order_id}','OrderController@view_user_order');
+Route::get('view_order/{order_id}',['middleware' => 'auth','uses' => 'OrderController@view_user_order']);
 
 Route::post('scroll_pagination','OrderController@ajax_pagination');
 
@@ -180,7 +178,7 @@ Route::get('privacy_policy','HomeController@show_privacy_policy');
 
 Route::get('about','HomeController@show_about');
 
-Route::post('save_single_card','OrderController@order_single_card');
+Route::post('save_single_card',['middleware' => 'auth','uses' => 'OrderController@order_single_card']);
 
 Route::get('order-history-datatable', 'EmployeeController@order_history_datatable');
 Route::get('admin/employees-datatable', 'AdminController@employee_datatable');
@@ -202,6 +200,10 @@ Route::post('admin/contacts/delete', 'ContactController@destroy');
 
 Route::get('order/{order_no}/payment','Front\PaymentsController@index');
 Route::post('payment','Front\PaymentsController@payment');
+
+Route::get('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@index']);
+Route::post('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@payment']);
+>>>>>>> origin/master
 Route::get('test','Front\PaymentsController@test');
 
 Route::get('contact','HomeController@show_contact_page');
