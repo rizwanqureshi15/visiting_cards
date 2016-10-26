@@ -203,7 +203,7 @@ Route::post('payment','Front\PaymentsController@payment');
 
 Route::get('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@index']);
 Route::post('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@payment']);
->>>>>>> origin/master
+
 Route::get('test','Front\PaymentsController@test');
 
 Route::get('contact','HomeController@show_contact_page');
