@@ -725,7 +725,7 @@ $(document).ready(function(){
 					                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1,"order_no": order_no},
 					                success : function(image)
 					                {
-					                	window.location.href = site_url+'/myorders'; 
+					                	window.location.href = site_url+'/order/'+order_no+'/payment'; 
 
 					                    } 
 					                    }).fail(function(data){
@@ -737,7 +737,7 @@ $(document).ready(function(){
 				     	}
 				     	else
 				     	{
-				     		window.location.href = site_url+'/myorders'; 
+				     		window.location.href = site_url+'/order/'+order_no+'/payment'; 
 				     	}
 				     		
                     } 

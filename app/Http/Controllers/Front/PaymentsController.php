@@ -15,18 +15,33 @@ use App\User;
 use Config;
 use Datatables;
 use App\Order;
+use App\Material;
+use App\UserTemplate;
 
 class PaymentsController extends Controller
 {
 
-    public function index()
+    public function index($order_no)
     {
-        return view('payment.billingandshipping');
+        $data['materials'] = Material::where('is_delete',0)->get();
+        $data['order'] = Order::where('order_no',$order_no)->first();
+        $template = UserTemplate::where('id',$data['order']->user_template_id)->first();
+        $material = Material::where('id',$data['order']->material_id)->first();
+        $data['material_price'] = $material->price;
+        $data['order_no'] = $order_no;
+        $data['order_id'] = $data['order']->id; 
+        $data['template_price'] = $template->price;
+        $data['order_quantity'] = $data['order']->quantity; 
+        $data['material_id_and_price'] = Material::where('is_delete',0)->lists('price','id'); 
+
+        return view('payment.billingandshipping',$data);
     }
 
     public function payment(Request $request)
     {
-        $order_id = 1;
+        
+
+        $order_id = $request->order_id;
         $validator = Validator::make($request->all(), [
                         "address_1" => 'required',
                         "address_2" => 'required',
@@ -63,9 +78,11 @@ class PaymentsController extends Controller
                 "shipping_state" => $request->ship_state,
                 "shipping_country" => $request->ship_country,
                 "shipping_zipcode" => $request->ship_zipcode,
+                "material_id" => $request->material_id,
+                "amount" => $request->final_price
             ];
 
-            Order::where("id", $order_id)->update($data);
+            $order = Order::where("id", $order_id)->update($data); 
             // $query=http_build_query($data) ;
             // $url = 'https://test.payumoney.com/payment/op/getPaymentResponse?merchantKey=xDjfEVwC&merchantTransactionIds=5655765'; 
             // $data =array('merchantKey'=>'xDjfEVwC', 'merchantTransactionIds '=>'5655765', 'amount' => '100','productinfo' => 'cards', 'firstname' => 'Rizwan', 'email' => 'rizwanqureshi15@gmail.com', 'phone' => '9834738393', 'surl' => url('admin/employees/login'), 'furl' => url('admin/employees/list'), 'service_provider' => 'payu_paisa'); 
@@ -87,11 +104,11 @@ class PaymentsController extends Controller
             
 
         }   
-
-        public function test()
-        {
-
-        }
     }
+        // public function test()
+        // {
+
+        // }
+
     
 }

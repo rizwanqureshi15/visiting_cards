@@ -23,10 +23,10 @@
                           </div>
                           <div class="modal-body">
                                 <select class="form-control textbox-controll">
-                                @foreach($materials as $material)
-                                        <option value="{{ $material->id }}" class="form-control textbox-controll">{{ $material->name }}</option>
-                                @endforeach
-                            </select>
+                                    @foreach($materials as $material)
+                                            <option value="{{ $material->id }}" class="form-control textbox-controll">{{ $material->name }}</option>
+                                    @endforeach
+                                </select>
                           </div>
                           <div class="modal-footer">
                             <a href="{{ url('material',$material->id) }}">
