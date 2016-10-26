@@ -27,6 +27,7 @@ class UserTemplate extends Model
         'background_image_back',
         'back_snap',
         'is_both_side',
+        'session_id',
     ];
 
     public function category()

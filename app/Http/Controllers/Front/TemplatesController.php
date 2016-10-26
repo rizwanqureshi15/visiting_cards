@@ -296,12 +296,12 @@ class TemplatesController extends Controller
     public function save_user_template(Request $request)
     { 
            $template =  Template::where('id',$request->template_id)->first();
-         
-         $user_id=Auth::user()->id;
-         
-         $url = TemplatesController::get_unique_url($request->template_id, $user_id);
+        if(Auth::user())
+        {
+            $user_id=Auth::user()->id;
+            $url = TemplatesController::get_unique_url($request->template_id, $user_id);
             
-        $user_fields=array(
+            $user_fields=array(
                 'name' => $template->name,
                 'price' => $template->price,
                 'template_id' => $template->id,
@@ -314,7 +314,25 @@ class TemplatesController extends Controller
                 'created_at' => date('Y-m-d H:s:i'),
                 'updated_at' => date('Y-m-d H:s:i')
         );
-
+        }
+        else
+        {
+            $session_id = Session::getId();
+            $user_fields=array(
+                'name' => $template->name,
+                'price' => $template->price,
+                'template_id' => $template->id,
+                'background_image' => $template->background_image,
+                'type' => $template->type,
+                'session_id' => $session_id,
+                'snap'=> $request->snap,
+                'is_both_side' => $template->is_both_side,
+                'created_at' => date('Y-m-d H:s:i'),
+                'updated_at' => date('Y-m-d H:s:i')
+            );
+            $user_id = $session_id;
+        }
+         
         $user_template_id = userTemplate::insertGetId($user_fields);
         if($request->feilds)
         {

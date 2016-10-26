@@ -66,79 +66,32 @@ class PaymentsController extends Controller
             ];
 
             Order::where("id", $order_id)->update($data);
-            // $query=http_build_query($data) ;
-            // $url = 'https://test.payumoney.com/payment/op/getPaymentResponse?merchantKey=xDjfEVwC&merchantTransactionIds=5655765'; 
-            // $data =array('merchantKey'=>'xDjfEVwC', 'merchantTransactionIds '=>'5655765', 'amount' => '100','productinfo' => 'cards', 'firstname' => 'Rizwan', 'email' => 'rizwanqureshi15@gmail.com', 'phone' => '9834738393', 'surl' => url('admin/employees/login'), 'furl' => url('admin/employees/list'), 'service_provider' => 'payu_paisa'); 
-            // $options = array( 
-            //   'http' => array( 
-            //     'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-            //         "Content-Length: ".strlen($query)."\r\n".
-            //         "User-Agent:MyAgent/1.0\r\n,Authorization: 0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=", 
-            //     'method' => 'POST', 
-            //     'Authorization'=> '0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=', 
-            //     'content' => $query 
-            //     ), 
-            //   ); 
-            // $context = stream_context_create($options); 
-            // $result = file_get_contents($url, false, $context, -1 , 40000); 
-            // if ($result === FALSE) { /* Handle error */ } 
-            
-            // dd($result); 
+           
                  
         }
 
-    }   
+    }  
 
-        public function test()
-        {
-           
-// $url = 'https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey= eM8ZaP&merchantTransactionIds=563445'; 
-// $data =array('key'=>'', 'txnid '=>'563445'); 
-// $query = http_build_query($data);
-// $options = array( 
-//   'http' => array( 
-//     'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-//                     "Content-Length: ".strlen($query)."\r\n".
-//                     "User-Agent:MyAgent/1.0\r\n,Authorization: 0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=", 
-//     'method' => 'POST', 
-//     'Authorization'=> '0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=', 
-//     'content' =>  $query
-//     ), 
-//   ); 
-// $context = stream_context_create($options); 
-// $result = file_get_contents($url, false, $context); 
-// if ($result === FALSE) { /* Handle error */ } 
-// var_dump($result); 
-        // $url = 'https://test.payu.in/_payment'; 
-        //     $data =array('key'=>'JBZaLc', 'txnid'=>'1', 'amount' => '100','productinfo' => 'cards', 'firstname' => 'rizwan', 'email' => 'rizwanqureshi15@gmail.com', 'phone' => '9979557690', 'surl' => url('admin/employees/login'), 'furl' => url('admin/employees/list'), 'service_provider' => 'payu_paisa', 'hash' => Hash('sha512','JBZaLc|1|100|cards|rizwan|rizwanqureshi15@gmail.com|||||||||||GQs7yium')); 
-        //      $query=http_build_query($data) ;
-        //     $options = array( 
-        //       'http' => array( 
-        //         'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-        //             "Content-Length: ".strlen($query)."\r\n".
-        //             "User-Agent:MyAgent/1.0\r\n,Authorization: GQs7yium", 
-        //         'method' => 'POST', 
-        //         'Authorization'=> 'GQs7yium', 
-        //         'content' => $query 
-        //         ), 
-        //       ); 
-        //     $context = stream_context_create($options); 
-        //     $result = file_get_contents($url, false, $context, -1 , 40000); 
-        //     if ($result === FALSE) { /* Handle error */ } 
-            
-        //     dd($result);
+    public function payment_success(Request $request)
+    {
+        dd($request->all());
+        return redirect('myorders');
+    } 
+
+    public function test()
+    {
         $data['details'] = [
-            'key'=>'JBZaLc', 
+            'key'=>'rjQUPktU', 
             'txnid'=>'1', 
             'amount' => '100',
             'productinfo' => 'cards', 
             'firstname' => 'rizwan', 
-            'email' => 'rizwanqureshi15@gmail.com', 
+            'email' => 'amrin.umar.khatri@gmail.com', 
             'phone' => '9979557690', 
-            'surl' => url('admin/employees/login'), 
-            'furl' => url('admin/employees/list'), 
+            'surl' => url('payment/myorders'), 
+            'furl' => url('payment'), 
             'service_provider' => 'payu_paisa',
-            'hash' => strtolower(hash('sha512','JBZaLc|1|100|cards|rizwan|rizwanqureshi15@gmail.com|||||||||||GQs7yium'))
+            'hash' => strtolower(hash('sha512','rjQUPktU|1|100|cards|rizwan|amrin.umar.khatri@gmail.com|||||||||||e5iIg1jwi8'))
             ];
 
         return view('payment.payment',$data);

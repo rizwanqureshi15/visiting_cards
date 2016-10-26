@@ -143,7 +143,15 @@ class UserController extends Controller
 
     public function save_image(Request $request)
     {
-        $username=Auth::user()->username;
+        if(Auth::user())
+        {
+            $username = Auth::user()->username;    
+        }
+        else
+        {
+            $username = Session::getId();
+        }
+        
 
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
         $img = str_replace('data:image/png;base64,', '', $img);
@@ -157,8 +165,7 @@ class UserController extends Controller
             File::makeDirectory($path);
         } 
         file_put_contents('images/'. $username .'/'.$name.'.png', $data);
-       
-        $user_id = Auth::user()->id;
+    
 
         return response()->json($name.'.png');
     }

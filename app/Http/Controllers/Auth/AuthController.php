@@ -10,6 +10,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Session;
+use File;
+use App\UserTemplate;
+use App\Template;
 
 class AuthController extends Controller
 {
@@ -31,7 +34,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/mytemplates';
 
     /**
      * Create a new authentication controller instance.
@@ -69,13 +72,30 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'username' => $data['username'],
         ]);
+        return $user;
+    }
+
+    public function get_unique_url($template_id,$user_id)
+    {
+        $c = userTemplate::where('template_id',$template_id)->where('user_id',$user_id)->count();
+        $url = template::where('id', $template_id)->pluck('url');
+        if($c > 0)
+        {
+            $url = $url[0] ."-". $c;
+
+        }
+        else
+        {
+            $url = $url[0];
+        }
+        return $url;
     }
 
     public function login(Request $request)
@@ -99,8 +119,41 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($v->errors());
        }
 
+       $session_id = Session::getId();
+       
        if (Auth::attempt(['email' => $email, 'password' => $password, 'is_delete' => 0]) OR Auth::attempt(['username' => $email, 'password' => $password, 'is_delete' => 0]))
         {   
+            $user_id = Auth::user()->id;
+            $username = Auth::user()->username;
+            $check = UserTemplate::where('session_id', $session_id)->get(); 
+            
+            if($check)
+            {
+                $path = public_path()."/images/".$username;
+                
+                if(!File::exists($path))
+                { 
+                    File::makeDirectory($path);
+                }   
+               
+                $files = glob(public_path()."/images/".$session_id."/*");   
+               
+                foreach($files as $file)
+                {   
+                    $file_to_go = str_replace(public_path()."/images/".$session_id."/",public_path()."/images/".$username."/",$file);         
+                    copy($file, $file_to_go);
+                    @unlink($file);   
+                }
+                rmdir(public_path()."/images/".$session_id);
+                foreach ($check as $value) {
+
+                    $url = AuthController::get_unique_url($value->template_id, $user_id);
+                    UserTemplate::where('id', $value->id)->update(['url' => $url]);
+                }
+                
+
+            }
+            UserTemplate::where('session_id', $session_id)->update(['user_id' => $user_id]);
             Session::flash('flash_message','Successfully Login');
             return redirect('/mytemplates');
         }

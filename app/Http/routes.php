@@ -159,6 +159,7 @@ Route::post('cancel_order', 'EmployeeController@cancel_order');
 
 
 Route::get('myorders',['middleware' => 'auth','uses' => 'OrderController@show_user_order']);
+Route::post('payment/myorders',['middleware' => 'auth','uses' => 'Front\PaymentsController@payment_success']);
 
 Route::get('view_order/{order_id}',['middleware' => 'auth','uses' => 'OrderController@view_user_order']);
 
