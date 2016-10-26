@@ -69,11 +69,13 @@
         <div class="col-md-9" >
         	<div class="col-md-12" id="posts">
 	        	@foreach ($templates as $template) 
-	        		<div class="col-sm-4 col-xs-12">
+	        		<div class="col-sm-4 col-xs-12 gallery-box">
 	        			<a href="{{ url('mytemplates/'.$template->url.'/create') }}">
 		        			@if($template->type=="horizontal")
-                                <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> 
-                                <span class="cards-data">{{ $template->name }}</span><br>
+                                <img class="image " src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;width:100%;height:175.16px;"> 
+                                <div class="cards-title">
+                                    <span id="cards_title" class="cards-data"  title="{{ $template->name }}">{{ $template->name }}</span><br>
+                                </div>
                                 <span class="cards-data"><h3>Rs. {{ $template->price }}</h3></span>
                             @else
                                 <img class="image" src="{{ url('templates/snaps/'.$template->snap) }}" style="margin-top:20px;margin-left:60px;width:50%;height:175.16px">
@@ -111,6 +113,8 @@
     
     
     $(document).ready(function(){
+
+        // $('#cards_title').tooltip('show');
 
         $("#orientation-flip").click(function(){
             $("#orientation").slideToggle("slow");
@@ -163,7 +167,8 @@ $("input[type='checkbox']").on("click",function(){
                                     html+="<div class='col-md-4'><a href="+site_url+"/mytemplates/"+val.url +"/create>";
                                     html+="<img src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;width:100%;height:175.16px;'>";
                                     html+="</a>";
-                                    html+="<span class='cards-data'>"+val.name+"</span><br>";
+                                    html+="<div class='cards-title'>";
+                                    html+="<span class='cards-data'>"+val.name+"</span><br></div>";
                                     html+="<span class='cards-data'><h3>Rs. "+val.price+"</h3></span>";
                                     html+="</div>";
                                 }
@@ -172,7 +177,8 @@ $("input[type='checkbox']").on("click",function(){
                                     html+="<div class='col-md-4'><a href="+site_url+"/mytemplates/"+val.url +"/create>";
                                     html+="<img src='"+site_url+"/templates/snaps/"+ val.snap+"' style='margin-top:20px;margin-left:60px;width:50%;height:175.16px'>";
                                     html+="</a>";
-                                    html+="<span class='cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12'>"+val.name+"</span><br>";
+                                    html+="<div class='cards-title'>";
+                                    html+="<span class='cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12'>"+val.name+"</span><br></div>";
                                     html+="<span class='cards-data col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12'><h3 class='vertical-price'>Rs. "+val.price+"</h3></span>";
                                     html+="</div>";
                                 }

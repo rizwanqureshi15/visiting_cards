@@ -379,6 +379,7 @@ input[type="checkbox"]
     color:#252525;
     font-weight: 700;
     text-decoration: none;
+    overflow: hidden;   
 }
 
 .cards-data:hover
@@ -1071,4 +1072,11 @@ a:hover
 .btn-payment
 {
     margin-left: 5.333333%;
+}
+
+.cards-title
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

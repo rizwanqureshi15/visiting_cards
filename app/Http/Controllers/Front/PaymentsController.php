@@ -38,8 +38,12 @@ class PaymentsController extends Controller
     }
 
     public function payment(Request $request)
-    {
-        
+    {   
+        $order = Order::where('id',$request->order_id)->first(); 
+        $user_template = UserTemplate::where('id',$order->user_template_id)->first();
+        $material = Material::where('id',$request->material_id)->first();
+
+        $final_price = $order->quantity * $user_template->price * $material->price;
 
         $order_id = $request->order_id;
         $validator = Validator::make($request->all(), [
@@ -79,7 +83,7 @@ class PaymentsController extends Controller
                 "shipping_country" => $request->ship_country,
                 "shipping_zipcode" => $request->ship_zipcode,
                 "material_id" => $request->material_id,
-                "amount" => $request->final_price
+                "amount" => $final_price
             ];
 
 
