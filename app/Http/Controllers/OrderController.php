@@ -32,6 +32,8 @@ class OrderController extends Controller
         $files = scandir($directory);
         $quantity = count($files)-2;
 
+        $material_id = Session::get('material_id'); 
+
         $card_price = UserTemplate::where('url',$url)->where('user_id',$user_id)->first();
 
         $template = $card_price;
@@ -80,10 +82,11 @@ class OrderController extends Controller
             
         Order::create([
                 'user_id' => $user_id,
-                'material_id' => '1',
+                'material_id' => $material_id,
                 'amount' => $amount,
                 'quantity' => $quantity,
                 'order_no' => $order_no,
+                'user_template_id' => $template->id,
                 'status' => 'new'
         ]);
 
@@ -276,7 +279,9 @@ class OrderController extends Controller
         //     rmdir(public_path().'/temp/'.$username.'/back');
         // }
 
-        return redirect('myorders');
+            //site_url+'/order/'+order_no+'/payment'
+
+        return redirect('/order/'.$order_no.'/payment');
 
     }
 
@@ -406,10 +411,11 @@ class OrderController extends Controller
         {
             $order = Order::create([
                 'user_id' => $user_id,
-                'material_id' => $material_id[0],
+                'material_id' => $material_id,
                 'amount' => $amount,
                 'quantity' => $quantity,
                 'order_no' => $order_no,
+                'user_template_id' => $template->id,
                 'status' => 'new'
             ]);
 
@@ -453,10 +459,11 @@ class OrderController extends Controller
             {
                  Order::create([
                     'user_id' => $user_id,
-                    'material_id' => $material_id[0],
+                    'material_id' => $material_id,
                     'amount' => $amount,
                     'quantity' => $quantity,
                     'order_no' => $order_no,
+                    'user_template_id' => $card_price->id,
                     'status' => 'new'
                 ]);
 

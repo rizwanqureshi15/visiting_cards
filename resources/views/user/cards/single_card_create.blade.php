@@ -114,8 +114,8 @@
          @if($template->type == 'horizontal')
                 <div class="col-md-7">
                  <div class="canvasBorder-horizontal">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
-                <canvas id="canvas1" width="680" height="419">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:690px;">
+                <canvas id="canvas1" width="690" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">

@@ -199,8 +199,12 @@ Route::resource('admin/contacts', 'ContactController' , ['only' => ['show','inde
 Route::get('admin/contact-datatable', 'ContactController@contact_datatable');
 Route::post('admin/contacts/delete', 'ContactController@destroy');
 
+Route::get('order/{order_no}/payment','Front\PaymentsController@index');
+Route::post('payment','Front\PaymentsController@payment');
+
 Route::get('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@index']);
 Route::post('payment',['middleware' => 'auth','uses' => 'Front\PaymentsController@payment']);
+
 Route::get('test','Front\PaymentsController@test');
 
 Route::get('contact','HomeController@show_contact_page');

@@ -25,6 +25,7 @@ use App\UserTemplateImage;
 use App\TemplateImage;
 use App\TemplateFeild;
 use App\Material;
+use App\Order;
 
 
 class TemplatesController extends Controller
@@ -1386,9 +1387,20 @@ class TemplatesController extends Controller
 
     public function get_material_id($material_id)
     {
-        Session::push('material_id',$material_id);
-        return redirect('cards');
+        Session::put('material_id',$material_id);
+        return redirect()->back();
     }
+
+
+    // public function change_material(Request $request)
+    // {
+    //     $order_no = $request->order_no;
+    //     $material = Order::where('order_no',$order_no)
+    //                             ->update(['material_id' => $request->material_id]);
+      
+    //     return redirect('/order/'.$order_no.'/payment');
+
+    // }
 
 
 }
