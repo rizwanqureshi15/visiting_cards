@@ -127,7 +127,7 @@ class AuthController extends Controller
             $username = Auth::user()->username;
             $check = UserTemplate::where('session_id', $session_id)->get(); 
             
-            if($check)
+            if(count($check))
             {
                 $path = public_path()."/images/".$username;
                 

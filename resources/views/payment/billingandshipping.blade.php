@@ -11,13 +11,12 @@
 
         </div>
 
-         <div class="col-xs-12">
-              {{ Form::open(array('id' => 'myform','method' => 'post','url' => url('payment'), 'class' => "form-horizontal")) }}
-        
+        {{ Form::open(array('id' => 'myform','method' => 'post','url' => url('payment'), 'class' => "form-horizontal")) }}
+               <div class="col-xs-12">  
+                  <div class="form-group col-sm-6 col-xs-12">
                   <input type="hidden" name="final_price" id="price" value="{{ $template_price * $order->quantity * $material_price }}" > 
                   <input type="hidden" name="_token" value="{{ csrf_token() }}" > 
                   <input type="hidden" name="order_id" value="{{ $order_id }}" >
-                  <div class="form-group col-sm-6 col-xs-12">
                     <label for="inputEmail3" class="control-label form-lable-payment ">Material</label>
                     <select id="material_id" class="form-control textbox-controll" name="material_id">
                         @foreach($materials as $material)
@@ -28,6 +27,18 @@
                           @endif  
                         @endforeach
                     </select>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-xs-12">
+                      <label for="inputEmail3" class="form-lable-payment control-label">Phone No.<span class="error-lable">(Required for payUmoney)</span></label>
+                      
+                         {{ Form::text('phone_no', null , $attributes= ['class' => 'form-control textbox-controll','placeholder' => 'Enter Phone No.','id' => 'bill_phone_no']) }}
+                         @if ($errors->first('phone_no'))
+                          <div class="alert alert-danger">
+                            {{ $errors->first('phone_no') }}
+                          </div>
+                         @endif
+
                   </div>
           </div>
 

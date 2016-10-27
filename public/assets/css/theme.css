@@ -1080,3 +1080,8 @@ a:hover
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.error-lable
+{
+    color:#a94442;
+}

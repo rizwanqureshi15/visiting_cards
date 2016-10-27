@@ -38,7 +38,8 @@ class PaymentsController extends Controller
     }
 
     public function payment(Request $request)
-    {   
+    {  
+        $user = Auth::user();
         $order = Order::where('id',$request->order_id)->first(); 
         $user_template = UserTemplate::where('id',$order->user_template_id)->first();
         $material = Material::where('id',$request->material_id)->first();
@@ -53,6 +54,7 @@ class PaymentsController extends Controller
                         "state" => 'required',
                         "country" => 'required',
                         "zipcode" => 'required',
+                        "phone_no" => 'required|numeric|digits:10',
                         "ship_address_1" => 'required',
                         "ship_address_2" => 'required',
                         "ship_city" => 'required',
@@ -83,14 +85,30 @@ class PaymentsController extends Controller
                 "shipping_country" => $request->ship_country,
                 "shipping_zipcode" => $request->ship_zipcode,
                 "material_id" => $request->material_id,
+                "phone_no" => $request->phone_no,
                 "amount" => $final_price
             ];
 
-
-            Order::where("id", $order_id)->update($data);
+            $card = UserTemplate::where('id',$order->user_template_id)->first();
            
+            Order::where("id", $order_id)->update($data);
 
-            $order = Order::where("id", $order_id)->update($data); 
+            $data['details'] = [
+                'key'=> Config::get('settings.key'), 
+                'txnid'=> $order->order_no, 
+                'amount' => $final_price,
+                'productinfo' => $card->name, 
+                'firstname' => $user->username, 
+                'email' => $user->email, 
+                'phone' => $request->phone_no, 
+                'surl' => url('payment/myorders'), 
+                'furl' => url('payment'), 
+                'service_provider' => 'payu_paisa',
+                'hash' => strtolower(hash('sha512','rjQUPktU|'.$order->order_no.'|'.$final_price.'|'.$card->name.'|'.$user->username.'|'.$user->email.'|||||||||||'.Config::get('settings.salt')))
+                ];
+
+            return view('payment.payment',$data);
+
             // $query=http_build_query($data) ;
             // $url = 'https://test.payumoney.com/payment/op/getPaymentResponse?merchantKey=xDjfEVwC&merchantTransactionIds=5655765'; 
             // $data =array('merchantKey'=>'xDjfEVwC', 'merchantTransactionIds '=>'5655765', 'amount' => '100','productinfo' => 'cards', 'firstname' => 'Rizwan', 'email' => 'rizwanqureshi15@gmail.com', 'phone' => '9834738393', 'surl' => url('admin/employees/login'), 'furl' => url('admin/employees/list'), 'service_provider' => 'payu_paisa'); 
@@ -115,7 +133,9 @@ class PaymentsController extends Controller
 
     public function payment_success(Request $request)
     {
-        dd($request->all());
+        $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid') ]);
+        Session::flash('flash_message','Successfully paid. Your order will be delivered soon');
+
         return redirect('myorders');
     } 
 
