@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row block">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
              @if(Session::has('flash_message'))
                     <div class="alert alert-success">
                          <span class="glyphicon glyphicon-ok"></span>
