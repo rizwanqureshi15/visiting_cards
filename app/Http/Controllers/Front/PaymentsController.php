@@ -114,7 +114,7 @@ class PaymentsController extends Controller
         dd($request->all());
         return redirect('myorders');
     } 
-
+    
     public function test()
     {
         $data['details'] = [

@@ -105,7 +105,7 @@ class EmployeeController extends Controller
     public function new_order_datatable()
     {
 
-         $orders = Order::with('user')->where('is_delete',0)->where('is_cancel', 0)->where('is_confirmed', 0)->get();
+         $orders = Order::with('user')->where('status', Config::get('status.paid'))->where('is_delete',0)->where('is_cancel', 0)->where('is_confirmed', 0)->get();
 
          return Datatables::of($orders)
                     ->addColumn('action', function ($data) {
