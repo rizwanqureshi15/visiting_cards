@@ -93,6 +93,8 @@ class PaymentsController extends Controller
            
             Order::where("id", $order_id)->update($data);
 
+            Order::where("id", $order_id)->update(['status' => 'unpaid']);
+
             $data['details'] = [
                 'key'=> Config::get('settings.key'), 
                 'txnid'=> $order->order_no, 
@@ -102,7 +104,7 @@ class PaymentsController extends Controller
                 'email' => $user->email, 
                 'phone' => $request->phone_no, 
                 'surl' => url('payment/myorders'), 
-                'furl' => url('payment'), 
+                'furl' => url('order/'.$order->order_no.'/payment'), 
                 'service_provider' => 'payu_paisa',
                 'hash' => strtolower(hash('sha512','rjQUPktU|'.$order->order_no.'|'.$final_price.'|'.$card->name.'|'.$user->username.'|'.$user->email.'|||||||||||'.Config::get('settings.salt')))
                 ];

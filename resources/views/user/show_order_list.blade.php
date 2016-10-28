@@ -23,8 +23,7 @@
 			        		<th>Material</th>
 			        		<th>Amount</th>
 			        		<th>Quentity</th>
-			        		<th>Status</th>
-			        		<th style="text-align:center;">View</th>
+			        		<th style="width:25%">View</th>
 			        	</tr>
 		        	</thead>
 
@@ -40,10 +39,17 @@
 			        			<td>{{ $order->material_id }}</td>
 			        			<td>{{ $order->amount }}</td>
 			        			<td>{{ $order->quantity }}</td>
-			        			<td>{{ $order->status }}</td>
-			        			<td><a class="model-btn" href="{{ url('view_order',$order->id) }}">
-			        				View Cards
-			        			</a></td>
+			        			<td >
+				        			<a class="model-btn" href="{{ url('view_order',$order->id) }}" >
+				        				View Cards
+
+				        				@if($order->status == "unpaid")
+				        				<a href="{{ url('order/'.$order->order_no.'/payment') }}" class="model-btn" > 
+				        					Proceed
+				        				</a>
+				        				@endif
+				        			</a>
+			        			</td>
 			        		</tr>
 			        	@endforeach
 		        	</tbody>
