@@ -140,7 +140,7 @@ class PaymentsController extends Controller
 
         return redirect('myorders');
     } 
-
+    
     public function test()
     {
         $data['details'] = [
