@@ -290,11 +290,18 @@ class OrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $data['user_orders'] = Order::where('user_id',$user_id)->orderBy('id','desc')->paginate(Config::get('settings.number_of_rows'));
+        $data['user_orders'] = Order::where('user_id',$user_id)->where('is_delete',0)->where('is_cancel',0)->orderBy('id','desc')->paginate(Config::get('settings.number_of_rows'));
 
         return view('user.show_order_list',$data);
     }
 
+    public function cancel_order($order_id)
+    {
+        Order::where('id',$order_id)->update(['is_cancel' => 1]);
+        Session::flash('flash_message','Order successfully cancled');
+
+        return redirect()->back();
+    }
 
     public function view_user_order($order_id)
     {

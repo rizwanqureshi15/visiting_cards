@@ -208,3 +208,5 @@ Route::get('contact','HomeController@show_contact_page');
 Route::post('submit_contact','HomeController@submit_contact');
 
 Route::get('material/{material_id}','Front\TemplatesController@get_material_id');
+
+Route::get('cancel_order/{order_id}','OrderController@cancel_order');

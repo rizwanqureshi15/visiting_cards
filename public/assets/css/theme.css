@@ -1086,3 +1086,10 @@ a:hover
 {
     color:#a94442;
 }
+
+.cancle-btn:hover
+{
+    color:#fff !important;
+    background-color: rgba(229,64,64,1);
+    border-color: rgba(229,64,64,1);
+}
