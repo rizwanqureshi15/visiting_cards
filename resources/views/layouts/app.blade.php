@@ -93,7 +93,8 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
+                    <!-- Authentication Links --> 
+                    <!-- <li>{{ Request::segment(1) }}</li> -->
                     <li><a href="{{ url('/') }}">Home</a></li>
                     <li><a href="{{ url('/about') }}">About</a></li>
                     <li><a href="{{ url('/cards') }}">Cards</a></li>

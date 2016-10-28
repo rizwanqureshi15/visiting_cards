@@ -38,7 +38,7 @@ class OrderController extends Controller
 
         $template = $card_price;
 
-        $material_price = Material::where('id','1')->first();
+        $material_price = Material::where('id',$material_id)->first();
 
         $amount = $card_price->price * $material_price->price * $quantity; 
 
@@ -356,14 +356,14 @@ class OrderController extends Controller
 
         $url = $request->url;
 
+        $material_id = Session::get('material_id'); 
+
         $card_price = UserTemplate::where('url',$url)->where('user_id',$user_id)->first();
 
         $template = $card_price;
 
-        $material_price = Material::where('id','1')->first();
+        $material_price = Material::where('id',$material_id)->first();
 
-        $directory = public_path().'/temp/'.$username.'/front';
-        $files = scandir($directory);
         $quantity = 1;
 
         $amount = $card_price->price * $material_price->price * $quantity; 

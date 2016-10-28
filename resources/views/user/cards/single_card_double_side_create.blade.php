@@ -286,8 +286,8 @@
 @if($template->type == 'horizontal')
   <div class="col-md-8">
     <div class="canvasBorder-horizontal">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
-        <canvas id="canvas2" width="680" height="419">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:690px;">
+        <canvas id="canvas2" width="690" height="419">
         </canvas>
 @else
   <div class="col-md-6">
@@ -437,7 +437,7 @@
                 <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:5px;" id="toolbardelete">
             </div>
             <div class="col-md-4" style="height:51px;padding:0px;width:33.33%;padding-left: 14px;border-bottom: 1px solid #b5babf;padding-top:10px;">
-                <a href="#" style="font-size: 20px;" id="flip">More</a>
+                <a href="#" style="font-size: 20px;color:blue" id="flip">More</a>
             </div>
         </div>
        

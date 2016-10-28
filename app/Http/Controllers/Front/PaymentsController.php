@@ -134,7 +134,7 @@ class PaymentsController extends Controller
     }
 
     public function payment_success(Request $request)
-    {
+    {   dd($request->all());
         $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid') ]);
         Session::flash('flash_message','Successfully paid. Your order will be delivered soon');
 

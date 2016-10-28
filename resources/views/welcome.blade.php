@@ -63,7 +63,7 @@
 <div class="container">
     <div class="row">
                 <div class="col-xs-12">
-                  <h4 class="title">Cards</h4>
+                  <h4 class="blog-title">Cards</h4>
                 </div>
 
                 <div class="col-xs-12">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="col-xs-12">
-                  <h4 class="title">Materials</h4>
+                  <h4 class="blog-title">Materials</h4>
                 </div>
 
                 <div class="col-xs-12">
