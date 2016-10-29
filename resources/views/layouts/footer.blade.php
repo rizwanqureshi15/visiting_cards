@@ -23,8 +23,14 @@
 						</a>
 					</div>
 					<div class="col-md-2">
-						<a href="#">
+						<a href="{{ url('/contact') }}">
 							<span class="footer-span">Contact us</span>
+						</a>
+					</div>
+
+					<div class="col-md-1">
+						<a href="{{ url('/faqs') }}">
+							<span class="footer-span">FAQ</span>
 						</a>
 					</div>
 
@@ -34,7 +40,7 @@
 						</a>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<a href="{{ url('/terms_condition') }}">
 							<span class="footer-span">Terms & Consition</span>
 						</a>

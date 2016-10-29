@@ -116,6 +116,24 @@ position: absolute;
     overflow: hidden;
     cursor: pointer;
 }
+
+#more_links{
+    bottom:0%;
+    position: absolute;
+    left: -100px;
+    text-align: center;
+    display: none;
+    background-color: white;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 9999;
+}
+
 .myFont
 {
 	font-size:15px;

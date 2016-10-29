@@ -340,7 +340,7 @@
 		                 feild = feild.replace(/\ /g, '_');
 		                 element_id = feild;
 
-		                $('#back_feild_body').append("<input type='text' id='back_sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+		                $('#back_feild_body').append("<input type='text' id='back_sidebar_"+feild+"' class='sidebar-textbox form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
 		                $('#back_card_body').append("<div id='back_"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content back-textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='back_span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
 		                $('#back_'+feild).draggable();
 		                $('#back_'+feild).resizable();
@@ -418,7 +418,7 @@
 			                 feild = feild.replace(/\ /g, '_');
 			                 element_id = feild;
 
-			                $('#back_label_body').append("<input type='text' id='back_sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+			                $('#back_label_body').append("<input type='text' id='back_sidebar_"+feild+"' class='sidebar-textbox form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
 			                $('#back_card_body').append("<div id='back_"+feild+"' data-type='label' data-name='"+str+"' class='idcard-transperent ui-widget-content back-textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='back_span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
 			                $('#back_'+feild).draggable();
 			                $('#back_'+feild).resizable();

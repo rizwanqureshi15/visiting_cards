@@ -23,8 +23,7 @@
 			        		<th>Material</th>
 			        		<th>Amount</th>
 			        		<th>Quentity</th>
-			        		<th>Status</th>
-			        		<th style="text-align:center;">View</th>
+			        		<th style="width:25%">View</th>
 			        	</tr>
 		        	</thead>
 
@@ -40,10 +39,23 @@
 			        			<td>{{ $order->material_id }}</td>
 			        			<td>{{ $order->amount }}</td>
 			        			<td>{{ $order->quantity }}</td>
-			        			<td>{{ $order->status }}</td>
-			        			<td><a class="model-btn" href="{{ url('view_order',$order->id) }}">
-			        				View Cards
-			        			</a></td>
+			        			<td >
+				        			<a class="model-btn text-center" href="{{ url('view_order',$order->id) }}">
+				        				View Cards
+				        			</a>
+				        			
+				        			@if($order->status == "unpaid")
+				        				<a href="{{ url('order/'.$order->order_no.'/payment') }}" class="model-btn" > 
+				        					Proceed
+				        				</a>
+				        			@endif
+
+				        			@if($order->status == "new")
+				        				<a class="model-btn cancle-btn order" data-order="{{ $order->id }}" data-toggle="modal" data-target="#cancel_order"> 
+				        					Cancle
+				        				</a>
+				        			@endif
+			        			</td> 
 			        		</tr>
 			        	@endforeach
 		        	</tbody>
@@ -55,7 +67,48 @@
 	    	</div>
 	    </div>
 
+
+	    <!--Modal-->
+                <div class="modal fade" id="cancel_order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Cancel Order</h4>
+                          </div>
+                          <div class="modal-body">
+                          		Are you sure want to cancle ?
+                          </div>
+                          <div class="modal-footer">
+                            <a href="" id="order_cancle">
+                                <button type="button" class="model-btn" >Yes</button>
+                            </a>
+                            <button type="button" class="model-btn" data-dismiss="modal">No</button>
+                          </div>
+                        </div>
+                      </div>
+                </div> 
+        <!--Modal End--> 
+
+
     </div>
 </div>
+
+@endsection
+
+@section('js')
+
+<script>
+
+	$(".order").click(function()
+    {
+        var order_id = $(this).data('order');
+        var new_url = '{{ url("cancel_order") }}/'+order_id+'';
+                
+        $('#order_cancle').attr('href',new_url);
+
+    });
+
+</script>
 
 @endsection

@@ -93,6 +93,8 @@ class PaymentsController extends Controller
            
             Order::where("id", $order_id)->update($data);
 
+            Order::where("id", $order_id)->update(['status' => 'unpaid']);
+
             $data['details'] = [
                 'key'=> Config::get('settings.key'), 
                 'txnid'=> $order->order_no, 
@@ -102,7 +104,7 @@ class PaymentsController extends Controller
                 'email' => $user->email, 
                 'phone' => $request->phone_no, 
                 'surl' => url('payment/myorders'), 
-                'furl' => url('payment'), 
+                'furl' => url('order/'.$order->order_no.'/payment'), 
                 'service_provider' => 'payu_paisa',
                 'hash' => strtolower(hash('sha512','rjQUPktU|'.$order->order_no.'|'.$final_price.'|'.$card->name.'|'.$user->username.'|'.$user->email.'|||||||||||'.Config::get('settings.salt')))
                 ];
@@ -132,7 +134,7 @@ class PaymentsController extends Controller
     }
 
     public function payment_success(Request $request)
-    {
+    {   dd($request->all());
         $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid') ]);
         Session::flash('flash_message','Successfully paid. Your order will be delivered soon');
 

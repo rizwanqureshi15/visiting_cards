@@ -218,7 +218,7 @@
                 </div>
                 
                 <div class="form-group">
-                  <div class="col-sm-11 btn-payment">
+                  <div class="col-sm-11">
                     {{ Form::submit('PayNow',[ "class" => "btn-blog" ]) }}
                   </div>
                 </div>

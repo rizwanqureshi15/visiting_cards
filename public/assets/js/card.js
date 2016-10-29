@@ -422,7 +422,7 @@
 		                 feild = feild.replace(/\ /g, '_');
 		                 element_id = feild;
 
-		                $('#feild_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+		                $('#feild_body').append("<tr><td><input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements sidebar-textbox	' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
 		                $('#card_body').append("<div id='"+feild+"' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
 		                $('#'+feild).draggable();
 		                $('#'+feild).resizable();
@@ -499,7 +499,7 @@
 			                 feild = feild.replace(/\ /g, '_');
 			                 element_id = feild;
 
-			                $('#label_body').append("<input type='text' id='sidebar_"+feild+"' class='form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
+			                $('#label_body').append("<input type='text' id='sidebar_"+feild+"' class='sidebar-textbox form-control sidebar-elements' placeholder='Enter "+str+"' name="+ str +"></td></tr>");
 			                $('#card_body').append("<div id='"+feild+"' data-type='label' data-name='"+str+"' class='idcard-transperent ui-widget-content textbox-size feild-elements' style='border:none;position:absolute;top:15px;left:30px;height:25px;'> <span id='span_"+feild+"' style='color:black;font-family:arial;font-weight:400;font-style:normal;font-size:12px;'>"+str+"</span></div>");
 			                $('#'+feild).draggable();
 			                $('#'+feild).resizable();
@@ -733,12 +733,11 @@ $(document).ready(function(){
                 type: "POST",
                 url: site_url+'/save_single_card',
                 dataType: 'json',
-                data: {"_token": token ,"image": imgageData ,"url": template_url ,"is_back": 0},
+                data: {"_token": token ,"image": imgageData ,"url": template_url ,"is_back": '0'},
                 success : function(data){
           				order_no = data;
           				if(template_both_side == 1)
 				        {
-					         $('#back_side').show();
 					         html2canvas(element2, {
 					         onrendered: function (canvas) {
 					                getCanvas = canvas;
@@ -748,7 +747,7 @@ $(document).ready(function(){
 					                type: "POST",
 					                url: site_url+'/save_single_card',
 					                dataType: 'json',
-					                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1,"order_no": order_no},
+					                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": '1',"order_no": order_no},
 					                success : function(image)
 					                {
 					                	window.location.href = site_url+'/order/'+order_no+'/payment'; 
@@ -774,35 +773,6 @@ $(document).ready(function(){
 
                  }
              });
-
-         if(template_both_side == 1)
-         {
-	         $('#back_side').show();
-	         html2canvas(element2, {
-	         onrendered: function (canvas) {
-	                getCanvas = canvas;
-	                var imgageData = getCanvas.toDataURL("image/png");
-
-	                $.ajax({
-	                type: "POST",
-	                url: site_url+'/save_single_card',
-	                dataType: 'json',
-	                data: {"_token": token ,"image": imgageData ,"url": template_url,"is_back": 1,"order_no": order_no},
-	                success : function(image){
-	                	
-	                	window.location.href = "{{ url('myorders'}}"; 
-
-	                	$('#preview_image').modal('hide');
-	                    } 
-	                    }).fail(function(data){
-	                        var errors = data.responseJSON;
-	                    });
-
-
-	                 }
-	             });
-	         	$('#back_side').hide();
-     	}
         });
 
     });
