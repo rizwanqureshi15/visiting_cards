@@ -479,7 +479,7 @@
 		$('#back_save_as_template').click(function(){
 			var i=0;
 			feilds=[];	
-			$('#overlay').show();
+			$('#user_overlay').show();
 			
 			$.each(back_feild_names, function(key,  value){
 
@@ -544,21 +544,21 @@
 					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "user_template_id": new_template_id},
 					        dataType: 'json',
 					        success: function(msg) {
-					        	$('#overlay').hide();
+					        	$('#user_overlay').hide();
 					        	window.location.href = site_url+"/mytemplates";
 					        },
 					        error: function(jqXHR, textStatus, errorThrown) {
-					        	$('#overlay').hide();
-					        	alert("Error");
+					        	$('#user_overlay').hide();
+					        	alert("Something is wrong.!");
 					        }
 							
 							});
 					          
 			        },
 			        error: function(jqXHR, textStatus, errorThrown) {
-			        			$('#overlay').hide();
+			        			$('#user_overlay').hide();
 					        	alert("Error");
-					           console.log("hello12");
+					           console.log("Something is wrong.!");
 					}
 
 	                });
@@ -570,7 +570,7 @@
 	$('#back_save_modifications').click(function(){
 			var i=0;
 			feilds=[];	
-			$('#overlay').show();
+			$('#user_overlay').show();
 			
 			$.each(back_feild_names, function(key,  value){
 

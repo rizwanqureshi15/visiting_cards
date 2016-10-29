@@ -36,6 +36,9 @@
 <div id="front_side" style="display:block;"> 
 <div class="container">
 <div class="row">
+  <div id="user_overlay">
+      <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
+    </div> 
   @if($template->type == "horizontal")
     <div class="col-md-3" >
   @else
@@ -495,6 +498,7 @@
     var side = "";
 
        $(document).ready(function(){
+        $('#user_overlay').hide();
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });

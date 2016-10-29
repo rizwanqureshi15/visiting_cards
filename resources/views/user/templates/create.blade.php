@@ -4,6 +4,9 @@
 
 <div class="container">
 <div class="row">
+    <div id="user_overlay">
+      <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
+    </div> 
     @if($template->type == "horizontal")
         <div class="col-md-3">
     @else
@@ -134,7 +137,7 @@
         <!--Toolebasr start-->
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;height:54px;">
         <div class="col-md-12" style="padding:0px;">
-            <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
+            <div id="more_links" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
                     <u class="myFont" >U</u>
                </div>
@@ -279,6 +282,8 @@
     var new_template_id;
     var template_both_side = {{ $template->is_both_side }};
     var side = "";
+
+    $('#user_overlay').hide();
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>

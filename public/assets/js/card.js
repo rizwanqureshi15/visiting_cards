@@ -37,46 +37,46 @@
 		});
 
 		$("#under_line").click(function(){
-			var check = $("#span_" + element_id).css("text-decoration");
+			var check = $("#"+ side +"span_" + element_id).css("text-decoration");
 			
 			 if(check == "none")
 			 {
-				$("#span_" + element_id).css("text-decoration", "underline"); 	
+				$("#"+ side +"span_" + element_id).css("text-decoration", "underline"); 	
 				$("#under_line").addClass("button-selected");
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("text-decoration", "none");
+			 	$("#"+ side +"span_" + element_id).css("text-decoration", "none");
 			 	$("#under_line").removeClass("button-selected");
 			 }
 			
 		});
 		$("#italic").click(function(){
-			var check = $("#span_" + element_id).css("font-style");
+			var check = $("#"+ side +"span_" + element_id).css("font-style");
 			
 			 if(check == "normal")
 			 {
-				$("#span_" + element_id).css("font-style", "italic");
+				$("#"+ side +"span_" + element_id).css("font-style", "italic");
 				$("#italic").addClass("button-selected"); 	
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("font-style", "normal");
+			 	$("#"+ side +"span_" + element_id).css("font-style", "normal");
 			 	$("#italic").removeClass("button-selected");
 			 }
 			
 		});
 		$("#bold").click(function(){
-			var check = $("#span_" + element_id).css("font-weight");
+			var check = $("#"+ side +"span_" + element_id).css("font-weight");
 			
 			 if(check == 400)
 			 {
-				$("#span_" + element_id).css("font-weight", 900);
+				$("#"+ side +"span_" + element_id).css("font-weight", 900);
 				$("#bold").addClass("button-selected"); 	
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("font-weight", 400);
+			 	$("#"+ side +"span_" + element_id).css("font-weight", 400);
 			 	$("#bold").removeClass("button-selected");
 			 }
 			
@@ -114,7 +114,7 @@
 		    if(template_both_side == 1)
 		    {
 			    l = l.substring(0,l.length - 2);
-			    l = parseInt(l) + 400;
+			    l = parseInt(l) + 470;
 			    l += "px";
 		    }
 		    var t = $('#'+side + element_id).css('top');
@@ -130,7 +130,7 @@
 		    	txt_hight = txt_hight.substring(0,txt_hight.length - 2);
 		    	if(template_both_side == 1)
 		    	{
-		    		t = parseInt(t) + parseInt(txt_hight) + 80;
+		    		t = parseInt(t) + parseInt(txt_hight) + 150;
 		    	}else
 		    	{
 		    		t = parseInt(t) + parseInt(txt_hight) + 10;
@@ -140,15 +140,41 @@
 		    {
 		 		if(template_both_side == 1)
 		    	{
-		    		t = parseInt(t) - 0;
+		    		t = parseInt(t) + 30;
 		    	}else
 		    	{
 		    		t = parseInt(t) - 110;
 		    	}
-		    	
-		    
 		    }
-		  
+		  	
+		  	var check = $("#"+ side +"span_" + element_id).css("text-decoration");
+			 if(check == "none")
+			 {		
+			 	$("#under_line").removeClass("button-selected");
+			 }
+			 else
+			 {
+				$("#under_line").addClass("button-selected");	
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-style");
+			 if(check == "normal")
+			 {
+			 	$("#italic").removeClass("button-selected");	
+			 }
+			 else
+			 {
+			 	$("#italic").addClass("button-selected");
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-weight");
+			 if(check == 400)
+			 {
+			 	$("#bold").removeClass("button-selected");	
+			 }
+			 else
+			 {
+				$("#bold").addClass("button-selected"); 
+			 	
+			 }
 			var selectedfont = $('#'+side+'span_' + element_id).css('font-family');		 
 			$('#font-text').css('font-family', selectedfont);
 			$('#font-text').text(selectedfont);
@@ -631,7 +657,7 @@
  $(document).ready(function(){
 
         $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
+            $("#more_links").slideToggle("slow");
         });
 
 

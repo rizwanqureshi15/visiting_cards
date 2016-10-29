@@ -127,7 +127,7 @@
 		    	txt_hight = txt_hight.substring(0,txt_hight.length - 2);
 		    	if(template_both_side == 1)
 		    	{
-		    		t = parseInt(t) + parseInt(txt_hight) + 80;
+		    		t = parseInt(t) + parseInt(txt_hight) + 150;
 		    	}else
 		    	{
 		    		t = parseInt(t) + parseInt(txt_hight) + 10;
@@ -137,7 +137,7 @@
 		    {
 		 		if(template_both_side == 1)
 		    	{
-		    		t = parseInt(t) - 0;
+		    		t = parseInt(t) + 70;
 		    	}else
 		    	{
 		    		t = parseInt(t) - 70;
@@ -145,7 +145,34 @@
 		    	
 		    
 		    }
-		  
+		  	var check = $("#"+ side +"span_" + element_id).css("text-decoration");
+			 if(check == "none")
+			 {		
+			 	$("#under_line").removeClass("button-selected");
+			 }
+			 else
+			 {
+				$("#under_line").addClass("button-selected");	
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-style");
+			 if(check == "normal")
+			 {
+			 	$("#italic").removeClass("button-selected");	
+			 }
+			 else
+			 {
+			 	$("#italic").addClass("button-selected");
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-weight");
+			 if(check == 400)
+			 {
+			 	$("#bold").removeClass("button-selected");	
+			 }
+			 else
+			 {
+				$("#bold").addClass("button-selected"); 
+			 	
+			 }
 			var selectedfont = $('#'+side+'span_' + element_id).css('font-family');		 
 			$('#font-text').css('font-family', selectedfont);
 			$('#font-text').text(selectedfont);
@@ -644,7 +671,7 @@
  $(document).ready(function(){
 
         $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
+            $("#more_links").slideToggle("slow");
         });
 
 
@@ -667,7 +694,7 @@
         $("#save_as_template").on('click', function () {
             var i=0;
             feilds=[];
-            $('#overlay').show();
+            $('#user_overlay').show();
 
             $.each(field_names, function(key,  value){
 
@@ -754,11 +781,12 @@
                                 	new_template_id = template_id_json;
                                 	side = "back_";
                             	}
-                            	$('#overlay').hide();
+                            	$('#user_overlay').hide();
                              
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                            	$('#overlay').hide();
+                            	$('#user_overlay').hide();
+                            	alert('Something went Wrong..!');
                                console.log(textStatus, errorThrown);
                             }
                             
@@ -848,7 +876,7 @@
                                 	new_template_id = template_id_json;
                                 	side = "back_";
                             	}
-                            	$('#overlay').hide();
+                            	$('#user_overlay').hide();
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                console.log(textStatus, errorThrown);

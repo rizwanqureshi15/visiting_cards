@@ -226,8 +226,9 @@ class TemplatesController extends Controller
     }
     public function get_unique_url($template_id,$user_id)
     {
-        $c = userTemplate::where('template_id',$template_id)->where('user_id',$user_id)->count();
-        $url = template::where('id', $template_id)->pluck('url');
+        $c = UserTemplate::where('template_id',$template_id)->where('user_id',$user_id)->count();
+        $url = Template::where('id', $template_id)->pluck('url');
+        
         if($c > 0)
         {
             $url = $url[0] ."-". $c;
@@ -237,12 +238,12 @@ class TemplatesController extends Controller
         {
             $url = $url[0];
         }
+        
         return $url;
     }
      public function back_save_user_template(Request $request)
     { 
          $template =  Template::where('id',$request->template_id)->first();
-        $user_id = Auth::user()->id;
         $user_fields=array(
                 
                 'background_image_back' => $template->background_image_back,
@@ -256,7 +257,6 @@ class TemplatesController extends Controller
             foreach ($request->feilds as $feild) 
             { 
                 $feild["template_id"] = $request->user_template_id; 
-                $feild["user_id"] = $user_id;
                 $feild["is_back"] = 1;
                 UserTemplateFeild::create($feild);    
             }
@@ -267,7 +267,6 @@ class TemplatesController extends Controller
             foreach ($request->labels as $label) 
             { 
                 $label["template_id"] = $request->user_template_id; 
-                $label["user_id"] = $user_id;
                 $label["is_label"] = 1;
                 $label["is_back"] = 1;
                 UserTemplateFeild::create($label);    
@@ -279,7 +278,7 @@ class TemplatesController extends Controller
        {
             foreach ($request->images as $image) {
 
-               $id =  UserTemplateFeild::insertGetId(['name'=>$image['name'],'is_back' => 1, 'user_id' => $user_id,'template_id' => $request->user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
+               $id =  UserTemplateFeild::insertGetId(['name'=>$image['name'],'is_back' => 1,'template_id' => $request->user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);
 
                 $image_data = TemplateImage::where('template_feild_id', $image['id'])->first();   
                 UserTemplateImage::create(['src' => $image_data->src, 'template_feild_id' => $id]);
@@ -795,6 +794,7 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels; 
+                
                 if($data['template']->is_both_side == 1)
                 {
                   return view('user.cards.single_card_double_side_create',$data);

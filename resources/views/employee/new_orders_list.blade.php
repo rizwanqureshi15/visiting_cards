@@ -46,6 +46,30 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="onDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      {{ Form::open(array('method' => 'post', 'url' => url('cancel_order'), 'class' =>"form-horizontal")) }}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Cancel Order</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-6 control-label">Are you sure want to cancel this Order ?</label>
+            <div class="col-sm-6">
+              {{ Form::hidden('cancel_id', null, ['id' => 'cancel_order_id']) }}
+            </div>
+          </div>        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Delete">    
+        </div>
+      {{ Form::close() }}
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('js')
@@ -78,29 +102,12 @@
             $(this).addClass('selected');
         }
     } );
-    $(document).on("click",'.cancel_order', function(){
-    	
-    	var order_id = $(this).data('id');
-    	var val = confirm("Are you sure you want to Cancel Order ?");
-		if(val)
-		{
-			$(this).closest("tr").hide();
-			$.ajax({
-            type: "POST",
-            url: site_url+'/cancel_order',
-            dataType: 'json',
-            async: false,
-            data: {"_token": token ,"order_id":order_id},
-            success : function(image)
-            {
-            }})	
-            table.draw();
-		}
-		else
-		{
+    $(document).on('click','.cancel_order', function(){
 
-		}
-		});
+                var cancel_id = $(this).data('id');
+                $('#cancel_order_id').val(cancel_id);
+
+            });
     });
   </script>
 	

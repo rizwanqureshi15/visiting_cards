@@ -126,7 +126,7 @@ Route::post('upload_images/{url}',['middleware' => 'auth','uses' => 'Front\Templ
 
 Route::get('delete_folder', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_multiple_preview_folder']);
 Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
-Route::post('user_template_back_save', ['middleware' => 'auth','uses' => 'Front\TemplatesController@back_save_user_template']);
+Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');
 
 Route::get('admin/materials/create', 'MaterialController@create');
 Route::post('admin/materials/create', 'MaterialController@create_post');
@@ -155,7 +155,7 @@ Route::get('order/confirm/{id}', 'EmployeeController@confirm_order');
 Route:: get('cancel_orders/list', 'EmployeeController@cancel_order_list');
 
 Route::get('admin/cancel-order-datatable', 'EmployeeController@cancel_order_datatable');
-Route::post('cancel_order', 'EmployeeController@cancel_order');
+Route::post('cancel_order', 'Front\PaymentsController@refund');
 
 
 Route::get('myorders',['middleware' => 'auth','uses' => 'OrderController@show_user_order']);
@@ -208,3 +208,5 @@ Route::get('contact','HomeController@show_contact_page');
 Route::post('submit_contact','HomeController@submit_contact');
 
 Route::get('material/{material_id}','Front\TemplatesController@get_material_id');
+
+Route::get('order/refund/{id}', 'PaymentsController@refund');

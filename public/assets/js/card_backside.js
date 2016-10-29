@@ -132,51 +132,6 @@
 			$('.back_template_image_div').resizable();
 			$('.back_template_image_div').draggable();
 		});
-		
-		
-		// $(document).on('click',".feild-elements", function(event) {
-		//      event.stopPropagation();
-		//     var l = $('#'+side+element_id).css('left');
-
-		//     l = l.substring(0,l.length - 2);
-		//     l = parseInt(l) + 260;
-		//     l += "px";
-		//     var t = $('#'+side + element_id).css('top');
-		//     var txt = $('#'+side +element_id).text();
-		//     $('#myTextBox').val($.trim(txt));
-		   
-		//     t = t.substring(0,t.length - 2);
-
-		//     if( parseInt(t) < 100 )
-		//     {
-		//     	var txt_hight = $('#'+side + element_id).css('height');
-		//     	t = parseInt(t) + parseInt(txt_hight) + 10;
-		    	
-		//     }
-		//     else
-		//     {
-		//     	t = parseInt(t)-110;
-		//     }
-		  
-		// 	var selectedfont = $('#'+side+'span_' + element_id).css('font-family');		 
-		// 	$('#font-text').css('font-family', selectedfont);
-		// 	$('#font-text').text(selectedfont);
-		// 	 var selectedfontsize = $('#'+side+'span_' + element_id).css('font-size');	
-		// 	 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
-		// 	 var hex = $('#'+side+'span_' + element_id).css('color');	
-		// 	 $('#colorSelector div').css('backgroundColor', '#' + hex);
-		// 	 feild_color = rgb2hex(hex);
-			
-		// 	$('#size-font').val(s).prop('selected', true);
-
-		//     t += "px";
-
-		//     $('#myToolbar').css('left',l);
-		//     $('#myToolbar').css('top',t);
-		    
-		//     $("#myToolbar").show();
-		// });
-
 		//Font Style Select
 		// $(function(){
   //       $('#font').fontselect();

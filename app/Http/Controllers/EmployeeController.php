@@ -110,7 +110,8 @@ class EmployeeController extends Controller
          return Datatables::of($orders)
                     ->addColumn('action', function ($data) {
                            
-                            $button = '<a href='.url("admin/new_orders/" . $data->id . "/list").'>View</a> |  <a id="is_cancel" class="cancel_order" data-id='. $data->id .'>Cancel</a>';
+                            $button = '<a href='.url("admin/new_orders/" . $data->id . "/list").'>View</a> |  
+                            <a data-toggle="modal"  style="cursor: pointer" class="cancel_order" data-target="#onDelete" data-id="'. $data->id .'" >Cancel</a>';
                             return $button;
                         })
                     ->editColumn('user_id', function ($data) {

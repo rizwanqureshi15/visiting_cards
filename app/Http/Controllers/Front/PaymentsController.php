@@ -138,6 +138,30 @@ class PaymentsController extends Controller
 
         return redirect('myorders');
     } 
+
+    public function refund(Request $request)
+    {
+        Order::where('id', $request->cancel_id)->update(['is_cancel' => 1]);
+        $transaction_id = Order::where('id', $request->cancel_id)->first();
+        $url = 'https://test.payumoney.com/payment/payment/chkMerchantTxnStatus?'; 
+        $data = array('merchantKey'=>'rjQUPktU','merchantTransactionIds'=> $transaction_id->order_no); 
+        $query = http_build_query($data);
+        $options = array( 
+          'http' => array( 
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+                  "Content-Length: ".strlen($query)."\r\n".
+                    "User-Agent:MyAgent/1.0\r\n,Authorization:5655765", 
+            'method' => 'POST', 
+            'Authorization'=> '5655765', 
+            'content' =>  $query
+            ), 
+          ); 
+        $context = stream_context_create($options); 
+        $result = file_get_contents($url, false, $context); 
+        if ($result === FALSE) { /* Handle error */ } 
+         dd($result); 
+        
+    }
     
     public function test()
     {

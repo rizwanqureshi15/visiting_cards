@@ -145,6 +145,34 @@
 		    {
 		    	t = parseInt(t)-parseInt($("#myToolbar").css('height'))-10;
 		    }
+		    var check = $("#"+ side +"span_" + element_id).css("text-decoration");
+			 if(check == "none")
+			 {		
+			 	$("#under_line").removeClass("button-selected");
+			 }
+			 else
+			 {
+				$("#under_line").addClass("button-selected");	
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-style");
+			 if(check == "normal")
+			 {
+			 	$("#italic").removeClass("button-selected");	
+			 }
+			 else
+			 {
+			 	$("#italic").addClass("button-selected");
+			 }
+			 var check = $("#"+ side +"span_" + element_id).css("font-weight");
+			 if(check == 400)
+			 {
+			 	$("#bold").removeClass("button-selected");	
+			 }
+			 else
+			 {
+				$("#bold").addClass("button-selected"); 
+			 	
+			 }
 		   var selectedfont = $('#span_' + element_id).css('font-family');		 
 			$('#font-text').css('font-family', selectedfont);
 			$('#font-text').text(selectedfont);
@@ -612,7 +640,7 @@
  $(document).ready(function(){
 
         $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
+            $("#more_links").slideToggle("slow");
         });
 
 
