@@ -390,7 +390,7 @@
 
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
         <div class="col-md-12" style="padding:0px;">
-            <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
+            <div id="more_links" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
                     <u class="myFont" >U</u>
                </div>
@@ -437,7 +437,7 @@
                 <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:5px;" id="toolbardelete">
             </div>
             <div class="col-md-4" style="height:51px;padding:0px;width:33.33%;padding-left: 14px;border-bottom: 1px solid #b5babf;padding-top:10px;">
-                <a href="#" style="font-size: 20px;color:blue" id="flip">More</a>
+                <a style="font-size: 20px;color:blue" id="flip">More</a>
             </div>
         </div>
        
@@ -530,9 +530,11 @@
     var side = "";
 
        $(document).ready(function(){
-        $("#flip").click(function(){
-            $("#panel").slideToggle("slow");
-        });
+
+          $("#flip").click(function(){
+              $("#more_links").slideToggle("slow");
+          });
+
        $("#front_back").click(function(){
           if($(this).text() == "Front")
           {

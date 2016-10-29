@@ -1106,3 +1106,10 @@ a:hover
 {
     color: #47bac1 !important;
 }
+
+.preview
+{
+    border: 2px solid gray;
+    height: 420px;
+    width: 694px;
+}

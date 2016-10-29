@@ -229,7 +229,7 @@
                 <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:5px;" id="toolbardelete">
             </div>
             <div class="col-md-4" style="height:51px;padding:0px;width:33.33%;padding-left: 14px;border-bottom: 1px solid #b5babf;padding-top:10px;">
-                <a href="#" style="font-size: 20px;color:blue" id="flip">More</a>
+                <a style="font-size: 20px;color:blue" id="flip">More</a>
             </div>
         </div>
        
