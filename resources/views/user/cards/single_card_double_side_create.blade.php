@@ -530,11 +530,6 @@
     var side = "";
 
        $(document).ready(function(){
-
-          $("#flip").click(function(){
-              $("#more_links").slideToggle("slow");
-          });
-
        $("#front_back").click(function(){
           if($(this).text() == "Front")
           {

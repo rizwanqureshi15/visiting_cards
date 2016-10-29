@@ -34,46 +34,46 @@
 		});
 
 		$("#under_line").click(function(){
-			var check = $("#span_" + element_id).css("text-decoration");
+			var check = $("#"+ side +"span_" + element_id).css("text-decoration");
 			
 			 if(check == "none")
 			 {
-				$("#span_" + element_id).css("text-decoration", "underline"); 	
+				$("#"+ side +"span_" + element_id).css("text-decoration", "underline"); 	
 				$("#under_line").addClass("button-selected");
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("text-decoration", "none");
+			 	$("#"+ side +"span_" + element_id).css("text-decoration", "none");
 			 	$("#under_line").removeClass("button-selected");
 			 }
 			
 		});
 		$("#italic").click(function(){
-			var check = $("#span_" + element_id).css("font-style");
+			var check = $("#"+ side +"span_" + element_id).css("font-style");
 			
 			 if(check == "normal")
 			 {
-				$("#span_" + element_id).css("font-style", "italic");
+				$("#"+ side +"span_" + element_id).css("font-style", "italic");
 				$("#italic").addClass("button-selected"); 	
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("font-style", "normal");
+			 	$("#"+ side +"span_" + element_id).css("font-style", "normal");
 			 	$("#italic").removeClass("button-selected");
 			 }
 			
 		});
 		$("#bold").click(function(){
-			var check = $("#span_" + element_id).css("font-weight");
+			var check = $("#"+ side +"span_" + element_id).css("font-weight");
 			
 			 if(check == 400)
 			 {
-				$("#span_" + element_id).css("font-weight", 900);
+				$("#"+ side +"span_" + element_id).css("font-weight", 900);
 				$("#bold").addClass("button-selected"); 	
 			 }
 			 else
 			 {
-			 	$("#span_" + element_id).css("font-weight", 400);
+			 	$("#"+ side +"span_" + element_id).css("font-weight", 400);
 			 	$("#bold").removeClass("button-selected");
 			 }
 			
@@ -177,7 +177,6 @@
 			$('#font-text').css('font-family', selectedfont);
 			$('#font-text').text(selectedfont);
 			 var selectedfontsize = $('#'+side+'span_' + element_id).css('font-size');
-			 console.log(selectedfontsize);	
 			 var s = selectedfontsize.substring(0,selectedfontsize.length-2);
 			 var hex = $('#'+side+'span_' + element_id).css('color');	
 			 $('#colorSelector div').css('backgroundColor', '#' + hex);
