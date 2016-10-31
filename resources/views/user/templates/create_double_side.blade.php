@@ -500,7 +500,6 @@
        $(document).ready(function(){
         $('#user_overlay').hide();
         
-        
        $("#front_back").click(function(){
           if($(this).text() == "Front")
           {

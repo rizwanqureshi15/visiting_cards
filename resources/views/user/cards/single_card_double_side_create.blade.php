@@ -530,7 +530,7 @@
     var side = "";
 
        $(document).ready(function(){
-
+        
        $("#front_back").click(function(){
           if($(this).text() == "Front")
           {
