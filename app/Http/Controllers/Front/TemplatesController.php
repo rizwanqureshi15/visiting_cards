@@ -1388,7 +1388,13 @@ class TemplatesController extends Controller
     public function get_material_id($material_id)
     {
         Session::put('material_id',$material_id);
-        return redirect()->back();
+        return redirect('cards');
+    }
+
+    public function save_material_id(Request $request)
+    {
+        Session::put('material_id',$request->material_id);
+        return response()->json();
     }
 
 

@@ -5,34 +5,6 @@
 <div class="container" >
     <div class="row">
 
-        @if(!Session::get('material_id'))
-            <!--Modal-->
-                <div class="modal fade" id="material_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Choose Material</h4>
-                          </div>
-                          <div class="modal-body">
-                                <select class="form-control textbox-controll">
-                                @foreach($materials as $material)
-                                        <option value="{{ $material->id }}" class="form-control textbox-controll">{{ $material->name }}</option>
-                                @endforeach
-                            </select>
-                          </div>
-                          <div class="modal-footer">
-                            <a href="{{ url('material',$material->id) }}">
-                                <button type="button" class="model-btn">Save</button>
-                            </a>
-                            
-                          </div>
-                        </div>
-                      </div>
-                </div> 
-            <!--Modal End--> 
-        @endif
-
         <div class="col-md-3">
             	 <table class="table mytable" border="1" style="margin-top:20px;">
                     <thead>
