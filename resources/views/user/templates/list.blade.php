@@ -11,7 +11,7 @@
                     </div>
              @endif
         </div>
-        
+
         <input type="hidden" value="{{ Session::get('material_id') }}" id="material">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -55,7 +55,7 @@
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only" data-dismiss="modal">Close</span></button>
+                            <button type="button" class="close"><span aria-hidden="true" data-dismiss="modal">&times;</span><span class="sr-only">Close</span></button>
                             <h4 class="modal-title" id="myModalLabel">Choose Material</h4>
                           </div>
                           <div class="modal-body">
