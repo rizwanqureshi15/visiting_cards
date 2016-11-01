@@ -1047,7 +1047,7 @@ class TemplatesController extends Controller
         //End getting
 
         //Comparing Feilds
-            
+           
             $new_feild_names = array();
             foreach ($feild_names as $value) 
             {

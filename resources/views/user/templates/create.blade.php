@@ -64,13 +64,13 @@
             @if($template->type == 'horizontal')
                 <div class="col-md-9">
                  <div class="canvasBorder-horizontal">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
                  <div class="canvasBorder-verticle">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
