@@ -136,7 +136,24 @@
 
                             $.each(user_cards, function( i,val ) 
                             {
-                                html+="<div class='col-md-4'><img src='"+site_url+"/images/"+ username+"/"+ val.image +"' style='width:100%;padding-top:20px;'></div>";
+                                html+="<div class='col-md-4'>";
+                                html+="<a id="+val.url+" data-url="+val.url+" class='url'> ";
+                                
+                                if(val.type == "horizontal")
+                                {
+                                    html+="<img class='image' src="+site_url+"/images/"+username+"/"+val.snap+">";
+                                }
+                                else
+                                {
+                                    html+="<img class='vertical_image' src="+site_url+"/images/"+username+"/"+val.snap+">";
+                                }
+
+                                html+="</a>";
+                                html+="<a href="+site_url+"/mytemplates/"+val.url+"/edit>";
+                                html+="<button class='btn-blog col-md-5'>Edit</button></a>";
+                                      
+                                html+="<a href="+site_url+"/mytemplates/"+val.url+"/delete>";
+                                html+="<button class='btn-blog col-md-6' style='margin-right:22px;'>Delete</button></a></div>";
                             });
             
                         $('#posts').append(html);

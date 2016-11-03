@@ -54,6 +54,7 @@
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
                     <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
+                    <div class="error"></div>
                 </div>
                 <div class="col-md-4">
                     <button id="newFeildBtn" class="sidebar-btn">OK</button>     
@@ -88,6 +89,7 @@
             <div class="row">
               <div class="col-md-8" style="padding-right:0px">
                 <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
+                <div class="lable-error"></div>
               </div>
               <div class="col-md-4">
                 <button id="newLabelBtn" class="sidebar-btn">OK</button>
@@ -330,6 +332,60 @@
     var template_id = {{ $template->id }};
     var side ="";
     var template_both_side = {{ $template->is_both_side }};
+
+      var typingTimer;                
+      var doneTypingInterval = 500;
+
+      $('#newFeildName').keyup(function () 
+      {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(CheckFeild, doneTypingInterval);
+      });
+
+      function CheckFeild() 
+      { 
+          var a = $('#newFeildName').val();
+          if(a.indexOf('.') > -1)
+          {
+              $('.error').html("<div style='color:red'>You can not use dot(.) as a character</div>");
+              $('#newFeildBtn').css('cursor','no-drop');
+              $('#newFeildBtn').attr('disabled','disabled');
+          }
+          else
+          { 
+              $('.error').html("");
+              $('#newFeildBtn').css('cursor','auto');
+              document.getElementById("newFeildBtn").disabled=false
+          }
+      }
+
+        var lableTimer;                
+        var doneLableInterval = 500;
+
+        $('#newLabelName').keyup(function () 
+        {
+            clearTimeout(lableTimer);
+            lableTimer = setTimeout(CheckLable, doneLableInterval);
+        });
+
+        function CheckLable() 
+        { 
+            var a = $('#newLabelName').val();
+            if(a.indexOf('.') > -1)
+            {
+                $('.lable-error').html("<div style='color:red'>You can not use dot(.) as a character</div>");
+                $('#newLabelBtn').css('cursor','no-drop');
+                $('#newLabelBtn').attr('disabled','disabled');
+            }
+            else
+            { 
+                $('.lable-error').html("");
+                $('#newLabelBtn').css('cursor','auto');
+                document.getElementById("newLabelBtn").disabled=false;
+            }
+        }
+
+
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
