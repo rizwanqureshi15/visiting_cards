@@ -380,7 +380,7 @@ class TemplatesController extends Controller
         $user = Auth::user();
         $data['username'] = $user->username;
         
-        $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
+        $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('id','desc')->take(Config::get('settings.number_of_items'))->get(); 
         if(count($data['user_cards'])==0)
         {
             $data['user_cards'] = false;

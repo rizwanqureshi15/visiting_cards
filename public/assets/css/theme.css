@@ -1113,3 +1113,30 @@ a:hover
     height: 420px;
     width: 694px;
 }
+
+.overlay
+{
+    z-index: 1;
+}
+
+.canvas-element-wrapper
+{
+    position: absolute;
+    top:0;
+    left: 0;
+}
+
+.safety-margin-line-fg
+{
+    border-top: 1px dashed red;
+    border-left: 1px dashed red;
+    pointer-events: none;
+    position: absolute;
+    opacity: .5;
+}
+
+.gallery-box
+{
+    height: 272.48px;
+    width: 269px;
+}

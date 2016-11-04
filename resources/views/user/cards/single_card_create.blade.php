@@ -117,12 +117,28 @@
                 <div class="col-md-7">
                  <div class="canvasBorder-horizontal">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:419px;width:690px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 665px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 665px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="690" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
                  <div class="canvasBorder-verticle">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
@@ -300,7 +316,7 @@
                 </div>
             <!--Modal End-->
         </div>
-         @if($template->type == "horizontal")
+        <!--  @if($template->type == "horizontal")
           <div style="margin-right:72px">
           @else
           <div style="margin-right:255px;">
@@ -311,7 +327,36 @@
                <a id="btnborder" class="btn-blog" style="margin-right:20px;">
                   Show Borders
                </a>
-          </div>
+               <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+          </div> -->
+
+
+          @if($template->type == "horizontal")
+            <div style="margin-right:72px">
+
+              <button class="btn-blog" id="Preview_single" data-toggle="modal" data-target="#preview_image">
+                Preview
+             </button>   
+               <a id="btnborder" class="btn-blog" style="margin-right:20px;">
+                  Show Borders
+               </a>
+               <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+            </div>
+            </div>
+             @else
+             </div>
+                  <div class="col-md-6 col-md-offset-4">
+                    <button class="btn-blog" id="Preview_single" data-toggle="modal" data-target="#preview_image">
+                        Preview
+                   </button>   
+                     <a id="btnborder" class="btn-blog" style="margin-right:20px;">
+                        Show Borders
+                     </a>
+                     <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+                  </div>
+             @endif
+
+
 </div>
 </div>
 </div>
@@ -384,6 +429,22 @@
                 document.getElementById("newLabelBtn").disabled=false;
             }
         }
+
+        $(document).ready(function()
+        {
+            $("#guideline").click(function(){
+              if($(this).text() == "Show Guideline")
+              {
+                  $('#guideline_border').show();
+                  $(this).text("Hide Guideline");
+              }
+              else
+              { 
+                  $('#guideline_border').hide();
+                  $(this).text("Show Guideline");
+              }
+          });
+        });
 
 
 </script>

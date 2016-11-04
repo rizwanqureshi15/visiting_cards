@@ -35,7 +35,11 @@
 </style>
 <div id="front_side" style="display:block;"> 
 <div class="row">
-    <div class="col-md-3 col-md-offset-1">
+  @if($template->type == "horizontal")
+      <div class="col-md-3 col-md-offset-1">
+  @else
+      <div class="col-md-3 col-md-offset-2">
+  @endif
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class=" panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
@@ -109,12 +113,25 @@
   <div class="col-md-8">
     <div class="canvasBorder-horizontal">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:419px;width:690px;">
+        <div id="guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 665px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 665px; height: 1px;"></div>
+        </div>
         <canvas id="canvas1" width="690" height="418">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder-verticle">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+          <div id="guideline_border" class="overlay canvas-element-wrapper">
+              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
+              <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
+              <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
+          </div>
+
         <canvas id="canvas1" width="400" height="648">
         </canvas>
 @endif
@@ -174,6 +191,7 @@
          
          <!--Image Toolbar Start-->
         <div id="imageToolbar" class="popup-imagetoolbar row col-md-12" style="display:none">
+            
             <!--Image Shape-->
                 <div class="col-md-5 imagetoolbar_section" >
                     <div class="squere_shape"></div>
@@ -290,13 +308,29 @@
 @if($template->type == 'horizontal')
   <div class="col-md-8">
     <div class="canvasBorder-horizontal">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:690px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100% 100%;height:419px;width:690px;">
+        
+        <div id="back_guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 665px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 665px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas2" width="690" height="419">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder-verticle">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100% 100%;height:648px;width:400px;">
+        
+          <div id="back_guideline_border" class="overlay canvas-element-wrapper">
+              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
+              <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
+              <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
+          </div>
+
         <canvas id="canvas2" width="400" height="648">
         </canvas>
 @endif
@@ -379,7 +413,13 @@
 </div>
 
 <div class="row">
-  <div class="col-md-5 col-md-offset-6" style="margin-top:10px;">
+
+      @if($template->type == "vertical")
+          <div class="col-md-7 col-md-offset-3" style="margin-top:10px;">
+      @else
+          <div class="col-md-7 col-md-offset-4" style="margin-top:10px;">
+      @endif
+
       <button class="btn-blog" id="front_back"  style="margin-right:40px">Back</button>
       <button class="btn-blog" id="Preview" data-toggle="modal" data-target="#preview_image" style="margin-right: 20px;">
         Preview
@@ -387,6 +427,8 @@
       <a id="btnborder" class="btn-blog" style="margin-right: 20px;">
         Show Borders
       </a>
+      <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+     
   </div>
   </div>
   <div class="row">
@@ -638,7 +680,40 @@
             }
         }
 
+      $(document).ready(function(){
 
+          $("#guideline").click(function(){
+            if($(this).text() == "Show Guideline")
+            {
+                $('#guideline_border').show();
+                $('#back_guideline_border').show();
+                $(this).text("Hide Guideline");
+            }
+            else
+            { 
+                $('#guideline_border').hide();
+                $('#back_guideline_border').hide();
+                $(this).text("Show Guideline");
+            }
+        });
+      });
+
+
+      $(document).ready(function()
+      {
+          $("#back_guideline").click(function(){
+            if($(this).text() == "Show Guideline")
+            {
+                $('#back_guideline_border').show();
+                $(this).text("Hide Guideline");
+            }
+            else
+            { 
+                $('#back_guideline_border').hide();
+                $(this).text("Show Guideline");
+            }
+        });
+      });
 
 
        $(document).ready(function(){

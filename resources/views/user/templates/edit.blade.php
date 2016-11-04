@@ -65,12 +65,28 @@
                 <div class="col-md-7">
                  <div class="canvasBorder-horizontal">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 665px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 665px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="680" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
                  <div class="canvasBorder-verticle">
                 <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="400" height="648">
                 </canvas>
              @endif
@@ -135,7 +151,7 @@
         <!--Toolebasr start-->
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;height:54px;">
         <div class="col-md-12" style="padding:0px;">
-            <div id="panel" class="col-md-6 col-md-offset-8" style="padding:0px;">
+            <div id="more_links" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">
                     <u class="myFont" >U</u>
                </div>
@@ -182,7 +198,7 @@
                 <img src="{{ url('assets/images/delete.png') }}" style="width:40px;margin-top:5px;" id="toolbardelete">
             </div>
             <div class="col-md-4" style="height:51px;padding:0px;width:33.33%;padding-left: 14px;border-bottom: 1px solid #b5babf;padding-top:10px;">
-                <a href="#" style="font-size: 20px;" id="flip">More</a>
+                <a style="font-size: 20px;color:blue" id="flip">More</a>
             </div>
         </div>
         <!--Toolbar Delete Button end-->
@@ -246,7 +262,7 @@
                 </div>
               </div>
             </div>
-             @if($template->type == "horizontal")
+            <!--  @if($template->type == "horizontal")
               <div style="">
               @else
               <div>
@@ -257,9 +273,36 @@
             <a id="btnborder" class="btn-blog" style="margin-right:10px">
                 Show Borders
              </a>
-             </div>
+             <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+             </div> -->
         </div>
-</div>
+
+              @if($template->type == "horizontal")
+                <div style="margin-right:168px">
+
+                  <button class="btn-blog" id="save_modifications">
+                      Save Modifications
+                  </button>   
+                  <a id="btnborder" class="btn-blog" style="margin-right:10px">
+                      Show Borders
+                   </a>
+                   <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+                </div>
+                </div>
+              
+               @else
+               </div>
+                    <div class="col-md-6 col-md-offset-4">
+                      <button class="btn-blog" id="save_modifications">
+                        Save Modifications
+                    </button>   
+                    <a id="btnborder" class="btn-blog" style="margin-right:10px">
+                        Show Borders
+                     </a>
+                     <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+                    </div>
+               @endif
+
 </div>
 </div>
 
@@ -276,6 +319,7 @@
     var upload_images = {!! json_encode($template_images) !!};
     var label_names = {!! json_encode($template_labels) !!};;
     var template_id = {{ $template->id }};
+    var side= "";
 
     var typingTimer;                
     var doneTypingInterval = 500;
@@ -328,6 +372,39 @@
               document.getElementById("newLabelBtn").disabled=false;
           }
       }
+
+      $(document).ready(function()
+      {
+          $("#guideline").click(function(){
+            if($(this).text() == "Show Guideline")
+            {
+                $('#guideline_border').show();
+                $(this).text("Hide Guideline");
+            }
+            else
+            { 
+                $('#guideline_border').hide();
+                $(this).text("Show Guideline");
+            }
+        });
+      });
+
+      $("#front_back").click(function(){
+          if($(this).text() == "Front")
+          {
+              $(this).text("Back");
+              $("#front_side").show();
+              $("#back_side").hide();
+              side = "";
+          }
+          else
+          { 
+              $(this).text("Front");
+              $("#back_side").show();
+              $("#front_side").hide();
+              side = "back_";
+          }
+       });
     
 </script>
 
