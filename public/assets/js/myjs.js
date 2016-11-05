@@ -691,9 +691,15 @@
         });
 
         $("#save_as_template").on('click', function () {
+
+        	$('#guideline_border').css('display','none');
+        	$('.feild-elements').css('border', 'none');	
+			$('.template_image_div').css('border', 'none');	
+
             var i=0;
             feilds=[];
             $('#user_overlay').show();
+            $('#navbar').hide();
 
             $.each(field_names, function(key,  value){
 
@@ -777,6 +783,7 @@
                             		alert("Front side of card is successfully saved..!");
                                 	$('#front_side').hide();
                                 	$('#back_side').show();
+                                	$('#navbar').show();
                                 	new_template_id = template_id_json;
                                 	side = "back_";
                             	}

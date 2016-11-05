@@ -477,10 +477,16 @@
 
 		//work on lable end
 		$('#back_save_as_template').click(function(){
+
+			$('#back_guideline_border').css('display','none');
+			$('.feild-elements').css('border', 'none');	
+			$('.back_template_image').css('border', 'none');	
+			$('#user_overlay').show();
+			$('#navbar').hide();
+
 			var i=0;
 			feilds=[];	
-			$('#user_overlay').show();
-			
+
 			$.each(back_feild_names, function(key,  value){
 
 				var id1  = value.toLowerCase();
@@ -526,7 +532,6 @@
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
 	                getCanvas = canvas;
-	              
 	                var imgageData = getCanvas.toDataURL("image/png");
 
 	                $.ajax({
@@ -571,6 +576,7 @@
 			var i=0;
 			feilds=[];	
 			$('#user_overlay').show();
+			$('#navbar').hide();
 			
 			$.each(back_feild_names, function(key,  value){
 

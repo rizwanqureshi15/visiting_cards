@@ -380,7 +380,7 @@ class TemplatesController extends Controller
         $user = Auth::user();
         $data['username'] = $user->username;
         
-        $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items'))->get(); 
+        $data['user_cards'] = UserTemplate::where('user_id',$user->id)->orderBy('id','desc')->take(Config::get('settings.number_of_items'))->get(); 
         if(count($data['user_cards'])==0)
         {
             $data['user_cards'] = false;
@@ -1047,7 +1047,7 @@ class TemplatesController extends Controller
         //End getting
 
         //Comparing Feilds
-            
+           
             $new_feild_names = array();
             foreach ($feild_names as $value) 
             {
@@ -1388,7 +1388,13 @@ class TemplatesController extends Controller
     public function get_material_id($material_id)
     {
         Session::put('material_id',$material_id);
-        return redirect()->back();
+        return redirect('cards');
+    }
+
+    public function save_material_id(Request $request)
+    {
+        Session::put('material_id',$request->material_id);
+        return response()->json();
     }
 
 

@@ -54,6 +54,7 @@
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
                     <input type="text" class="form-control sidebar-textbox" id="newFeildName" placeholder="Enter New Feild">
+                    <div class="error"></div>
                 </div>
                 <div class="col-md-4">
                     <button id="newFeildBtn" class="sidebar-btn">OK</button>     
@@ -88,6 +89,7 @@
             <div class="row">
               <div class="col-md-8" style="padding-right:0px">
                 <input type="text" class="form-control sidebar-textbox" id="newLabelName" placeholder="Enter New Label">
+                <div class="lable-error"></div>
               </div>
               <div class="col-md-4">
                 <button id="newLabelBtn" class="sidebar-btn">OK</button>
@@ -114,14 +116,31 @@
          @if($template->type == 'horizontal')
                 <div class="col-md-7">
                  <div class="canvasBorder-horizontal">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:690px;">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:419px;width:690px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 665px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 665px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="690" height="419">
                 </canvas>
             @else
                 <div class="col-md-6">
                  <div class="canvasBorder-verticle">
-                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:410px;">
+                <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:410px;">
+                
+                <div id="guideline_border" class="overlay canvas-element-wrapper">
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
+                </div>
+
                 <canvas id="canvas1" width="410" height="648">
+
                 </canvas>
              @endif
                 
@@ -298,7 +317,7 @@
                 </div>
             <!--Modal End-->
         </div>
-         @if($template->type == "horizontal")
+        <!--  @if($template->type == "horizontal")
           <div style="margin-right:72px">
           @else
           <div style="margin-right:255px;">
@@ -309,7 +328,36 @@
                <a id="btnborder" class="btn-blog" style="margin-right:20px;">
                   Show Borders
                </a>
-          </div>
+               <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+          </div> -->
+
+
+          @if($template->type == "horizontal")
+            <div style="margin-right:72px">
+
+              <button class="btn-blog" id="Preview_single" data-toggle="modal" data-target="#preview_image">
+                Preview
+             </button>   
+               <a id="btnborder" class="btn-blog" style="margin-right:20px;">
+                  Show Borders
+               </a>
+               <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+            </div>
+            </div>
+             @else
+             </div>
+                  <div class="col-md-6 col-md-offset-4">
+                    <button class="btn-blog" id="Preview_single" data-toggle="modal" data-target="#preview_image">
+                        Preview
+                   </button>   
+                     <a id="btnborder" class="btn-blog" style="margin-right:20px;">
+                        Show Borders
+                     </a>
+                     <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
+                  </div>
+             @endif
+
+
 </div>
 </div>
 </div>
@@ -330,6 +378,76 @@
     var template_id = {{ $template->id }};
     var side ="";
     var template_both_side = {{ $template->is_both_side }};
+
+      var typingTimer;                
+      var doneTypingInterval = 500;
+
+      $('#newFeildName').keyup(function () 
+      {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(CheckFeild, doneTypingInterval);
+      });
+
+      function CheckFeild() 
+      { 
+          var a = $('#newFeildName').val();
+          if(a.indexOf('.') > -1)
+          {
+              $('.error').html("<div style='color:red'>You can not use dot(.) as a character</div>");
+              $('#newFeildBtn').css('cursor','no-drop');
+              $('#newFeildBtn').attr('disabled','disabled');
+          }
+          else
+          { 
+              $('.error').html("");
+              $('#newFeildBtn').css('cursor','auto');
+              document.getElementById("newFeildBtn").disabled=false
+          }
+      }
+
+        var lableTimer;                
+        var doneLableInterval = 500;
+
+        $('#newLabelName').keyup(function () 
+        {
+            clearTimeout(lableTimer);
+            lableTimer = setTimeout(CheckLable, doneLableInterval);
+        });
+
+        function CheckLable() 
+        { 
+            var a = $('#newLabelName').val();
+            if(a.indexOf('.') > -1)
+            {
+                $('.lable-error').html("<div style='color:red'>You can not use dot(.) as a character</div>");
+                $('#newLabelBtn').css('cursor','no-drop');
+                $('#newLabelBtn').attr('disabled','disabled');
+            }
+            else
+            { 
+                $('.lable-error').html("");
+                $('#newLabelBtn').css('cursor','auto');
+                document.getElementById("newLabelBtn").disabled=false;
+            }
+        }
+
+        $(document).ready(function()
+        {
+            $("#guideline").click(function(){
+              if($(this).text() == "Show Guideline")
+              {
+                  $('#guideline_border').show();
+                  $(this).text("Hide Guideline");
+              }
+              else
+              { 
+                  $('#guideline_border').hide();
+                  $(this).text("Show Guideline");
+              }
+          });
+        });
+
+
 </script>
 
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>

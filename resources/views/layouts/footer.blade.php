@@ -42,7 +42,7 @@
 
 					<div class="col-md-2">
 						<a href="{{ url('/terms_condition') }}">
-							<span class="footer-span">Terms & Consition</span>
+							<span class="footer-span">Terms & Condition</span>
 						</a>
 					</div>
 					<!-- <h3>Sign up now</h3>

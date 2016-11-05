@@ -214,3 +214,5 @@ Route::get('order/refund/{id}', 'PaymentsController@refund');
 Route::get('cancel_order/{order_id}','OrderController@cancel_order');
 
 Route::post('upload_image', 'CardController@upload_normal_image');
+Route::post('save_material_id','Front\TemplatesController@save_material_id');
+
