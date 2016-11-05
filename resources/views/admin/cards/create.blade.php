@@ -214,7 +214,7 @@
       <a id="btnborder" class="btn btn-primary col-md-3 card-buttons-verticle" style="margin-left:10px;">
           Show Borders
         </a>
-        <a type="button" class="btn btn-primary col-md-3 card-buttons-verticle" data-toggle="modal" data-target="#myModal">
+        <a type="button" class="btn btn-primary col-md-3 card-buttons-verticle" data-toggle="modal" data-target="#getSize">
           Upload Image
         </a>
         <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
@@ -419,7 +419,7 @@
       <a id="back_btnborder" class="btn btn-primary card-buttons-verticle"  style="margin-left:10px;">
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary card-buttons-verticle" data-toggle="modal" data-target="#myModal">
+      <a type="button" class="btn btn-primary card-buttons-verticle" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
       <a id="back_btnsave" class="btn btn-primary card-buttons-verticle">
@@ -512,7 +512,51 @@
 
         </div><!--Toolbar end-->
   </div>
-<!-- Modal -->
+         <!-- Modal -->
+            <div class="modal fade" id="getSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Select Image Size</h4>
+                  </div>
+                  <div class="modal-body">
+                      <select class="form-control" id="image-size">
+                        <option value="passport">Passport size Image</option>
+                        <option value="menualy">Other Size Image</option>
+                      </select>
+                      <div id="size" style="margin-top:10px;display: none">
+                        <form id="uploadimage" method="POST" action="" enctype="multipart/form-data">
+                          <div class="form-group" >
+                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image Name : </label>
+                            <div class="col-sm-9" style="margin-top:10px;">
+                              <input type="text"  name="imagenameform" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image : </label>
+                            <div class="col-sm-9" style="margin-top:10px;">
+                              <input type="file" id="other_image" name="image" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-3" style="margin-top:10px;"><input type="submit" class="btn btn-primary"></div>
+                            </div> 
+                        </form>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary" id="saveSize" data-toggle="modal" data-target="#myModal">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -522,11 +566,11 @@
                     <h4 class="modal-title" id="myModalLabel">Upload Your Image</h4>
                   </div>
                   <div class="modal-body">
-                    <div class="image-editor">
+                    <div class="image-editor" id="image-editor">
                           <hr>
                           <input type="file" class="cropit-image-input">
                           <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
-                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" name="image_name" id="image_name" placeholder="Enter image Feild Name.." required="required" />
+                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" id="image_name" name="image_name" placeholder="Enter image Feild Name.." required="required" />
                           <div id="image_error" style="margin-top:10px;"></div>
                           <hr>
                           <div class="cropit-preview"></div>
@@ -543,6 +587,7 @@
                 </div>
               </div>
             </div>
+        </div>
 </div>
 
    
@@ -564,9 +609,11 @@
     var back_label_names = {!! json_encode($back_template_labels) !!};
     var template_id = {{ $templates->id }};
     var side = "";
+    var is_back ="0";
     var template_both_side = {{ $templates->is_both_side }};
 
        $(document).ready(function(){
+       
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
@@ -577,6 +624,7 @@
               $("#front_side").show();
               $("#back_side").hide();
               side = "";
+              is_back = "0";
           }
           else
           { 
@@ -584,6 +632,7 @@
               $("#back_side").show();
               $("#front_side").hide();
               side = "back_";
+              is_back = "1";
           }
        });
     });

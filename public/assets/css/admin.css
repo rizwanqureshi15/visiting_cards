@@ -330,3 +330,13 @@ position: absolute;
 .page-title .title_right {
     height: 60px;
 }
+label.error{
+    background-color: rgba(231,76,60,0.88);
+    border-color: rgba(231,76,60,0.88);
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #E9EDEF;
+    padding:5px;
+    width: 100%;
+}

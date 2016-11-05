@@ -589,23 +589,23 @@
       
 	});
 		$(function() {
-        $('.image-editor').cropit({
-          exportZoom: 1.25,
-          imageBackground: true,
-          imageBackgroundBorderWidth: 20,
-          smallImage: 'allow',
-          height: 250,
-          width: 200,
-          maxZoom: 2,
-        });
-
+			$('.image-editor').cropit({
+              exportZoom: 1.25,
+              imageBackground: true,
+              imageBackgroundBorderWidth: 20,
+              smallImage: 'allow',
+              maxZoom: 2,
+              height:250,
+              width:200
+              
+            });
         $('.rotate-cw').click(function() {
           $('.image-editor').cropit('rotateCW');
         });
         $('.rotate-ccw').click(function() {
           $('.image-editor').cropit('rotateCCW');
         });
-
+        
         $('.export').click(function() {
         	if($('#image_name').val()=='')
         	{
@@ -657,6 +657,8 @@
                
         });
         
+
+
         $(document).on('click','.back_template_image',function(event){
         	event.stopPropagation();
         	image_id = $(this).attr('id');
@@ -743,6 +745,8 @@
 			}
 		});
 
+
+
 		$(document).on('click','#back_imagetoolbardelete', function(){
 			var id = $('#'+image_id).data('id');
 			$('#'+image_id).remove();
@@ -766,6 +770,80 @@
 			$("#back_imageToolbar").hide();				
 		});
 
+		$('#image-size').change(function(){
+          if($('#image-size').val()== "passport")
+          {
+          		$('#size').hide();
+          } 
+          else
+          {
+
+            $('#size').show();
+          }   
+        });
+
+        $('#saveSize').click(function(){
+           if($('#image-size').val()== "passport")
+           {
+           		$('myModal').modal('show');
+           }
+           else
+           {   		
+           }
+           $('#getSize').modal('hide');
+        });
+		
+		$("#uploadimage").validate({
+        //errorLabelContainer: "#message_box", wrapper: "li",
+		        rules: {
+		            image: {
+		                required: true
+		            },
+		            imagenameform: {
+		                required: true
+		            }
+		        },
+		        submitHandler: function(form, event) {
+		          var formElement = document.querySelector("form");
+		          event.preventDefault();
+		          imagedata = new FormData(formElement);
+		          $('#image_name_alert').hide();
+		          $('#image_alert').hide();
+		          imagedata.append('css', 'height:100%;width:100%;');
+		          imagedata.append('div_css', 'position:absolute;height:102px;width:102px;left:30px;top:15px;background-color:trasprent;border:none');
+		          imagedata.append("template_id", template_id);
+		          imagedata.append("is_back", is_back);
+		          imagedata.append('name', $('#image_name').val());
+
+		          $.ajax({
+		          url: site_url+"/upload_image", // Url to which the request is send
+		          type: "POST",             // Type of request to be send, called as method
+		          data: imagedata, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+		          contentType: false,       // The content type used when sending data to the server.
+		          cache: false,             // To unable request pages to be cached
+		          processData:false,        // To send DOMDocument or non processed data file it is set to false
+		          success: function(data)   // A function to be called if request succeeds
+		          {
+		            data = JSON.parse(data);
+		            $('#getSize').modal('hide');
+		            $('#'+side+'image_name').val();
+		            $('#'+side+'card_body').append("<div id='div_image_"+data.id+"' name='"+name+"' class='ui-widget-content template_image_div' style='position:absolute;height:101px;width:101px;left:30px;top:15px;background-color:trasprent;border:none'><img src='"+site_url+"\\templates\\images\\"+data.name+"' data-id='"+data.id+"' style='height:100%;width:100%;' class='"+side+"template_image' id='image_"+data.id+"'></div>");
+		              $('#div_image_'+data.id).resizable();
+		              $('#div_image_'+data.id).draggable();
+		              if(side == "back_")
+		              {
+		                back_upload_images[back_upload_images.length] = data.id;
+		              }
+		              else
+		              {
+		                upload_images[upload_images.length] = data.id;
+		              }
+		            }
+		        });
+		       
+		        }
+		        
+		    });
       });
 
 

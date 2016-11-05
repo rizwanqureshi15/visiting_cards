@@ -112,8 +112,8 @@
 @else
   <div class="col-md-6">
     <div class="canvasBorder-verticle">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
-        <canvas id="canvas1" width="400" height="648">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:410px;">
+        <canvas id="canvas1" width="410" height="648">
         </canvas>
 @endif
 <div id="card_body" style="">
@@ -292,8 +292,8 @@
 @else
   <div class="col-md-6">
     <div class="canvasBorder-verticle">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
-        <canvas id="canvas2" width="400" height="648">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:410px;">
+        <canvas id="canvas2" width="410" height="648">
         </canvas>
 @endif
 <div id="back_card_body" style="">

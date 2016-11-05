@@ -77,6 +77,7 @@
     <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/js/html2canvas.js') }}"></script>
     <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.validate.js') }}"></script>
     <script src="{{ url('assets/js/jquery.dataTables.js') }}"></script>
     <script src="{{ url('assets/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ url('assets/js/fastclick.js') }}"></script>

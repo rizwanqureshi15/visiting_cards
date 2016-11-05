@@ -375,6 +375,22 @@ class CardController extends Controller
         return json_encode($name .'.png');
 
     }
+
+    public function upload_normal_image(Request $request)
+    {
+        
+        $imageTempName = $request->file('image')->getPathname(); 
+        $name = str_random(40);
+        $path = public_path() .'/templates/images';
+        $request->file('image')->move($path , $name.".png");
+         $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+
+            $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+            
+        return json_encode(['name' => $name .'.png','image_id' => $image_id, 'id' => $feild_id]);
+
+    }
+
         public function upload_image(Request $request)
         {
           
