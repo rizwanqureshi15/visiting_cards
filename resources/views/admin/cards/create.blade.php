@@ -204,7 +204,7 @@
       <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" style="margin-left:10px;">
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#myModal">
+      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
       <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" >
@@ -409,7 +409,7 @@
       <a id="back_btnborder" class="btn btn-primary card-buttons"  style="margin-left:10px;">
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary card-buttons" data-toggle="modal" data-target="#myModal">
+      <a type="button" class="btn btn-primary card-buttons" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
       <a id="back_btnsave" class="btn btn-primary card-buttons">
