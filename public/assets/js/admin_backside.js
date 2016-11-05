@@ -139,7 +139,7 @@
 		    if(template_both_side==1)
 		    {
 		    	l = l.substring(0,l.length - 2);
-		    	l = parseInt(l) + 260;
+		    	l = parseInt(l) + 530;
 		    	l += "px";	
 		    }
 		    
@@ -151,13 +151,28 @@
 
 		    if( parseInt(t) < 100 )
 		    {
-		    	var txt_hight = $('#'+side + element_id).css('height');
-		    	t = parseInt(t) + parseInt(txt_hight) + 10;
-		    	
+		    	if(template_both_side==1)
+		    	{
+		    		var txt_hight = $('#'+side + element_id).css('height');
+		    		t = parseInt(t) + parseInt(txt_hight) + 70;
+		    	}
+		    	else
+		    	{
+			    	var txt_hight = $('#'+side + element_id).css('height');
+			    	t = parseInt(t) + parseInt(txt_hight) + 10;
+		    	}
 		    }
 		    else
 		    {
-		    	t = parseInt(t)-110;
+		    	if(template_both_side==1)
+		    	{
+		    		t = parseInt(t)-40;
+		    	}
+		    	else
+		    	{
+		    		t = parseInt(t)-110;	
+		    	}
+		    	
 		    }
 		  
 			var selectedfont = $('#'+side+'span_' + element_id).css('font-family');		 
