@@ -44,7 +44,7 @@ class PaymentsController extends Controller
         $user_template = UserTemplate::where('id',$order->user_template_id)->first();
         $material = Material::where('id',$request->material_id)->first();
 
-        $final_price = $order->quantity * $user_template->price * $material->price;
+        $final_price = ($user_template->price + $material->price) * $order->quantity;
 
         $order_id = $request->order_id;
         $validator = Validator::make($request->all(), [
@@ -93,7 +93,7 @@ class PaymentsController extends Controller
            
             Order::where("id", $order_id)->update($data);
 
-            Order::where("id", $order_id)->update(['status' => 'unpaid']);
+            Order::where("id", $order_id)->update(['status' => Config::get('status.unpaid')]);
 
             $data['details'] = [
                 'key'=> Config::get('settings.key'), 
@@ -110,78 +110,42 @@ class PaymentsController extends Controller
                 ];
 
             return view('payment.payment',$data);
-
-            // $query=http_build_query($data) ;
-            // $url = 'https://test.payumoney.com/payment/op/getPaymentResponse?merchantKey=xDjfEVwC&merchantTransactionIds=5655765'; 
-            // $data =array('merchantKey'=>'xDjfEVwC', 'merchantTransactionIds '=>'5655765', 'amount' => '100','productinfo' => 'cards', 'firstname' => 'Rizwan', 'email' => 'rizwanqureshi15@gmail.com', 'phone' => '9834738393', 'surl' => url('admin/employees/login'), 'furl' => url('admin/employees/list'), 'service_provider' => 'payu_paisa'); 
-            // $options = array( 
-            //   'http' => array( 
-            //     'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-            //         "Content-Length: ".strlen($query)."\r\n".
-            //         "User-Agent:MyAgent/1.0\r\n,Authorization: 0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=", 
-            //     'method' => 'POST', 
-            //     'Authorization'=> '0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc=', 
-            //     'content' => $query 
-            //     ), 
-            //   ); 
-            // $context = stream_context_create($options); 
-            // $result = file_get_contents($url, false, $context, -1 , 40000); 
-            // if ($result === FALSE) { /* Handle error */ } 
-            
-            // dd($result); 
                  
         }
     }
 
     public function payment_success(Request $request)
-    {   dd($request->all());
-        $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid') ]);
+    {  
+        $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid'), "payu_money_id" => $request->payuMoneyId ]);
         Session::flash('flash_message','Successfully paid. Your order will be delivered soon');
-
         return redirect('myorders');
     } 
 
     public function refund(Request $request)
     {
-        Order::where('id', $request->cancel_id)->update(['is_cancel' => 1]);
+       
         $transaction_id = Order::where('id', $request->cancel_id)->first();
-        $url = 'https://test.payumoney.com/payment/payment/chkMerchantTxnStatus?'; 
-        $data = array('merchantKey'=>'rjQUPktU','merchantTransactionIds'=> $transaction_id->order_no); 
-        $query = http_build_query($data);
+
+        $url = 'https://www.payumoney.com/payment/merchant/refundPayment?'; 
+        $data =array('merchantKey'=> Config::get('settings.key'), 'paymentId'=> $transaction_id->payu_money_id,'refundAmount'=> $transaction_id->amount); 
         $options = array( 
           'http' => array( 
-            'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-                  "Content-Length: ".strlen($query)."\r\n".
-                    "User-Agent:MyAgent/1.0\r\n,Authorization:5655765", 
+            'header' => "Content-Type: application/x-www-form-urlencoded&Authorization: ".Config::get('settings.authorization'), 
             'method' => 'POST', 
-            'Authorization'=> '5655765', 
-            'content' =>  $query
+            'Authorization'=> Config::get('settings.authorization'), 
+            'content' => http_build_query($data) 
             ), 
           ); 
         $context = stream_context_create($options); 
         $result = file_get_contents($url, false, $context); 
-        if ($result === FALSE) { /* Handle error */ } 
-         dd($result); 
-        
-    }
-    
-    public function test()
-    {
-        $data['details'] = [
-            'key'=>'rjQUPktU', 
-            'txnid'=>'1', 
-            'amount' => '100',
-            'productinfo' => 'cards', 
-            'firstname' => 'rizwan', 
-            'email' => 'amrin.umar.khatri@gmail.com', 
-            'phone' => '9979557690', 
-            'surl' => url('payment/myorders'), 
-            'furl' => url('payment'), 
-            'service_provider' => 'payu_paisa',
-            'hash' => strtolower(hash('sha512','rjQUPktU|1|100|cards|rizwan|amrin.umar.khatri@gmail.com|||||||||||e5iIg1jwi8'))
-            ];
-
-        return view('payment.payment',$data);
+        if ($result === FALSE) { 
+            Session::flash('error_msg','There was an error while processing Refund.');
+        }
+        else{
+            Session::flash('succ_msg','Successfully Refunded.');
+            Order::where('id', $request->cancel_id)->update(['is_cancel' => 1,'status' => Config::get('status.refunded')]);
+        }
+        return redirect('new_orders/list');
     }
     
 }

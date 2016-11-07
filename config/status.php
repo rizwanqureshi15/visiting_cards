@@ -5,5 +5,7 @@
 		'confirmed' => 'Confirmed',
 		'in_process' => 'In Process',
 		'done' => 'Done',
-		'paid' => 'Paid',	
+		'paid' => 'Paid',
+		'unpaid' => 'Unpaid',	
+		'refunded' => 'Refunded',
  	];

@@ -40,20 +40,26 @@
 			        			<td>{{ $order->amount }}</td>
 			        			<td>{{ $order->quantity }}</td>
 			        			<td >
-				        			<a class="model-btn text-center" href="{{ url('view_order',$order->id) }}">
-				        				View Cards
-				        			</a>
-				        			
-				        			@if($order->status == "unpaid")
-				        				<a href="{{ url('order/'.$order->order_no.'/payment') }}" class="model-btn" > 
-				        					Proceed
-				        				</a>
-				        			@endif
+			        			<?php $status = Config::get('status.refunded') ?>
+				        			@if($order->status == $status) 
+				        				<b>REFUNDED !</b>
+				        			@else
+					        			<a class="model-btn text-center" href="{{ url('view_order',$order->id) }}">
+					        				View Cards
+					        			</a>
+					        			<?php $status_unpaid = Config::get('status.unpaid') ?>
+					        			@if($order->status == $status_unpaid)
+					        				<a href="{{ url('order/'.$order->order_no.'/payment') }}" class="model-btn" > 
+					        					Proceed
+					        				</a>
+					        			@endif
 
-				        			@if($order->status == "new")
-				        				<a class="model-btn cancle-btn order" data-order="{{ $order->id }}" data-toggle="modal" data-target="#cancel_order"> 
-				        					Cancle
-				        				</a>
+					        			<?php $status_new = Config::get('status.new') ?>
+					        			@if($order->status == $status_new)
+					        				<a class="model-btn cancle-btn order" data-order="{{ $order->id }}" data-toggle="modal" data-target="#cancel_order"> 
+					        					Cancle
+					        				</a>
+					        			@endif
 				        			@endif
 			        			</td> 
 			        		</tr>

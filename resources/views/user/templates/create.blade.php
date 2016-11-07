@@ -302,6 +302,7 @@
                   </div>
              @endif
 </div>
+
 </div>
 </div>
 
@@ -325,6 +326,7 @@
       var typingTimer;                
       var doneTypingInterval = 500;
 
+      
       $('#newFeildName').keyup(function () 
       {
           clearTimeout(typingTimer);

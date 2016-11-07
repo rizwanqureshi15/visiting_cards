@@ -40,7 +40,7 @@ class OrderController extends Controller
 
         $material_price = Material::where('id',$material_id)->first();
 
-        $amount = $card_price->price * $material_price->price * $quantity; 
+        $amount = ($card_price->price + $material_price->price) * $quantity; 
 
         $count = Order::get();
         if(count($count) == 0)
@@ -87,7 +87,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'order_no' => $order_no,
                 'user_template_id' => $template->id,
-                'status' => 'new'
+                'status' => Config::get('status.new')
         ]);
 
         $front_images;
@@ -290,7 +290,7 @@ class OrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $data['user_orders'] = Order::where('user_id',$user_id)->where('is_delete',0)->where('is_cancel',0)->orderBy('id','desc')->paginate(Config::get('settings.number_of_rows'));
+        $data['user_orders'] = Order::where('user_id',$user_id)->where('is_delete',0)->orderBy('id','desc')->paginate(Config::get('settings.number_of_rows'));
 
         return view('user.show_order_list',$data);
     }
@@ -366,7 +366,7 @@ class OrderController extends Controller
 
         $quantity = 1;
 
-        $amount = $card_price->price * $material_price->price * $quantity; 
+        $amount = ($card_price->price + $material_price->price)* $quantity; 
 
         $count = Order::get();
         if(count($count) == 0)
@@ -423,7 +423,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'order_no' => $order_no,
                 'user_template_id' => $template->id,
-                'status' => 'new'
+                'status' => Config::get('status.new')
             ]);
 
             $order_id = Order::where('order_no',$order_no)->first();
@@ -471,7 +471,7 @@ class OrderController extends Controller
                     'quantity' => $quantity,
                     'order_no' => $order_no,
                     'user_template_id' => $card_price->id,
-                    'status' => 'new'
+                    'status' => Config::get('status.new')
                 ]);
 
                 $order_id = Order::where('order_no',$order_no)->first();

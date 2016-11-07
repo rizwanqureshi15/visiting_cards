@@ -23,6 +23,11 @@
               <a class="alert-link">{{ Session::get('succ_msg') }}</a>
             </div>
         @endif
+        @if(Session::get('error_msg'))
+            <div class="alert alert-danger" role="alert">
+              <a class="alert-link">{{ Session::get('error_msg') }}</a>
+            </div>
+        @endif
         <div class="x_panel">
             <div class="x_title">
                 <h2>New Orders</h2>
@@ -64,7 +69,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-primary" value="Delete">    
+          <input type="submit" class="btn btn-primary" value="Sure">    
         </div>
       {{ Form::close() }}
     </div>

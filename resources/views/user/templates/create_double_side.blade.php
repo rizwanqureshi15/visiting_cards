@@ -570,6 +570,18 @@
                 </div>
               </div>
             </div>
+<div class="col-md-6 col-md-offset-4">
+  <div style="height:180px;padding:20px;">
+    <div class="col-md-4 text-center front-back-images">
+      <img src="{{ url('templates/snaps', $template->snap) }}" height="90%" width="90%"  id="front_side_image">
+      <label style="color:#47bac1;">FRONT SIDE</label>
+    </div>
+    <div class="col-md-4 text-center front-back-images">
+      <img src="{{ url('templates/snaps', $template->snap) }}" height="90%" width="90%" id="back_side_image">
+      <label style="color:#47bac1;">BACK SIDE</label>
+    </div>
+  </div>
+</div>
 </div>
 
    
@@ -595,6 +607,7 @@
 
       var typingTimer;                
       var doneTypingInterval = 500;
+
 
       $('#newFeildName').keyup(function () 
       {
@@ -701,14 +714,18 @@
 
        $(document).ready(function(){
         $('#user_overlay').hide();
+        $('#front_side_image').css('border',"4px solid #47bac1").css('height', '100%').css('width','100%');
+        $('#back_side_image').css("opacity", "0.6");
 
-        
        $("#front_back").click(function(){
           if($(this).text() == "Front")
           {
               $(this).text("Back");
               $("#front_side").show();
               $("#back_side").hide();
+              $('#front_side_image').css('border',"4px solid #47bac1").css('height', '100%').css('width','100%');
+              $('#back_side_image').css('border', "none");
+              $('#back_side_image').css("opacity", "0.6");
               side = "";
           }
           else
@@ -716,6 +733,9 @@
               $(this).text("Front");
               $("#back_side").show();
               $("#front_side").hide();
+              $('#back_side_image').css('border',"4px solid #47bac1").css('height', '100%').css('width','100%');
+              $('#front_side_image').css('border', "none");
+              $('#front_side_image').css("opacity", "0.6");
               side = "back_";
           }
        });

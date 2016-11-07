@@ -6,7 +6,7 @@
       <div class="col-md-12 innerWrapper">
         <div class="col-md-12">
               <h4 class="title text-transform">Material
-                <span class="title-rupee">Payment to pay : <i class="fa fa-inr"></i> <span id="final_price"> {{ $template_price * $order->quantity * $material_price }}</span></span>
+                <span class="title-rupee">Payment to pay : <i class="fa fa-inr"></i> <span id="final_price"> {{ ($template_price + $material_price) * $order->quantity}}</span></span>
               </h4>
 
         </div>
@@ -252,7 +252,7 @@
               }
           });
 
-          var final_price = price * template_price * order_quantity;
+          var final_price = (parseInt(price) + parseInt(template_price)) * order_quantity;
 
           $("#final_price").html(final_price);
           $("#price").val(final_price);
