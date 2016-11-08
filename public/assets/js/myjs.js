@@ -695,6 +695,8 @@
         	$('#guideline_border').css('display','none');
         	$('.feild-elements').css('border', 'none');	
 			$('.template_image_div').css('border', 'none');	
+			$('#back_side_image').removeClass('inactive_image').addClass('active_image');
+            $('#front_side_image').removeClass('active_image').addClass('inactive_image');
 
             var i=0;
             feilds=[];
@@ -812,6 +814,8 @@
         $("#save_modifications").on('click', function () {
             var i=0;
             feilds=[];
+            $('#back_side_image').removeClass('inactive_image').addClass('active_image');
+            $('#front_side_image').removeClass('active_image').addClass('inactive_image');
 
             $.each(field_names, function(key,  value){
 

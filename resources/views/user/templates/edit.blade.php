@@ -9,7 +9,7 @@
     @else
         <div class="col-md-3 col-md-offset-2">
     @endif
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       <div class=" panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">

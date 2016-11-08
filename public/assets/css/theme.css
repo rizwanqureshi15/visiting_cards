@@ -1140,3 +1140,25 @@ a:hover
     height: 272.48px;
     width: 269px;
 }
+.active_image{
+    padding: 5px;
+    border: solid 1px #47bac1;
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 1px 1px 5px #999;
+        box-shadow: 1px 1px 5px #999;
+    height:100%;
+    width:100%;
+    opacity:1;
+}
+.inactive_image{
+    padding: 5px;
+    border: solid 1px #47bac1;
+    height:100%;
+    width:100%;
+}
+.image_fonts{
+    margin-top:10px;
+    color:#47bac1;
+}
+
+

@@ -263,7 +263,7 @@ position: absolute;
     background: #333;
     opacity: 1.8;
     filter: alpha(opacity=80);
-    z-index: 3;
+    z-index: 10;
 
 }
 #user_loading {

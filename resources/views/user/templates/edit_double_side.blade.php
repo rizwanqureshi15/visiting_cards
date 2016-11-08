@@ -518,6 +518,18 @@
                 </div>
               </div>
             </div>
+            <?php $username = Auth::user()->username; ?>
+  <div class="col-md-6 col-md-offset-4">
+        <div style="height:180px;padding:20px;">
+          <div class="col-md-4 text-center">
+            <img src="{{ url('images/'.$username, $template->snap) }}" class="active_image" id="front_side_image" style="">
+            <label class="image_fonts">FRONT SIDE</label>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="{{ url('templates/snaps', $template->back_snap) }}" class="inactive_image" id="back_side_image" style="">
+            <label class="image_fonts">BACK SIDE</label>
+          </div>
+        </div>
 </div>
 
    

@@ -422,7 +422,6 @@
           <div class="col-md-7 col-md-offset-4" style="margin-top:10px;">
       @endif
 
-      <button class="btn-blog" id="front_back"  style="margin-right:40px">Back</button>
       <button class="btn-blog" id="Preview" data-toggle="modal" data-target="#preview_image" style="margin-right: 20px;">
         Preview
       </button>
@@ -432,6 +431,19 @@
       <a class="btn-blog" id="guideline" style="margin-right:20px;">Hide Guideline</a>
      
   </div>
+   <?php $username = Auth::user()->username; ?>
+  <div class="col-md-6 col-md-offset-4">
+        <div style="height:180px;padding:20px;">
+          <div class="col-md-4 text-center">
+            <img src="{{ url('images/'.$username, $template->snap) }}" class="active_image front_back" id="front_side_image" style="">
+            <label class="image_fonts">FRONT SIDE</label>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="{{ url('images/'.$username, $template->back_snap) }}" class="inactive_image front_back" id="back_side_image" style="">
+            <label class="image_fonts">BACK SIDE</label>
+          </div>
+        </div>
+</div>
   </div>
   <div class="row">
     <!--Toolebasr start-->
@@ -498,6 +510,7 @@
 
         </div><!--Toolbar end-->
   </div>
+
 <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
@@ -556,7 +569,6 @@
                   </div>
                 </div>
             <!--Modal End-->
-</div>
 
 @endsection
 
@@ -719,23 +731,20 @@
 
 
        $(document).ready(function(){
-        
-       $("#front_back").click(function(){
-          if($(this).text() == "Front")
-          {
-              $(this).text("Back");
-              $("#front_side").show();
+        $('#front_side_image').click(function(){
+          $("#front_side").show();
               $("#back_side").hide();
               side = "";
-          }
-          else
-          { 
-              $(this).text("Front");
-              $("#back_side").show();
-              $("#front_side").hide();
-              side = "back_";
-          }
-       });
+              $('#front_side_image').removeClass('inactive_image').addClass('active_image');
+              $('#back_side_image').removeClass('active_image').addClass('inactive_image');
+        });
+        $('#back_side_image').click(function(){
+            $("#back_side").show();
+            $("#front_side").hide();
+            side = "back_";
+            $('#back_side_image').removeClass('inactive_image').addClass('active_image');
+            $('#front_side_image').removeClass('active_image').addClass('inactive_image');
+        });
     });
     
 </script>
