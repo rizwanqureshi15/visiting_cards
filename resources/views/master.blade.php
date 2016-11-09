@@ -44,6 +44,7 @@
 
     <link rel="stylesheet" href="{{ url('assets/css/admin.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/admin_backside.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/objects.css') }}">
     <style>
         body {
             font-family: 'Lato';

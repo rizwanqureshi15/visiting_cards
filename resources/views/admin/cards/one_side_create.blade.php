@@ -50,7 +50,7 @@
             </a>
           </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body" id="feild_body">
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
@@ -107,6 +107,36 @@
                     <input type="text" id="sidebar_{{ $id }}" class="form-control sidebar-elements" placeholder="Enter {{ $label->name }}">               
                 @endforeach
             @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Objects              
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-4" style="padding-left:22px;" id="object_line" >
+                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
+                <br>LINE
+              </div>
+              
+              <div class="col-md-4 text-center" id="object_squere">
+                <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
+                <br>SQUERE
+              </div>
+
+              <div class="col-md-4 text-center" id="object_circle">
+                <i class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                <br>CIRCLE
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -267,7 +297,30 @@
         </div>
         <!--Image Toolbar End-->
 
+        <!--Object Toolbar start-->
+        <div id="objectToolbar" class="object-toolbar" style="position:absolute;padding:0px;">
+          <div class="row">
+            <!--Thickness Dropdown-->
+            <div class="col-md-3 side-break">
+              <select id="thickness" class="select-thickness">
+                <option value = "1">1px</option>
+                <option value = "2">2px</option>
+                <option value = "3">3px</option>
+                <option value = "4">4px</option>
+                <option value = "5">5px</option>
+                <option value = "6">6px</option>
+                <option value = "7">7px</option>
+                <option value = "8">8px</option>
+              </select>
+            </div>
+            <!--end-->
 
+            <!--Border Color start-->
+            <!--end-->
+
+          </div>
+        </div>
+        <!--Object Toolbar end-->
        
          <!-- Modal -->
             <div class="modal fade" id="getSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -459,5 +512,6 @@
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
     <script src="{{ url('assets/js/admin_backside.js') }}"></script>
+    <script src="{{ url('assets/js/objects.js') }}"></script>
 
 @endsection

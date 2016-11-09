@@ -1,0 +1,131 @@
+.object_line{
+	height: 0px;
+	width: 100%;
+	border: 2px solid black;
+	z-index: 5;
+	top:40%;
+	margin-top: 10px;
+	
+}
+#object_line{
+	cursor: pointer;
+}
+.selected .ui-resizable-handle{
+	position: absolute;
+    font-size: .1px;
+    display: block;
+    border: 2px solid #fff;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-radius: 12px;
+    background-clip: padding-box;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    background-color: #ccc;
+    width: 11px;
+    height: 11px;
+
+}
+.selected .ui-resizable-w{
+	right: -8px;
+    top: 50%;
+    margin-top: -7px;
+    cursor: e-resize;
+}
+.selected .ui-resizable-e{
+	right: -8px;
+    top: 50%;
+    margin-top: -7px;
+    cursor: e-resize;
+}
+.object_line_wrapper{
+	height: 26px;
+	width:100px;	
+	position: absolute;
+	padding:0px;
+	top: 10px;
+	left:20px;
+	cursor: pointer;
+}
+.object_line_wrapper:hover{
+	border:1px dashed black;
+}
+.selected{
+	border:1px dashed black;
+}
+
+.object_squere{
+	height: 30px;
+	width: 30px;
+	border: 2px solid black;
+	top: 10px;
+	left: 20px;
+	background-color: transparent;
+	position: absolute;
+}
+
+#object_squere{
+	cursor: pointer;
+}
+
+.object_circle{
+	height: 30px;
+	width: 30px;
+	border: 2px solid black;
+	top: 10px;
+	left: 20px;
+	background-color: transparent;
+	position: absolute;
+	border-radius: 100%;
+}
+
+#object_circle{
+	cursor: pointer;
+}
+
+.object-toolbar{
+	top: 10px;
+	left: 20px;
+	position: absolute;
+	width:300px;
+	height: 54px;
+	box-shadow: 2px 2px 8px -2px #888;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    background-color: #fff;
+    font-size: 11px;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+.side-break{
+	 border-right: 1px solid #b5babf;
+	 padding-bottom: 10px;
+}
+
+.select-thickness{
+	height: 36px;
+    margin-top: 8px;
+    color: black;
+    width: 55px;
+    font-size: 13px;
+    float: left;
+    background-color: white;
+    border-radius: 20px;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 8px -5px #000 inset;
+}
+#thickness{
+	margin-left: 6px;
+}
