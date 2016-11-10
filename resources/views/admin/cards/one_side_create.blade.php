@@ -298,11 +298,25 @@
         <!--Image Toolbar End-->
 
         <!--Object Toolbar start-->
-        <div id="objectToolbar" class="object-toolbar" style="position:absolute;padding:0px;">
-          <div class="row">
-            <!--Thickness Dropdown-->
-            <div class="col-md-3 side-break">
-              <select id="thickness" class="select-thickness">
+        <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
+          
+          <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
+            <div id="object_fill_color" class="col-md-6 submenu">
+              <div class="col-md-8">
+                <div class="object-toolbar-submenu-text">Object Color</div>
+              </div>
+              <div class="col-md-4">
+                <div id="colorSelector1" class="object-color-picker">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-5 object-toolbar-submenu">
+            <div id="object_stroke_tools" class="col-md-8 submenu">
+              <div class="col-md-4 side-break">
+                <select id="thickness" class="select-thickness">
                 <option value = "1">1px</option>
                 <option value = "2">2px</option>
                 <option value = "3">3px</option>
@@ -312,13 +326,58 @@
                 <option value = "7">7px</option>
                 <option value = "8">8px</option>
               </select>
+              </div>
+              <div class="col-md-4">
+                <div id="colorSelector1" class="object-color-picker">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+            <!--Thickness Dropdown-->
+            <div class="col-md-2 text-center side-break" id="object_fill">
+              <img src="{{ url('assets/images/fill.png') }}" height="20px" width="20x" class="fill-color">
+              <div class="object-toolbar-text">Fill</div>
+            </div>
+            <!-- <div class="col-md-3 side-break">
+            </div> -->
             <!--end-->
 
             <!--Border Color start-->
+            <div class="col-md-2 text-center side-break" id="object_stroke">
+              <img src="{{ url('assets/images/stroke.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Stroke</div>
+            </div>
+            <!-- <div class="col-md-2 side-break">
+                <div id="colorSelector1" class="object-color-picker"><div style="background-color: #0000ff"></div></div>
+            </div> -->
             <!--end-->
-
-          </div>
+            <div class="col-md-2 text-center side-break">
+              <img src="{{ url('assets/images/opacity.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Opacity</div>
+            </div>
+            <div class="col-md-2 text-center side-break">
+              <img src="{{ url('assets/images/rotation.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Rotation</div>
+            </div>
+            <div class="col-md-2 text-center side-break">
+              <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Arrange</div>
+            </div>
+            <div class="col-md-2 text-center side-break">
+              <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Delete</div>
+            </div>
+            <!--style Dropdown-->
+            <!-- <div class="col-md-4 side-break">
+              <select id="border_type" class="select-border-style">
+                <option value = "dashed">Dashed</option>
+                <option value = "dotted">Dotted</option>
+                <option value = "solid">Solid</option>
+              </select>
+            </div> -->
+            <!--end-->
         </div>
         <!--Object Toolbar end-->
        
@@ -485,9 +544,17 @@
         }
     }
     $(document).ready(function(){
+
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
+       $("#object_fill").click(function(){
+            $("#object_fill_color").slideToggle("slow");
+        });
+       $("#object_stroke").click(function(){
+            $("#object_stroke_tools").slideToggle("slow");
+        });
+         
     });
       
     var token = "{{ csrf_token() }}";
@@ -513,5 +580,6 @@
     <script src="{{ url('assets/js/admin.js') }}"></script>
     <script src="{{ url('assets/js/admin_backside.js') }}"></script>
     <script src="{{ url('assets/js/objects.js') }}"></script>
+
 
 @endsection

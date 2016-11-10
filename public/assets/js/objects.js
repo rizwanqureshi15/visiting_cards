@@ -59,5 +59,24 @@ $(document).ready(function(){
 
 	});
 
+	$('#colorSelector1').ColorPicker({
+
+		color : '#0000ff',
+		onShow: function (colpkr) {
+			$(colpkr).fadeIn(500);
+			return false;
+		},
+		onHide: function (colpkr) {
+			$(colpkr).fadeOut(500);
+			return false;
+		},
+		onChange: function (hsb, hex, rgb) {
+
+			$('#colorSelector1 div').css('backgroundColor', '#' + hex);
+			$('#'+side+'span_'+element_id).css('color', '#' + hex)
+		}
+
+	});
+
 
 });

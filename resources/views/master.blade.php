@@ -22,8 +22,6 @@
     <!-- <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
-
     <!--end-->
 
     <!--DataTable-->

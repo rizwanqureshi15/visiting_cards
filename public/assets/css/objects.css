@@ -88,7 +88,7 @@
 	top: 10px;
 	left: 20px;
 	position: absolute;
-	width:300px;
+	width:400px;
 	height: 54px;
 	box-shadow: 2px 2px 8px -2px #888;
     border-top: 1px solid #b5babf;
@@ -104,7 +104,7 @@
 
 .side-break{
 	 border-right: 1px solid #b5babf;
-	 padding-bottom: 10px;
+	 padding-bottom: 8px;
 }
 
 .select-thickness{
@@ -128,4 +128,67 @@
 }
 #thickness{
 	margin-left: 6px;
+}
+.select-border-style{
+	height: 36px;
+    margin-top: 8px;
+    color: black;
+    width: 87px;
+    font-size: 13px;
+    float: left;
+    background-color: white;
+    border-radius: 20px;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 8px -5px #000 inset;
+}
+.object-color-picker{
+	margin-top:8px;
+	margin-left:-1px;
+}
+.fill-color{
+	margin-top:8px;
+	margin-left:13px;
+}
+.object-toolbar-text{
+	size:10px;
+	margin-left: 12px;
+	margin-top: 2px;
+}
+.stroke-color{
+	margin-top:8px;
+}
+.submenu{
+	bottom: 0%;
+    position: absolute;
+    left: -100px;
+    text-align: center;
+    display: none;
+    background-color: white;
+    border-top: 1px solid #b5babf;
+    border-left: 1px solid #b5babf;
+    border-right: 1px solid #b5babf;
+    border-bottom: 1px solid #b5babf;
+    border: 1px solid #b5babf;
+    overflow: hidden;
+    cursor: pointer;
+    padding-bottom: 8px;
+    display:none;
+    padding-left:0px;
+
+}
+.object-toolbar-submenu
+{
+	margin-bottom: -1px;
+}
+.object-toolbar-submenu-text{
+	font-size:13px;
+	margin-left: 12px;
+	margin-top: 18px;
 }
