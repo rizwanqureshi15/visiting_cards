@@ -100,6 +100,7 @@
     font-size: 11px;
     -ms-touch-action: none;
     touch-action: none;
+    display: none;
 }
 
 .side-break{
@@ -161,6 +162,14 @@
 	margin-left: 12px;
 	margin-top: 2px;
 }
+.object-toolbar-opacity-text{
+	size:10px;
+	margin-left: 0px;
+	margin-top: 10px;
+}
+.object-opacity-textbox{
+
+}
 .stroke-color{
 	margin-top:8px;
 }
@@ -178,11 +187,26 @@
     border: 1px solid #b5babf;
     overflow: hidden;
     cursor: pointer;
-    padding-bottom: 8px;
     display:none;
     padding-left:0px;
+    height:50px;
+}
+.object-toolbar-submenu{
 
 }
+.arrange_font{
+	font-size: 15px;
+}
+.arrange_icon{
+	font-size: 30px;
+}
+#ex1Slider .slider-selection {
+	background: #BABABA;
+	width:100px;
+}
+.slider.slider-horizontal {
+    width: 170px !important; 
+ }
 .object-toolbar-submenu
 {
 	margin-bottom: -1px;

@@ -301,7 +301,7 @@
         <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
           
           <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
-            <div id="object_fill_color" class="col-md-6 submenu">
+            <div id="object_fill_color" class="col-md-6 submenu" style="padding-bottom:8px;">
               <div class="col-md-8">
                 <div class="object-toolbar-submenu-text">Object Color</div>
               </div>
@@ -327,41 +327,72 @@
                 <option value = "8">8px</option>
               </select>
               </div>
-              <div class="col-md-4">
-                <div id="colorSelector1" class="object-color-picker">
+              <div class="col-md-3 side-break text-center">
+                <div id="colorSelector3" class="object-color-picker" style="margin-left:4px;">
                   <div style="background-color: #0000ff">
                   </div>
                 </div>
               </div>
+              <div class="col-md-5 text-center">
+                <select id="border_type" class="select-border-style">
+                  <option value = "dashed">Dashed</option>
+                  <option value = "dotted">Dotted</option>
+                  <option value = "solid">Solid</option>
+                </select>
+              </div>
             </div>
           </div>
+           <div class="col-md-12 col-md-offset-7 object-toolbar-submenu" >
+            <div id="object_opacity_tool" class="col-md-7 submenu" style="padding-bottom:8px;padding-top:8px;">
+              <div class="col-md-10">
+                <input id="opacity_slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/>
+              </div>
+              <div class="col-md-2">
+                20%
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-9 object-toolbar-submenu" >
+            <div id="object_rotate_tool" class="col-md-7 submenu">
+              <div class="col-md-7"  style="margin-top:10px;">
+                Enter Rotation :
+              </div>
+                <input type="text" id="rotation_degrees" class="col-md-2"  style="margin-top:10px;">
+              <div class="col-md-3"  style="margin-top:10px;">
+                Degrees
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-11 object-toolbar-submenu" >
+            <div id="object_arrange_tool" class="col-md-8 submenu">
+              <div class="col-md-6 side-break" style="padding-top:10px;">
+                <i class="fa fa-arrow-circle-left arrange_icon" aria-hidden="true"></i><b class="arrange_font"> BACK </b>
+              </div>
+              <div class="col-md-6" style="padding-top:10px;">
+                <i class="fa fa-arrow-circle-right arrange_icon" aria-hidden="true"></i><b class="arrange_font"> FRONT </b>
+              </div>
+
+            </div>
+          </div>
+
             <!--Thickness Dropdown-->
             <div class="col-md-2 text-center side-break" id="object_fill">
               <img src="{{ url('assets/images/fill.png') }}" height="20px" width="20x" class="fill-color">
               <div class="object-toolbar-text">Fill</div>
             </div>
-            <!-- <div class="col-md-3 side-break">
-            </div> -->
-            <!--end-->
-
-            <!--Border Color start-->
             <div class="col-md-2 text-center side-break" id="object_stroke">
               <img src="{{ url('assets/images/stroke.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Stroke</div>
             </div>
-            <!-- <div class="col-md-2 side-break">
-                <div id="colorSelector1" class="object-color-picker"><div style="background-color: #0000ff"></div></div>
-            </div> -->
-            <!--end-->
-            <div class="col-md-2 text-center side-break">
+            <div class="col-md-2 text-center side-break" id="object_opacity">
               <img src="{{ url('assets/images/opacity.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Opacity</div>
             </div>
-            <div class="col-md-2 text-center side-break">
+            <div class="col-md-2 text-center side-break" id="object_rotate">
               <img src="{{ url('assets/images/rotation.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Rotation</div>
             </div>
-            <div class="col-md-2 text-center side-break">
+            <div class="col-md-2 text-center side-break" id="object_arrange">
               <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Arrange</div>
             </div>
@@ -548,12 +579,13 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
-       $("#object_fill").click(function(){
-            $("#object_fill_color").slideToggle("slow");
-        });
-       $("#object_stroke").click(function(){
-            $("#object_stroke_tools").slideToggle("slow");
-        });
+       
+       $('#opacity_slider').bootstrapSlider({
+        
+        formatter: function(value) {
+          return 'Current value: ' + value;
+        }
+      });
          
     });
       
@@ -580,6 +612,6 @@
     <script src="{{ url('assets/js/admin.js') }}"></script>
     <script src="{{ url('assets/js/admin_backside.js') }}"></script>
     <script src="{{ url('assets/js/objects.js') }}"></script>
-
+    <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
 
 @endsection

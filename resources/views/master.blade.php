@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/fontselect.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
 
+
     <!-- <link rel="stylesheet" href="{{ url('assets/css/mystyle.css') }}"> -->
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
@@ -43,6 +44,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/admin.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/admin_backside.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/objects.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap-slider.min.css') }}">
     <style>
         body {
             font-family: 'Lato';

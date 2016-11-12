@@ -246,6 +246,8 @@
 
 		});
 
+        
+
 		$('#toolbardelete').click(function(){
 			var name = $('#'+side+element_id).data('name');
 			var type = $('#'+side+element_id).data('type');
