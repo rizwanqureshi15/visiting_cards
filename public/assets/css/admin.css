@@ -121,6 +121,7 @@ position: absolute;
 .feild-elements
 {
     cursor: pointer;
+    z-index: 3;
 }
 .delete-category{
     

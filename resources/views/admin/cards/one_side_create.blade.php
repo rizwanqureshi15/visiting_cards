@@ -127,9 +127,9 @@
                 <br>LINE
               </div>
               
-              <div class="col-md-4 text-center" id="object_squere">
+              <div class="col-md-4 text-center" id="object_square">
                 <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
-                <br>SQUERE
+                <br>SQUARE
               </div>
 
               <div class="col-md-4 text-center" id="object_circle">
@@ -315,7 +315,7 @@
           </div>
           <div class="col-md-12 col-md-offset-5 object-toolbar-submenu">
             <div id="object_stroke_tools" class="col-md-8 submenu">
-              <div class="col-md-4 side-break">
+              <div class="col-md-4 side-break-submenu">
                 <select id="thickness" class="select-thickness">
                 <option value = "1">1px</option>
                 <option value = "2">2px</option>
@@ -327,7 +327,7 @@
                 <option value = "8">8px</option>
               </select>
               </div>
-              <div class="col-md-3 side-break text-center">
+              <div class="col-md-3 side-break-submenu text-center">
                 <div id="colorSelector3" class="object-color-picker" style="margin-left:4px;">
                   <div style="background-color: #0000ff">
                   </div>
@@ -335,41 +335,45 @@
               </div>
               <div class="col-md-5 text-center">
                 <select id="border_type" class="select-border-style">
+                  <option value = "solid">Solid</option>
                   <option value = "dashed">Dashed</option>
                   <option value = "dotted">Dotted</option>
-                  <option value = "solid">Solid</option>
                 </select>
               </div>
             </div>
           </div>
            <div class="col-md-12 col-md-offset-7 object-toolbar-submenu" >
-            <div id="object_opacity_tool" class="col-md-7 submenu" style="padding-bottom:8px;padding-top:8px;">
+            <div id="object_opacity_tool" class="col-md-7 submenu" style="">
               <div class="col-md-10">
                 <input id="opacity_slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-2" id="opacity_value">
                 20%
               </div>
             </div>
           </div>
           <div class="col-md-12 col-md-offset-9 object-toolbar-submenu" >
             <div id="object_rotate_tool" class="col-md-7 submenu">
-              <div class="col-md-7"  style="margin-top:10px;">
+              <div class="col-md-7"  style="margin-top:17px;">
                 Enter Rotation :
               </div>
-                <input type="text" id="rotation_degrees" class="col-md-2"  style="margin-top:10px;">
-              <div class="col-md-3"  style="margin-top:10px;">
+                <input type="text" id="rotation_degrees" class="col-md-2"  style="margin-top:13px;">
+              <div class="col-md-3"  style="margin-top:17px;">
                 Degrees
               </div>
             </div>
           </div>
           <div class="col-md-12 col-md-offset-11 object-toolbar-submenu" >
-            <div id="object_arrange_tool" class="col-md-8 submenu">
-              <div class="col-md-6 side-break" style="padding-top:10px;">
-                <i class="fa fa-arrow-circle-left arrange_icon" aria-hidden="true"></i><b class="arrange_font"> BACK </b>
+            <div id="object_arrange_tool" class="col-md-4 submenu" style="padding-left:10px;">
+              <div class="col-md-6 side-break-submenu" id="arrange_back">
+                <i class="fa fa-arrow-circle-left arrange_icon" aria-hidden="true" ></i>
+                <br>
+                <b class="arrange_font"> BACK </b>
               </div>
-              <div class="col-md-6" style="padding-top:10px;">
-                <i class="fa fa-arrow-circle-right arrange_icon" aria-hidden="true"></i><b class="arrange_font"> FRONT </b>
+              <div class="col-md-6" id="arrange_front">
+                <i class="fa fa-arrow-circle-right arrange_icon" aria-hidden="true"></i>
+                <br>
+                <b class="arrange_font"> FRONT </b>
               </div>
 
             </div>
@@ -396,7 +400,7 @@
               <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Arrange</div>
             </div>
-            <div class="col-md-2 text-center side-break">
+            <div class="col-md-2 text-center side-break" id="object_delete">
               <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Delete</div>
             </div>
@@ -579,13 +583,6 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
-       
-       $('#opacity_slider').bootstrapSlider({
-        
-        formatter: function(value) {
-          return 'Current value: ' + value;
-        }
-      });
          
     });
       

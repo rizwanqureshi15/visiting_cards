@@ -3,8 +3,6 @@
 	width: 100%;
 	border: 2px solid black;
 	z-index: 5;
-	top:40%;
-	margin-top: 10px;
 	
 }
 #object_line{
@@ -40,13 +38,16 @@
     cursor: e-resize;
 }
 .object_line_wrapper{
-	height: 26px;
+	height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 	width:100px;	
 	position: absolute;
-	padding:0px;
-	top: 10px;
-	left:20px;
+	padding-left:0px;
+    padding-right: 0px;
 	cursor: pointer;
+    top: 10px;
+    left:20px;
 }
 .object_line_wrapper:hover{
 	border:1px dashed black;
@@ -55,7 +56,7 @@
 	border:1px dashed black;
 }
 
-.object_squere{
+.object_square{
 	height: 30px;
 	width: 30px;
 	border: 2px solid black;
@@ -65,7 +66,7 @@
 	position: absolute;
 }
 
-#object_squere{
+#object_square{
 	cursor: pointer;
 }
 
@@ -98,14 +99,22 @@
     border: 1px solid #b5babf;
     background-color: #fff;
     font-size: 11px;
+    z-index:10;
     -ms-touch-action: none;
     touch-action: none;
     display: none;
 }
+.colorpicker{
+    z-index : 20;
+}
 
 .side-break{
 	 border-right: 1px solid #b5babf;
-	 padding-bottom: 8px;
+	 padding-bottom:8px;
+}
+.side-break-submenu{
+	 border-right: 1px solid #b5babf;
+	 padding-bottom:5px;
 }
 
 .select-thickness{
@@ -129,6 +138,10 @@
 }
 #thickness{
 	margin-left: 6px;
+}
+#object_opacity_tool{
+	padding-bottom:8px;
+	padding-top:16px;
 }
 .select-border-style{
 	height: 36px;
@@ -185,20 +198,22 @@
     border-right: 1px solid #b5babf;
     border-bottom: 1px solid #b5babf;
     border: 1px solid #b5babf;
-    overflow: hidden;
     cursor: pointer;
     display:none;
     padding-left:0px;
     height:50px;
+    z-index:10;
 }
 .object-toolbar-submenu{
 
 }
 .arrange_font{
-	font-size: 15px;
+	font-size: 9px;
+	vertical-align: middle;
 }
 .arrange_icon{
-	font-size: 30px;
+	font-size: 20px;
+	margin-top:6px;
 }
 #ex1Slider .slider-selection {
 	background: #BABABA;
@@ -215,4 +230,7 @@
 	font-size:13px;
 	margin-left: 12px;
 	margin-top: 18px;
+}
+.object{
+    z-index:100;
 }
