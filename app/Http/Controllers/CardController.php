@@ -19,6 +19,7 @@ use App\Category;
 use Illuminate\Support\Facades\Input;
 use File;
 use App\TemplateImage;
+use App\Objects;
 
 class CardController extends Controller
 {
@@ -205,6 +206,34 @@ class CardController extends Controller
                    
                 }
             }
+            dd($request->circle_object);
+        $circle_names = Objects::where('is_back',0)->where('type', 'circle')->where('template_id', $request->template_id)->pluck('name');
+         if($request->circle_object)
+         {  
+            foreach ($request->circle_object as $circle) {
+
+                $update = 0;
+                $circle['template_id'] = $request->template_id;
+                 foreach ($circle_object as $key => $value) {
+                        if($value == $circle['name'])
+                        {
+                            $id = $key;
+                            $update = 1;
+
+                        }
+                }
+                if($update == 1)
+                {
+                     Objects::where('id', $id)->update($circle);
+                }
+                else
+                {
+                    $circle['is_back'] = 0;
+                    Objects::create($circle);
+                }
+               
+            }
+        }
             if($request->deleted_labels!=null)
             {
                 foreach ($request->deleted_labels as $value) {

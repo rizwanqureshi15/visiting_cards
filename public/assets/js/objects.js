@@ -1,9 +1,4 @@
-var lines = [];
-var circles = [];
-var squares = [];
-var deleted_lines = [];
-var deleted_circles = [];
-var deleted_squares = [];
+
 var back_lines = [];
 var back_circles = [];
 var back_squares = [];

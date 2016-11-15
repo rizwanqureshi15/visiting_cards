@@ -473,7 +473,40 @@
 				//console.log(feilds);
 				i++; 
 			});
+
+			var circle_object = [];
+			i=0
+			$.each(circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				circle_object[i] = values;
+				i++;
+			});
 			
+
+			var square_object = [];
+			i=0
+			$.each(squares, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				square_object[i] = values;
+				i++;
+			});
+
+			var line_object = [];
+			i=0
+			$.each(lines, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, type: type};
+				line_object[i] = values;
+				i++;
+			});
 			html2canvas(element2, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
@@ -493,7 +526,7 @@
 					        url: site_url+"/admin/templates/save_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+					        data: { "_token": token ,"feilds": feilds, "circle_object": circle_object,"square_object": square_object,"line_object":line_object, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();

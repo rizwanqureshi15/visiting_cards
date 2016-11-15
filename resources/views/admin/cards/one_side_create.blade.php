@@ -595,7 +595,12 @@
     var side = "";
     var is_back = "0";
     var template_both_side = {{ $templates->is_both_side }};
-
+    var lines = [];
+var circles = [];
+var squares = [];
+var deleted_lines = [];
+var deleted_circles = [];
+var deleted_squares = [];
     
     
 </script>
