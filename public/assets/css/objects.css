@@ -8,6 +8,9 @@
 #object_line{
 	cursor: pointer;
 }
+#back_object_line{
+    cursor: pointer;
+}
 .selected .ui-resizable-handle{
 	position: absolute;
     font-size: .1px;
@@ -69,7 +72,9 @@
 #object_square{
 	cursor: pointer;
 }
-
+#back_object_square{
+    cursor: pointer;
+}
 .object_circle{
 	height: 30px;
 	width: 30px;
@@ -84,7 +89,9 @@
 #object_circle{
 	cursor: pointer;
 }
-
+#back_object_circle{
+    cursor: pointer;
+}
 .object-toolbar{
 	top: 10px;
 	left: 20px;
@@ -233,4 +240,7 @@
 }
 .object{
     z-index:100;
+}
+#object_delete{
+    cursor: pointer;
 }

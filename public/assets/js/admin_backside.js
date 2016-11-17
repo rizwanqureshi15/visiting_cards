@@ -499,6 +499,7 @@
 			var i=0;
 			feilds=[];	
 			$('#overlay').show();
+			$('#guideline_border').hide();
 			
 			$.each(back_feild_names, function(key,  value){
 
@@ -541,6 +542,41 @@
 				i++; 
 			});
 
+			var back_circle_object = [];
+			i=0;
+			$.each(back_circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				back_circle_object[i] = values;
+				i++;
+			});
+			
+
+			var back_square_object = [];
+			i=0;
+			$.each(back_squares, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				back_square_object[i] = values;
+				i++;
+			});
+
+			var back_line_object = [];
+			i=0;
+			$.each(back_lines, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				back_line_object[i] = values;
+				i++;
+			});
+
 			html2canvas(element, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
@@ -560,7 +596,7 @@
 					        url: site_url+"/admin/templates/save_back_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images},
+					        data: { "_token": token ,"feilds": feilds, "deleted_circle_object": back_deleted_circles,"deleted_square_object": back_deleted_squares,"deleted_line_object":back_deleted_lines, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "back_circle_object": back_circle_object,"back_line_object":back_line_object,"back_square_object": back_square_object},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();

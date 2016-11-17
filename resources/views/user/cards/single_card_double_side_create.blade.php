@@ -563,7 +563,7 @@
                             Save
                         </button>
                         
-                        <button type="button" class="btn btn-default model-btn" data-dismiss="modal" >Close</button>
+                        <button type="button" class="btn btn-default model-btn" id="close_model" data-dismiss="modal" >Close</button>
                       </div>
                     </div>
                   </div>
@@ -746,6 +746,17 @@
             $('#front_side_image').removeClass('active_image').addClass('inactive_image');
         });
     });
+
+      $('#Preview').click(function()
+      { 
+            $('#guideline_border').hide();
+      });
+
+      $('#close_model').click(function()
+      { 
+            $('#guideline_border').show();
+            $("#guideline").text("Hide Guideline");
+      });
     
 </script>
 

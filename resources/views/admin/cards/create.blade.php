@@ -106,6 +106,39 @@
         </div>
       </div>
     </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Objects              
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-4" style="padding-left:22px;" id="object_line" >
+                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
+                <br>LINE
+              </div>
+              
+              <div class="col-md-4 text-center" id="object_square">
+                <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
+                <br>SQUARE
+              </div>
+
+              <div class="col-md-4 text-center" id="object_circle">
+                <i class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                <br>CIRCLE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
   </div>
 </div>  
 
@@ -113,16 +146,57 @@
   <div class="col-md-9">
     <div class="canvasBorder" style="height:421px;width:682px;">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
+        
+        <div id="guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas1" width="680" height="418">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+        
+        <div id="guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas1" width="400" height="648">
         </canvas>
 @endif
 <div id="card_body" style="">
+
+  @if($objects)
+
+            @foreach($objects as $object) 
+              <?php
+                $id = $object->name;
+                $id = str_replace(" ","_",$object->name);
+                $id = strtolower($id);
+              ?>
+
+              @if($object->type == "line")
+                  <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                      <div id="{{ $id }}" class="object_line">
+                      </div>
+                  </div>
+              @elseif($object->type == "square")
+                  <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+                  </div>
+              @elseif($object->type == "circle")
+                  <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+                  </div>
+              @endif
+            @endforeach
+
+          @endif
   @if($feilds)
     @foreach($feilds as $feild)
       <?php
@@ -196,18 +270,25 @@
             <!--Image Delete End-->
         </div>
         <!--Image Toolbar End-->
+
+
+        <!--Object Toolbar end-->
+
         </div>
         <!-- <div id="slider" style="margin-top:20px;"></div> -->
     </div>
     @if($templates->type == "horizontal")
     <div  class="row">
-      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" style="margin-left:10px;">
+      <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;">
+        Hide Guidelines
+      </a>
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons">
         Show Borders
       </a>
       <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
-      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" >
+      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" style="padding-left:10px;">
         Save
       </a>
     </div>
@@ -222,6 +303,11 @@
         <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
           Save
         </a>
+
+        <a id="guideline" class="btn btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+          Hide Guidelines
+        </a>
+
     </div>
     @endif
         
@@ -314,6 +400,39 @@
         </div>
       </div>
     </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Objects              
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-4" style="padding-left:22px;" id="back_object_line" >
+                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
+                <br>LINE
+              </div>
+              
+              <div class="col-md-4 text-center" id="back_object_square"> 
+                <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
+                <br>SQUARE
+              </div>
+
+              <div class="col-md-4 text-center" id="back_object_circle">
+                <i class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                <br>CIRCLE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
   </div>
 </div>  
 
@@ -321,16 +440,59 @@
   <div class="col-md-9">
     <div class="canvasBorder" style="height:421px;width:682px;">
       <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:419px;width:680px;">
+        
+        <div id="back_guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas2" width="680" height="419">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
       <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:648px;width:400px;">
+        
+        <div id="back_guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas2" width="400" height="648">
         </canvas>
 @endif
 <div id="back_card_body" style="">
+
+    @if($back_objects)
+
+        @foreach($back_objects as $object) 
+          <?php
+            $id = $object->name;
+            $id = str_replace(" ","_",$object->name);
+            $id = strtolower($id);
+          ?>
+
+          @if($object->type == "line")
+              <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                  <div id="{{ $id }}" class="object_line">
+                  </div>
+              </div>
+          @elseif($object->type == "square")
+              <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+              </div>
+          @elseif($object->type == "circle")
+              <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+              </div>
+          @endif
+      @endforeach
+
+    @endif
+
+
   @if($back_feilds)
     @foreach($back_feilds as $feild)
       <?php
@@ -360,7 +522,7 @@
     </div>
     @endforeach
   @endif
-  @if($back_images)
+  @if($back_image_css)
     @foreach($back_images as $image)
       @foreach($back_image_css as $img_css)
         @if($img_css->id == $image->template_feild_id )
@@ -406,7 +568,10 @@
     </div>
     @if($templates->type == "horizontal")
     <div class="row">
-      <a id="back_btnborder" class="btn btn-primary card-buttons"  style="margin-left:10px;">
+      <a id="back_guideline" class="btn btn-primary card-buttons"  style="margin-left:10px;width:174px;">
+        Hide Guidelines
+      </a>
+      <a id="back_btnborder" class="btn btn-primary card-buttons"  >
         Show Borders
       </a>
       <a type="button" class="btn btn-primary card-buttons" data-toggle="modal" data-target="#getSize">
@@ -418,6 +583,7 @@
     </div>
     @else
     <div class="row">
+
       <a id="back_btnborder" class="btn btn-primary card-buttons-verticle"  style="margin-left:10px;">
         Show Borders
       </a>
@@ -426,6 +592,10 @@
       </a>
       <a id="back_btnsave" class="btn btn-primary card-buttons-verticle">
         Save
+      </a>
+
+      <a id="back_guideline" class="btn btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+        Hide Guidelines
       </a>
     </div>
     @endif
@@ -513,6 +683,127 @@
         <!--Toolbar Textbox end-->
 
         </div><!--Toolbar end-->
+
+
+                <!--Object Toolbar start-->
+        <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
+          
+          <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
+            <div id="object_fill_color" class="col-md-6 submenu" style="padding-bottom:8px;">
+              <div class="col-md-8">
+                <div class="object-toolbar-submenu-text">Object Color</div>
+              </div>
+              <div class="col-md-4">
+                <div id="colorSelector1" class="object-color-picker">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-5 object-toolbar-submenu">
+            <div id="object_stroke_tools" class="col-md-8 submenu">
+              <div class="col-md-4 side-break-submenu">
+                <select id="thickness" class="select-thickness">
+                <option value = "1">1px</option>
+                <option value = "2">2px</option>
+                <option value = "3">3px</option>
+                <option value = "4">4px</option>
+                <option value = "5">5px</option>
+                <option value = "6">6px</option>
+                <option value = "7">7px</option>
+                <option value = "8">8px</option>
+              </select>
+              </div>
+              <div class="col-md-3 side-break-submenu text-center">
+                <div id="colorSelector3" class="object-color-picker" style="margin-left:4px;">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 text-center">
+                <select id="border_type" class="select-border-style">
+                  <option value = "solid">Solid</option>
+                  <option value = "dashed">Dashed</option>
+                  <option value = "dotted">Dotted</option>
+                </select>
+              </div>
+            </div>
+          </div>
+           <div class="col-md-12 col-md-offset-7 object-toolbar-submenu" >
+            <div id="object_opacity_tool" class="col-md-7 submenu" style="">
+              <div class="col-md-10">
+                <input id="opacity_slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/>
+              </div>
+              <div class="col-md-2" id="opacity_value">
+                20%
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-9 object-toolbar-submenu" >
+            <div id="object_rotate_tool" class="col-md-7 submenu">
+              <div class="col-md-7"  style="margin-top:17px;">
+                Enter Rotation :
+              </div>
+                <input type="text" id="rotation_degrees" class="col-md-2"  style="margin-top:13px;">
+              <div class="col-md-3"  style="margin-top:17px;">
+                Degrees
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-11 object-toolbar-submenu" >
+            <div id="object_arrange_tool" class="col-md-4 submenu" style="padding-left:10px;">
+              <div class="col-md-6 side-break-submenu" id="arrange_back">
+                <i class="fa fa-arrow-circle-left arrange_icon" aria-hidden="true" ></i>
+                <br>
+                <b class="arrange_font"> BACK </b>
+              </div>
+              <div class="col-md-6" id="arrange_front">
+                <i class="fa fa-arrow-circle-right arrange_icon" aria-hidden="true"></i>
+                <br>
+                <b class="arrange_font"> FRONT </b>
+              </div>
+
+            </div>
+          </div>
+
+            <!--Thickness Dropdown-->
+            <div class="col-md-2 text-center side-break" id="object_fill">
+              <img src="{{ url('assets/images/fill.png') }}" height="20px" width="20x" class="fill-color">
+              <div class="object-toolbar-text">Fill</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_stroke">
+              <img src="{{ url('assets/images/stroke.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Stroke</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_opacity">
+              <img src="{{ url('assets/images/opacity.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Opacity</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_rotate">
+              <img src="{{ url('assets/images/rotation.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Rotation</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_arrange">
+              <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Arrange</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_delete">
+              <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Delete</div>
+            </div>
+            <!--style Dropdown-->
+            <!-- <div class="col-md-4 side-break">
+              <select id="border_type" class="select-border-style">
+                <option value = "dashed">Dashed</option>
+                <option value = "dotted">Dotted</option>
+                <option value = "solid">Solid</option>
+              </select>
+            </div> -->
+            <!--end-->
+        </div>
+
+
   </div>
          <!-- Modal -->
             <div class="modal fade" id="getSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -599,7 +890,32 @@
 
 @section('js')
  
+
+
     <script>
+
+
+    var token = "{{ csrf_token() }}";
+    var site_url = "{{ url('') }}";
+    var feild_names = {!! json_encode($names) !!};
+    var upload_images = {!! json_encode($template_images) !!};
+    var label_names = {!! json_encode($template_labels) !!};;
+    var template_id = {{ $templates->id }};
+    var side = "";
+    var is_back = "0";
+    var template_both_side = {{ $templates->is_both_side }};
+    var lines = {!! json_encode($lines) !!};
+    var circles = {!! json_encode($circles) !!};
+    var squares = {!! json_encode($squares) !!};
+    var deleted_lines = [];
+    var deleted_circles = [];
+    var deleted_squares = [];
+    var back_lines = {!! json_encode($back_lines) !!};
+    var back_circles = {!! json_encode($back_circles) !!};
+    var back_squares = {!! json_encode($back_squares) !!};
+    var back_deleted_lines = [];
+    var back_deleted_circles = [];
+    var back_deleted_squares = [];
 
     var token = "{{ csrf_token() }}";
     var site_url = "{{ url('') }}";
@@ -614,6 +930,36 @@
     var is_back ="0";
     var template_both_side = {{ $templates->is_both_side }};
 
+
+    $(document).ready(function()
+    {
+        $("#guideline").click(function(){
+          if($(this).text() == "Show Guideline")
+          {
+              $('#guideline_border').show();
+              $(this).text("Hide Guideline");
+          }
+          else
+          { 
+              $('#guideline_border').hide();
+              $(this).text("Show Guideline");
+          }
+      });
+
+      $("#back_guideline").click(function(){
+          if($(this).text() == "Show Guideline")
+          {
+              $('#back_guideline_border').show();
+              $(this).text("Hide Guideline");
+          }
+          else
+          { 
+              $('#back_guideline_border').hide();
+              $(this).text("Show Guideline");
+          }
+      });
+
+    });
 
       var typingTimer;                
       var doneTypingInterval = 500;
@@ -665,7 +1011,6 @@
 
 
        $(document).ready(function(){
-       
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
@@ -691,13 +1036,14 @@
     
 </script>
 
-
     <script src="{{ url('assets/js/jquery-ui.js') }}"></script>
-    <script src="{{ url('assets/js/jquery.fontselect.js') }}"></script>
     <!--Color Picker -->
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
     <script src="{{ url('assets/js/admin_backside.js') }}"></script>
+    <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.fontselect.js') }}"></script>
+    <script src="{{ url('assets/js/objects.js') }}"></script>
 
 @endsection

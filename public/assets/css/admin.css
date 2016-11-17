@@ -114,6 +114,16 @@ position: absolute;
     overflow: hidden;
     cursor: pointer;
 }
+
+.safety-margin-line-fg
+{
+    border-top: 1px dashed red;
+    border-left: 1px dashed red;
+    pointer-events: none;
+    position: absolute;
+    opacity: .5;
+}
+
 .myFont
 {
     font-size:15px;
@@ -304,7 +314,7 @@ position: absolute;
 }
 
 .card-buttons{
-    width:224px;
+    width:164px;
     border-radius: 0px;
     margin-top: 3px;
 }

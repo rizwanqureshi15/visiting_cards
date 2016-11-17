@@ -307,7 +307,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default model-btn" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default model-btn" data-dismiss="modal" id="close_model">Close</button>
                         <button id="btnSave" type="submit" class="model-btn sidebar-btn">
                             Save
                         </button>
@@ -445,6 +445,17 @@
                   $(this).text("Show Guideline");
               }
           });
+        });
+
+        $('#Preview_single').click(function()
+        { 
+              $('#guideline_border').hide();
+        });
+
+        $('#close_model').click(function()
+        { 
+              $('#guideline_border').show();
+              $("#guideline").text("Hide Guideline");
         });
 
 

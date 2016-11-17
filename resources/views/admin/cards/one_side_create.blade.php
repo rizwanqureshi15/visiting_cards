@@ -148,12 +148,28 @@
   <div class="col-md-9">
     <div class="canvasBorder" style="height:421px;width:682px;">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
+        
+        <div id="guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas1" width="680" height="419">
         </canvas>
 @else
   <div class="col-md-6">
     <div class="canvasBorder"  style="height:650px;width:402px;">
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+       
+        <div id="guideline_border" class="overlay canvas-element-wrapper">
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+        </div>
+
         <canvas id="canvas1" width="400" height="648">
         </canvas>
 @endif
@@ -496,7 +512,10 @@
     </div>
         @if($templates->type == "horizontal")
     <div  class="row">
-      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" style="margin-left:10px;">
+      <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:174px;">
+        Hide Guidelines
+      </a>
+      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" >
         Show Borders
       </a>
       <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#getSize">
@@ -517,6 +536,9 @@
         <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
           Save
         </a>
+        <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+          Hide Guidelines
+        </a>
     </div>
     @endif
   </div>    
@@ -532,6 +554,23 @@
     var base_url = "{{ url('') }}";
     var typingTimer;                
     var doneTypingInterval = 500;
+
+
+    $(document).ready(function()
+    {
+        $("#guideline").click(function(){
+          if($(this).text() == "Show Guideline")
+          {
+              $('#guideline_border').show();
+              $(this).text("Hide Guideline");
+          }
+          else
+          { 
+              $('#guideline_border').hide();
+              $(this).text("Show Guideline");
+          }
+      });
+    });
 
     $('#newFeildName').keyup(function () 
     {

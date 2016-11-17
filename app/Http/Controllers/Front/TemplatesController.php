@@ -243,7 +243,7 @@ class TemplatesController extends Controller
     }
      public function back_save_user_template(Request $request)
     { 
-         $template =  Template::where('id',$request->template_id)->first();
+        $template =  Template::where('id',$request->template_id)->first();
         $user_fields=array(
                 
                 'background_image_back' => $template->background_image_back,
@@ -274,8 +274,8 @@ class TemplatesController extends Controller
         }
 
        
-       if($request->images)
-       {
+        if($request->images)
+        {
             foreach ($request->images as $image) {
 
                $id =  UserTemplateFeild::insertGetId(['name'=>$image['name'],'is_back' => 1,'template_id' => $request->user_template_id,'css' => $image['div_css'], 'font_css' => $image['css'], 'created_at' => date('Y-m-d H:s:i'), 'updated_at' => date('Y-m-d H:s:i')]);

@@ -125,7 +125,7 @@ Route::post('admin/templates/save_back_cards','CardController@back_card_save');
 Route::post('upload_images/{url}',['middleware' => 'auth','uses' => 'Front\TemplatesController@upload_images']);
 
 Route::get('delete_folder', ['middleware' => 'auth','uses' => 'Front\TemplatesController@delete_multiple_preview_folder']);
-Route::post('admin/templates/save_back_cards', 'CardController@back_card_save');
+
 Route::post('user_template_back_save', 'Front\TemplatesController@back_save_user_template');
 
 Route::get('admin/materials/create', 'MaterialController@create');

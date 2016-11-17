@@ -432,6 +432,7 @@
 			var i=0;
 			feilds=[];	
 			$('#overlay').show();
+			$('#guideline_border').hide();
 			
 			$.each(feild_names, function(key,  value){
 
@@ -475,7 +476,7 @@
 			});
 
 			var circle_object = [];
-			i=0
+			i=0;
 			$.each(circles, function(key, value){
 				var name = value;
 				var css = $('#'+ value).attr('style');
@@ -487,7 +488,7 @@
 			
 
 			var square_object = [];
-			i=0
+			i=0;
 			$.each(squares, function(key, value){
 				var name = value;
 				var css = $('#'+ value).attr('style');
@@ -497,16 +498,19 @@
 				i++;
 			});
 
+			
 			var line_object = [];
-			i=0
+			i=0;
 			$.each(lines, function(key, value){
 				var name = value;
-				var css = $('#'+ value).attr('style');
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
 				var type = 'line';
-				var values = { name: name, css: css, type: type};
+				var values = { name: name, css: css, line_css: line_css,type: type};
 				line_object[i] = values;
 				i++;
 			});
+
 			html2canvas(element2, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
@@ -526,7 +530,7 @@
 					        url: site_url+"/admin/templates/save_cards",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "circle_object": circle_object,"square_object": square_object,"line_object":line_object, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+					        data: { "_token": token ,"feilds": feilds, "deleted_circle_object": deleted_circles,"deleted_square_object": deleted_squares,"deleted_line_object":deleted_lines, "circle_object": circle_object,"square_object": square_object,"line_object":line_object, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();
