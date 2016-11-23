@@ -1577,15 +1577,15 @@ class TemplatesController extends Controller
         $data['back_names'] = $back_names; 
         $data['back_template_images'] = $back_template_images;
         $data['back_template_labels'] = $back_labels;
-        $data['objects'] = Objects::where('is_back',0)->where('template_id',$data['template_data'][0]->id)->get();
-        $data['circles'] = Objects::where('type','circle')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        $data['lines'] = Objects::where('type','line')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        $data['squares'] = Objects::where('type','square')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        $data['back_objects'] = Objects::where('is_back',1)->where('template_id',$data['template_data'][0]->id)->get();
-        $data['back_circles'] = Objects::where('type','circle')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        $data['back_lines'] = Objects::where('type','line')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        $data['back_squares'] = Objects::where('type','square')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
-        dd($data['objects']);
+        $data['objects'] = UserObject::where('is_back',0)->where('template_id',$data['template_data'][0]->id)->get();
+        $data['circles'] = UserObject::where('type','circle')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['lines'] = UserObject::where('type','line')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['squares'] = UserObject::where('type','square')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_objects'] = UserObject::where('is_back',1)->where('template_id',$data['template_data'][0]->id)->get();
+        $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+       
         if($data['template_data'][0]->is_both_side == 1)
         {  
             return view('user.multiple_double_side_cards_snap',$data);
