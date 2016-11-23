@@ -158,6 +158,7 @@ class CardController extends Controller
 
     public function card_save(Request $request)
     { 
+       
         if(CardController::authenticate_admin())
         {
            

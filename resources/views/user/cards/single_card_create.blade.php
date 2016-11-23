@@ -147,7 +147,30 @@
                 <input type="hidden" id="template_id" value="{{ $template->id }}"/>
         
                 <div id="card_body">
+@if($objects)
 
+    @foreach($objects as $object) 
+      <?php
+        $id = $object->name;
+        $id = str_replace(" ","_",$object->name);
+        $id = strtolower($id);
+      ?>
+
+      @if($object->type == "line")
+          <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+              </div>
+          </div>
+      @elseif($object->type == "square")
+          <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+          </div>
+      @elseif($object->type == "circle")
+          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          </div>
+      @endif
+    @endforeach
+
+  @endif
                     @if($feilds)
                 @foreach($feilds as $feild)
                      <?php

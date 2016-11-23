@@ -172,8 +172,8 @@ $(document).ready(function(){
 		if(selected_object.substring(0,7) == "wrapper")
 		{
 			selected_object = selected_object.substring(8, selected_object.length);
-
 		}
+		
 		var fill = $('#' + selected_object).css('background-color');
 		var stroke_color = $('#' + selected_object).css('border-color');
 		var stroke_width = $('#' + selected_object).css('border-width');
@@ -185,15 +185,7 @@ $(document).ready(function(){
 		$('#thickness').val(stroke_width);
 		$('#border_type').val(stroke_type);
 		object_opacity = parseInt(object_opacity)*100;
-		if(template_both_side == 1)
-		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) + 63).css('left', parseInt(left) + 500 );
-		}
-		else
-		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) - 10).css('left', parseInt(left) );
-		}
-		
+		$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) + 130).css('left', parseInt(left) + 400);
 		$('#objectToolbar').show();
 	});
 
@@ -279,6 +271,7 @@ $(document).ready(function(){
 
 		if(id.substring(0,6) == 'circle')
 		{
+
 			$.each(circles, function(key, value){
 
 					if(value == id)
@@ -375,7 +368,7 @@ $(document).ready(function(){
 			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
-		else if(id.substring(5,11) == 'square')
+		else
 		{
 			$.each(back_squares, function(key,  value){
 					if(value == id)

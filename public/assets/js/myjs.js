@@ -266,6 +266,7 @@
 			}
 
 		});
+
 		$('#toolbardelete').click(function(){
 			var name = $('#'+side+element_id).data('name');
 			var type = $('#'+side+element_id).data('type');
@@ -692,7 +693,7 @@
 
         $("#save_as_template").on('click', function () {
 
-        	$('#guideline_border').css('display','none');
+        	$('#guideline_border').hide();
         	$('.feild-elements').css('border', 'none');	
 			$('.template_image_div').css('border', 'none');	
 			$('#back_side_image').removeClass('inactive_image').addClass('active_image');
@@ -758,6 +759,42 @@
 				i++; 
 			});
 
+			var circle_object = [];
+			i=0;
+			$.each(circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				circle_object[i] = values;
+				i++;
+			});
+			
+
+			var square_object = [];
+			i=0;
+			$.each(squares, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				square_object[i] = values;
+				i++;
+			});
+
+			
+			var line_object = [];
+			i=0;
+			$.each(lines, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				line_object[i] = values;
+				i++;
+			});
+
          html2canvas(element, {
          onrendered: function (canvas) {
                 getCanvas = canvas;
@@ -773,7 +810,7 @@
                     $.ajax({
                             url: site_url+'/user_template_save',
                             type: "post",
-                            data: {"_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+                            data: {"_token": token ,"feilds": feilds,"deleted_circle_object": deleted_circles,"deleted_square_object": deleted_squares,"deleted_line_object":deleted_lines,"circle_object": circle_object,"square_object": square_object,"line_object":line_object, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
                             dataType: 'json',
                             success: function(template_id_json) {
                             	if(template_both_side == 0)
@@ -812,6 +849,7 @@
              });
         });
         $("#save_modifications").on('click', function () {
+        	$('#guideline_border').hide();
             var i=0;
             feilds=[];
             $('#back_side_image').removeClass('inactive_image').addClass('active_image');
@@ -856,6 +894,42 @@
 				//console.log(feilds);
 				i++; 
 			});
+
+			var circle_object = [];
+			i=0;
+			$.each(circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				circle_object[i] = values;
+				i++;
+			});
+			
+
+			var square_object = [];
+			i=0;
+			$.each(squares, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				square_object[i] = values;
+				i++;
+			});
+
+			
+			var line_object = [];
+			i=0;
+			$.each(lines, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				line_object[i] = values;
+				i++;
+			});
          html2canvas(element, {
          onrendered: function (canvas) {
                 getCanvas = canvas;
@@ -871,7 +945,7 @@
                     $.ajax({
                             url: site_url+'/user_template_edit',
                             type: "post",
-                            data: {"_token": token ,"feilds": feilds, "deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
+                            data: {"_token": token ,"feilds": feilds, "deleted_circle_object": deleted_circles,"deleted_square_object": deleted_squares,"deleted_line_object":deleted_lines,"circle_object": circle_object,"square_object": square_object,"line_object":line_object,"deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
                             dataType: 'json',
                             success: function(msg) {
                             	if(template_both_side == 0)

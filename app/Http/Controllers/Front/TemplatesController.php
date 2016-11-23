@@ -26,7 +26,8 @@ use App\TemplateImage;
 use App\TemplateFeild;
 use App\Material;
 use App\Order;
-
+use App\UserObject;
+use App\Objects;
 
 class TemplatesController extends Controller
 {
@@ -192,13 +193,22 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels;
+                $data['objects'] = Objects::where('is_back',0)->where('template_id',$data['template']->id)->get();
+                $data['circles'] = Objects::where('type','circle')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['lines'] = Objects::where('type','line')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['squares'] = Objects::where('type','square')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_objects'] = Objects::where('is_back',1)->where('template_id',$data['template']->id)->get();
+                $data['back_circles'] = Objects::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_lines'] = Objects::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_squares'] = Objects::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+             
                 if($data['template']->is_both_side == 1)
                 {
                    return view('user.templates.create_double_side',$data);
                 }
                 else
                 {
-                    return view('user.templates.create',$data);
+                    return view('user.templates.create', $data);
                 }
 
         
@@ -243,6 +253,7 @@ class TemplatesController extends Controller
     }
      public function back_save_user_template(Request $request)
     { 
+        
         $template =  Template::where('id',$request->template_id)->first();
         $user_fields=array(
                 
@@ -285,7 +296,112 @@ class TemplatesController extends Controller
                  
            }
         }
-            
+        
+        
+        $circle_names = UserObject::where('is_back',1)->where('type', 'circle')->where('template_id', $request->user_template_id)->pluck('name');
+         if($request->back_circle_object)
+         {  
+            foreach ($request->back_circle_object as $circle) 
+            {
+                $update = 0;
+                $circle['template_id'] = $request->user_template_id;
+                 foreach ($circle_names as $key => $value) {
+
+                        if($value == $circle['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                }
+                else
+                {   
+                    $circle['is_back'] = 1;
+                    UserObject::create($circle);
+                }
+               
+            }
+        }
+
+
+        $square_names = UserObject::where('is_back',1)->where('type', 'square')->where('template_id', $request->user_template_id)->pluck('name');
+         if($request->back_square_object)
+         {  
+            foreach ($request->back_square_object as $square) 
+            {
+                $update = 0;
+                $square['template_id'] = $request->user_template_id;
+                 foreach ($square_names as $key => $value) {
+
+                        if($value == $square['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $square['name'])->update($square);
+                }
+                else
+                {   
+                    $square['is_back'] = 1;
+                    UserObject::create($square);
+                }
+               
+            }
+        }
+
+        $line_names = UserObject::where('is_back',1)->where('type', 'line')->where('template_id', $request->user_template_id)->pluck('name');
+         if($request->back_line_object)
+         {  
+            foreach ($request->back_line_object as $line) 
+            {
+                $update = 0;
+                $line['template_id'] = $request->user_template_id;
+                 foreach ($line_names as $key => $value) {
+
+                        if($value == $line['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $line['name'])->update($line);
+                }
+                else
+                {   
+                    $line['is_back'] = 1;
+                    UserObject::create($line);
+                }
+               
+            }
+        }
+
+        if($request->deleted_line_object!=null)
+            {
+                foreach ($request->deleted_line_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->user_template_id)->delete();
+                }
+            }
+            if($request->deleted_circle_object!=null)
+            {
+                foreach ($request->deleted_circle_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->user_template_id)->delete();
+                }
+            }
+            if($request->deleted_square_object!=null)
+            {
+                foreach ($request->deleted_square_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->user_template_id)->delete();
+                }
+            }
+   
      
        return json_encode("Template is Saved..!");
 
@@ -367,6 +483,118 @@ class TemplatesController extends Controller
                  
            }
         }
+
+        $circle_names = UserObject::where('is_back',0)->where('type', 'circle')->where('template_id', $user_template_id)->pluck('name');
+         if($request->circle_object)
+         {  
+            foreach ($request->circle_object as $circle) 
+            {
+                $update = 0;
+                $circle['template_id'] = $user_template_id;
+                 foreach ($circle_names as $key => $value) {
+
+                        if($value == $circle['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                }
+                else
+                {   
+                    $circle['is_back'] = 0;
+                    UserObject::create($circle);
+                }
+               
+            }
+        }
+
+
+        $square_names = UserObject::where('is_back',0)->where('type', 'square')->where('template_id', $user_template_id)->pluck('name');
+         if($request->square_object)
+         {  
+            foreach ($request->square_object as $square) 
+            {
+                $update = 0;
+                $square['template_id'] = $user_template_id;
+                 foreach ($square_names as $key => $value) {
+
+                        if($value == $square['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $square['name'])->update($square);
+                }
+                else
+                {   
+                    $square['is_back'] = 0;
+                    UserObject::create($square);
+                }
+               
+            }
+        }
+
+
+        $line_names = UserObject::where('is_back',0)->where('type', 'line')->where('template_id', $request->template_id)->pluck('name');
+         if($request->line_object)
+         {  
+            foreach ($request->line_object as $line) 
+            {
+                $update = 0;
+                $line['template_id'] = $user_template_id;
+                 foreach ($line_names as $key => $value) {
+
+                        if($value == $line['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $line['name'])->update($line);
+                }
+                else
+                {   
+                    $line['is_back'] = 0;
+                    UserObject::create($line);
+                }
+               
+            }
+        }
+
+         if($request->deleted_line_object!=null)
+            {
+                foreach ($request->deleted_line_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$user_template_id)->delete();
+                }
+            }
+            if($request->deleted_circle_object!=null)
+            {
+                foreach ($request->deleted_circle_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$user_template_id)->delete();
+                }
+            }
+            if($request->deleted_square_object!=null)
+            {
+                foreach ($request->deleted_square_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$user_template_id)->delete();
+                }
+            }
+
+            if($request->deleted_labels!=null)
+            {
+                foreach ($request->deleted_labels as $value) {
+                    UserTemplateFeild::where('name',$value)->where('is_label',1)->where('template_id',$user_template_id)->delete();
+                }
+            }
             
      
        return json_encode($user_template_id);
@@ -501,6 +729,18 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels;
+
+                $data['back_names'] = $back_names;
+                $data['back_template_images'] = $back_template_images;
+                $data['back_template_labels'] = $back_labels;
+                $data['objects'] = UserObject::where('is_back',0)->where('template_id',$data['template']->id)->get();
+                $data['circles'] = UserObject::where('type','circle')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['lines'] = UserObject::where('type','line')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['squares'] = UserObject::where('type','square')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_objects'] = UserObject::where('is_back',1)->where('template_id',$data['template']->id)->get();
+                $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
                 if($data['template']->is_both_side == 1)
                 {
                   return view('user.templates.edit_double_side',$data);
@@ -525,7 +765,7 @@ class TemplatesController extends Controller
                 'snap'=> $request->snap,
         );
 
-        userTemplate::where('id', $request->template_id)->update($user_fields);
+        UserTemplate::where('id', $request->template_id)->update($user_fields);
         if($request->feilds)
         {
             foreach ($request->feilds as $feild) 
@@ -594,13 +834,119 @@ class TemplatesController extends Controller
             UserTemplateFeild::where('is_back',0)->where('id', $image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
             }
         }
+
+        $circle_names = UserObject::where('is_back',0)->where('type', 'circle')->where('template_id', $request->template_id)->pluck('name');
+         if($request->circle_object)
+         {  
+            foreach ($request->circle_object as $circle) 
+            {
+                $update = 0;
+                $circle['template_id'] = $request->template_id;
+                 foreach ($circle_names as $key => $value) {
+
+                        if($value == $circle['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                }
+                else
+                {   
+                    $circle['is_back'] = 0;
+                    UserObject::create($circle);
+                }
+               
+            }
+        }
+
+
+        $square_names = UserObject::where('is_back',0)->where('type', 'square')->where('template_id', $request->template_id)->pluck('name');
+         if($request->square_object)
+         {  
+            foreach ($request->square_object as $square) 
+            {
+                $update = 0;
+                $square['template_id'] = $request->template_id;
+                 foreach ($square_names as $key => $value) {
+
+                        if($value == $square['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $square['name'])->update($square);
+                }
+                else
+                {   
+                    $square['is_back'] = 0;
+                    UserObject::create($square);
+                }
+               
+            }
+        }
+
+
+        $line_names = UserObject::where('is_back',0)->where('type', 'line')->where('template_id', $request->template_id)->pluck('name');
+         if($request->line_object)
+         {  
+            foreach ($request->line_object as $line) 
+            {
+                $update = 0;
+                $line['template_id'] = $request->template_id;
+                 foreach ($line_names as $key => $value) {
+
+                        if($value == $line['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $line['name'])->update($line);
+                }
+                else
+                {   
+                    $line['is_back'] = 0;
+                    UserObject::create($line);
+                }
+               
+            }
+        }
+
+         if($request->deleted_line_object!=null)
+            {
+                foreach ($request->deleted_line_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$request->template_id)->delete();
+                }
+            }
+            if($request->deleted_circle_object!=null)
+            {
+                foreach ($request->deleted_circle_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$request->template_id)->delete();
+                }
+            }
+            if($request->deleted_square_object!=null)
+            {
+                foreach ($request->deleted_square_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',0)->where('template_id',$request->template_id)->delete();
+                }
+            }
+
             
      
        return json_encode('saved.!');
     }
     public function edit_user_template_back_post(Request $request)
     { 
-
+     
         //$template =  Template::where('id',$request->template_id)->first();
          
          $user_id=Auth::user()->id;
@@ -647,6 +993,111 @@ class TemplatesController extends Controller
                 } 
         }
     }
+
+    $circle_names = UserObject::where('is_back',1)->where('type', 'circle')->where('template_id', $request->template_id)->pluck('name');
+         if($request->back_circle_object)
+         {  
+            foreach ($request->back_circle_object as $circle) 
+            {
+                $update = 0;
+                $circle['template_id'] = $request->template_id;
+                 foreach ($circle_names as $key => $value) {
+
+                        if($value == $circle['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                }
+                else
+                {   
+                    $circle['is_back'] = 1;
+                    UserObject::create($circle);
+                }
+               
+            }
+        }
+
+
+        $square_names = UserObject::where('is_back',1)->where('type', 'square')->where('template_id', $request->template_id)->pluck('name');
+         if($request->back_square_object)
+         {  
+            foreach ($request->back_square_object as $square) 
+            {
+                $update = 0;
+                $square['template_id'] = $request->template_id;
+                 foreach ($square_names as $key => $value) {
+
+                        if($value == $square['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $square['name'])->update($square);
+                }
+                else
+                {   
+                    $square['is_back'] = 1;
+                    UserObject::create($square);
+                }
+               
+            }
+        }
+
+
+        $line_names = UserObject::where('is_back',1)->where('type', 'line')->where('template_id', $request->template_id)->pluck('name');
+         if($request->back_line_object)
+         {  
+            foreach ($request->back_line_object as $line) 
+            {
+                $update = 0;
+                $line['template_id'] = $request->template_id;
+                 foreach ($line_names as $key => $value) {
+
+                        if($value == $line['name'])
+                        { 
+                            $id = $key;
+                            $update = 1;
+                        }
+                }
+                if($update == 1)
+                {
+                    $object = UserObject::where('name', $line['name'])->update($line);
+                }
+                else
+                {   
+                    $line['is_back'] = 1;
+                    UserObject::create($line);
+                }
+               
+            }
+        }
+
+         if($request->back_deleted_line_object!=null)
+            {
+                foreach ($request->back_deleted_line_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->template_id)->delete();
+                }
+            }
+            if($request->back_deleted_circle_object!=null)
+            {
+                foreach ($request->back_deleted_circle_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->template_id)->delete();
+                }
+            }
+            if($request->back_deleted_square_object!=null)
+            {
+                foreach ($request->back_deleted_square_object as $value) {
+                    UserObject::where('name',$value)->where('is_back',1)->where('template_id',$request->template_id)->delete();
+                }
+            }
         if($request->deleted_feilds)
         {
             foreach ($request->deleted_feilds as  $feild) {
@@ -704,6 +1155,7 @@ class TemplatesController extends Controller
         UserTemplateImage::whereIn('template_Feild_id', $ids)->delete();
         UserTemplateFeild::where('template_id', $user_template->id)->delete();
         UserTemplate::where('id', $user_template->id)->delete();
+        UserObject::where('template_id',$user_template->id)->delete();
         return Redirect()->back();
     }
 
@@ -794,6 +1246,14 @@ class TemplatesController extends Controller
                 $data['back_names'] = $back_names;
                 $data['back_template_images'] = $back_template_images;
                 $data['back_template_labels'] = $back_labels; 
+                 $data['objects'] = UserObject::where('is_back',0)->where('template_id',$data['template']->id)->get();
+                $data['circles'] = UserObject::where('type','circle')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['lines'] = UserObject::where('type','line')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['squares'] = UserObject::where('type','square')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_objects'] = UserObject::where('is_back',1)->where('template_id',$data['template']->id)->get();
+                $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+                $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
                 
                 if($data['template']->is_both_side == 1)
                 {
@@ -1117,7 +1577,15 @@ class TemplatesController extends Controller
         $data['back_names'] = $back_names; 
         $data['back_template_images'] = $back_template_images;
         $data['back_template_labels'] = $back_labels;
-
+        $data['objects'] = Objects::where('is_back',0)->where('template_id',$data['template_data'][0]->id)->get();
+        $data['circles'] = Objects::where('type','circle')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['lines'] = Objects::where('type','line')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['squares'] = Objects::where('type','square')->where('is_back',0)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_objects'] = Objects::where('is_back',1)->where('template_id',$data['template_data'][0]->id)->get();
+        $data['back_circles'] = Objects::where('type','circle')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_lines'] = Objects::where('type','line')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        $data['back_squares'] = Objects::where('type','square')->where('is_back',1)->where('template_id',$data['template_data'][0]->id)->pluck('name');
+        dd($data['objects']);
         if($data['template_data'][0]->is_both_side == 1)
         {  
             return view('user.multiple_double_side_cards_snap',$data);

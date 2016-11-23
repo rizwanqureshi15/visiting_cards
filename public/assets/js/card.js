@@ -534,6 +534,8 @@
         });
     });
     $("#Preview").on('click', function () {
+    	$('#guideline_border').hide();
+    	$('#back_guideline_border').hide();
         $('.feild-elements').css('border','none'); 
             $("#previewImage").html(' ');
         if($('#front_side').css("display") == "none")

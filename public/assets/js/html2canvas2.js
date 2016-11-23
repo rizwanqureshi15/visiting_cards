@@ -2507,25 +2507,11 @@ function calculateCurvePoints(bounds, borderRadius, borders) {
         trv = borderRadius[1][1],
         brh = borderRadius[2][0],
         brv = borderRadius[2][1],
-        // blh = borderRadius[3][0],
-        // blv = borderRadius[3][1];
-blh = borderRadius[3][0],
-    blv = borderRadius[3][1];
-
-      var halfHeight = Math.floor(height / 2);
-      tlh = tlh > halfHeight ? halfHeight : tlh;
-      tlv = tlv > halfHeight ? halfHeight : tlv;
-      trh = trh > halfHeight ? halfHeight : trh;
-      trv = trv > halfHeight ? halfHeight : trv;
-      brh = brh > halfHeight ? halfHeight : brh;
-      brv = brv > halfHeight ? halfHeight : brv;
-      blh = blh > halfHeight ? halfHeight : blh;
-      blv = blv > halfHeight ? halfHeight : blv;
+        blh = borderRadius[3][0],
+        blv = borderRadius[3][1];
 
     var topWidth = width - trh,
-    rightHeight = height - brv,
-    // var topWidth = width - trh,
-    //     rightHeight = height - brv,
+        rightHeight = height - brv,
         bottomWidth = width - brh,
         leftHeight = height - blv;
 

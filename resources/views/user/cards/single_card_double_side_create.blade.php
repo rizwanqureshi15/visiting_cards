@@ -2,6 +2,10 @@
 
 @section('content')
 <style>
+  .object_line_wrapper:hover{
+    border:none;
+    cursor: default;
+  }
     .cropit-preview {
         background-color: #f8f8f8;
         background-size: cover;
@@ -31,6 +35,7 @@
         z-index: 10;
         display: block;
       }
+  }
 
 </style>
 <div id="front_side" style="display:block;"> 
@@ -137,6 +142,30 @@
         </canvas>
 @endif
 <div id="card_body" style="">
+@if($objects)
+
+    @foreach($objects as $object) 
+      <?php
+        $id = $object->name;
+        $id = str_replace(" ","_",$object->name);
+        $id = strtolower($id);
+      ?>
+
+      @if($object->type == "line")
+          <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+              </div>
+          </div>
+      @elseif($object->type == "square")
+          <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+          </div>
+      @elseif($object->type == "circle")
+          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          </div>
+      @endif
+    @endforeach
+
+  @endif
   @if($feilds)
     @foreach($feilds as $feild)
       <?php
@@ -337,6 +366,30 @@
         </canvas>
 @endif
 <div id="back_card_body" style="">
+@if($back_objects)
+
+        @foreach($back_objects as $object) 
+          <?php
+            $id = $object->name;
+            $id = str_replace(" ","_",$object->name);
+            $id = strtolower($id);
+          ?>
+
+          @if($object->type == "line")
+              <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                  <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+                  </div>
+              </div>
+          @elseif($object->type == "square")
+              <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+              </div>
+          @elseif($object->type == "circle")
+              <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+              </div>
+          @endif
+      @endforeach
+
+    @endif
   @if($back_feilds)
     @foreach($back_feilds as $feild)
       <?php
@@ -422,7 +475,7 @@
           <div class="col-md-7 col-md-offset-4" style="margin-top:10px;">
       @endif
 
-      <button class="btn-blog" id="Preview" data-toggle="modal" data-target="#preview_image" style="margin-right: 20px;">
+      <button class="btn-blog" id="Preview" data-toggle="modal" data-target="#preview_image" style="margin-right: 11%;">
         Preview
       </button>
       <a id="btnborder" class="btn-blog" style="margin-right: 20px;">
@@ -435,11 +488,11 @@
   <div class="col-md-6 col-md-offset-4">
         <div style="height:180px;padding:20px;">
           <div class="col-md-4 text-center">
-            <img src="{{ url('images/'.$username, $template->snap) }}" class="active_image front_back" id="front_side_image" style="">
+            <img src="{{ url('images/'.$username, $template->snap) }}" class="active_image front_back" id="front_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
             <label class="image_fonts">FRONT SIDE</label>
           </div>
           <div class="col-md-4 text-center">
-            <img src="{{ url('images/'.$username, $template->back_snap) }}" class="inactive_image front_back" id="back_side_image" style="">
+            <img src="{{ url('images/'.$username, $template->back_snap) }}" class="inactive_image front_back" id="back_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
             <label class="image_fonts">BACK SIDE</label>
           </div>
         </div>
@@ -746,12 +799,6 @@
             $('#front_side_image').removeClass('active_image').addClass('inactive_image');
         });
     });
-
-      $('#Preview').click(function()
-      { 
-            $('#guideline_border').hide();
-      });
-
       $('#close_model').click(function()
       { 
             $('#guideline_border').show();

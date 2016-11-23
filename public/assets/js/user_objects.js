@@ -104,7 +104,7 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "back_square_" + length;
 		back_squares.push(id);
-		$('#back_card_body').append('<div class="object object_square" id="' + id +'"></div>');
+		$('#back_card_body').append('<div class="object object_square" style="border-color:black;" id="' + id +'"></div>');
 		$('#' + id).draggable();
 		$('#' + id).resizable({
 			handles: "e, w, s, n"
@@ -118,7 +118,7 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "square_" + length;
 		squares.push(id);
-		$('#card_body').append('<div class="object object_square" id="' + id +'"></div>');
+		$('#card_body').append('<div class="object object_square" style="border-color:black;" id="' + id +'"></div>');
 		$('#' + id).draggable();
 		$('#' + id).resizable({
 			handles: "e, w, s, n"
@@ -133,7 +133,7 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "back_circle_" + length;
 		back_circles.push(id);
-		$('#back_card_body').append('<div class="object object_circle" id="' + id +'"></div>');
+		$('#back_card_body').append('<div class="object object_circle"  style="border-color:black;" id="' + id +'"></div>');
 		$('#'+ id).draggable();
 		$('#'+ id).resizable({
 			handles: "e, w, s, n"
@@ -147,7 +147,7 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "circle_" + length;
 		circles.push(id);
-		$('#card_body').append('<div class="object object_circle" id="' + id +'"></div>');
+		$('#card_body').append('<div class="object object_circle" style="border-color:black;" id="' + id +'"></div>');
 		$('#' + id).draggable();
 		$('#' + id).resizable({
 			handles: "e, w, s, n"
@@ -172,8 +172,8 @@ $(document).ready(function(){
 		if(selected_object.substring(0,7) == "wrapper")
 		{
 			selected_object = selected_object.substring(8, selected_object.length);
-
 		}
+		
 		var fill = $('#' + selected_object).css('background-color');
 		var stroke_color = $('#' + selected_object).css('border-color');
 		var stroke_width = $('#' + selected_object).css('border-width');
@@ -185,15 +185,7 @@ $(document).ready(function(){
 		$('#thickness').val(stroke_width);
 		$('#border_type').val(stroke_type);
 		object_opacity = parseInt(object_opacity)*100;
-		if(template_both_side == 1)
-		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) + 63).css('left', parseInt(left) + 500 );
-		}
-		else
-		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) - 10).css('left', parseInt(left) );
-		}
-		
+		$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) -10).css('left', parseInt(left) + 16);
 		$('#objectToolbar').show();
 	});
 
@@ -279,6 +271,7 @@ $(document).ready(function(){
 
 		if(id.substring(0,6) == 'circle')
 		{
+
 			$.each(circles, function(key, value){
 
 					if(value == id)
@@ -375,7 +368,7 @@ $(document).ready(function(){
 			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
-		else if(id.substring(5,11) == 'square')
+		else
 		{
 			$.each(back_squares, function(key,  value){
 					if(value == id)

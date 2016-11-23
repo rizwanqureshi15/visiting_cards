@@ -83,7 +83,7 @@
 	left: 20px;
 	background-color: transparent;
 	position: absolute;
-	border-radius: 100%;
+    border-radius: 100%;
 }
 
 #object_circle{
@@ -240,6 +240,7 @@
 }
 .object{
     z-index:100;
+    cursor: pointer;
 }
 #object_delete{
     cursor: pointer;

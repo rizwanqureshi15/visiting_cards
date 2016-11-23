@@ -478,7 +478,7 @@
 		//work on lable end
 		$('#back_save_as_template').click(function(){
 
-			$('#back_guideline_border').css('display','none');
+			$('#back_guideline_border').hide();
 			$('.feild-elements').css('border', 'none');	
 			$('.back_template_image').css('border', 'none');	
 			$('#user_overlay').show();
@@ -528,6 +528,41 @@
 				i++; 
 			});
 
+			var back_circle_object = [];
+			i=0;
+			$.each(back_circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				back_circle_object[i] = values;
+				i++;
+			});
+			
+
+			var back_square_object = [];
+			i=0;
+			$.each(back_squares, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				back_square_object[i] = values;
+				i++;
+			});
+			
+			var back_line_object = [];
+			i=0;
+			$.each(back_lines, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				back_line_object[i] = values;
+				i++;
+			});
+			
 			html2canvas(element2, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
@@ -546,7 +581,7 @@
 					        url: site_url+"/user_template_back_save",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "user_template_id": new_template_id},
+					        data: { "_token": token ,"feilds": feilds , "back_circle_object": back_circle_object,"back_square_object": back_square_object,"back_line_object":back_line_object,  "deleted_circle_object": back_deleted_circles,"deleted_square_object": back_deleted_squares,"deleted_line_object":back_deleted_lines, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "user_template_id": new_template_id},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#user_overlay').hide();
@@ -577,6 +612,7 @@
 			feilds=[];	
 			$('#user_overlay').show();
 			$('#navbar').hide();
+			$('#back_guideline_border').hide();
 			
 			$.each(back_feild_names, function(key,  value){
 
@@ -619,6 +655,40 @@
 				i++; 
 			});
 
+			var back_circle_object = [];
+			i=0;
+			$.each(back_circles, function(key, value){
+				var name = value;
+				var css = $('#'+ value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, type: type};
+				back_circle_object[i] = values;
+				i++;
+			});
+			
+
+			var back_square_object = [];
+			i=0;
+			$.each(back_squares, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style');
+				var type = 'square';
+				var values = { name: name, css: css, type: type};
+				back_square_object[i] = values;
+				i++;
+			});
+
+			var back_line_object = [];
+			i=0;
+			$.each(back_lines, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style'); 
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'line';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				back_line_object[i] = values;
+				i++;
+			});
 			html2canvas(element2, {
 	         onrendered: function (canvas) {
 	                //$("#previewImage").append(canvas);
@@ -638,7 +708,7 @@
 					        url: site_url+"/user_template_edit_back",
 					        type: "post",
 					        async: true,
-					        data: { "_token": token ,"feilds": feilds, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "user_template_id": new_template_id},
+					        data: { "_token": token ,"feilds": feilds, "back_circle_object": back_circle_object,"back_square_object": back_square_object,"back_line_object":back_line_object,  "deleted_circle_object": back_deleted_circles,"deleted_square_object": back_deleted_squares,"deleted_line_object":back_deleted_lines, "deleted_feilds": back_delete_feilds, "labels": labels,"deleted_labels": back_delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": back_delete_images, "user_template_id": new_template_id},
 					        dataType: 'json',
 					        success: function(msg) {
 					        	$('#overlay').hide();

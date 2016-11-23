@@ -20,11 +20,10 @@
     <link rel="stylesheet" href="{{ url('assets/css/font.css') }}">
 
     <link rel="stylesheet" href="{{ url('assets/css/theme.css') }}">
-
+    <link rel="stylesheet" href="{{ url('assets/css/objects.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap-slider.min.css') }}">
     <!--ColorPicker-->
     <link rel="stylesheet" href="{{ url('assets/colorpicker/css/colorpicker.css') }}" type="text/css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="{{ url('assets/colorpicker/css/layout.css') }}" />
-
     <!--end-->
     
 

@@ -50,7 +50,7 @@
             </a>
           </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body" id="feild_body">
             <div class="row">
                 <div class="col-md-8" style="padding-right:0px">
@@ -119,7 +119,7 @@
             </a>
           </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-4" style="padding-left:22px;" id="object_line" >
@@ -177,6 +177,28 @@
      <!--<input type="hidden" id="template_id" value="{{ $templates->id }}"/> -->
         
         <div id="card_body">
+@if($objects)
+  @foreach($objects as $object) 
+    <?php
+    $id = $object->name;
+    $id = str_replace(" ","_",$object->name);
+    $id = strtolower($id);
+    ?>
+
+    @if($object->type == "line")
+      <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+        <div id="{{ $id }}" class="object_line">
+        </div>
+      </div>
+    @elseif($object->type == "square")
+      <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+      </div>
+    @elseif($object->type == "circle")
+      <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+      </div>
+    @endif
+  @endforeach
+@endif
           @if($feilds)
             @foreach($feilds as $feild)
               <?php
@@ -313,7 +335,87 @@
         </div>
         <!--Image Toolbar End-->
 
-        <!--Object Toolbar start-->
+
+       
+         <!-- Modal -->
+            <div class="modal fade" id="getSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Select Image Size</h4>
+                  </div>
+                  <div class="modal-body">
+                      <select class="form-control" id="image-size">
+                        <option value="passport">Passport size Image</option>
+                        <option value="menualy">Other Size Image</option>
+                      </select>
+                      <div id="size" style="margin-top:10px;display: none">
+                        <form id="uploadimage" method="POST" action="" enctype="multipart/form-data">
+                          <div class="form-group" >
+                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image Name : </label>
+                            <div class="col-sm-9" style="margin-top:10px;">
+                              <input type="text"  name="imagenameform" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image : </label>
+                            <div class="col-sm-9" style="margin-top:10px;">
+                              <input type="file" id="other_image" name="image" class="form-control">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-3" style="margin-top:10px;"><input type="submit" class="btn btn-primary"></div>
+                            </div> 
+                        </form>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary" id="saveSize" data-toggle="modal" data-target="#myModal">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Upload Your Image</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="image-editor" id="image-editor">
+                          <hr>
+                          <input type="file" class="cropit-image-input">
+                          <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
+                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" id="image_name" name="image_name" placeholder="Enter image Feild Name.." required="required" />
+                          <div id="image_error" style="margin-top:10px;"></div>
+                          <hr>
+                          <div class="cropit-preview"></div>
+                          <hr>
+                          <input type="range" class="cropit-image-zoom-input" />
+                        
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- <div id="slider" style="margin-top:20px;"></div> -->
+    </div>
+            <!--Object Toolbar start-->
         <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
           
           <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
@@ -420,96 +522,8 @@
               <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Delete</div>
             </div>
-            <!--style Dropdown-->
-            <!-- <div class="col-md-4 side-break">
-              <select id="border_type" class="select-border-style">
-                <option value = "dashed">Dashed</option>
-                <option value = "dotted">Dotted</option>
-                <option value = "solid">Solid</option>
-              </select>
-            </div> -->
-            <!--end-->
         </div>
         <!--Object Toolbar end-->
-       
-         <!-- Modal -->
-            <div class="modal fade" id="getSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Select Image Size</h4>
-                  </div>
-                  <div class="modal-body">
-                      <select class="form-control" id="image-size">
-                        <option value="passport">Passport size Image</option>
-                        <option value="menualy">Other Size Image</option>
-                      </select>
-                      <div id="size" style="margin-top:10px;display: none">
-                        <form id="uploadimage" method="POST" action="" enctype="multipart/form-data">
-                          <div class="form-group" >
-                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image Name : </label>
-                            <div class="col-sm-9" style="margin-top:10px;">
-                              <input type="text"  name="imagenameform" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-sm-3 control-label" style="margin-top:10px;">Image : </label>
-                            <div class="col-sm-9" style="margin-top:10px;">
-                              <input type="file" id="other_image" name="image" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-9 col-sm-offset-3" style="margin-top:10px;"><input type="submit" class="btn btn-primary"></div>
-                            </div> 
-                        </form>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                    <button type="button" class="btn btn-primary" id="saveSize" data-toggle="modal" data-target="#myModal">OK</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-        <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Upload Your Image</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="image-editor" id="image-editor">
-                          <hr>
-                          <input type="file" class="cropit-image-input">
-                          <label style="position: absolute;margin-top: 14px;margin-left: 6px;">Name </label>
-                          <input type="text" class="form-control" style="margin-top:10px;width:400px;margin-left:53px;" id="image_name" name="image_name" placeholder="Enter image Feild Name.." required="required" />
-                          <div id="image_error" style="margin-top:10px;"></div>
-                          <hr>
-                          <div class="cropit-preview"></div>
-                          <hr>
-                          <input type="range" class="cropit-image-zoom-input" />
-                        
-                        </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" id="upload" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                    <button type="button" class="btn btn-primary export" style="display:inline-block;">Upload</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <!-- <div id="slider" style="margin-top:20px;"></div> -->
-    </div>
         @if($templates->type == "horizontal")
     <div  class="row">
       <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:174px;">
@@ -634,12 +648,12 @@
     var side = "";
     var is_back = "0";
     var template_both_side = {{ $templates->is_both_side }};
-    var lines = [];
-var circles = [];
-var squares = [];
-var deleted_lines = [];
-var deleted_circles = [];
-var deleted_squares = [];
+    var lines = {!! json_encode($lines) !!};
+    var circles = {!! json_encode($circles) !!};
+    var squares = {!! json_encode($squares) !!};
+    var deleted_lines = [];
+    var deleted_circles = [];
+    var deleted_squares = [];
     
     
 </script>
@@ -651,7 +665,6 @@ var deleted_squares = [];
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
-    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
     <script src="{{ url('assets/js/objects.js') }}"></script>
     <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
 

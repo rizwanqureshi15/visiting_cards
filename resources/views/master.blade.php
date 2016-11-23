@@ -76,7 +76,7 @@
     <script src="{{ url('assets/js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('assets/js/html2canvas.js') }}"></script>
+    <script src="{{ url('assets/js/html2canvas2.js') }}"></script>
     <script src="{{ url('assets/js/jquery.cropit.js') }}"></script>
     <script src="{{ url('assets/js/jquery.validate.js') }}"></script>
     <script src="{{ url('assets/js/jquery.dataTables.js') }}"></script>

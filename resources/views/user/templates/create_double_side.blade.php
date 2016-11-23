@@ -33,6 +33,7 @@
       }
 
 </style>
+ 
 <div id="front_side" style="display:block;"> 
 <div class="container">
 <div class="row">
@@ -93,6 +94,36 @@
       </div>
     </div>
 
+         <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+               <h3 class="sidebar-heading">Objects</h3>              
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-4" style="padding-left:22px;" id="object_line" >
+                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
+                <br>LINE
+              </div>
+              
+              <div class="col-md-4 text-center" id="object_square">
+                <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
+                <br>SQUARE
+              </div>
+
+              <div class="col-md-4 text-center" id="object_circle">
+                <i class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                <br>CIRCLE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
   </div>
 </div>  
 
@@ -128,6 +159,30 @@
         </canvas>
 @endif
 <div id="card_body" style="">
+    @if($objects)
+
+    @foreach($objects as $object) 
+      <?php
+        $id = $object->name;
+        $id = str_replace(" ","_",$object->name);
+        $id = strtolower($id);
+      ?>
+
+      @if($object->type == "line")
+          <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+              </div>
+          </div>
+      @elseif($object->type == "square")
+          <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+          </div>
+      @elseif($object->type == "circle")
+          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          </div>
+      @endif
+    @endforeach
+
+  @endif
   @if($feilds)
     @foreach($feilds as $feild)
       <?php
@@ -316,6 +371,35 @@
         </div>
       </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <h3 class="sidebar-heading">Objects </h3>             
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body" id="label_body">
+            <div class="row">
+              <div class="col-md-4" style="padding-left:22px;" id="back_object_line" >
+                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
+                <br>LINE
+              </div>
+              
+              <div class="col-md-4 text-center" id="back_object_square"> 
+                <i class="fa fa-square-o fa-3x" aria-hidden="true"></i>
+                <br>SQUARE
+              </div>
+
+              <div class="col-md-4 text-center" id="back_object_circle">
+                <i class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                <br>CIRCLE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </div>  
 
@@ -350,6 +434,30 @@
         </canvas>
 @endif
 <div id="back_card_body" style="">
+ @if($back_objects)
+
+        @foreach($back_objects as $object) 
+          <?php
+            $id = $object->name;
+            $id = str_replace(" ","_",$object->name);
+            $id = strtolower($id);
+          ?>
+
+          @if($object->type == "line")
+              <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                  <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+                  </div>
+              </div>
+          @elseif($object->type == "square")
+              <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+              </div>
+          @elseif($object->type == "circle")
+              <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+              </div>
+          @endif
+      @endforeach
+
+    @endif
   @if($back_feilds)
     @foreach($back_feilds as $feild)
       <?php
@@ -475,6 +583,7 @@
   <div class="col-md-2 col-md-offset-3">
   </div>
   <div class="row">
+    
     <!--Toolebasr start-->
 
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;height:54px;">
@@ -538,6 +647,114 @@
         <!--Toolbar Textbox end-->
 
         </div><!--Toolbar end-->
+  <!--Object Toolbar start-->
+        <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
+          
+          <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
+            <div id="object_fill_color" class="col-md-6 submenu" style="padding-bottom:8px;">
+              <div class="col-md-8">
+                <div class="object-toolbar-submenu-text">Object Color</div>
+              </div>
+              <div class="col-md-4">
+                <div id="colorSelector1" class="object-color-picker">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-5 object-toolbar-submenu">
+            <div id="object_stroke_tools" class="col-md-8 submenu">
+              <div class="col-md-4 side-break-submenu">
+                <select id="thickness" class="select-thickness">
+                <option value = "1">1px</option>
+                <option value = "2">2px</option>
+                <option value = "3">3px</option>
+                <option value = "4">4px</option>
+                <option value = "5">5px</option>
+                <option value = "6">6px</option>
+                <option value = "7">7px</option>
+                <option value = "8">8px</option>
+              </select>
+              </div>
+              <div class="col-md-3 side-break-submenu text-center">
+                <div id="colorSelector3" class="object-color-picker" style="margin-left:4px;">
+                  <div style="background-color: #0000ff">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 text-center">
+                <select id="border_type" class="select-border-style">
+                  <option value = "solid">Solid</option>
+                  <option value = "dashed">Dashed</option>
+                  <option value = "dotted">Dotted</option>
+                </select>
+              </div>
+            </div>
+          </div>
+           <div class="col-md-12 col-md-offset-7 object-toolbar-submenu" >
+            <div id="object_opacity_tool" class="col-md-7 submenu" style="">
+              <div class="col-md-10">
+                <input id="opacity_slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/>
+              </div>
+              <div class="col-md-2" id="opacity_value">
+                20%
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-9 object-toolbar-submenu" >
+            <div id="object_rotate_tool" class="col-md-7 submenu">
+              <div class="col-md-7"  style="margin-top:17px;">
+                Enter Rotation :
+              </div>
+                <input type="text" id="rotation_degrees" class="col-md-2"  style="margin-top:13px;">
+              <div class="col-md-3"  style="margin-top:17px;">
+                Degrees
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-md-offset-11 object-toolbar-submenu" >
+            <div id="object_arrange_tool" class="col-md-4 submenu" style="padding-left:10px;">
+              <div class="col-md-6 side-break-submenu" id="arrange_back">
+                <i class="fa fa-arrow-circle-left arrange_icon" aria-hidden="true" ></i>
+                <br>
+                <b class="arrange_font"> BACK </b>
+              </div>
+              <div class="col-md-6" id="arrange_front">
+                <i class="fa fa-arrow-circle-right arrange_icon" aria-hidden="true"></i>
+                <br>
+                <b class="arrange_font"> FRONT </b>
+              </div>
+
+            </div>
+          </div>
+
+            <!--Thickness Dropdown-->
+            <div class="col-md-2 text-center side-break" id="object_fill">
+              <img src="{{ url('assets/images/fill.png') }}" height="20px" width="20x" class="fill-color">
+              <div class="object-toolbar-text">Fill</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_stroke">
+              <img src="{{ url('assets/images/stroke.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Stroke</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_opacity">
+              <img src="{{ url('assets/images/opacity.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Opacity</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_rotate">
+              <img src="{{ url('assets/images/rotation.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Rotation</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_arrange">
+              <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Arrange</div>
+            </div>
+            <div class="col-md-2 text-center side-break" id="object_delete">
+              <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
+              <div class="">Delete</div>
+            </div>
+        </div>
   </div>
 <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -573,11 +790,11 @@
       <div class="col-md-6 col-md-offset-4">
         <div style="height:180px;padding:20px;">
           <div class="col-md-4 text-center">
-            <img src="{{ url('templates/snaps', $template->snap) }}" class="active_image" id="front_side_image" style="">
+            <img src="{{ url('templates/snaps', $template->snap) }}" class="active_image" id="front_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
             <label class="image_fonts">FRONT SIDE</label>
           </div>
           <div class="col-md-4 text-center">
-            <img src="{{ url('templates/snaps', $template->back_snap) }}" class="inactive_image" id="back_side_image" style="">
+            <img src="{{ url('templates/snaps', $template->back_snap) }}" class="inactive_image" id="back_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
             <label class="image_fonts">BACK SIDE</label>
           </div>
         </div>
@@ -604,9 +821,20 @@
     var template_id = {{ $template->id }};
     var template_both_side = {{ $template->is_both_side }};
     var new_template_id;
-
-      var typingTimer;                
-      var doneTypingInterval = 500;
+    var lines = {!! json_encode($lines) !!};
+    var circles = {!! json_encode($circles) !!};
+    var squares = {!! json_encode($squares) !!};
+    var deleted_lines = [];
+    var deleted_circles = [];
+    var deleted_squares = [];
+    var back_lines = {!! json_encode($back_lines) !!};
+    var back_circles = {!! json_encode($back_circles) !!};
+    var back_squares = {!! json_encode($back_squares) !!};
+    var back_deleted_lines = [];
+    var back_deleted_circles = [];
+    var back_deleted_squares = [];
+    var typingTimer;                
+    var doneTypingInterval = 500;
 
 
       $('#newFeildName').keyup(function () 
@@ -760,5 +988,7 @@
     <!--end-->
     <script src="{{ url('assets/js/myjs.js') }}"></script>
     <script src="{{ url('assets/js/myjs_backside.js') }}"></script>
+    <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
+    <script src="{{ url('assets/js/back_user_objects.js') }}"></script>
 
 @endsection

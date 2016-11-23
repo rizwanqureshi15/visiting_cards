@@ -116,7 +116,7 @@
             </a>
           </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-4" style="padding-left:22px;" id="object_line" >
@@ -175,28 +175,28 @@
 
   @if($objects)
 
-            @foreach($objects as $object) 
-              <?php
-                $id = $object->name;
-                $id = str_replace(" ","_",$object->name);
-                $id = strtolower($id);
-              ?>
+    @foreach($objects as $object) 
+      <?php
+        $id = $object->name;
+        $id = str_replace(" ","_",$object->name);
+        $id = strtolower($id);
+      ?>
 
-              @if($object->type == "line")
-                  <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-                      <div id="{{ $id }}" class="object_line">
-                      </div>
-                  </div>
-              @elseif($object->type == "square")
-                  <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
-                  </div>
-              @elseif($object->type == "circle")
-                  <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
-                  </div>
-              @endif
-            @endforeach
+      @if($object->type == "line")
+          <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" class="object_line">
+              </div>
+          </div>
+      @elseif($object->type == "square")
+          <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+          </div>
+      @elseif($object->type == "circle")
+          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          </div>
+      @endif
+    @endforeach
 
-          @endif
+  @endif
   @if($feilds)
     @foreach($feilds as $feild)
       <?php
@@ -405,12 +405,12 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_back" href="#collapseThree_back" aria-expanded="false" aria-controls="collapseThree">
               Objects              
             </a>
           </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseThree_back" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
           <div class="panel-body" id="label_body">
             <div class="row">
               <div class="col-md-4" style="padding-left:22px;" id="back_object_line" >
@@ -685,7 +685,7 @@
         </div><!--Toolbar end-->
 
 
-                <!--Object Toolbar start-->
+      <!--Object Toolbar start-->
         <div id="objectToolbar" class="object-toolbar row" style="position:absolute;padding:0px;">
           
           <div class="col-md-12 col-md-offset-3 object-toolbar-submenu">
@@ -792,15 +792,6 @@
               <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Delete</div>
             </div>
-            <!--style Dropdown-->
-            <!-- <div class="col-md-4 side-break">
-              <select id="border_type" class="select-border-style">
-                <option value = "dashed">Dashed</option>
-                <option value = "dotted">Dotted</option>
-                <option value = "solid">Solid</option>
-              </select>
-            </div> -->
-            <!--end-->
         </div>
 
 
@@ -916,19 +907,9 @@
     var back_deleted_lines = [];
     var back_deleted_circles = [];
     var back_deleted_squares = [];
-
-    var token = "{{ csrf_token() }}";
-    var site_url = "{{ url('') }}";
-    var feild_names = {!! json_encode($names) !!};
-    var upload_images = {!! json_encode($template_images) !!};
-    var label_names = {!! json_encode($template_labels) !!};
     var back_feild_names = {!! json_encode($back_names) !!};
     var back_upload_images = {!! json_encode($back_template_images) !!};
     var back_label_names = {!! json_encode($back_template_labels) !!};
-    var template_id = {{ $templates->id }};
-    var side = "";
-    var is_back ="0";
-    var template_both_side = {{ $templates->is_both_side }};
 
 
     $(document).ready(function()
