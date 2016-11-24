@@ -49,6 +49,7 @@ position: absolute;
     width:500px;
     left:0px;
     top:0px;
+    z-index:100;
 
 }
 .toolbar-textbox{
@@ -204,27 +205,6 @@ position: absolute;
 #imagetoolbardelete{
     cursor: pointer;
 }
-#overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background: #fff;
-    opacity: 0.8;
-    filter: alpha(opacity=80);
-    z-index: 3;
-
-}
-#loading {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -28px 0 0 -25px;
-}
-
 //crop
   .cropit-preview {
         background-color: #f8f8f8;
@@ -289,15 +269,16 @@ position: absolute;
    
 }
 #user_overlay {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    bottom: 0;
-    right: 0;
     background: #333;
     opacity: 1.8;
     filter: alpha(opacity=80);
     z-index: 3;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 
 }
 #user_loading {

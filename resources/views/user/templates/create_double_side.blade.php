@@ -37,9 +37,9 @@
 <div id="front_side" style="display:block;"> 
 <div class="container">
 <div class="row">
-  <div id="user_overlay">
+  <!-- <div id="user_overlay">
       <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
-    </div> 
+    </div> --> 
   @if($template->type == "horizontal")
     <div class="col-md-3" >
   @else
@@ -170,7 +170,7 @@
 
       @if($object->type == "line")
           <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-              <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+              <div id="{{ $id }}" class="object_line" style="{{ $object->css }}">
               </div>
           </div>
       @elseif($object->type == "square")

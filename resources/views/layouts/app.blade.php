@@ -131,6 +131,9 @@
     </div>
 
     @include('layouts.footer')
+    <div id="user_overlay" style="display:none;">
+            <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
+    </div>
     <script>
         window.onscroll = function (e) {  
             $('#topBar').css('display','none');

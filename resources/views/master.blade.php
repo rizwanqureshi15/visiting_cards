@@ -63,15 +63,13 @@
     <div class="right_col" role="main">
         @yield('content')
     </div>
-    <div id="overlay" style="display:none;">
-        <img id="loading" src="{{ url('assets\images\ajax-loader.gif') }}">
-    </div>
-    <div id="user_overlay" style="display:none;">
-            <img id="user_loading" src="{{ url('assets\images\loading.gif') }}">
-    </div>
     <!--End Page Content-->
 
     @include('include.footer')
+    
+    <div id="overlay" style="display:none;">
+        <img id="loading" src="{{ url('assets\images\ajax-loader.gif') }}">
+    </div>    
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url('assets/js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

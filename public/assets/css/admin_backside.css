@@ -182,6 +182,7 @@ position: absolute;
     left:0px;
     top:0px;
     padding:0px;
+    z-index:100;
 }
 .imagetoolbar_section{
     height:50px;
@@ -194,15 +195,14 @@ position: absolute;
     cursor: pointer;
 }
 #overlay {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
     right: 0;
     background: #fff;
     opacity: 0.8;
-    filter: alpha(opacity=80);
-    z-index: 3;
+    z-index: 60;
 
 }
 #loading {

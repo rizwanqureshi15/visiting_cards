@@ -271,7 +271,7 @@ $(document).ready(function(){
 	});
 
 	$('#arrange_front').click(function(){
-		$("#" + side + selected_object).css('z-index', '7');
+		$("#" + side + selected_object).css('z-index', '50');
 	});
 
 	$('#object_delete').click(function(){

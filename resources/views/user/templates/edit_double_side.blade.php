@@ -166,7 +166,7 @@
 
       @if($object->type == "line")
           <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-              <div id="{{ $id }}" class="object_line">
+              <div id="{{ $id }}" class="object_line"  style="{{ $object->css }}">
               </div>
           </div>
       @elseif($object->type == "square")
