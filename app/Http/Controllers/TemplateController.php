@@ -18,9 +18,26 @@ use App\Category;
 use Illuminate\Support\Facades\Input;
 use Datatables;
 
+
+/**
+ * Handles all the function of admin side template
+ *
+ * @package   TemplateController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class TemplateController extends Controller
 {
 	protected $guard = 'employee';
+
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
 	public function authenticate_admin()
     {
        
@@ -37,15 +54,23 @@ class TemplateController extends Controller
             return false;
         }
     }
+
+
+    /**
+     * Show template list with category and pagination
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
 	public function template_list()
 	{
 		if(TemplateController::authenticate_admin())
         {
-
-                $data['categories'] = Template::with('category')->get();
-        		$data['templates'] = Template::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
+            $data['categories'] = Template::with('category')->get();
+        	$data['templates'] = Template::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
                 
-                return view('admin.templates.list', $data);      
+            return view('admin.templates.list', $data);      
         }
         else
         {
@@ -54,9 +79,17 @@ class TemplateController extends Controller
 		
 	}
 
-     public function templates_datatable()
-    {
 
+    /**
+     * Get the data of template and return it to datatable 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     int product_id
+     * @return     array product_info
+     */
+    public function templates_datatable()
+    {
          $template = Template::with('category')->where('is_delete',0)->get();
 
          return Datatables::of($template)
@@ -78,6 +111,14 @@ class TemplateController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Show create template page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function create_template()
     {
         if(TemplateController::authenticate_admin())
@@ -91,12 +132,19 @@ class TemplateController extends Controller
         }
     }
 
+
+    /**
+     * Validate the form and stores in the database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,category_id,type,url,background_image,price
+     * @return   view
+     */
     public function create_template_post(Request $request)
     {
         if(TemplateController::authenticate_admin())
         {
-           
-
              $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'category_id' => 'required',
@@ -173,7 +221,16 @@ class TemplateController extends Controller
         }
     }
 
-     public function edit_template($id)
+
+    /**
+     * Get the data of template and show edit template page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
+    public function edit_template($id)
     {
         if(TemplateController::authenticate_admin())
         {
@@ -187,6 +244,16 @@ class TemplateController extends Controller
         }
     }
 
+
+    /**
+     * Validate the from update edited data
+     * Put new image in proper folder and update image feild  
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,price,description,int id
+     * @return   view
+     */
     public function edit_template_post(Request $request,$id)
     {
 
@@ -283,6 +350,15 @@ class TemplateController extends Controller
         }
     }
 
+
+    /**
+     * Update is_delete feild in template table 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array delete_id
+     * @return   view
+     */
     public function delete_template(Request $request)
     {
         $id=$request->delete_id;

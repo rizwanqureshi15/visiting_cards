@@ -17,16 +17,39 @@ use App\User;
 use Mail;
 
 
-
+/**
+ *  Handles all the function related to employee
+ *
+ * @package   Class_name
+ * @author     webdesignandsolution15@gmail.com
+ * @link       http://www.webdesignandsolution.com/
+ */
 class EmployeeController extends Controller
 {
     //
     protected $guard = 'employee';
+
+
+    /**
+     * Show employee loin page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function login()
     {
     	return view('employee/login');
     }
 
+
+    /**
+     * Authenticate the employee
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function authenticate_employee()
     {
        
@@ -44,6 +67,16 @@ class EmployeeController extends Controller
             return false;
         }
     }
+
+
+    /**
+     * If employee is exist than show it proper page otherwise show error message
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     int product_id
+     * @return     array product_info
+     */
     public function login_post(Request $request)
     {
     	//Auth::guard('Newgardname'); [specify guerd name by which you want to authenticate
@@ -77,6 +110,14 @@ class EmployeeController extends Controller
         }
     }
 
+
+    /**
+     * Show order list page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function order_list()
     {
         if(Auth::guard('employee')->user())
@@ -90,6 +131,14 @@ class EmployeeController extends Controller
     	
     }
 
+
+     /**
+     * Show new order list page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function new_order_list()
     {
         if(Auth::guard('employee')->user())
@@ -102,6 +151,14 @@ class EmployeeController extends Controller
         }
     }
 
+
+    /**
+     * Get the data from database where status is paid and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function new_order_datatable()
     {
 
@@ -122,7 +179,13 @@ class EmployeeController extends Controller
     }
 
     
-
+    /**
+     * Get the data from database where status is done and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function datatable()
     {
 
@@ -149,29 +212,52 @@ class EmployeeController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Get the data of user from database where status is in_process
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function list_cards($id)
     {
-
         Order::where('id', $id)->update(['status' => Config::get('status.in_process')]);
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = OrderItem::where('order_id',$id)->get();
         $data['username'] = $order->user->username;
         return view('employee.orders.list',$data);
-
     }
 
+
+    /**
+     * Show users order with pagination
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function new_list_cards($id)
     {
-
         //Order::where('id', $id)->update(['status' => 'In Process']);
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = OrderItem::where('order_id',$id)->paginate('20');
         $data['username'] = $order->user->username;
         $data['order_id'] = $id;
         return view('employee.orders.order_items_view',$data);
-
     }
 
+
+    /**
+     * Send confirmation email to the user whoes order is being confirm
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function confirm_order($id)
     {
         $order = Order::where('id', $id)->first();
@@ -194,9 +280,17 @@ class EmployeeController extends Controller
         return redirect('new_orders/list');
     }
 
+
+    /**
+     * Get the final order of the user send it to the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function order_snap_list($id)
     {
-
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = FinalOrder::where('order_id',$id)->paginate(1);
         $data['username'] = $order->user->username;
@@ -205,9 +299,17 @@ class EmployeeController extends Controller
 
     }
 
+
+    /**
+     * Save image of order and put it in the folder and update the satus of an order in order table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image,order_id,is_back,status
+     * @return   json image
+     */
     public function save_list_snap(Request $request)
     {
-
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
@@ -239,6 +341,14 @@ class EmployeeController extends Controller
         return json_encode($name .'.png');
     }
 
+
+    /**
+     * Show cancel order list page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function cancel_order_list()
     {
          if(Auth::guard('employee')->user())
@@ -251,6 +361,14 @@ class EmployeeController extends Controller
         }
     }
 
+
+    /**
+     * Get the data of cancel order and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function cancel_order_datatable()
     {
 
@@ -264,6 +382,15 @@ class EmployeeController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Update status of is_cancel feild in order table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int order_id
+     * @return   void
+     */
     public function cancel_order(Request $request)
     {
         if(Auth::guard('employee')->user())
@@ -277,6 +404,15 @@ class EmployeeController extends Controller
         }
     }
 
+
+    /**
+     * Update status to done in order table send email to the user
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     int product_id
+     * @return     array product_info
+     */
     public function done_order($id)
     {
        if(Auth::guard('employee')->user())
@@ -303,6 +439,14 @@ class EmployeeController extends Controller
         } 
     }
 
+
+    /**
+     * Show order history list page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function order_history_list()
     {
         if(Auth::guard('employee')->user())
@@ -317,9 +461,15 @@ class EmployeeController extends Controller
     } 
 
 
+    /**
+     * Get the data of order table where status is done and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function order_history_datatable()
     {
-
          $orders = Order::with('user')->whereIn('status', [Config::get('status.done')])->get();
 
          return Datatables::of($orders)

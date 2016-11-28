@@ -18,9 +18,27 @@ use App\Category;
 use Datatables;
 use Illuminate\Support\Facades\Input;
 
+
+
+/**
+ * Handles all the function related to category
+ *
+ * @package   CategoryController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class CategoryController extends Controller
 {
 	protected $guard = 'employee';
+
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
 	public function authenticate_admin()
     {
        
@@ -37,8 +55,16 @@ class CategoryController extends Controller
             return false;
         }
     
-}
-    //Category
+    }
+    
+
+    /**
+     * Show category list
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function display_category()
     {
         if(CategoryController::authenticate_admin())
@@ -53,7 +79,15 @@ class CategoryController extends Controller
         }
     }
 
-     public function category_datatable()
+
+    /**
+     * Get the category data from database and return it to datatales
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
+    public function category_datatable()
     {
 
          $category = Category::where('is_delete', 0)->get();
@@ -68,6 +102,14 @@ class CategoryController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Show create category form
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function create_category()
     {
           if(CategoryController::authenticate_admin())
@@ -81,6 +123,16 @@ class CategoryController extends Controller
             }
     }
 
+
+    /**
+     * Validate the form and store the data in to datbase
+     * Put category image in proper folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,image
+     * @return   view
+     */
     public function create_category_post(Request $request)
     {
         if(CategoryController::authenticate_admin())
@@ -118,6 +170,15 @@ class CategoryController extends Controller
             }
     }
 
+
+    /**
+     * Get the data of category from database and show edit category page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function edit_category($id)
     {
           if(CategoryController::authenticate_admin())
@@ -132,6 +193,16 @@ class CategoryController extends Controller
             }
     }
 
+
+    /**
+     * Validate the form and store the data in to datbase
+     * Put edited category image in proper folder and update image value
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,image,int id
+     * @return   view
+     */
     public function edit_category_post(Request $request,$id)
     {
         if(CategoryController::authenticate_admin())
@@ -175,7 +246,16 @@ class CategoryController extends Controller
             }
     }
 
-     public function delete_category(Request $request)
+
+    /**
+     * Update is_delete value from category value
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array delete_id
+     * @return   view
+     */
+    public function delete_category(Request $request)
     {
         $id=$request->delete_id;
 

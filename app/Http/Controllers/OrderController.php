@@ -14,14 +14,26 @@ use Config;
 use Session;
 
 
+
+/**
+ * Handles all the function related to orders
+ *
+ * @package   OrderController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class OrderController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
 
+    /**
+     * Stores the values in database and stores all the images in another folder
+     * Strores the values in OrderItem table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return   view
+     */
     public function order_multiple_cards($url)
     {
         $user = Auth::user();
@@ -286,6 +298,13 @@ class OrderController extends Controller
     }
 
 
+    /**
+     * Get the data of user and show it in the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function show_user_order()
     {
         $user_id = Auth::user()->id;
@@ -295,6 +314,15 @@ class OrderController extends Controller
         return view('user.show_order_list',$data);
     }
 
+
+    /**
+     * Update the status of is_cancel feild in order table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int order_id
+     * @return   redirect back on the view
+     */
     public function cancel_order($order_id)
     {
         Order::where('id',$order_id)->update(['is_cancel' => 1]);
@@ -303,6 +331,15 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Get the data of order item and show it in the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int order_id
+     * @return   array product_info
+     */
     public function view_user_order($order_id)
     {
         $username = Auth::user()->username;;
@@ -322,10 +359,17 @@ class OrderController extends Controller
         }
 
         return view('user.show_order',$data);
-
     }
 
 
+    /**
+     * Ajax pagination on user order list
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array order_no,is_back,page_no
+     * @return   json order items
+     */
     public function ajax_pagination(Request $request)
     {   
         $order = Order::where('order_no',$request->order_no)->first();
@@ -347,6 +391,17 @@ class OrderController extends Controller
 
     }
 
+
+    /**
+     * Stores the data in to order table
+     * Stores the data in to orderitem table
+     * Put the images into proper folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array url,image,is_back,order_no
+     * @return   json order_no
+     */
     public function order_single_card(Request $request)
     {
         $user = Auth::user();

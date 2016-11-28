@@ -3,6 +3,14 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * Category
+ *
+ * @package   Category
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class Category extends Model
 {
     /**

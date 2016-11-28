@@ -21,9 +21,27 @@ use File;
 use App\TemplateImage;
 use App\Objects;
 
+
+/**
+ * Handles every functions of user cards
+ *
+ * @package   CardController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
+
 class CardController extends Controller
 {
     protected $guard = 'employee';
+
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function authenticate_admin()
     {
        
@@ -41,11 +59,21 @@ class CardController extends Controller
         }
     }
 
+
+    /**
+     * Get cards data,lables and objects
+     * If Cards is both side than get the data,lables and objects of back side
+     * According to card is both side or not it will show the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String name
+     * @return   view
+     */
     public function card_display($name)
     {
         if(CardController::authenticate_admin())
         {
-
                 $data['templates'] = Template::where('is_delete', 0)->where('url', $name)->first();
                 $data['feilds'] = TemplateFeild::where('template_id',$data['templates']->id)->where('is_back',0)->get();
                 
@@ -156,6 +184,14 @@ class CardController extends Controller
     }
 
 
+    /**
+     * Save all the data,lables and objects of the cards strored in the database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int template_id,feilds,labels,circle_object,square_object,line_object,deleted_square_object,deleted_line_object,deleted_circle_object
+     * @return   json String
+     */
     public function card_save(Request $request)
     { 
        
@@ -332,9 +368,7 @@ class CardController extends Controller
             if($request->images!=null)
             {
                 foreach ($request->images as $image) {
-
                     TemplateFeild::where('id',$image['id'])->update(['css' => $image['div_css'], 'font_css' => $image['css']]);
-
                 }
             }
             if($request->deleted_images!=null)
@@ -367,7 +401,17 @@ class CardController extends Controller
         }
         
     }
-     public function back_card_save(Request $request)
+
+
+    /**
+     * Stores all the data,lables and objects of the card's backside and strored in the database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array template_id,user_template_id,feilds,labels,images,back_circle_object,back_square_object,back_line_object,deleted_line_object,deleted_square_object,deleted_circle_object
+     * @return   json String 
+     */
+    public function back_card_save(Request $request)
     {   
         if(CardController::authenticate_admin())
         {
@@ -578,7 +622,18 @@ class CardController extends Controller
         }
         
     }
-     public function save_image(Request $request)
+
+
+    /**
+     * Save snap of template
+     * Put the image in folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image
+     * @return   json image,user_id
+     */
+    public function save_image(Request $request)
     {
         
         $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
@@ -598,45 +653,60 @@ class CardController extends Controller
 
     }
 
+
+    /**
+     * Save images of the cards and stores in the database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     array file,name,div_css,css,template_id,is_back
+     * @return    json image_id,image,feild_id
+     */
     public function upload_normal_image(Request $request)
     {
-        
         $imageTempName = $request->file('image')->getPathname(); 
         $name = str_random(40);
         $path = public_path() .'/templates/images';
         $request->file('image')->move($path , $name.".png");
-         $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+        $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
 
-            $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+        $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
             
         return json_encode(['name' => $name .'.png','image_id' => $image_id, 'id' => $feild_id]);
 
     }
 
-        public function upload_image(Request $request)
-        {
-          
 
-            $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
-            $img = str_replace('data:image/png;base64,', '', $img);
-            $img = str_replace(' ', '+', $img);
-            $data = base64_decode($img);
-            $name = str_random(40);
-            $path = public_path() .'/templates/images';   
-            
-            if(!File::exists($path))
-            { 
-                File::makeDirectory($path);
-            } 
-            file_put_contents($path .'/'. $name .'.png', $data);
-            
-            $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+    /**
+     * Put uploaded images in folder and stores in the database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array file,name,div_css,css,template_id,is_back
+     * @return   json image_id,image,feild_id
+     */
+    public function upload_image(Request $request)
+    {
+        $img = $request->image; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $name = str_random(40);
+        $path = public_path() .'/templates/images';   
+        
+        if(!File::exists($path))
+        { 
+            File::makeDirectory($path);
+        } 
+        file_put_contents($path .'/'. $name .'.png', $data);
+        
+        $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
 
-           $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
-            
-            return json_encode(['name' => $name .'.png','image_id' => $image_id, 'id' => $feild_id]);
+        $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+        
+        return json_encode(['name' => $name .'.png','image_id' => $image_id, 'id' => $feild_id]);
 
-        }
+    }
     
    
 }

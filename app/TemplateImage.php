@@ -5,6 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * TemplateImage
+ *
+ * @package   TemplateImage
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class TemplateImage extends model
 {
     /**

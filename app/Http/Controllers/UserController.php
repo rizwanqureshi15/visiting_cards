@@ -19,6 +19,13 @@ use Response;
 use Config;
 
 
+/**
+ * Handles user's basic functanilities
+ *
+ * @package   UserController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class UserController extends Controller
 {
     //
@@ -27,6 +34,13 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Show user's profile page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function edit_profile(Request $request)
     {
         if(Auth::guest())
@@ -41,6 +55,15 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Validate the form
+     * Update values of user's profile
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array first_name,last_name
+     * @return   view
+     */
     public function change_profile(Request $request)
     {
         if(Auth::guest())
@@ -88,6 +111,14 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Check username is exist or not
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array username
+     * @return   json username
+     */
     public function check_username(Request $request)
     {
         $username = User::where('username', $request->username)->first();
@@ -95,6 +126,13 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Show change password page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function show_change_password()
     {
         if(Auth::guest())
@@ -105,6 +143,15 @@ class UserController extends Controller
         return view('auth.change_password');
     }
 
+
+    /**
+     * Update the value of user's password in user table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array password,password_confirmation
+     * @return   view
+     */
     public function change_password(Request $request)
     {
         if(Auth::guest())
@@ -141,6 +188,15 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Save snap of template
+     * Put the image in folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image
+     * @return   json image
+     */    
     public function save_image(Request $request)
     {
         if(Auth::user())
@@ -171,7 +227,14 @@ class UserController extends Controller
     }
 
 
-
+    /**
+     * Ajax pagination on user's card images show page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array page_no
+     * @return   json usercards
+     */
     public function user_image_pagination(Request $request)
     {
         $user_id=Auth::user()->id;
