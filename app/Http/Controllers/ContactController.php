@@ -11,9 +11,26 @@ use App\User;
 use App\Contact;
 use Datatables;
 
+
+/**
+ * Handles all the function related to contact
+ *
+ * @package   ContactController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class ContactController extends Controller
 {
 	protected $guard = 'employee';
+
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
 	public function authenticate_admin()
     {
        
@@ -32,6 +49,15 @@ class ContactController extends Controller
     
     }
     
+
+
+    /**
+     * Show contact us form
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function index()
     {
         if(ContactController::authenticate_admin())
@@ -44,9 +70,16 @@ class ContactController extends Controller
         }
     }
 
+
+    /**
+     * Get the data from contact table and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function contact_datatable()
     {
-
          $contact = Contact::where('is_delete', 0)->get();
 
          return Datatables::of($contact)
@@ -59,6 +92,15 @@ class ContactController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Show contact us form
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function show($id)
     {
         if(ContactController::authenticate_admin())
@@ -72,6 +114,15 @@ class ContactController extends Controller
         }   
     }
 
+
+    /**
+     * Update is_delete value from contact table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int delete_id
+     * @return   view
+     */
     public function destroy(Request $request)
     {
         if(ContactController::authenticate_admin())

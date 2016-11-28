@@ -17,8 +17,24 @@ use Session;
 use Datatables;
 use Illuminate\Support\Facades\Input;
 
+
+/**
+ * Handles all the function related to materials
+ *
+ * @package   MaterialController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class MaterialController extends Controller
 {
+
+     /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function authenticate_admin()
     {
        
@@ -36,6 +52,14 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Show create material form
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function create()
     {
         if(MaterialController::authenticate_admin())
@@ -49,6 +73,16 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Validate the from and stores in the database
+     * Put material image to proper folder 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,price,description,image
+     * @return   view
+     */
     public function create_post(Request $request)
     {
         if(MaterialController::authenticate_admin())
@@ -90,6 +124,15 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Get the data from database and send it to the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function edit($id)
     {
         if(MaterialController::authenticate_admin())
@@ -103,6 +146,16 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Validate the from update edited data
+     * Put new image in proper folder and update image feild  
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array name,price,description,int id
+     * @return   view
+     */
     public function edit_post(Request $request, $id)
     {
         if(MaterialController::authenticate_admin())
@@ -152,6 +205,15 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Update is_delete feild in material table 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array delete_id
+     * @return   view
+     */
     public function delete(Request $request)
     {
         if(MaterialController::authenticate_admin())
@@ -166,13 +228,20 @@ class MaterialController extends Controller
         } 
     }
 
+
+    /**
+     * Get the data of materials and pagination on material list
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return    view
+     */
     public function materials_list()
     {
         if(MaterialController::authenticate_admin())
         {
             $data['materials'] = Material::where('is_delete', 0)->paginate(Config::get('settings.number_of_rows'));
                                         
-
             return view('admin.materials.list', $data);        
         }
         else
@@ -181,9 +250,16 @@ class MaterialController extends Controller
         }
     }
 
+
+    /**
+     * Get the data from material table and return it to the datatable
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function material_datatable()
     {
-
          $materials = Material::where('is_delete', 0)->get();
 
          return Datatables::of($materials)

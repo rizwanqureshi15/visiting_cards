@@ -18,9 +18,24 @@ use App\Order;
 use App\Material;
 use App\UserTemplate;
 
+    /**
+     * Handle payments of users
+     *
+     * @package   PaymentsController
+     * @author    webdesignandsolution15@gmail.com
+     * @link      http://www.webdesignandsolution.com/
+     */
 class PaymentsController extends Controller
 {
 
+    /**
+     * Load billing page with data
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int order_no
+     * @return   view
+     */
     public function index($order_no)
     {
         $data['materials'] = Material::where('is_delete',0)->get();
@@ -37,6 +52,14 @@ class PaymentsController extends Controller
         return view('payment.billingandshipping',$data);
     }
 
+    /**
+     * Fetch delievery details and strores it in database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array request
+     * @return   array product_info
+     */
     public function payment(Request $request)
     {  
         $user = Auth::user();
@@ -114,6 +137,15 @@ class PaymentsController extends Controller
         }
     }
 
+
+    /**
+     * Update payment status when payment got successed 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int txnid
+     * @return   view
+     */
     public function payment_success(Request $request)
     {  
         $order = Order::where('order_no',$request->txnid)->update([ 'status' => Config::get('status.paid'), "payu_money_id" => $request->payuMoneyId ]);
@@ -121,6 +153,15 @@ class PaymentsController extends Controller
         return redirect('myorders');
     } 
 
+
+    /**
+     * Send refund request to server when order get cancled
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int cancel_id
+     * @return   view
+     */
     public function refund(Request $request)
     {
        

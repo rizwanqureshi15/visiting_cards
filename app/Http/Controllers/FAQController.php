@@ -11,9 +11,26 @@ use Form;
 use Datatables;
 use App\Faq;
 
+
+/**
+ * Handles all the function related to FAQ
+ *
+ * @package   FAQController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class FAQController extends Controller
 {
 	protected $guard = 'employee';
+
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
 	public function authenticate_admin()
     {
        
@@ -31,6 +48,14 @@ class FAQController extends Controller
         }
     }
     
+
+    /**
+     * Show FAQs list page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function faqs_list()
     {
         if(FAQController::authenticate_admin())
@@ -43,6 +68,14 @@ class FAQController extends Controller
         }
     }
 
+
+    /**
+     * Get the data from database and return it to the datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function faq_datatable()
     {
         $faq = Faq::where('is_delete', 0)->get();
@@ -55,6 +88,14 @@ class FAQController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Show FAQ create form
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function create()
     {
         if(FAQController::authenticate_admin())
@@ -67,6 +108,15 @@ class FAQController extends Controller
         }
     }
 
+
+    /**
+     * Validate the form and stores the data in to database
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array question,answer
+     * @return   view
+     */
     public function create_post(Request $request)
     {
       if(FAQController::authenticate_admin())
@@ -87,6 +137,15 @@ class FAQController extends Controller
         }  
     }
 
+
+    /**
+     * Get the data of perticular FAQ and show edit form of FAQ
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   view
+     */
     public function edit($id)
     {
         if(FAQController::authenticate_admin())
@@ -100,6 +159,15 @@ class FAQController extends Controller
         }
     }
 
+
+    /**
+     * Update the edited data of FAQ
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array question,answer,int id
+     * @return   view
+     */
     public function edit_post(Request $request,$id)
     {
       if(FAQController::authenticate_admin())
@@ -118,6 +186,15 @@ class FAQController extends Controller
         }  
     }
 
+
+    /**
+     * Update the status of is_delete in FAQ table
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int delete_id
+     * @return   array product_info
+     */
     public function delete(Request $request)
     {
         if(FAQController::authenticate_admin())

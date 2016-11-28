@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
+/**
+ * Employee
+ *
+ * @package   Employee
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class Employee extends Authenticatable
 {
     /**

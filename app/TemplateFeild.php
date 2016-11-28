@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * TemplateFeild
+ *
+ * @package   TemplateFeild
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class TemplateFeild extends Model
 {
     /**

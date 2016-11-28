@@ -29,6 +29,13 @@ use App\Order;
 use App\UserObject;
 use App\Objects;
 
+/**
+ * Controlls user side templates
+ *
+ * @package   TemplatesController
+ * @author     webdesignandsolution15@gmail.com
+ * @link       http://www.webdesignandsolution.com/
+ */
 class TemplatesController extends Controller
 {
     //
@@ -36,7 +43,14 @@ class TemplatesController extends Controller
     {
     }
 
-
+    /**
+     * Save template images
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image
+     * @return   void
+     */
     public function save_image(Request $request)
     {
         $username=Auth::user()->username;
@@ -64,6 +78,14 @@ class TemplatesController extends Controller
     }
     
 
+    /**
+     * Display cards with data
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    string category_name
+     * @return   view
+     */
     public function index($category_name = null)
     {
         $template = Template::where('is_delete',0)->orderBy('created_at','desc')->take(Config::get('settings.number_of_items')); 
@@ -86,6 +108,14 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Do ajax pagination on scroll the page in cards 
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array page_no,orientations,category
+     * @return   json templates
+     */
     public function ajax_templates(Request $request)
     {
         $templates = Template::orderBy('created_at','desc')
@@ -108,6 +138,18 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Fetch template's data
+     * Fetch template's lables
+     * Fetch template's objects
+     * If template is both side get the data,lables and objects of backside
+     * According to template is both side or not it will show the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return   view
+     */
     public function get_template($url)
     {
                 $data['template'] = Template::where('is_delete', 0)->where('url', $url)->first();
@@ -215,6 +257,14 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Do ajax pagination on scroll in cards gallery
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array product_id,category
+     * @return   json template
+     */
     public function filter_ajax(Request $request)
     {
         $filtered_templates = Template::orderBy('created_at','desc')
@@ -234,6 +284,16 @@ class TemplatesController extends Controller
         return response()->json($data);
 
     }
+
+
+    /**
+     * Create unique url of template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int template_id, int user_id
+     * @return   url
+     */
     public function get_unique_url($template_id,$user_id)
     {
         $c = UserTemplate::where('template_id',$template_id)->where('user_id',$user_id)->count();
@@ -251,9 +311,18 @@ class TemplatesController extends Controller
         
         return $url;
     }
-     public function back_save_user_template(Request $request)
+
+
+    /**
+     * Save Template's backside
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array template_id,user_template_id,feilds,labels,images,back_circle_object,back_square_object,back_line_object,deleted_line_object,deleted_square_object,deleted_circle_object
+     * @return   json String 
+     */
+    public function back_save_user_template(Request $request)
     { 
-        
         $template =  Template::where('id',$request->template_id)->first();
         $user_fields=array(
                 
@@ -402,13 +471,21 @@ class TemplatesController extends Controller
                 }
             }
    
-     
        return json_encode("Template is Saved..!");
-
-
 
     }
 
+
+    /**
+     * Save user's templates
+     * Save all the data of user template
+     * Save lables and objects of user's templates
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array template_id,snap,feilds,labels,images
+     * @return   int user_template_id
+     */
     public function save_user_template(Request $request)
     { 
            $template =  Template::where('id',$request->template_id)->first();
@@ -595,14 +672,19 @@ class TemplatesController extends Controller
                     UserTemplateFeild::where('name',$value)->where('is_label',1)->where('template_id',$user_template_id)->delete();
                 }
             }
-            
-     
+
        return json_encode($user_template_id);
-
-
 
     }
 
+
+    /**
+     * What function does
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function show_user_gallery()
     {
         $user = Auth::user();
@@ -620,6 +702,14 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Show User template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return   view
+     */
     public function show_user_template($url)
     {
 
@@ -643,6 +733,15 @@ class TemplatesController extends Controller
         return view('user.templates.create',$data);
     }
 
+
+    /**
+     * Edit template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     int product_id
+     * @return     array product_info
+     */
     public function edit_user_template($url)
     {
         $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
@@ -752,6 +851,15 @@ class TemplatesController extends Controller
         
     }
     
+
+    /**
+     * Save all the modification which is being done on edit page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array snap,template_id,feilds,labels,deleted_feilds,deleted_labels,deleted_images,images,line_object,square_object,circle_object,deleted_line_object,deleted_square_object,deleted_circle_object
+     * @return   json String
+     */
     public function edit_user_template_post(Request $request)
     { 
 
@@ -944,9 +1052,18 @@ class TemplatesController extends Controller
      
        return json_encode('saved.!');
     }
+
+
+    /**
+     * Save all the modification of template's backside which is being done on edit page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array snap,template_id,feilds,labels,deleted_feilds,deleted_labels,deleted_images,images,line_object,square_object,circle_object,deleted_line_object,deleted_square_object,deleted_circle_object
+     * @return   json String
+     */
     public function edit_user_template_back_post(Request $request)
-    { 
-     
+    {
         //$template =  Template::where('id',$request->template_id)->first();
          
          $user_id=Auth::user()->id;
@@ -1141,6 +1258,17 @@ class TemplatesController extends Controller
 
     }
 
+
+    /**
+     * Delete user template
+     * Delete snap of template
+     * Delete lables and data of template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return   redirect back on view
+     */
     public function delete_user_template($url)
     {
         $user_template = UserTemplate::where('url', $url)->where('user_id', Auth::user()->id)->first();
@@ -1159,116 +1287,134 @@ class TemplatesController extends Controller
         return Redirect()->back();
     }
 
+
+    /**
+     * Get the data,lables and objects of the template
+     * If the template is both side than get the data,lables and objects of backside
+     * According to template is both side or not it will show the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return   array product_info
+     */
     public function create_single_card($url)
     {
-
-                $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
-                
-                $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
-                
-                $ids = array();
-                foreach($data['feilds'] as $feild)
-                {
-                  array_push($ids, $feild->id);
-                }
-
-                $data['images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
-
-                $imageids = array();
-                foreach ($data['images'] as $key => $value) {
-                    array_push($imageids, $value->template_feild_id);
-                }
-
-                $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-                $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
-               
-                $names = array();
-                foreach($data['feilds'] as $feild)
-                {
-                  array_push($names, $feild->name);
-                }
-
-                $labels = array();
-                foreach($data['labels'] as $label)
-                {
-                  array_push($labels, $label->name);
-                }
-
-                $template_images = array();
-                foreach($data['image_css'] as $image)
-                {
-                  array_push($template_images, $image->id);
-                }
-
-                $data['names'] = $names;
-                $data['template_images'] = $template_images;
-                $data['template_labels'] = $labels;
-
-
-                $data['back_feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',1)->get();
-                
-                $ids = array();
-                foreach($data['back_feilds'] as $feild)
-                {
-                  array_push($ids, $feild->id);
-                }
-
-                $data['back_images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
-
-                $imageids = array();
-                foreach ($data['back_images'] as $key => $value) {
-                    array_push($imageids, $value->template_feild_id);
-                }
-
-                $data['back_feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
-                $data['back_labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
-                $data['back_image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
-               
-                $back_names = array();
-                foreach($data['back_feilds'] as $feild)
-                {
-                  array_push($back_names, $feild->name);
-                }
-
-                $back_labels = array();
-                foreach($data['back_labels'] as $label)
-                {
-                  array_push($back_labels, $label->name);
-                }
-
-                $back_template_images = array();
-                foreach($data['back_image_css'] as $image)
-                {
-                  array_push($back_template_images, $image->id);
-                }
-
-                $data['back_names'] = $back_names;
-                $data['back_template_images'] = $back_template_images;
-                $data['back_template_labels'] = $back_labels; 
-                 $data['objects'] = UserObject::where('is_back',0)->where('template_id',$data['template']->id)->get();
-                $data['circles'] = UserObject::where('type','circle')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
-                $data['lines'] = UserObject::where('type','line')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
-                $data['squares'] = UserObject::where('type','square')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
-                $data['back_objects'] = UserObject::where('is_back',1)->where('template_id',$data['template']->id)->get();
-                $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
-                $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
-                $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
-                
-                if($data['template']->is_both_side == 1)
-                {
-                  return view('user.cards.single_card_double_side_create',$data);
-                }
-                else
-                {
-                   return view('user.cards.single_card_create',$data);
-                }  
-             
+        $data['template'] = UserTemplate::where('is_delete', 0)->where('url', $url)->first();
         
+        $data['feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',0)->get();
+        
+        $ids = array();
+        foreach($data['feilds'] as $feild)
+        {
+          array_push($ids, $feild->id);
+        }
+
+        $data['images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+        $imageids = array();
+        foreach ($data['images'] as $key => $value) {
+            array_push($imageids, $value->template_feild_id);
+        }
+
+        $data['feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+        $data['labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+        $data['image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',0)->whereIn('id', $imageids)->get();
+       
+        $names = array();
+        foreach($data['feilds'] as $feild)
+        {
+          array_push($names, $feild->name);
+        }
+
+        $labels = array();
+        foreach($data['labels'] as $label)
+        {
+          array_push($labels, $label->name);
+        }
+
+        $template_images = array();
+        foreach($data['image_css'] as $image)
+        {
+          array_push($template_images, $image->id);
+        }
+
+        $data['names'] = $names;
+        $data['template_images'] = $template_images;
+        $data['template_labels'] = $labels;
+
+
+        $data['back_feilds'] = UserTemplateFeild::where('template_id',$data['template']->id)->where('is_back',1)->get();
+        
+        $ids = array();
+        foreach($data['back_feilds'] as $feild)
+        {
+          array_push($ids, $feild->id);
+        }
+
+        $data['back_images'] = UserTemplateImage::whereIn('template_feild_id',$ids)->get();
+
+        $imageids = array();
+        foreach ($data['back_images'] as $key => $value) {
+            array_push($imageids, $value->template_feild_id);
+        }
+
+        $data['back_feilds'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',0)->get();
+        $data['back_labels'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereNotIn('id', $imageids)->where('is_label',1)->get();
+        $data['back_image_css'] = UserTemplateFeild::where('template_id', $data['template']->id)->where('is_back',1)->whereIn('id', $imageids)->get();
+       
+        $back_names = array();
+        foreach($data['back_feilds'] as $feild)
+        {
+          array_push($back_names, $feild->name);
+        }
+
+        $back_labels = array();
+        foreach($data['back_labels'] as $label)
+        {
+          array_push($back_labels, $label->name);
+        }
+
+        $back_template_images = array();
+        foreach($data['back_image_css'] as $image)
+        {
+          array_push($back_template_images, $image->id);
+        }
+
+        $data['back_names'] = $back_names;
+        $data['back_template_images'] = $back_template_images;
+        $data['back_template_labels'] = $back_labels; 
+        $data['objects'] = UserObject::where('is_back',0)->where('template_id',$data['template']->id)->get();
+        $data['circles'] = UserObject::where('type','circle')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+        $data['lines'] = UserObject::where('type','line')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+        $data['squares'] = UserObject::where('type','square')->where('is_back',0)->where('template_id',$data['template']->id)->pluck('name');
+        $data['back_objects'] = UserObject::where('is_back',1)->where('template_id',$data['template']->id)->get();
+        $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+        $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+        $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
+        
+        if($data['template']->is_both_side == 1)
+        {
+          return view('user.cards.single_card_double_side_create',$data);
+        }
+        else
+        {
+           return view('user.cards.single_card_create',$data);
+        }  
+             
     }
 
+
+    /**
+     * Save snap of template
+     * Put the image in folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image
+     * @return   json image,user_id
+     */
     public function save_card(Request $request)
-    
     {
         $username=Auth::user()->username;
 
@@ -1297,6 +1443,15 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Show upload items according to the template is being selected
+     * If template is back side show upload items according to the template is being selected
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String url
+     * @return     array product_info
+     */
     public function show_multiple_cards($url)
     {
         $user_id = Auth::user()->id;
@@ -1343,7 +1498,6 @@ class TemplatesController extends Controller
             unset($data['user_template_images'][1]);
         }
 
-       // dd($data['user_template_images']);
         $directory2 = public_path().'/temp/'.$username.'/back';
 
         if(File::exists($directory2))
@@ -1368,6 +1522,14 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+    * According to the template is being selected user can download the excel file with appropriate values  
+    *
+    * @author   webdesignandsolution15@gmail.com
+    * @access   public
+    * $param    String url
+    * @return   void
+    */
     public function download_excel_file($url)
     {
         $user_id = Auth::user()->id;
@@ -1384,6 +1546,17 @@ class TemplatesController extends Controller
         })->export('xls');
     }
 
+
+    /**
+     * User can upload appropriate excel file
+     * User can only upload the file which header is being matching to the template feilds
+     * User can not upload empty excel file
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array excel_file,String url
+     * @return   view
+     */
     public function upload_excel_file(Request $request,$url)
     {
         $user = Auth::user();
@@ -1599,6 +1772,16 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * User uploads the file
+     * Folder is being created with username 
+     * Images are being strore in username folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array id, String url
+     * @return   redirect back on view
+     */
     public function upload_images(Request $request,$url)
     {   
         $user = Auth::user();
@@ -1679,6 +1862,16 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Create username folder
+     * If there are Front side's images in template than front named folder is being created ad stored image in that folder
+     * If there are back side's images in template than back named folder is being created ad stored image in that folder
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image
+     * @return   json image
+     */
     public function multiple_image_save(Request $request)
     {   
         $username=Auth::user()->username;
@@ -1741,6 +1934,14 @@ class TemplatesController extends Controller
         return json_encode($name.".png");
     }
 
+
+    /**
+     * Get all the images ad show the images
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return    view
+     */
     public function show_multiple_image_preview()
     {
         $username = Auth::user()->username;
@@ -1755,18 +1956,45 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Delete image from multiple preview
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image_name
+     * @return   json String
+     */
     public function delete_image_from_multiple_preview(Request $request)
     {
         @unlink(public_path("temp/".Auth::user()->username.'/front/'.$request->image_name));
         return response()->json("save");
     }
 
+
+     /**
+     * Delete backside image from multiple preview
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image_name
+     * @return   json String
+     */
     public function delete_back_image_from_multiple_preview(Request $request)
     {
         @unlink(public_path("temp/".Auth::user()->username.'/back/'.$request->image_name));
         return response()->json("save");
     }
 
+
+     /**
+     * Delete all images of template
+     * Delete folder and excel file of that template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array image_name
+     * @return   json String
+     */
     public function delete_multiple_preview_folder($url)
     {  
         $user = Auth::user();
@@ -1853,12 +2081,29 @@ class TemplatesController extends Controller
     }
 
 
+    /**
+     * Save material_id in session
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int material_id
+     * @return   array product_info
+     */
     public function get_material_id($material_id)
     {
         Session::put('material_id',$material_id);
         return redirect('cards');
     }
 
+
+    /**
+     * Save material_id in session
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array material_id
+     * @return   json
+     */
     public function save_material_id(Request $request)
     {
         Session::put('material_id',$request->material_id);

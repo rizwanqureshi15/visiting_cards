@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * Faq
+ *
+ * @package   Faq
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class Faq extends Model
 {
     /**

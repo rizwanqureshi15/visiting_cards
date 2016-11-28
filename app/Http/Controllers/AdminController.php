@@ -15,11 +15,27 @@ use App\User;
 use Config;
 use Datatables;
 
+
+/**
+ * Controlls admin functionalities
+ *
+ * @package   AdminController
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class AdminController extends Controller
 {
     //
     protected $guard = 'employee';
 
+
+    /**
+     * Authenticate the admin
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function authenticate_admin()
     {
        
@@ -37,9 +53,16 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * show dashboard page of employee
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function dashboard_display()
     {
-        //dd(AdminController::authenticate_admin());
         if(AdminController::authenticate_admin())
         {
 
@@ -52,6 +75,14 @@ class AdminController extends Controller
     
     }
     
+
+    /**
+     * admin logout
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return    view
+     */
     public function logout()
     {
         
@@ -59,9 +90,16 @@ class AdminController extends Controller
         return redirect('employees/login');
     }
 
+
+    /**
+     * Show employee list
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function employees_list()
     {
-
         if(AdminController::authenticate_admin())
         {
                 return view('admin.employees_list');        
@@ -72,6 +110,14 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * Get the data of the employee and returns it to datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function employee_datatable()
     {
          $employees = Employee::where('is_delete', 0)->where('is_admin', 0)->get();
@@ -92,6 +138,14 @@ class AdminController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Show create employee page
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   void
+     */
     public function create_employee()
     {
         if(AdminController::authenticate_admin())
@@ -102,10 +156,20 @@ class AdminController extends Controller
         {
                 return redirect()->back();
         }
-        
 
     }
 
+
+    /**
+     * Validate the form
+     * If validations are false than redirect back to the view
+     * If validations are true than stores the value in database and return the view
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array first_name,last_name,username,email,password,password_confirmation
+     * @return   view
+     */
     public function create_employee_post(Request $request)
     {
          if(AdminController::authenticate_admin())
@@ -139,15 +203,25 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * Validate the form
+     * If validations are false than redirect back to the view
+     * If validations are true than reset the password
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param     int product_id
+     * @return     array product_info
+     */
     public function reset_password(Request $request)
     {
-
         if(AdminController::authenticate_admin())
         {
             $validator = Validator::make($request->all(), [
                 'password' => 'required|min:8'
                 
-             ]);
+            ]);
         
           
             if ($validator->fails()) {
@@ -168,6 +242,15 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * Delete the employee
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int delete_id
+     * @return   redirect back on view
+     */
     public function delete_employee(Request $request)
     {
         $id=$request->delete_id;
@@ -183,33 +266,47 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * admin can edit the profile of employee
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int id
+     * @return   array product_info
+     */
     public function edit_profile($id)
     {
-
         if(AdminController::authenticate_admin())
         {
-
             $data['employee'] = Employee::where('id', $id)->first();
             return view('admin.edit_profile', $data);
         }
         else
         {
-                return redirect()->back();
+            return redirect()->back();
         }
     }
 
+
+    /**
+     * Validate the form
+     * If validations are true than update the profile of employee
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array first_name,last_name,email,int id
+     * @return   view
+     */
     public function edit_profile_post(Request $request,$id)
     {
-
         if(AdminController::authenticate_admin())
         {
-
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|max:255',
                 'last_name' => 'required|max:255',
-                'email' => 'required|email'
-                
-             ]);
+                'email' => 'required|email'              
+            ]);
         
           
             if ($validator->fails()) {
@@ -231,6 +328,14 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * Show users list
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   view
+     */
     public function users_list()
     {
          if(AdminController::authenticate_admin())
@@ -243,10 +348,18 @@ class AdminController extends Controller
         }
     }
 
+
+    /**
+     * Get the data of users and return it to datatables
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * @return   array product_info
+     */
     public function users_datatable()
     {
-         $users = User::where('is_delete',0)->get();
-         return Datatables::of($users)
+        $users = User::where('is_delete',0)->get();
+        return Datatables::of($users)
                     ->editColumn('first_name', function ($data) {
                             $username = $data->first_name . " " . $data->last_name;
                             return $username;
@@ -254,6 +367,15 @@ class AdminController extends Controller
                     ->make(true);
     }
 
+
+    /**
+     * Check employeename
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    String username
+     * @return   json employeename
+     */
     public function check_employeename(Request $request)
     {
         $employeename=Employee::where('username', $request->username)->first();

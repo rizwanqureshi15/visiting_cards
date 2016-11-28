@@ -14,6 +14,14 @@ use File;
 use App\UserTemplate;
 use App\Template;
 
+    /**
+    * Authenticate user
+    *
+    * @package   AuthController
+    * @author     webdesignandsolution15@gmail.com
+    * @link       http://www.webdesignandsolution.com/
+    */
+
 class AuthController extends Controller
 {
     /*
@@ -64,12 +72,14 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
+     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return User
+     * @package   create
+     * @author     webdesignandsolution15@gmail.com
+     * @link       http://www.webdesignandsolution.com/
      */
+
     protected function create(array $data)
     {
         $user = User::create([
@@ -82,6 +92,14 @@ class AuthController extends Controller
         return $user;
     }
 
+     /**
+     * Get User friendly URl for template
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    int template_id, int user_id
+     * @return   int url
+     */
     public function get_unique_url($template_id,$user_id)
     {
         $c = userTemplate::where('template_id',$template_id)->where('user_id',$user_id)->count();
@@ -98,6 +116,21 @@ class AuthController extends Controller
         return $url;
     }
 
+     /**
+     * Login in system
+     *
+     * @package    login
+     * @author     webdesignandsolution15@gmail.com
+     * @link       http://www.webdesignandsolution.com/
+     */
+     /**
+     * Login in system
+     *
+     * @author   webdesignandsolution15@gmail.com
+     * @access   public
+     * $param    array request
+     * @return   view
+     */
     public function login(Request $request)
     {
          $v=$validator= Validator::make(

@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * UserTemplateFeild
+ *
+ * @package   UserTemplateFeild
+ * @author    webdesignandsolution15@gmail.com
+ * @link      http://www.webdesignandsolution.com/
+ */
 class UserTemplateFeild extends Model
 {
     /**
