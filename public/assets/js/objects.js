@@ -4,7 +4,7 @@ var selected_object;
 
 $(document).ready(function(){
 	$('.object_circle').draggable().resizable({
-		handles: "e, w, s, n"
+		handles: "e, w, s, n,  se, sw, ne ,nw"
 		});
 	$('.object_square').draggable().resizable({
 		handles: "e, w, s, n"
@@ -150,8 +150,24 @@ $(document).ready(function(){
 		$('#card_body').append('<div class="object object_circle" id="' + id +'"></div>');
 		$('#' + id).draggable();
 		$('#' + id).resizable({
-			handles: "e, w, s, n"
+			handles: "se, sw, ne ,nw"
 		});
+		var y = $('#'+id).css('top');
+		var x = $('#'+id).css('left');
+		var r = $('#'+id).css('width');
+		var h = $('#'+id).css('height');
+		x = x.substring(0, x.length-2);
+		y = y.substring(0, y.length-2);
+		h = parseInt(h.substring(0, h.length-2) / 2);
+		r = parseInt(r.substring(0, r.length-2) / 2);
+		x = parseInt(x) + parseInt(r) - 5;
+		y = parseInt(y) + parseInt(h) - 5;
+		console.log(x+ y + r);
+		var c=document.getElementById("canvas1");
+		var ctx=c.getContext("2d");
+		ctx.beginPath();
+		ctx.arc(175,175,50,0,Math.PI*2,true);
+		ctx.stroke();
 
 	});
 
@@ -164,7 +180,18 @@ $(document).ready(function(){
         $("#object_rotate_tool").slideUp();
 
 		selected_object = $(this).attr('id');
-
+		if(selected_object.substring(0,6) == 'square' || selected_object.substring(5,11) == 'square')
+		{
+			$('#square_radius').empty();
+			var data = '<div class="col-md-2 text-center side-break" id="object_radius"><img src="'+ site_url +'/assets/images/radius.svg" height="20px" width="20x" class="stroke-color"><div class="">Radius</div></div>';
+			$('#square_radius').append(data);
+			$('.side-break').css('width','14.28%');
+		}
+		else
+		{
+			$('.side-break').css('width','');
+			$('#square_radius').empty();
+		}
 		var top = $('#' + selected_object).css('top');
 		var left = $('#' + selected_object).css('left');
 		var toolbar_height = $('#objectToolbar').css('height');
@@ -267,12 +294,14 @@ $(document).ready(function(){
 	});
 
 	$('#arrange_back').click(function(){
-		$("#" + side + selected_object).css('z-index', '1');
+		$("#" + selected_object).css('z-index', '1');
 	});
 
 	$('#arrange_front').click(function(){
-		$("#" + side + selected_object).css('z-index', '50');
+		$("#" + selected_object).css('z-index', '50');
 	});
+
+	
 
 	$('#object_delete').click(function(){
 		var id = $('#'+selected_object).attr('id');
@@ -396,3 +425,14 @@ $(document).ready(function(){
 
 	});
 });
+
+$('#square_radius').on('click','#object_radius', function(){
+		if($('#' + selected_object).css('border-radius') == '10px')
+		{
+			$("#" + selected_object).css('border-radius', '0px');
+		}
+		else
+		{
+			$("#" + selected_object).css('border-radius', '10px');
+		}
+	});

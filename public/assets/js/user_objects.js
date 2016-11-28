@@ -4,7 +4,7 @@ var selected_object;
 
 $(document).ready(function(){
 	$('.object_circle').draggable().resizable({
-		handles: "e, w, s, n"
+		handles: "e, w, s, n, se, sw, ne ,nw"
 		});
 	$('.object_square').draggable().resizable({
 		handles: "e, w, s, n"
@@ -147,15 +147,27 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "circle_" + length;
 		circles.push(id);
-		$('#card_body').append('<div class="object object_circle" style="border-color:black;" id="' + id +'"></div>');
+		$('#card_body').append('<div class="object object_circle" style="border-color:black;border-radious:15px/15px;" id="' + id +'"></div>');
 		$('#' + id).draggable();
 		$('#' + id).resizable({
-			handles: "e, w, s, n"
+			resize: function( event, ui ) {
+				var h = ui.size.height;
+				var w = ui.size.width;
+				var hh = parseInt(h)/2;
+				var ww = parseInt(w)/2;
+				var rr = Math.floor(hh) +"px / "+ Math.floor(ww) + "px";
+				console.log($('#' + id));
+				// $('#' + id).css({'border-radius': Math.floor(hh) +"px/"+ Math.floor(ww) + "px"});
+				$('#' + id).css({'border-radius': '115px 50px 115px 50px 115px 50px 115px 50px'});
+			},
+			handles: "e, w, s, n, se, sw, ne ,nw"
 		});
+
 
 	});
 
-	$(document).on("click", '.object', function(event){
+	
+	$(document).on("click", '.object', function(event){ 
 		event.stopPropagation();
 		$("#object_arrange_tool").slideUp();
         $("#object_fill_color").slideUp();
@@ -164,6 +176,19 @@ $(document).ready(function(){
         $("#object_rotate_tool").slideUp();
 
 		selected_object = $(this).attr('id');
+		
+		if(selected_object.substring(0,6) == 'square' || selected_object.substring(5,11) == 'square')
+		{
+			$('#square_radius').empty();
+			var data = '<div class="col-md-2 text-center side-break" id="object_radius"><img src="'+ site_url +'/assets/images/radius.svg" height="20px" width="20x" class="stroke-color"><div class="">Radius</div></div>';
+			$('#square_radius').append(data);
+			$('.side-break').css('width','14.28%');
+		}
+		else
+		{	
+			$('.side-break').css('width','');
+			$('#square_radius').empty();
+		}
 
 		var top = $('#' + selected_object).css('top');
 		var left = $('#' + selected_object).css('left');
@@ -388,4 +413,16 @@ $(document).ready(function(){
 		}
 
 	});
+
 });
+
+$('#square_radius').on('click','#object_radius', function(){
+		if($('#' + selected_object).css('border-radius') == '10px')
+		{
+			$("#" + selected_object).css('border-radius', '0px');
+		}
+		else
+		{
+			$("#" + selected_object).css('border-radius', '10px');
+		}
+	});

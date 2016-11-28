@@ -788,6 +788,8 @@
               <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Arrange</div>
             </div>
+            <div id="square_radius">
+            </div>
             <div class="col-md-2 text-center side-break" id="object_delete">
               <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Delete</div>

@@ -165,6 +165,19 @@ $(document).ready(function(){
 
 		selected_object = $(this).attr('id');
 
+		if(selected_object.substring(0,6) == 'square' || selected_object.substring(5,11) == 'square')
+		{
+			$('#square_radius').empty();
+			var data = '<div class="col-md-2 text-center side-break" id="object_radius"><img src="'+ site_url +'/assets/images/radius.svg" height="20px" width="20x" class="stroke-color"><div class="">Radius</div></div>';
+			$('#square_radius').append(data);
+			$('.side-break').css('width','14.28%');
+		}
+		else
+		{	
+			$('.side-break').css('width','');
+			$('#square_radius').empty();
+		}
+
 		var top = $('#' + selected_object).css('top');
 		var left = $('#' + selected_object).css('left');
 		var toolbar_height = $('#objectToolbar').css('height');
@@ -389,3 +402,14 @@ $(document).ready(function(){
 
 	});
 });
+
+$('#square_radius').on('click','#object_radius', function(){
+		if($('#' + selected_object).css('border-radius') == '10px')
+		{
+			$("#" + selected_object).css('border-radius', '0px');
+		}
+		else
+		{
+			$("#" + selected_object).css('border-radius', '10px');
+		}
+	});
