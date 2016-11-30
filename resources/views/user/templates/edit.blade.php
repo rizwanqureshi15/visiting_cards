@@ -444,7 +444,7 @@
         </div>
 
               @if($template->type == "horizontal")
-                <div style="margin-right:168px">
+                <div style="">
 
                   <button class="btn-blog" id="save_modifications">
                       Save Modifications

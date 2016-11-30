@@ -1,7 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
 <style>
+.object_line_wrapper:hover{
+    border:none;
+    cursor: default;
+  }
+  .object_circle_wrapper:hover{
+    border:none;
+    cursor: default;
+  }
     .cropit-preview {
         background-color: #f8f8f8;
         background-size: cover;
@@ -109,6 +118,8 @@
           </div>
         </div>
       </div>
+
+
     </div>
         </div>  
 
@@ -165,8 +176,12 @@
           <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
           </div>
       @elseif($object->type == "circle")
-          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" style="{{ $object->css }}" class="object_circle">
+              </div>
           </div>
+         <!--  <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          </div> -->
       @endif
     @endforeach
 
@@ -222,7 +237,7 @@
 
        <!--Toolebasr start-->
 
-        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
+        <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;x-index:3;">
         <div class="col-md-12" style="padding:0px;">
             <div id="more_links" class="col-md-6 col-md-offset-8" style="padding:0px;">
                <div class="col-md-4" style="padding:10px;" id="under_line">

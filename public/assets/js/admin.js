@@ -478,15 +478,16 @@
 			var circle_object = [];
 			i=0;
 			$.each(circles, function(key, value){
-				var name = value;
+				var name = value; 
 				var css = $('#'+ value).attr('style');
+				var line_css = $('#wrapper_' + value).attr('style');
 				var type = 'circle';
-				var values = { name: name, css: css, type: type};
+				var values = { name: name, css: css, line_css: line_css,type: type};
 				circle_object[i] = values;
 				i++;
 			});
 			
-
+			console.log(circle_object);
 			var square_object = [];
 			i=0;
 			$.each(squares, function(key, value){

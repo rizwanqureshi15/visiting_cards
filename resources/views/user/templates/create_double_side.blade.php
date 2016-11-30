@@ -177,7 +177,9 @@
           <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
           </div>
       @elseif($object->type == "circle")
-          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" style="{{ $object->css }}" class="object_circle">
+              </div>
           </div>
       @endif
     @endforeach
@@ -452,7 +454,9 @@
               <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
               </div>
           @elseif($object->type == "circle")
-              <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+              <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                  <div id="{{ $id }}" style="{{ $object->css }}" class="object_circle">
+                  </div>
               </div>
           @endif
       @endforeach
@@ -820,7 +824,7 @@
     var back_feild_names = {!! json_encode($back_names) !!};
     var back_upload_images = {!! json_encode($back_template_images) !!};
     var back_label_names = {!! json_encode($back_template_labels) !!};;
-    var template_id = {{ $template->id }};
+    var template_id = {{ $template->id }}; 
     var template_both_side = {{ $template->is_both_side }};
     var new_template_id;
     var lines = {!! json_encode($lines) !!};

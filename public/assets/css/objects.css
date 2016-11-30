@@ -40,6 +40,12 @@
     margin-top: -7px;
     cursor: e-resize;
 }
+.selected .ui-resizable-se{
+    right: -6px;
+    top: 100%;
+    margin-top: -7px;
+    cursor: e-resize;
+}
 .object_line_wrapper{
 	height: auto;
     padding-top: 10px;
@@ -76,11 +82,9 @@
     cursor: pointer;
 }
 .object_circle{
-	height: 30px;
-	width: 30px;
+	height: 100%;
+	width: 100%;
 	border: 2px solid black;
-	top: 10px;
-	left: 20px;
 	background-color: transparent;
 	position: absolute;
     border-radius: 15px/15px;
@@ -111,8 +115,14 @@
     touch-action: none;
     display: none;
 }
+
+#rotation_degrees
+{
+    padding-left: 0px;
+}
+
 .colorpicker{
-    z-index : 101;
+    z-index : 110;
 }
 
 .side-break{
@@ -247,4 +257,19 @@
 }
 #object_radius{
     cursor: pointer;
+}
+
+.object_circle_wrapper
+{
+    top:10px;
+    left:20px;
+    position:absolute;
+    height:33px;
+    width:33px;
+    z-index: 50;
+}
+
+.object_circle_wrapper:hover
+{
+    border:1px dashed #333;
 }

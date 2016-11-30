@@ -184,14 +184,16 @@
 
       @if($object->type == "line")
           <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-              <div id="{{ $id }}" class="object_line">
+              <div id="{{ $id }}" class="object_line" style="{{ $object->css }}" >
               </div>
           </div>
       @elseif($object->type == "square")
           <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
           </div>
       @elseif($object->type == "circle")
-          <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+          <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+              <div id="{{ $id }}" class="object_circle" style="{{ $object->css }}">
+              </div>
           </div>
       @endif
     @endforeach
@@ -478,14 +480,16 @@
 
           @if($object->type == "line")
               <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-                  <div id="{{ $id }}" class="object_line">
+                  <div id="{{ $id }}" class="object_line" style="{{ $object->css }}">
                   </div>
               </div>
           @elseif($object->type == "square")
               <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
               </div>
           @elseif($object->type == "circle")
-              <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+              <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                  <div id="{{ $id }}" class="object_circle" style="{{ $object->css }}">
+                  </div>
               </div>
           @endif
       @endforeach

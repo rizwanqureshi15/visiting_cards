@@ -3,8 +3,8 @@ var selected_line;
 var selected_object;
 
 $(document).ready(function(){
-	$('.object_circle').draggable().resizable({
-		handles: "e, w, s, n,  se, sw, ne ,nw"
+	$('.object_circle_wrapper').draggable().resizable({
+		handles: "se, sw, ne ,nw"
 		});
 	$('.object_square').draggable().resizable({
 		handles: "e, w, s, n"
@@ -133,10 +133,25 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "back_circle_" + length;
 		back_circles.push(id);
-		$('#back_card_body').append('<div class="object object_circle" id="' + id +'"></div>');
-		$('#'+ id).draggable();
-		$('#'+ id).resizable({
-			handles: "e, w, s, n"
+		$('#back_card_body').append('<div class="object object_circle_wrapper" id="wrapper_' + id +'"><div class="object object_circle" id="'+ id +'" style="border-color:black;border-radious:15px/15px;"></div></div>');
+		$('#wrapper_'+ id).draggable();
+		$('#wrapper_'+ id).resizable({
+			resize: function( event, ui ) {
+				var h = ui.size.height;
+				var w = ui.size.width;
+				var hh = parseInt(h)/2;
+				var ww = parseInt(w)/2;
+				if(h > w)
+				{
+					$('#' + id).css({'border-radius': ww,'height':w,'width':w});
+				}
+				else
+				{
+					$('#' + id).css({'border-radius': hh,'height':h,'width':h});
+				}
+				
+			},
+			handles: "se, sw, ne ,nw"
 		});
 
 	});
@@ -147,28 +162,25 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "circle_" + length;
 		circles.push(id);
-		$('#card_body').append('<div class="object object_circle" id="' + id +'"></div>');
-		$('#' + id).draggable();
-		$('#' + id).resizable({
+		$('#card_body').append('<div class="object object_circle_wrapper" id="wrapper_' + id +'"><div class="object object_circle" id="'+ id +'" style="border-color:black;border-radious:15px/15px;"></div></div>');
+		$('#wrapper_' + id).draggable();
+		$('#wrapper_' + id).resizable({
+			resize: function( event, ui ) {
+				var h = ui.size.height;
+				var w = ui.size.width;
+				var hh = parseInt(h)/2;
+				var ww = parseInt(w)/2;
+				if(h > w)
+				{
+					$('#' + id).css({'border-radius': ww,'height':w,'width':w});
+				}
+				else
+				{
+					$('#' + id).css({'border-radius': hh,'height':h,'width':h});
+				}	
+			},
 			handles: "se, sw, ne ,nw"
 		});
-		var y = $('#'+id).css('top');
-		var x = $('#'+id).css('left');
-		var r = $('#'+id).css('width');
-		var h = $('#'+id).css('height');
-		x = x.substring(0, x.length-2);
-		y = y.substring(0, y.length-2);
-		h = parseInt(h.substring(0, h.length-2) / 2);
-		r = parseInt(r.substring(0, r.length-2) / 2);
-		x = parseInt(x) + parseInt(r) - 5;
-		y = parseInt(y) + parseInt(h) - 5;
-		console.log(x+ y + r);
-		var c=document.getElementById("canvas1");
-		var ctx=c.getContext("2d");
-		ctx.beginPath();
-		ctx.arc(175,175,50,0,Math.PI*2,true);
-		ctx.stroke();
-
 	});
 
 	$(document).on("click", '.object', function(event){
@@ -192,8 +204,22 @@ $(document).ready(function(){
 			$('.side-break').css('width','');
 			$('#square_radius').empty();
 		}
-		var top = $('#' + selected_object).css('top');
-		var left = $('#' + selected_object).css('left');
+		if(selected_object.substring(0,6)=="circle")
+		{
+			var top = $('#wrapper_' + selected_object).css('top'); 
+			var left = $('#wrapper_' + selected_object).css('left');
+		}
+		else if(selected_object.substring(5,11)=="circle")
+		{
+			var top = $('#wrapper_' + selected_object).css('top'); 
+			var left = $('#wrapper_' + selected_object).css('left');
+		}
+		else
+		{
+			var top = $('#' + selected_object).css('top');
+			var left = $('#' + selected_object).css('left');
+		}
+		
 		var toolbar_height = $('#objectToolbar').css('height');
 
 		if(selected_object.substring(0,7) == "wrapper")
@@ -212,16 +238,51 @@ $(document).ready(function(){
 		$('#thickness').val(stroke_width);
 		$('#border_type').val(stroke_type);
 		object_opacity = parseInt(object_opacity)*100;
-		if(template_both_side == 1)
+		var t = top.substring(0,top.length-2);
+		var selected_height;
+		if(selected_object.substring(0,4) == 'line' || selected_object.substring(5,9) == 'line')
 		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) + 63).css('left', parseInt(left) + 500 );
+			selected_height = $('#wrapper_'+selected_object).css('height');
 		}
 		else
 		{
-			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) - 10).css('left', parseInt(left) );
+		   selected_height = $('#'+selected_object).css('height');	
+		}
+		
+		
+		if(template_both_side == 1)
+		{
+			if(t > 100)
+			{
+				$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) + 63).css('left', parseInt(left) + 500 );
+			}
+			else
+			{
+
+				$('#objectToolbar').css('top', parseInt(top) + parseInt(selected_height.substring(0,selected_height.length)) + 83).css('left', parseInt(left) + 500);
+			}
+			
+		}
+		else
+		{
+			if(t > 100)
+			{
+				$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) - 10).css('left', parseInt(left));
+			}
+			else
+			{
+				$('#objectToolbar').css('top', parseInt(top) + parseInt(selected_height.substring(0,selected_height.length)) + 10).css('left', parseInt(left) );
+			}
+			
 		}
 		
 		$('#objectToolbar').show();
+	});
+
+	$(document).on("click", ".object_circle_wrapper", function(event){
+		event.stopPropagation();
+		selected_line = $(this).attr('id');
+		$('#' + selected_line).addClass('selected');
 	});
 
 	$('#colorSelector1').ColorPicker({
@@ -264,13 +325,13 @@ $(document).ready(function(){
 
 	$(document).on("change", '#thickness', function(){
 		var size = $(this).val();
-		$('#' + side + selected_object).css('border-width', size + "px");
+		$('#' + selected_object).css('border-width', size + "px");
 	});
 
 
 	$(document).on("change", '#border_type', function(){
 		var style = $(this).val();
-		$('#' + side + selected_object).css('border-style', style);
+		$('#' + selected_object).css('border-style', style);
 	});
 
 	$('#opacity_slider').bootstrapSlider({
@@ -279,7 +340,7 @@ $(document).ready(function(){
         	$('#opacity_value').text(value + '%');
         	var key = value;
         	value = parseInt(value)/100;
-        	$('#' + side + selected_object).css('opacity', value);
+        	$('#' + selected_object).css('opacity', value);
         	
           return 'Current value: ' + key;
         }
@@ -287,18 +348,41 @@ $(document).ready(function(){
 
 	$('#rotation_degrees').keyup(function(){
 		var degree = $(this).val();
-		$('#' + side + selected_object).css('-ms-transform', 'rotate(' + degree + 'deg)' );
-		$('#' + side + selected_object).css('-webkit-transform', 'rotate(' + degree + 'deg)' );
-		$('#' + side + selected_object).css('transform', 'rotate(' + degree + 'deg)' );
+		$('#' + selected_object).css('-ms-transform', 'rotate(' + degree + 'deg)' );
+		$('#' + selected_object).css('-webkit-transform', 'rotate(' + degree + 'deg)' );
+		$('#' + selected_object).css('transform', 'rotate(' + degree + 'deg)' );
 
 	});
 
 	$('#arrange_back').click(function(){
-		$("#" + selected_object).css('z-index', '1');
+		if(selected_object.substring(0,6)=='circle' || selected_object.substring(5,11) == 'circle')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '1');
+		}
+		else if(selected_object.substring(0,4)=='line' || selected_object.substring(5,9) == 'line')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '1');
+		}
+		else
+		{
+			$("#" + selected_object).css('z-index', '1');
+		}
 	});
 
 	$('#arrange_front').click(function(){
-		$("#" + selected_object).css('z-index', '50');
+		if(selected_object.substring(0,6)=='circle' || selected_object.substring(5,11) == 'circle')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '50');
+		}
+		else if(selected_object.substring(0,4)=='line' || selected_object.substring(5,9) == 'line')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '50');
+		}
+		else
+		{
+			$("#" + selected_object).css('z-index', '50');
+		}
+
 	});
 
 	
@@ -323,7 +407,7 @@ $(document).ready(function(){
 					}
 				});
 
-			$('#'+selected_object).remove();
+			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
 		else if(id.substring(0,4) == 'line')
@@ -382,7 +466,7 @@ $(document).ready(function(){
 					}
 				});
 
-			$('#'+selected_object).remove();
+			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
 		else if(id.substring(5,9) == 'line')

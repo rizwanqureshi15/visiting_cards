@@ -252,7 +252,6 @@ class CardController extends Controller
                    
                 }
             }
-
         $circle_names = Objects::where('is_back',0)->where('type', 'circle')->where('template_id', $request->template_id)->pluck('name');
          if($request->circle_object)
          {  

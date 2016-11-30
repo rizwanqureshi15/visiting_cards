@@ -759,18 +759,6 @@
 				i++; 
 			});
 
-			var circle_object = [];
-			i=0;
-			$.each(circles, function(key, value){
-				var name = value;
-				var css = $('#'+ value).attr('style');
-				var type = 'circle';
-				var values = { name: name, css: css, type: type};
-				circle_object[i] = values;
-				i++;
-			});
-			
-
 			var square_object = [];
 			i=0;
 			$.each(squares, function(key, value){
@@ -779,6 +767,18 @@
 				var type = 'square';
 				var values = { name: name, css: css, type: type};
 				square_object[i] = values;
+				i++;
+			});
+
+			var circle_object = [];
+			i=0;
+			$.each(circles, function(key, value){
+				var name = value; 
+				var css = $('#'+ value).attr('style');
+				var line_css = $('#wrapper_' + value).attr('style');
+				var type = 'circle';
+				var values = { name: name, css: css, line_css: line_css,type: type};
+				circle_object[i] = values;
 				i++;
 			});
 

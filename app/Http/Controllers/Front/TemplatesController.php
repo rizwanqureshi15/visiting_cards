@@ -308,7 +308,6 @@ class TemplatesController extends Controller
         {
             $url = $url[0];
         }
-        
         return $url;
     }
 
@@ -326,8 +325,8 @@ class TemplatesController extends Controller
         $template =  Template::where('id',$request->template_id)->first();
         $user_fields=array(
                 
-                'background_image_back' => $template->background_image_back,
-                'back_snap'=> $template->back_snap
+          'background_image_back' => $template->background_image_back,
+          'back_snap'=> $template->back_snap,
         );
 
         UserTemplate::where('id', $request->user_template_id)->update($user_fields);
@@ -368,6 +367,7 @@ class TemplatesController extends Controller
         
         
         $circle_names = UserObject::where('is_back',1)->where('type', 'circle')->where('template_id', $request->user_template_id)->pluck('name');
+        
          if($request->back_circle_object)
          {  
             foreach ($request->back_circle_object as $circle) 
@@ -420,7 +420,6 @@ class TemplatesController extends Controller
                     $square['is_back'] = 1;
                     UserObject::create($square);
                 }
-               
             }
         }
 
@@ -488,6 +487,7 @@ class TemplatesController extends Controller
      */
     public function save_user_template(Request $request)
     { 
+
            $template =  Template::where('id',$request->template_id)->first();
         if(Auth::user())
         {
@@ -526,7 +526,7 @@ class TemplatesController extends Controller
             $user_id = $session_id;
         }
          
-        $user_template_id = userTemplate::insertGetId($user_fields);
+        $user_template_id = userTemplate::insertGetId($user_fields); 
         if($request->feilds)
         {
             foreach ($request->feilds as $feild) 
@@ -567,14 +567,14 @@ class TemplatesController extends Controller
             foreach ($request->circle_object as $circle) 
             {
                 $update = 0;
-                $circle['template_id'] = $user_template_id;
-                 foreach ($circle_names as $key => $value) {
-
-                        if($value == $circle['name'])
-                        { 
-                            $id = $key;
-                            $update = 1;
-                        }
+                $circle['template_id'] = $user_template_id; 
+                foreach ($circle_names as $key => $value) 
+                {
+                    if($value == $circle['name'])
+                    {
+                        $id = $key;
+                        $update = 1;
+                    }
                 }
                 if($update == 1)
                 {
@@ -960,7 +960,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                    $object = UserObject::where('name', $circle['name'])->where('template_id',$request->template_id)->update($circle);
                 }
                 else
                 {   
@@ -989,7 +989,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $square['name'])->update($square);
+                    $object = UserObject::where('name', $square['name'])->where('template_id',$request->template_id)->update($square);
                 }
                 else
                 {   
@@ -1018,7 +1018,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $line['name'])->update($line);
+                    $object = UserObject::where('name', $line['name'])->where('template_id',$request->template_id)->update($line);
                 }
                 else
                 {   
@@ -1128,7 +1128,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $circle['name'])->update($circle);
+                    $object = UserObject::where('name', $circle['name'])->where('template_id',$request->template_id)->update($circle);
                 }
                 else
                 {   
@@ -1157,7 +1157,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $square['name'])->update($square);
+                    $object = UserObject::where('name', $square['name'])->where('template_id',$request->template_id)->update($square);
                 }
                 else
                 {   
@@ -1186,7 +1186,7 @@ class TemplatesController extends Controller
                 }
                 if($update == 1)
                 {
-                    $object = UserObject::where('name', $line['name'])->update($line);
+                    $object = UserObject::where('name', $line['name'])->where('template_id',$request->template_id)->update($line);
                 }
                 else
                 {   
@@ -1392,7 +1392,7 @@ class TemplatesController extends Controller
         $data['back_circles'] = UserObject::where('type','circle')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
         $data['back_lines'] = UserObject::where('type','line')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
         $data['back_squares'] = UserObject::where('type','square')->where('is_back',1)->where('template_id',$data['template']->id)->pluck('name');
-        
+       
         if($data['template']->is_both_side == 1)
         {
           return view('user.cards.single_card_double_side_create',$data);

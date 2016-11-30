@@ -21,7 +21,7 @@ class Template extends Model
      * @var array
      */
      protected $fillable = [
-        'id', 'name', 'category_id', 'background_image', 'background_color','url','type','is_delete','is_both_side', 'background_image_back', 'back_snap', 'snap'
+        'id', 'name', 'category_id', 'background_image', 'background_color','url','type','is_delete','is_both_side', 'background_image_back', 'back_snap', 'snap','price'
     ];
 
     public function category()

@@ -187,15 +187,18 @@
 
     @if($object->type == "line")
       <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
-        <div id="{{ $id }}" class="object_line">
+        <div id="{{ $id }}" class="object_line" style="{{ $object->css }}">
         </div>
       </div>
     @elseif($object->type == "square")
       <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
       </div>
     @elseif($object->type == "circle")
-      <div id="{{ $id }}" class="object object_circle" style="{{ $object->css }}">
+    <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+       <div id="{{ $id }}" class="object_circle" style="{{ $object->css }}">
       </div>
+    </div>
+      
     @endif
   @endforeach
 @endif
@@ -518,6 +521,8 @@
               <img src="{{ url('assets/images/arrange.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Arrange</div>
             </div>
+            <div id="square_radius">
+            </div>
             <div class="col-md-2 text-center side-break" id="object_delete">
               <img src="{{ url('assets/images/delete.png') }}" height="20px" width="20x" class="stroke-color">
               <div class="">Delete</div>
@@ -665,7 +670,7 @@
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
-    <script src="{{ url('assets/js/objects.js') }}"></script>
     <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
+    <script src="{{ url('assets/js/objects.js') }}"></script>
 
 @endsection

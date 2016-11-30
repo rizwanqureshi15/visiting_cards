@@ -3,8 +3,8 @@ var selected_line;
 var selected_object;
 
 $(document).ready(function(){
-	$('.object_circle').draggable().resizable({
-		handles: "e, w, s, n, se, sw, ne ,nw"
+	$('.object_circle_wrapper').draggable().resizable({
+		handles: "se, sw, ne ,nw"
 		});
 	$('.object_square').draggable().resizable({
 		handles: "e, w, s, n"
@@ -133,9 +133,24 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "back_circle_" + length;
 		back_circles.push(id);
-		$('#back_card_body').append('<div class="object object_circle"  style="border-color:black;" id="' + id +'"></div>');
-		$('#'+ id).draggable();
-		$('#'+ id).resizable({
+		$('#back_card_body').append('<div class="object object_circle_wrapper" id="wrapper_' + id +'"><div class="object object_circle" id="'+ id +'" style="border-color:black;border-radious:15px/15px;"></div></div>');
+		$('#wrapper_'+ id).draggable();
+		$('#wrapper_'+ id).resizable({
+			resize: function( event, ui ) {
+				var h = ui.size.height;
+				var w = ui.size.width;
+				var hh = parseInt(h)/2;
+				var ww = parseInt(w)/2;
+				if(h > w)
+				{
+					$('#' + id).css({'border-radius': ww,'height':w,'width':w});
+				}
+				else
+				{
+					$('#' + id).css({'border-radius': hh,'height':h,'width':h});
+				}
+				
+			},
 			handles: "e, w, s, n"
 		});
 
@@ -147,18 +162,22 @@ $(document).ready(function(){
 		length = parseInt(length) + 1;
 		var id = "circle_" + length;
 		circles.push(id);
-		$('#card_body').append('<div class="object object_circle" style="border-color:black;border-radious:15px/15px;" id="' + id +'"></div>');
-		$('#' + id).draggable();
-		$('#' + id).resizable({
+		$('#card_body').append('<div class="object object_circle_wrapper" id="wrapper_' + id +'"><div class="object object_circle" id="'+ id +'" style="border-color:black;border-radious:15px/15px;"></div></div>');
+		$('#wrapper_' + id).draggable();
+		$('#wrapper_' + id).resizable({
 			resize: function( event, ui ) {
 				var h = ui.size.height;
 				var w = ui.size.width;
 				var hh = parseInt(h)/2;
 				var ww = parseInt(w)/2;
-				var rr = Math.floor(hh) +"px / "+ Math.floor(ww) + "px";
-				console.log($('#' + id));
-				// $('#' + id).css({'border-radius': Math.floor(hh) +"px/"+ Math.floor(ww) + "px"});
-				$('#' + id).css({'border-radius': '115px 50px 115px 50px 115px 50px 115px 50px'});
+				if(h > w)
+				{
+					$('#' + id).css({'border-radius': ww,'height':w,'width':w});
+				}
+				else
+				{
+					$('#' + id).css({'border-radius': hh,'height':h,'width':h});
+				}	
 			},
 			handles: "e, w, s, n, se, sw, ne ,nw"
 		});
@@ -190,8 +209,21 @@ $(document).ready(function(){
 			$('#square_radius').empty();
 		}
 
-		var top = $('#' + selected_object).css('top');
-		var left = $('#' + selected_object).css('left');
+		if(selected_object.substring(0,6)=="circle")
+		{
+			var top = $('#wrapper_' + selected_object).css('top'); 
+			var left = $('#wrapper_' + selected_object).css('left');
+		}
+		else if(selected_object.substring(5,11) == "circle")
+		{
+			var top = $('#wrapper_back_' + selected_object).css('top'); 
+			var left = $('#wrapper_back_' + selected_object).css('left');
+		}
+		else
+		{
+			var top = $('#' + selected_object).css('top');
+			var left = $('#' + selected_object).css('left');
+		}
 		var toolbar_height = $('#objectToolbar').css('height');
 
 		if(selected_object.substring(0,7) == "wrapper")
@@ -210,9 +242,35 @@ $(document).ready(function(){
 		$('#thickness').val(stroke_width);
 		$('#border_type').val(stroke_type);
 		object_opacity = parseInt(object_opacity)*100;
-		$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) -10).css('left', parseInt(left) + 16);
+		var t = top.substring(0,top.length-2);
+		var selected_height;
+		if(selected_object.substring(0,4) == 'line' || selected_object.substring(5,9) == 'line')
+		{
+			selected_height = $('#wrapper_'+selected_object).css('height');
+		}
+		else
+		{
+		   selected_height = $('#'+selected_object).css('height');	
+		}
+		if(t > 100)
+		{
+			$('#objectToolbar').css('top', parseInt(top) - parseInt(toolbar_height) -10).css('left', parseInt(left) + 16);
+		}
+		else
+		{
+			$('#objectToolbar').css('top', parseInt(top) + parseInt(selected_height.substring(0,selected_height.length)) + 10).css('left', parseInt(left) + 16);
+		}
+		
 		$('#objectToolbar').show();
 	});
+
+
+	$(document).on("click", ".object_circle_wrapper", function(event){
+		event.stopPropagation();
+		selected_line = $(this).attr('id');
+		$('#' + selected_line).addClass('selected');
+	});
+
 
 	$('#colorSelector1').ColorPicker({
 
@@ -283,12 +341,35 @@ $(document).ready(function(){
 
 	});
 
-	$('#arrange_back').click(function(){
-		$("#" + side + selected_object).css('z-index', '1');
+		$('#arrange_back').click(function(){
+		if(selected_object.substring(0,6)=='circle' || selected_object.substring(5,11) == 'circle')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '1');
+		}
+		else if(selected_object.substring(0,4)=='line' || selected_object.substring(5,9) == 'line')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '1');
+		}
+		else
+		{
+			$("#" + selected_object).css('z-index', '1');
+		}
 	});
 
 	$('#arrange_front').click(function(){
-		$("#" + side + selected_object).css('z-index', '50');
+		if(selected_object.substring(0,6)=='circle' || selected_object.substring(5,11) == 'circle')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '50');
+		}
+		else if(selected_object.substring(0,4)=='line' || selected_object.substring(5,9) == 'line')
+		{
+			$("#wrapper_" + selected_object).css('z-index', '50');
+		}
+		else
+		{
+			$("#" + selected_object).css('z-index', '50');
+		}
+
 	});
 
 	$('#object_delete').click(function(){
@@ -312,7 +393,7 @@ $(document).ready(function(){
 					}
 				});
 
-			$('#'+selected_object).remove();
+			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
 		else if(id.substring(0,4) == 'line')
@@ -371,7 +452,7 @@ $(document).ready(function(){
 					}
 				});
 
-			$('#'+selected_object).remove();
+			$('#wrapper_'+selected_object).remove();
 			$('#objectToolbar').hide();
 		}
 		else if(id.substring(5,9) == 'line')
