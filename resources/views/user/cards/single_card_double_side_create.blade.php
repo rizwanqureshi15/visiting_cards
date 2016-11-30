@@ -500,7 +500,7 @@
             <label class="image_fonts">FRONT SIDE</label>
           </div>
           <div class="col-md-4 text-center">
-            <img src="{{ url('images/'.$username, $template->back_snap) }}" class="inactive_image front_back" id="back_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
+            <img src="{{ url('templates/snaps/', $template->back_snap) }}" class="inactive_image front_back" id="back_side_image" style="@if($template->type == 'horizontal') width:100%; @else width:60% @endif">
             <label class="image_fonts">BACK SIDE</label>
           </div>
         </div>
