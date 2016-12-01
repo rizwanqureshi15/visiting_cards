@@ -499,8 +499,9 @@
 			var i=0;
 			feilds=[];	
 			$('#overlay').show();
-			$('#guideline_border').hide();
-			
+			$('#back_guideline_border').hide();
+			$('.feild-elements').css('border', 'none');	
+			$('.template_image_div').css('border', 'none');	
 			$.each(back_feild_names, function(key,  value){
 
 				var id1  = value.toLowerCase();

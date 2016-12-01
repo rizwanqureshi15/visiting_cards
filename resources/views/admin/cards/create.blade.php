@@ -831,7 +831,8 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-9 col-sm-offset-3" style="margin-top:10px;"><input type="submit" class="btn btn-primary"></div>
+                            <div class="col-sm-9 col-sm-offset-3" style="margin-top:10px;">
+                              <input type="submit" class="btn btn-primary"></div>
                             </div> 
                         </form>
                       </div>

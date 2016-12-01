@@ -29,7 +29,7 @@
                                 </canvas>
                             @else
                             <div class="col-md-7" style="margin-top:20px;">
-                                <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
+                                <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
                                 <canvas id="canvas_id" width="400" height="648">
                                 </canvas>
                             @endif
@@ -107,13 +107,13 @@
                                     </canvas>
                             @else
                                 <div class="col-md-7" style="margin-top:20px;">
-                                    <div id="multiple_user_double_side_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:419px;width:680px;">
+                                    <div id="multiple_user_double_side_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image_back) }}');background-size:100%;height:648px;width:400px;">
                                     <canvas id="canvas_id2" width="400" height="648">
-                                    <!-- </canvas> -->
+                                    </canvas>
                             @endif
+
                                     <div id="back_card_body">
                                     @if($back_objects)
-
                                         @foreach($back_objects as $object) 
                                           <?php
                                             $id = $object->name;
@@ -137,6 +137,7 @@
 
                                     @endif
                                       @if($back_feilds)
+                                      
                                             @foreach($back_feilds as $feild)
                                               <?php 
                                                 $id = $feild->name;

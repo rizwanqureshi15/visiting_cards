@@ -326,7 +326,7 @@ class TemplatesController extends Controller
         $user_fields=array(
                 
           'background_image_back' => $template->background_image_back,
-          'back_snap'=> $template->back_snap,
+          'back_snap'=> $request->snap,
         );
 
         UserTemplate::where('id', $request->user_template_id)->update($user_fields);
@@ -1783,7 +1783,7 @@ class TemplatesController extends Controller
      * @return   redirect back on view
      */
     public function upload_images(Request $request,$url)
-    {   
+    {  
         $user = Auth::user();
         $username = $user->username;
         $user_id = $user->id;

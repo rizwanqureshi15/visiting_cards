@@ -667,7 +667,7 @@ class CardController extends Controller
         $name = str_random(40);
         $path = public_path() .'/templates/images';
         $request->file('image')->move($path , $name.".png");
-        $feild_id = TemplateFeild::insertGetId(['name' => $request->name, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
+        $feild_id = TemplateFeild::insertGetId(['name' => $request->imagenameform, 'css' => $request->div_css, 'font_css' => $request->css, 'template_id' => $request->template_id,'is_back' => $request->is_back, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
 
         $image_id = TemplateImage::insertGetId(['src' => $name.'.png','template_feild_id' => $feild_id, 'created_at' => date('Y-m-d H:s:i'),'updated_at' => date('Y-m-d H:s:i')]);
             

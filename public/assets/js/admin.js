@@ -433,6 +433,8 @@
 			feilds=[];	
 			$('#overlay').show();
 			$('#guideline_border').hide();
+			$('.feild-elements').css('border', 'none');	
+			$('.template_image_div').css('border', 'none');	
 			
 			$.each(feild_names, function(key,  value){
 

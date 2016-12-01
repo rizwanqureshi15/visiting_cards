@@ -692,7 +692,7 @@
         });
 
         $("#save_as_template").on('click', function () {
-
+        	$('#user_overlay').show();
         	$('#guideline_border').hide();
         	$('.feild-elements').css('border', 'none');	
 			$('.template_image_div').css('border', 'none');	
@@ -701,7 +701,7 @@
 
             var i=0;
             feilds=[];
-            $('#user_overlay').show();
+            
             $('#navbar').hide();
 
             $.each(field_names, function(key,  value){
@@ -850,6 +850,9 @@
         });
         $("#save_modifications").on('click', function () {
         	$('#guideline_border').hide();
+        	$('#user_overlay').show();
+			$('.feild-elements').css('border', 'none');	
+			$('.template_image_div').css('border', 'none');	
             var i=0;
             feilds=[];
             $('#back_side_image').removeClass('inactive_image').addClass('active_image');
@@ -947,7 +950,7 @@
                             type: "post",
                             data: {"_token": token ,"feilds": feilds, "deleted_circle_object": deleted_circles,"deleted_square_object": deleted_squares,"deleted_line_object":deleted_lines,"circle_object": circle_object,"square_object": square_object,"line_object":line_object,"deleted_feilds": delete_feilds, "labels": labels,"deleted_labels": delete_labels, "template_id": template_id, "snap": image ,"images": images_temp, "deleted_images": delete_images},
                             dataType: 'json',
-                            success: function(msg) {
+                            success: function(template_id_json) {
                             	if(template_both_side == 0)
                             	{
                             		window.location.href = site_url+"/mytemplates";
