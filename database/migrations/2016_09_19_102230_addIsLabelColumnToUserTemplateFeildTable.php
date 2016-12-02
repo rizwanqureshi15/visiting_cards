@@ -23,7 +23,7 @@ class AddIsLabelColumnToUserTemplateFeildTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_template_feils', function ($table) {
+        Schema::table('user_template_feilds', function ($table) {
             $table->dropColumn('is_label');
         });
     }

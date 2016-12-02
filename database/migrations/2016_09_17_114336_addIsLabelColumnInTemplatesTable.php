@@ -23,7 +23,7 @@ class AddIsLabelColumnInTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::table('template_feils', function ($table) {
+        Schema::table('template_feilds', function ($table) {
             $table->dropColumn('is_label');
         });
     }

@@ -24,6 +24,8 @@ class AddImageToUser extends Migration
      */
     public function down()
     {
-        Schema::dropColumn('image');
+        Schema::table('users', function ($table) {
+            $table->dropColumn('image');
+        });
     }
 }

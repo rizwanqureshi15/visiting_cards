@@ -21,7 +21,7 @@ class RemoveUserIdColumnFromUserTemplateImagesTable extends Migration
     public function down()
     {
         Schema::table('user_template_images', function ($table) {
-            $table->string('user_id');
+            $table->integer('user_id');
         });
     }
 }
