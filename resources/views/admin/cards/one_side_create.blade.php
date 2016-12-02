@@ -670,6 +670,7 @@
     <script type="text/javascript" src="{{ url('assets/colorpicker/js/colorpicker.js') }}"></script>
     <!--end-->
     <script src="{{ url('assets/js/admin.js') }}"></script>
+    <script src="{{ url('assets/js/admin_backside.js') }}"></script>
     <script src="{{ url('assets/js/bootstrap-slider.min.js') }}"></script>
     <script src="{{ url('assets/js/objects.js') }}"></script>
 

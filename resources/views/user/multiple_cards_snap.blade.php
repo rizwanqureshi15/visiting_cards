@@ -23,10 +23,17 @@
 
                         @foreach($template_data as $template)
 
-                            <div class="col-md-7" style="margin-top:20px;">
-                                <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
-                                <canvas id="canvas_id" width="680" height="419">
-                                </canvas>
+                             @if($template->type == 'horizontal')
+                                <div class="col-md-7" style="margin-top:20px;">
+                                    <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:419px;width:680px;">
+                                    <canvas id="canvas_id" width="680" height="419">
+                                    </canvas>
+                            @else
+                                <div class="col-md-7" style="margin-top:20px;">
+                                    <div id="multiple_user_card_snap" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100%;height:648px;width:400px;">
+                                    <canvas id="canvas_id" width="400" height="648">
+                                    </canvas>
+                            @endif
                                     <div id="card_body">
                                             @if($objects)
 

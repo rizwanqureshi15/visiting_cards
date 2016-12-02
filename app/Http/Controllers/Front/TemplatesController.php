@@ -1687,8 +1687,28 @@ class TemplatesController extends Controller
                 $new_val = str_replace(' ', '_', $value);
                 array_push($new_feild_names,$new_val);
             }
-
-            if($new_feild_names === $header_names) {
+            //
+            if($data['template_data'][0]->is_both_side == 1 )
+            {
+                $check_feilds = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->where('is_label', 0)->pluck('name');
+               
+            }
+            else
+            {
+              $check_feilds = UserTemplateFeild::where('template_id', $data['template_data'][0]->id)->where('is_back',0)->where('is_label', 0)->pluck('name');
+            }
+            $database_feilds = [];
+            foreach ($check_feilds as $name) {
+              $name = str_replace(" ","_",$name);
+              $name = strtolower($name);
+              array_push($database_feilds , $name);
+            }
+            //
+            //dd($database_feilds,$header_names);
+            // if($new_feild_names === $header_names) {
+                
+            // } 
+            if($database_feilds === $header_names) {
                 
             } 
             else

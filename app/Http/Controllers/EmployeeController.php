@@ -245,7 +245,8 @@ class EmployeeController extends Controller
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = OrderItem::where('order_id',$id)->paginate('20');
         $data['username'] = $order->user->username;
-        $data['order_id'] = $id;
+        $data['order_id'] = $id; 
+        $data['order_no'] = $order->order_no; 
         return view('employee.orders.order_items_view',$data);
     }
 
