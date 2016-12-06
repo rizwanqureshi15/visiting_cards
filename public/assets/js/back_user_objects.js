@@ -160,6 +160,13 @@ $(document).ready(function(){
 				// $('#' + id).css({'border-radius': Math.floor(hh) +"px/"+ Math.floor(ww) + "px"});
 				
 			},
+			stop: function( event, ui )
+			{ 
+				var h = $('#' + id).css('height');
+				var w = $('#' + id).css('width'); 
+
+				$('#wrapper_' + id).css({'height': h,'width': w});
+			},
 			handles: "se, sw, ne ,nw"
 		});
 
@@ -188,9 +195,16 @@ $(document).ready(function(){
 					$('#' + id).css({'border-radius': hh,'height':h,'width':h});
 				}
 				//var rr = Math.floor(hh) +"px / "+ Math.floor(ww) + "px";
-				console.log($('#' + id));
+				//console.log($('#' + id));
 				// $('#' + id).css({'border-radius': Math.floor(hh) +"px/"+ Math.floor(ww) + "px"});
 				
+			},
+			stop: function( event, ui )
+			{ 
+				var h = $('#' + id).css('height');
+				var w = $('#' + id).css('width'); 
+
+				$('#wrapper_' + id).css({'height': h,'width': w});
 			},
 			handles: "se, sw, ne ,nw"
 		});

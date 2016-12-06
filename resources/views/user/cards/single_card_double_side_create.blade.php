@@ -136,11 +136,11 @@
 
       <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$template->background_image) }}');background-size:100% 100%;height:648px;width:410px;">
           <div id="guideline_border" class="overlay canvas-element-wrapper">
-              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
-              <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 378px; height: 1px;"></div>
-              <div class="safety-margin-line-fg" style="top: 12px; left: 388px; width: 1px; height: 626px;"></div>
-              <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 378px; height: 1px;"></div>
-          </div>
+             <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 387px; height: 1px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 12px; left: 397px; width: 1px; height: 626px;"></div>
+                    <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 387px; height: 1px;"></div>
+              </div>
 
         <canvas id="canvas1" width="410" height="648">
         </canvas>
