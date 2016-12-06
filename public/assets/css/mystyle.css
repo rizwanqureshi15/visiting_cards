@@ -251,6 +251,9 @@ position: absolute;
     border-bottom: 1px solid #b5babf;
     padding:10px;
 }
+#toolbardelete{
+    cursor: pointer;
+}
 #imagetoolbardelete{
     cursor: pointer;
 }
@@ -283,6 +286,7 @@ position: absolute;
     width: 36px;
     height: 36px;
     background: url(../colorpicker/images/select.png);
+    cursor: pointer;
 }
 #colorSelector div {
     position: absolute;

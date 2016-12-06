@@ -128,6 +128,7 @@
 .side-break{
 	 border-right: 1px solid #b5babf;
 	 padding-bottom:8px;
+     cursor: pointer;
 }
 .side-break-submenu{
 	 border-right: 1px solid #b5babf;
