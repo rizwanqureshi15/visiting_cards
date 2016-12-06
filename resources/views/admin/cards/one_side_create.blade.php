@@ -531,16 +531,16 @@
         <!--Object Toolbar end-->
         @if($templates->type == "horizontal")
     <div  class="row">
-      <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:174px;">
+      <a id="guideline" class="btn col-md-3 btn-primary front-card-buttons"  style="margin-left:10px;width:174px;">
         Hide Guidelines
       </a>
-      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons" >
+      <a id="btnborder" class="btn btn-primary col-md-3 front-card-buttons" >
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#getSize">
+      <a type="button" class="btn btn-primary col-md-3 front-card-buttons" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
-      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" >
+      <a id="btnsave" class="btn btn-primary col-md-3 front-card-buttons" >
         Save
       </a>
     </div>

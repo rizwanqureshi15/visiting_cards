@@ -301,6 +301,11 @@ position: absolute;
     border-radius: 0px;
     margin-top: 3px;
 }
+.front-card-buttons{
+    width:168px;
+    border-radius: 0px;
+    margin-top: 3px;
+}
 .card-buttons{
     width:165px;
     border-radius: 0px;
