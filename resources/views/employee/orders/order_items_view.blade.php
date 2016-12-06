@@ -37,11 +37,11 @@
 	        	@foreach($cards as $card)
 					<?php $url = url('order/'.$username); ?>
 						<div class="col-md-3" style="margin-top:10px;">
-							<img src="{{ $url.'/'.$order_no.'/front/'.$card->front_snap }}" style="height:100%;width:100%;">
+							<img src="{{ $url.'/'.$order_no.'/front/'.$card->front_snap }}" style="height:100%;width:100%;border: 2px #ddd solid;">
 						</div>
 						@if($card->back_snap)
 							<div class="col-md-3" style="margin-top:10px;">
-								<img src="{{ $url.'/'.$order_no.'/back/'.$card->back_snap }}" style="height:100%;width:100%;">
+								<img src="{{ $url.'/'.$order_no.'/back/'.$card->back_snap }}" style="height:100%;width:100%;border: 2px #ddd solid;">
 							</div>
 						@endif
 				@endforeach
