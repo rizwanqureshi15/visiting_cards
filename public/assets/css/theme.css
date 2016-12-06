@@ -387,6 +387,8 @@ input[type="checkbox"]
     font-weight: 700;
     text-decoration: none;
     overflow: hidden;   
+    white-space: nowrap;
+    text-overflow:ellipsis;
 }
 
 .cards-data:hover
