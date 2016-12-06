@@ -119,7 +119,7 @@
 							        	
 								        	<div class="col-md-3" id="{{ substr($image,0,-4) }}">
 								                <img class="preview_back_image" data-image="{{ $image }}" id="delete_back_image" src="{{ url('assets/images/delete.png') }}" style="height:30px;position:absolute;z-index: 1;margin-top: 22px;margin-left:72%;">
-								                <img src="{{ url('temp/'.$username.'/back/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
+								                <img class="myimage" src="{{ url('temp/'.$username.'/back/'.$image) }}" style="height:220px;width:100%;margin-top:20px;">
 								            </div>
 								    @endif
 								    @endforeach
