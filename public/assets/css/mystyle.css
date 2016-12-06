@@ -32,6 +32,7 @@
 .feild-elements{
     background-color: transparent;
     cursor: pointer;
+    z-index:3;
 }
 
 .popup-toolbar
