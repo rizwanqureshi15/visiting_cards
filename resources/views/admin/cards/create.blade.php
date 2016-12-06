@@ -143,32 +143,32 @@
 </div>  
 
 @if($templates->type == 'horizontal')
-  <div class="col-md-9">
-    <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
+  <div class="col-md-9" style="padding-left:0px;">
+    <div class="canvasBorder" style="height:421px;width:692px;border:1px black dashed;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:690px;">
         
         <div id="guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 666px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 666px; height: 1px;"></div>
         </div>
 
-        <canvas id="canvas1" width="680" height="418">
+        <canvas id="canvas1" width="690" height="418">
         </canvas>
 @else
-  <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+  <div class="col-md-6"  style="padding-left:0px;">
+    <div class="canvasBorder"  style="height:650px;width:412px;border:1px black dashed;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:410px;">
         
         <div id="guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 388px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 388px; height: 1px;"></div>
         </div>
 
-        <canvas id="canvas1" width="400" height="648">
+        <canvas id="canvas1" width="410" height="648">
         </canvas>
 @endif
 <div id="card_body" style="">
@@ -281,16 +281,16 @@
     </div>
     @if($templates->type == "horizontal")
     <div  class="row">
-      <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;">
+      <a id="guideline" class="btn col-md-3 btn-primary back-card-buttons"  style="margin-left:10px;">
         Hide Guidelines
       </a>
-      <a id="btnborder" class="btn btn-primary col-md-3 card-buttons">
+      <a id="btnborder" class="btn btn-primary col-md-3 back-card-buttons">
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary col-md-3 card-buttons" data-toggle="modal" data-target="#getSize">
+      <a type="button" class="btn btn-primary col-md-3 back-card-buttons" data-toggle="modal" data-target="#getSize">
         Upload Image
       </a>
-      <a id="btnsave" class="btn btn-primary col-md-3 card-buttons" style="padding-left:10px;">
+      <a id="btnsave" class="btn btn-primary col-md-3 back-card-buttons" style="padding-left:10px;">
         Save
       </a>
     </div>
@@ -306,7 +306,7 @@
           Save
         </a>
 
-        <a id="guideline" class="btn btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+        <a id="guideline" class="btn btn-primary card-buttons  card-buttons-guide-line">
           Hide Guidelines
         </a>
 
@@ -439,29 +439,29 @@
 </div>  
 
 @if($templates->type == 'horizontal')
-  <div class="col-md-9">
-    <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:419px;width:680px;">
+  <div class="col-md-9" style="padding-left: 0px;">
+    <div class="canvasBorder" style="height:421px;width:692px;border:1px black dashed;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:419px;width:690px;">
         
         <div id="back_guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 666px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 666px; height: 1px;"></div>
         </div>
 
-        <canvas id="canvas2" width="680" height="419">
+        <canvas id="canvas2" width="690" height="419">
         </canvas>
 @else
-  <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:648px;width:400px;">
+  <div class="col-md-6" style="padding-left:0px;">
+    <div class="canvasBorder"  style="height:650px;width:412px;border:1px black dashed;">
+      <div id="div2" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image_back) }}');background-size:100% 100%;height:648px;width:410px;">
         
         <div id="back_guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 388px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 388px; height: 1px;"></div>
         </div>
 
         <canvas id="canvas2" width="400" height="648">
@@ -588,17 +588,17 @@
     @else
     <div class="row">
 
-      <a id="back_btnborder" class="btn btn-primary card-buttons-verticle"  style="margin-left:10px;">
+      <a id="back_btnborder" class="btn btn-primary card-buttons-verticle"  style="margin-left:10px;margin-right: 3px;">
         Show Borders
       </a>
-      <a type="button" class="btn btn-primary card-buttons-verticle" data-toggle="modal" data-target="#getSize">
+      <a type="button" class="btn btn-primary card-buttons-verticle" data-toggle="modal" data-target="#getSize" style="margin-right: 2px;">
         Upload Image
       </a>
       <a id="back_btnsave" class="btn btn-primary card-buttons-verticle">
         Save
       </a>
 
-      <a id="back_guideline" class="btn btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+      <a id="back_guideline" class="btn btn-primary  card-buttons card-buttons-guide-line">
         Hide Guidelines
       </a>
     </div>
@@ -614,12 +614,12 @@
 <div class="row">
   
     @if($templates->type == "horizontal")
-    <div class="col-md-8 col-md-offset-3">
-      <button class="btn btn-dark btn-lg card-buttons" style="width:682px;" id="front_back">Back</button>
+    <div class="col-md-8 col-md-offset-3" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:692px;" id="front_back">Back</button>
     </div>
     @else
-    <div class="col-md-4 col-md-offset-5">
-      <button class="btn btn-dark btn-lg card-buttons" style="width:400px;" id="front_back">Back</button>
+    <div class="col-md-4 col-md-offset-5" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:410px;" id="front_back">Back</button>
     </div>
     @endif
   </div>

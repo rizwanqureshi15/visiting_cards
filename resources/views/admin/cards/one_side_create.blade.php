@@ -145,32 +145,32 @@
 <!--<canvas id="canvas" width="800" height="500"><img src="{{ url('images/card.png') }}" width="100%"></canvas>-->
 
 @if($templates->type == 'horizontal')
-  <div class="col-md-9">
-    <div class="canvasBorder" style="height:421px;width:682px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:680px;">
+  <div class="col-md-9" style="padding-left: 0px;">
+    <div class="canvasBorder" style="height:421px;width:692px;border:1px black dashed;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:419px;width:690px;">
         
         <div id="guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 395px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 666px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 679px; width: 1px; height: 395px;"></div>
-            <div class="safety-margin-line-fg" style="top: 408px; left: 22px; width: 656px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 408px; left: 12px; width: 666px; height: 1px;"></div>
         </div>
 
         <canvas id="canvas1" width="680" height="419">
         </canvas>
 @else
-  <div class="col-md-6">
-    <div class="canvasBorder"  style="height:650px;width:402px;">
-      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:400px;">
+  <div class="col-md-6" style="padding-left: 0px;">
+    <div class="canvasBorder"  style="height:650px;width:412px;border:1px black dashed;">
+      <div id="div1" style="background-image:url('{{ url('templates/background-images/'.$templates->background_image) }}');background-size:100% 100%;height:648px;width:410px;">
        
         <div id="guideline_border" class="overlay canvas-element-wrapper">
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 12px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 1px; height: 626px;"></div>
+            <div class="safety-margin-line-fg" style="top: 12px; left: 12px; width: 388px; height: 1px;"></div>
             <div class="safety-margin-line-fg" style="top: 12px; left: 398px; width: 1px; height: 626px;"></div>
-            <div class="safety-margin-line-fg" style="top: 636px; left: 22px; width: 378px; height: 1px;"></div>
+            <div class="safety-margin-line-fg" style="top: 636px; left: 12px; width: 388px; height: 1px;"></div>
         </div>
 
-        <canvas id="canvas1" width="400" height="648">
+        <canvas id="canvas1" width="410" height="648">
         </canvas>
 @endif
             
@@ -555,7 +555,7 @@
         <a id="btnsave" class="btn btn-primary col-md-3 card-buttons-verticle" >
           Save
         </a>
-        <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:400px;">
+        <a id="guideline" class="btn col-md-3 btn-primary card-buttons"  style="margin-left:10px;width:410px;">
           Hide Guidelines
         </a>
     </div>

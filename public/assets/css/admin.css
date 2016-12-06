@@ -296,16 +296,24 @@ position: absolute;
     background-color: #2a3f54;
     color:white;
 }
-
+.back-card-buttons{
+    width:169px;
+    border-radius: 0px;
+    margin-top: 3px;
+}
 .card-buttons{
-    width:164px;
+    width:165px;
     border-radius: 0px;
     margin-top: 3px;
 }
 .card-buttons-verticle{
-    width:130px;
+    width:134px;
     border-radius: 0px;
     margin-top: 3px;
+}
+.card-buttons-guide-line{
+    margin-left:10px;
+    width:410px;
 }
 .alert{
     padding:8px;
