@@ -10,6 +10,9 @@
 .myimage{
     border: 2px #ddd solid;
 }
+.multiple-image-modal{
+    width:1280px;
+}
  #navbar
  {
  	background-color: #ffffff;

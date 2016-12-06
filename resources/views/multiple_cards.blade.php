@@ -98,7 +98,7 @@
 
 				    <!-- Modal -->
 		                <div class="modal fade" id="multiple_images" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog modal-lg" role="document">
+						  <div class="modal-dialog modal-lg multiple-image-modal" role="document">
 						    <div class="modal-content">
 						      <div class="modal-header">
 						        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
