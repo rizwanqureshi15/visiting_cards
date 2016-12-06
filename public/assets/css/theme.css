@@ -7,7 +7,9 @@
  {
     z-index: 110;
  }
-
+.myimage{
+    border: 2px #ddd solid;
+}
  #navbar
  {
  	background-color: #ffffff;
