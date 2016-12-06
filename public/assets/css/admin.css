@@ -202,6 +202,9 @@ position: absolute;
     padding:10px;
     cursor: pointer;
 }
+#toolbardelete{
+    cursor: pointer;
+}
 #imagetoolbardelete{
     cursor: pointer;
 }
@@ -336,6 +339,7 @@ label.error{
     position: relative;
     width: 36px;
     height: 36px;
+    cursor: pointer;
     background: url(../colorpicker/images/select.png);
 }
 #colorSelector div {
