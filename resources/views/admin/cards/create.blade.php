@@ -117,7 +117,7 @@
           </h4>
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body" id="label_body">
+          <div class="panel-body" id="back_label_body">
             <div class="row">
               <div class="col-md-4" style="padding-left:22px;" id="object_line" >
                 <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true" ></i>  
@@ -294,6 +294,9 @@
         Save
       </a>
     </div>
+    <div class="col-md-8" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:692px;" id="front_button">Back</button>
+    </div>
     @else
     <div class="row">
       <a id="btnborder" class="btn btn-primary col-md-3 card-buttons-verticle" style="margin-left:10px;">
@@ -311,7 +314,11 @@
         </a>
 
     </div>
+    <div class="col-md-4" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:410px;" id="front_button">Back</button>
+    </div>
     @endif
+    
         
           
    
@@ -585,6 +592,9 @@
         Save
       </a>
     </div>
+    <div class="col-md-8" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:692px;" id="back_button">Front</button>
+    </div>
     @else
     <div class="row">
 
@@ -602,6 +612,10 @@
         Hide Guidelines
       </a>
     </div>
+
+    <div class="col-md-4" style="padding-left:0px;">
+      <button class="btn btn-dark btn-lg card-buttons" style="width:410px;" id="back_button">Front</button>
+    </div>
     @endif
         
         
@@ -610,20 +624,7 @@
     
     </div>
 </div>
-
-<div class="row">
-  
-    @if($templates->type == "horizontal")
-    <div class="col-md-8 col-md-offset-3" style="padding-left:0px;">
-      <button class="btn btn-dark btn-lg card-buttons" style="width:692px;" id="front_back">Back</button>
-    </div>
-    @else
-    <div class="col-md-4 col-md-offset-5" style="padding-left:0px;">
-      <button class="btn btn-dark btn-lg card-buttons" style="width:410px;" id="front_back">Back</button>
-    </div>
-    @endif
-  </div>
-  <div class="row">
+ <div class="row">
     <!--Toolebasr start-->
 
         <div id="myToolbar" class="popup-toolbar row col-md-12" style="display:none;position:absolute;padding:0px;">
@@ -1002,23 +1003,18 @@
         $("#flip").click(function(){
             $("#panel").slideToggle("slow");
         });
-       $("#front_back").click(function(){
-          if($(this).text() == "Front")
-          {
-              $(this).text("Back");
-              $("#front_side").show();
-              $("#back_side").hide();
-              side = "";
-              is_back = "0";
-          }
-          else
-          { 
-              $(this).text("Front");
+       $("#front_button").click(function(){
               $("#back_side").show();
               $("#front_side").hide();
               side = "back_";
               is_back = "1";
-          }
+
+          });
+       $("#back_button").click(function(){
+             $("#front_side").show();
+              $("#back_side").hide();
+              side = "";
+              is_back = "0"; 
        });
     });
     

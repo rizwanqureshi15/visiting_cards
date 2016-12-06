@@ -394,6 +394,7 @@
 		            	}
 		            	else
 		            	{
+		            		console.log("hello");
 		                $("#back_error").html(''); // remove it
 		                var feild = $('#back_newFeildName').val();
 		                 str = feild;
