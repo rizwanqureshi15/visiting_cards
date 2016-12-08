@@ -1707,7 +1707,8 @@ class TemplatesController extends Controller
             //dd($database_feilds,$header_names);
             // if($new_feild_names === $header_names) {
                 
-            // } 
+            // }  
+           
             if($database_feilds === $header_names) {
                 
             } 

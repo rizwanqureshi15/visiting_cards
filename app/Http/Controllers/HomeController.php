@@ -52,7 +52,6 @@ class HomeController extends Controller
         return view('welcome',$data);
     }
 
-
     /**
      * Ajax pagination on user's template images
      *

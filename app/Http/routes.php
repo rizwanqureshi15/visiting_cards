@@ -13,7 +13,6 @@
 
 Route::get('/', 'HomeController@index');
 
-
 Route::auth();
 
 Route::get('employees/login', 'EmployeeController@login');
@@ -215,4 +214,4 @@ Route::get('cancel_order/{order_id}','OrderController@cancel_order');
 
 Route::post('upload_image', 'CardController@upload_normal_image');
 Route::post('save_material_id','Front\TemplatesController@save_material_id');
-
+Route::post('change_status', 'EmployeeController@change_status');

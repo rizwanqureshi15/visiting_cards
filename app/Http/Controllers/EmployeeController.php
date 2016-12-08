@@ -15,6 +15,7 @@ use File;
 use App\FinalOrder;
 use App\User;
 use Mail;
+use App\UserTemplate;
 
 
 /**
@@ -226,7 +227,11 @@ class EmployeeController extends Controller
         Order::where('id', $id)->update(['status' => Config::get('status.in_process')]);
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = OrderItem::where('order_id',$id)->get();
-        $data['username'] = $order->user->username;
+        $data['username'] = $order->user->username; 
+        $data['order_no'] = $order->order_no;
+        $user_template = UserTemplate::where('id',$order->user_template_id)->first();
+        $data['card_type'] = $user_template->type; 
+
         return view('employee.orders.list',$data);
     }
 
@@ -247,6 +252,7 @@ class EmployeeController extends Controller
         $data['username'] = $order->user->username;
         $data['order_id'] = $id; 
         $data['order_no'] = $order->order_no; 
+        
         return view('employee.orders.order_items_view',$data);
     }
 
@@ -295,7 +301,7 @@ class EmployeeController extends Controller
         $order = Order::with('user')->where('id', $id)->first();
         $data['cards'] = FinalOrder::where('order_id',$id)->paginate(1);
         $data['username'] = $order->user->username;
-
+       
         return view('employee.orders.order_snaps',$data);
 
     }
@@ -316,7 +322,7 @@ class EmployeeController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $name = str_random(40);
-        $path = public_path() .'/orders/snaps';   
+        $path = public_path().'/orders/snaps';   
 
         if(!File::exists($path))
         { 
@@ -334,12 +340,15 @@ class EmployeeController extends Controller
             $save['is_back'] = 1;
         }
         FinalOrder::create($save);
-         if($request->status)
-        {
-            
-            Order::where('id', $request->order_id)->update(['status' => Config::get('status.in_process')]);
-        }
+         
         return json_encode($name .'.png');
+    }
+
+    public function change_status(Request $request)
+    {
+            
+        Order::where('id', $request->order_id)->update(['status' => Config::get('status.in_process')]);
+        return json_encode("successfully added");
     }
 
 

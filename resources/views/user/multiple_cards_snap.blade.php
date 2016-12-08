@@ -35,7 +35,7 @@
                                     </canvas>
                             @endif
                                     <div id="card_body">
-                                            @if($objects)
+                                           <!--  @if($objects)
 
                                                 @foreach($objects as $object) 
                                                   <?php
@@ -58,7 +58,35 @@
                                                   @endif
                                                 @endforeach
 
-                                              @endif
+                                              @endif -->
+
+                                        @if($objects)
+
+                                          @foreach($objects as $object) 
+                                            <?php
+                                              $id = $object->name;
+                                              $id = str_replace(" ","_",$object->name);
+                                              $id = strtolower($id);
+                                            ?>
+
+                                            @if($object->type == "line")
+                                                <div class="object object_line_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                                                    <div id="{{ $id }}" style="{{ $object->css }}" class="object_line">
+                                                    </div>
+                                                </div>
+                                            @elseif($object->type == "square")
+                                                <div id="{{ $id }}" class="object object_square" style="{{ $object->css }}">
+                                                </div>
+                                            @elseif($object->type == "circle")
+                                               <div class="object object_circle_wrapper" id="wrapper_{{ $id }}" style="{{ $object->line_css }}">
+                                                    <div id="{{ $id }}" style="{{ $object->css }}" class="object_circle">
+                                                    </div>
+                                                </div>
+                                            @endif
+                                          @endforeach
+
+                                        @endif
+
                                         @if($user_feilds)
                                             @foreach($user_feilds as $f)
                                                  <?php
