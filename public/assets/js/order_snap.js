@@ -25,7 +25,6 @@ $(document).ready(function(){
             }
             if(key == "back_snap" && value != "")
             {
-                count++;
                 i++;
                 $('#image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/back/"+value);
             }
@@ -136,7 +135,6 @@ $(document).ready(function(){
             }
             if(key == "back_snap" && value != "")
             {
-                count++;
                 i++;
                 $('#vertical_image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/back/"+value);
             }
