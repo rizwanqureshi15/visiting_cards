@@ -1,9 +1,11 @@
-var element = $('#a4');
 var order_id;
 var count=0;
 var a=0;
 
 $(document).ready(function(){
+
+    var element = $('#a4');
+
 	if(card_type == 'horizontal')
     {
         var i = 0;
@@ -116,9 +118,10 @@ $(document).ready(function(){
     }
     else
     {
+        var element = $('#a5');
         var i = 0;
-    $('#user_overlay').show();
-    $('#admin_navbar').hide();
+        $('#user_overlay').show();
+        $('#admin_navbar').hide();
     $.each(cards,function(k, card){
         $.each(card,function(key, value){
             if(key == "order_id")
@@ -129,13 +132,13 @@ $(document).ready(function(){
             {
                 count++;
                 i++;
-                $('#image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/front/"+value);
+                $('#vertical_image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/front/"+value);
             }
             if(key == "back_snap" && value != "")
             {
                 count++;
                 i++;
-                $('#image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/back/"+value);
+                $('#vertical_image_'+i).attr('src', site_url+"/order/"+username+"/"+ order_no +"/back/"+value);
             }
         });
         if(i == 6 && cards.length != count)
@@ -184,7 +187,7 @@ $(document).ready(function(){
     var j;
     for (j = i+1; j<=6 ; j++)
     {
-        $('#image_'+j).attr('src', " ");
+        $('#vertical_image_'+j).attr('src', " ");
     }
     html2canvas(element, {
         onrendered: function (canvas) {
