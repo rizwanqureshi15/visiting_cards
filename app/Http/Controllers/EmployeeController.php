@@ -273,15 +273,15 @@ class EmployeeController extends Controller
         $data['order'] = $order;
         $user = $data['user']; 
 
-        Mail::send('emails.confirmation_email', $data , function ($m) use ($user) 
-        {
-            $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order Confirmation');
-        });
-        //dd(view('emails.admin_confirmation_email', $data)->render());
-        Mail::send('emails.admin_confirmation_email', $data , function ($m) use ($user) 
-        {
-            $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order Confirmation');
-        });
+        // Mail::send('emails.confirmation_email', $data , function ($m) use ($user) 
+        // {
+        //     $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order Confirmation');
+        // });
+        // //dd(view('emails.admin_confirmation_email', $data)->render());
+        // Mail::send('emails.admin_confirmation_email', $data , function ($m) use ($user) 
+        // {
+        //     $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order Confirmation');
+        // });
 
         Order::where('id', $id)->update(['is_confirmed' => '1', 'status' => Config::get('status.confirmed')]);
         return redirect('new_orders/list');
@@ -431,15 +431,15 @@ class EmployeeController extends Controller
             $user = User::where('id', $data['order']->user_id)->first();
             $data['user'] = $user;
 
-            Mail::send('emails.done_order_email', $data , function ($m) use ($user) 
-            {
-                $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order is Delivered');
-            });
+            // Mail::send('emails.done_order_email', $data , function ($m) use ($user) 
+            // {
+            //     $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order is Delivered');
+            // });
             
-            Mail::send('emails.admin_done_order_email', $data , function ($m) use ($user) 
-            {
-                $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order is Delivered');
-            });
+            // Mail::send('emails.admin_done_order_email', $data , function ($m) use ($user) 
+            // {
+            //     $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order is Delivered');
+            // });
         Order::where('id', $id)->update(['status' => Config::get('status.done')]);  
            return redirect()->back();   
         }
