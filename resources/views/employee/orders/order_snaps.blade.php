@@ -25,14 +25,14 @@
 			<a class="alert-link">{{ Session::get('succ_msg') }}</a>
 			</div>
 		@endif
-	    <div class="x_panel">
+	    <div class="x_panel" id="panel1">
 	        <div class="x_title">
 	            <h2>Order Snaps</h2>
 	            <ul class="nav navbar-right panel_toolbox">
 	                     
 	            </ul>
 	            <div class="clearfix"></div>
-	            </div>
+	        </div>
 	        <div class="x_content">
 	        	<div class="col-md-offset-2 col-md-10"  style="display:block;">
 					<img src="{{ url('orders/snaps/'.$cards[0]->snap) }}" id="print_image" style="height:70%;width:70%;">
@@ -56,18 +56,30 @@
 	var site_url = "{{ url('') }}";
 	$('#print_snap').click(function(){
 		
-		 $('#sidebar').css('display', 'none');
-		 $('#print_button').css('display', 'none');
-		 $('#links').css('display', 'none');
-		 $('#print_image').css('width', '100%');
-		 $('#print_image').css('height', '100%');
+		  $('#sidebar').css('display', 'none');
+		  $('#print_button').css('display', 'none');
+		  $('#links').css('display', 'none');
+		  $('#print_image').css('width', '100%');
+		 	$('#print_image').css('height', '100%');
+		 	$('.x_title').hide();
+		 	$('#panel1').removeClass('x_panel');
+		 	$('.page-title').hide();
+		 	$('.top_nav').hide();
+		 	$('footer').hide();
+		 	$('.x_content').css('padding', '0px');
 		// $('#print_div').css('display', 'block');
 		 window.print();
-		 $('#sidebar').css('display', 'block');
-		 $('#print_button').css('display', 'block');
-		 $('#links').css('display', 'block');
-		 $('#print_image').css('width', '70%');
-		 $('#print_image').css('height', '70%');
+		  $('#sidebar').css('display', 'block');
+		  $('#print_button').css('display', 'block');
+		  $('#links').css('display', 'block');
+		  $('#print_image').css('width', '70%');
+		  $('#print_image').css('height', '70%');
+		  $('.x_title').show();
+		 	$('#panel1').addClass('x_panel');
+		 	$('.page-title').show();
+		 	$('.top_nav').show();
+		 	$('footer').show();	
+		 	$('.x_content').css('padding', '0 5px 6px');
 	});
 </script>
 @endsection
