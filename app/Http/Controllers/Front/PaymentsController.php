@@ -17,6 +17,7 @@ use Datatables;
 use App\Order;
 use App\Material;
 use App\UserTemplate;
+use Mail;
 
     /**
      * Handle payments of users
@@ -165,28 +166,44 @@ class PaymentsController extends Controller
     public function refund(Request $request)
     {
        
-        $transaction_id = Order::where('id', $request->cancel_id)->first();
-
-        $url = 'https://www.payumoney.com/payment/merchant/refundPayment?'; 
-        $data =array('merchantKey'=> Config::get('settings.key'), 'paymentId'=> $transaction_id->payu_money_id,'refundAmount'=> $transaction_id->amount); 
-        $options = array( 
-          'http' => array( 
-            'header' => "Content-Type: application/x-www-form-urlencoded&Authorization: ".Config::get('settings.authorization'), 
-            'method' => 'POST', 
-            'Authorization'=> Config::get('settings.authorization'), 
-            'content' => http_build_query($data) 
-            ), 
-          ); 
-        $context = stream_context_create($options); 
-        $result = file_get_contents($url, false, $context); 
+        $transaction_id = Order::where('id', $request->order_id)->first();
+        
+        // $url = 'https://test.payumoney.com/payment/merchant/refundPayment?'; 
+        // $data =array('merchantKey'=> Config::get('settings.key'), 'paymentId'=> $transaction_id->payu_money_id,'refundAmount'=> $transaction_id->amount); 
+        // $options = array( 
+        //   'http' => array( 
+        //     'header' => "Content-Type: application/x-www-form-urlencoded&Authorization: ".Config::get('settings.authorization'), 
+        //     'method' => 'POST', 
+        //     'Authorization'=> Config::get('settings.authorization'), 
+        //     'content' => http_build_query($data) 
+        //     ), 
+        //   ); 
+        // $context = stream_context_create($options); 
+        // $result = file_get_contents($url, false, $context); 
+        $result= TRUE;
         if ($result === FALSE) { 
             Session::flash('error_msg','There was an error while processing Refund.');
+            return json_encode("fail");
         }
         else{
+            $order = Order::where('id', $request->order_id)->first();
+            $data['user'] = User::where('id', $order->user_id)->first();
+            $data['order'] = $order;
+            $user = $data['user'];
+             Mail::send('emails.cancel_order', $data , function ($m) use ($user) 
+            {
+                $m->to($user->email, $user->first_name." ".$user->last_name)->subject('Order Confirmation');
+            });
+            //dd(view('emails.admin_confirmation_email', $data)->render());
+            Mail::send('emails.admin_cancel_order', $data , function ($m) use ($user) 
+            {
+                $m->to(Config::get('settings.admin_email'),'Admin')->subject('Order Cancellation');
+            });
             Session::flash('succ_msg','Successfully Refunded.');
-            Order::where('id', $request->cancel_id)->update(['is_cancel' => 1,'status' => Config::get('status.refunded')]);
+            Order::where('id', $request->order_id)->update(['is_cancel' => 1,'status' => Config::get('status.refunded')]);
+            return json_encode("success");
         }
-        return redirect('new_orders/list');
+        
     }
     
 }

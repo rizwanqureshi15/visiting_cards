@@ -96,8 +96,9 @@
             dataType: 'json',
             async: false,
             data: {"_token": token ,"order_id":order_id},
-            success : function(image)
+            success : function(result)
             {
+                location.reload();
             }})	
             table.draw();
 		}

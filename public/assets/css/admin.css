@@ -52,6 +52,9 @@ position: absolute;
     z-index:100;
 
 }
+.cancel_order{
+    cursor: pointer;
+}
 .toolbar-textbox{
     box-sizing: border-box;
     position: relative;
