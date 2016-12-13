@@ -168,18 +168,18 @@ class PaymentsController extends Controller
        
         $transaction_id = Order::where('id', $request->order_id)->first();
         
-        // $url = 'https://test.payumoney.com/payment/merchant/refundPayment?'; 
-        // $data =array('merchantKey'=> Config::get('settings.key'), 'paymentId'=> $transaction_id->payu_money_id,'refundAmount'=> $transaction_id->amount); 
-        // $options = array( 
-        //   'http' => array( 
-        //     'header' => "Content-Type: application/x-www-form-urlencoded&Authorization: ".Config::get('settings.authorization'), 
-        //     'method' => 'POST', 
-        //     'Authorization'=> Config::get('settings.authorization'), 
-        //     'content' => http_build_query($data) 
-        //     ), 
-        //   ); 
-        // $context = stream_context_create($options); 
-        // $result = file_get_contents($url, false, $context); 
+        $url = 'https://www.payumoney.com/payment/merchant/refundPayment?'; 
+        $data =array('merchantKey'=> Config::get('settings.key'), 'paymentId'=> $transaction_id->payu_money_id,'refundAmount'=> $transaction_id->amount); 
+        $options = array( 
+          'http' => array( 
+            'header' => "Content-Type: application/x-www-form-urlencoded&Authorization: ".Config::get('settings.authorization'), 
+            'method' => 'POST', 
+            'Authorization'=> Config::get('settings.authorization'), 
+            'content' => http_build_query($data) 
+            ), 
+          ); 
+        $context = stream_context_create($options); 
+        $result = file_get_contents($url, false, $context); 
         $result= TRUE;
         if ($result === FALSE) { 
             Session::flash('error_msg','There was an error while processing Refund.');
