@@ -6,9 +6,9 @@
     <h3>Orders</h3>
   </div>
   <div class="title_right">
-    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+    <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right top_search">
       <div class="input-group">
-        <ol class="breadcrumb" style="width:260px;padding-left:0px;">
+        <ol class="breadcrumb" style="padding-left:0px;">
           <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
           <li>Orders</li>
           <li>New Orders</li>
