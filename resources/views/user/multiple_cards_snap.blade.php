@@ -139,6 +139,7 @@
 <script>
 
     $('#navbar').css("display","none");  
+    $('#user_overlay').css('opacity','1.9');
 
     var site_url = "{{url('')}}";
     var page_no = 1;
@@ -211,8 +212,7 @@
             
               
         });
-       
-    $('#user_overlay').css('opacity','1.9');
+      
        
     });
 
