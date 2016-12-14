@@ -119,7 +119,7 @@
                                                 @endforeach
 
                                                     <div id="div_image_{{ $id }}" name="{{ $name }}" style="{{ $div_css }}" class="template_image_div">
-                                                        <img src=""  style="{{ $css }}" class="template_image" data-id="{{ $id }}" id = "image_{{ $id }}">
+                                                        <img style="{{ $css }}" class="template_image" data-id="{{ $id }}" id="image_{{ $id }}">
                                                     </div>
                                             @endforeach
                                         @endif
@@ -212,7 +212,7 @@
               
         });
        
-
+    $('#user_overlay').css('opacity','1.9');
        
     });
 

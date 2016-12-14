@@ -393,7 +393,7 @@
               
         });
        
-
+    $('#user_overlay').css('opacity','1.9');
        
     });
 

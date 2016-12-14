@@ -1173,4 +1173,8 @@ a:hover
     color:#47bac1;
 }
 
+.template_image_div
+{
+    z-index: 100;
+}
 
