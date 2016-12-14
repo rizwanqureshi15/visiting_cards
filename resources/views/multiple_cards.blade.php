@@ -21,6 +21,7 @@
 		<div class="col-md-3 download-instruction-box">
 			<span></span><font>Please download formated excel file first.</font><br><br>
 			<span></span><font>Please put proper content downloaded excel file.</font><br><br>
+			<span></span><font>Date formate must be DD/MM/YYYY.</font><br><br>
 			<span></span><font>Than upload exel file.</font><br>
 			<a class="text-center" href="{{ url('download_file',$template_url) }}">
 				<button class="download-btn col-md-12">
